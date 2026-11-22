@@ -4,16 +4,17 @@
 
 - PR: https://github.com/spinlnw10-art/ck-nexus/pull/392
 - Branch: `ops/provider-free-go-clean`
-- Verified candidate commit before this status-only update: `e4b9c414c9400b83a8343025d5896e29b36aa3c1`
-- Scope: private Termux key-file loading with strict ownership/mode checks; Gemini-first then Groq routing; paid providers excluded unless two explicit opt-ins are enabled; targeted fallback tests.
-- At baseline head `e4b9c414c9400b83a8343025d5896e29b36aa3c1`: CK-NEXUS CI, AI Factory preflight, Security Attack Regression V1, and CodeQL passed. Follow-up Termux provider/credential test selection: 36 passed. A broader collection including `tests/test_credential_vault.py` is blocked by Termux Pydantic v1, which lacks the Pydantic v2 `field_validator` API required by the project.
-- SonarCloud Code Analysis was marked cancelled/failed with zero annotations and only a generic “last analysis has failed” summary. The account-side cause is unknown and is not claimed fixed.
-- PR remains `OPEN`, `BLOCKED`, and `REVIEW_REQUIRED`; no independent review, merge, or deployment is recorded.
+- Latest code commit pushed: `8eb52e86f1570e16a8c6952d8255b85a04e9f062`; the README/status documentation refresh is being committed separately.
+- Scope: private Termux key-file loading with strict ownership/mode checks; Gemini-first then Groq routing; paid providers excluded unless both explicit opt-ins are enabled; Gemini API key sent in the `x-goog-api-key` header; Groq default refreshed to `openai/gpt-oss-20b`; tests cover provider order, paid-provider exclusion, fail-closed behavior, fallback, and key-header handling.
+- Termux provider/credential test selection on the pushed code commit: **37 passed**. Ruff, `compileall`, JavaScript syntax check, and `git diff --check`: PASS.
+- GitHub Actions on the latest pushed code commit were triggered and observed pending at the time of this update: CodeQL Actions/JavaScript/Python, attack-regression, preflight, test, and universal-system. Do not call them passed until completed.
+- SonarCloud had failed on the prior code commit `e4b9c414...`; no completed SonarCloud result was visible yet for `8eb52e86...`. The prior failure is not considered fixed by restored connectivity alone.
+- PR remains OPEN and requires independent review. No merge or deployment is recorded.
 - No live model-generation request was sent. API model-list HTTP 200 is not evidence of generation quota or zero cost. Provider billing/quota must be checked before any live call.
-- Groq's former default `llama-3.3-70b-versatile` was deprecated with shutdown on 2026-08-16; candidate defaults were updated to `openai/gpt-oss-20b`. Gemini API key authentication uses the documented `x-goog-api-key` header rather than a query-string credential.
+- Full repository pytest is not claimed; the validated local selection is the 37 targeted provider/credential tests.
 - This candidate does not close Q10–Q16 and does not change the production NO-GO decision.
 
-This block is a dated candidate snapshot. Re-check the latest PR head and checks before treating any evidence as current.
+This is a dated candidate snapshot. Re-check the latest PR head and checks before treating any evidence as current.
 
 ---
 
