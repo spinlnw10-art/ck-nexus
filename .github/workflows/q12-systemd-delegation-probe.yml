@@ -33,7 +33,7 @@ jobs:
           test "$(git rev-parse 'HEAD^{tree}')" = "$Q12_SOURCE_TREE"
           paths=(app creator_app services gateway orchestration idea_engine migrations deploy observability Dockerfile docker-compose.prod.yml main.py pyproject.toml uv.lock)
           subject="$(git ls-tree -r HEAD -- "${paths[@]}" | sha256sum | awk '{print $1}')"
-          printf 'subject_manifest=%s\\n' "$subject" >> "$GITHUB_OUTPUT"
+          echo "subject_manifest=$subject" >> "$GITHUB_OUTPUT"
           test "$(id -u)" -ne 0
           command -v systemd-run
           systemctl is-system-running || true
