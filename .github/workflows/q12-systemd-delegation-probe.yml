@@ -93,6 +93,7 @@ jobs:
       - name: Build Q12 diagnostic evidence
         if: always()
         env:
+          Q12_RELEASE_SUBJECT: ${{ steps.subject.outputs.subject_manifest }}
           GATE_RC: ${{ steps.gate.outputs.exit_code }}
         shell: bash
         run: |
