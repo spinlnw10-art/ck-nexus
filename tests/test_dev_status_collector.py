@@ -103,7 +103,9 @@ def test_qwen_probe_rejects_unapproved_base_url_without_sending_key(tmp_path, mo
     assert not (tmp_path / "qwen_probe_state.json").exists()
 
 
-def test_qwen_probe_rejects_unapproved_https_host_without_sending_key(tmp_path, monkeypatch) -> None:
+def test_qwen_probe_rejects_unapproved_https_host_without_sending_key(
+    tmp_path, monkeypatch
+) -> None:
     monkeypatch.setattr(collector, "OUTPUT", tmp_path / "dev_status.json")
     monkeypatch.setenv("DASHSCOPE_API_KEY", "test-secret-never-used")
     monkeypatch.setenv("QWEN_MODEL", "qwen-test")
