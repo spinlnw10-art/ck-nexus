@@ -24,8 +24,6 @@ jobs:
   native-deep-scan:
     runs-on: ubuntu-24.04
     timeout-minutes: 120
-    env:
-      Q10_OUTPUT_DIR: ${{ runner.temp }}/q10-codex-security-output
     steps:
       - name: Checkout exact frozen release subject
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
@@ -62,11 +60,12 @@ jobs:
         shell: bash
         run: |
           set +e
-          mkdir -p "$Q10_OUTPUT_DIR"
+          out="$RUNNER_TEMP/q10-codex-security-output"
+          mkdir -p "$out"
           codex-security --version > q10-version.txt 2>&1
           codex-security scan . --auth api-key --mode deep --headless --dry-run \
             --max-cost 5 --max-discovery-runs 10 --workers 2 --subagents 0 \
-            --stop-after-no-new 3 --output-dir "$Q10_OUTPUT_DIR" --json \
+            --stop-after-no-new 3 --output-dir "$out" --json \
             > q10-dry-run.json 2> q10-dry-run.log
           rc=$?
           echo "exit_code=$rc" >> "$GITHUB_OUTPUT"
@@ -130,7 +129,13 @@ jobs:
               scan_obj = json.loads(scan) if scan else None
           except Exception:
               scan_obj = None
-          output_dir = Path(os.environ["Q10_OUTPUT_DIR"])
+          import shutil
+          output_dir = Path(os.environ.get("RUNNER_TEMP", "/tmp")) / "q10-codex-security-output"
+          artifact_copy = Path("q10-output-artifacts")
+          if artifact_copy.exists():
+              shutil.rmtree(artifact_copy)
+          if output_dir.exists():
+              shutil.copytree(output_dir, artifact_copy)
           files = []
           if output_dir.exists():
               for p in sorted(x for x in output_dir.rglob("*") if x.is_file()):
@@ -184,7 +189,7 @@ jobs:
             q10-dry-run.log
             q10-scan.json
             q10-scan.log
-            ${{ env.Q10_OUTPUT_DIR }}
+            q10-output-artifacts/
           if-no-files-found: warn
           retention-days: 90
 
