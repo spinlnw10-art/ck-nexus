@@ -13,6 +13,21 @@ collector = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(collector)
 
 
+def test_output_path_ignores_environment_override(monkeypatch) -> None:
+    import importlib.util
+
+    monkeypatch.setenv("CKNEXUS_DEV_STATUS_FILE", "/tmp/attacker-controlled.json")
+    spec = importlib.util.spec_from_file_location(
+        "collect_dev_status_env_test", MODULE_PATH
+    )
+    assert spec and spec.loader
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+
+    assert module.OUTPUT == module.ROOT / "data" / "dev_status.json"
+    assert module.OUTPUT != Path("/tmp/attacker-controlled.json")
+
+
 def test_collector_command_success_json(monkeypatch) -> None:
     completed = subprocess.CompletedProcess(["gh"], 0, '{"ok": true}', "")
     monkeypatch.setattr(collector.subprocess, "run", Mock(return_value=completed))
