@@ -85,6 +85,7 @@ jobs:
       - name: Build Q11 evidence
         if: always()
         env:
+          Q11_RELEASE_SUBJECT: ${{ steps.subject.outputs.subject_manifest }}
           CONFIRMED: ${{ inputs.confirm_api_usage == true }}
           AUTH_AVAILABLE: ${{ steps.auth.outputs.available }}
           SMOKE_RC: ${{ steps.smoke.outputs.exit_code }}
