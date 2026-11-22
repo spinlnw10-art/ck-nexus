@@ -1,22 +1,22 @@
 # Current candidate update — 2026-11-23 (PR #392)
 
-**Decision: NO-GO FOR PRODUCTION.** This is a provider-routing candidate only; it is not merged or deployed.
+**Decision: NO-GO FOR PRODUCTION.** This provider-routing candidate is not merged or deployed.
 
 - PR: https://github.com/spinlnw10-art/ck-nexus/pull/392
 - Branch: `ops/provider-free-go-clean`
-- Latest code commit pushed: `8eb52e86f1570e16a8c6952d8255b85a04e9f062`; the README/status documentation refresh is being committed separately.
-- Scope: private Termux key-file loading with strict ownership/mode checks; Gemini-first then Groq routing; paid providers excluded unless both explicit opt-ins are enabled; Gemini API key sent in the `x-goog-api-key` header; Groq default refreshed to `openai/gpt-oss-20b`; tests cover provider order, paid-provider exclusion, fail-closed behavior, fallback, and key-header handling.
-- Termux provider/credential test selection on the pushed code commit: **37 passed**. Ruff, `compileall`, JavaScript syntax check, and `git diff --check`: PASS.
-- GitHub Actions and CodeQL on the pushed code commit `8eb52e86...` passed: CK-NEXUS CI, AI Factory preflight, Security Attack Regression V1, universal-system, and CodeQL Actions/JavaScript/Python.
-- The documentation refresh commit `bb62d6a0...` also completed the same GitHub Actions/CodeQL checks successfully. SonarCloud Code Analysis on that latest checked PR head was **cancelled/failed** (check run `137372723238`, zero annotations, generic “last analysis has failed” summary). This is not a passing result. The SonarCloud host responded to a Termux connectivity probe, but unauthenticated project APIs returned “Project doesn't exist”; project-side diagnostics require an authorized SonarCloud session.
-- PR checks are not all green: SonarCloud remains failed/cancelled, and independent review is required.
-- PR remains OPEN and requires independent review. No merge or deployment is recorded.
-- No live model-generation request was sent. API model-list HTTP 200 is not evidence of generation quota or zero cost. Provider billing/quota must be checked before any live call.
-- Full repository pytest is not claimed; the validated local selection is the 37 targeted provider/credential tests.
-- This candidate does not close Q10–Q16 and does not change the production NO-GO decision.
+- Current PR head: `dc42ab23adcad8c25724f202fa7c72d0c8b5baa3`
+- Provider cost guard: Gemini, Groq, and OpenAI are excluded by default; Gemini/Groq/OpenAI require both `CKNEXUS_PROVIDER_ALLOW_PAID=true` and `CKNEXUS_PROVIDER_ALLOW_CLOUD=true`. Local/mock providers remain separate.
+- Credential handling: Termux key file checks ownership, regular-file type, and restrictive permissions; Gemini generation and provider-hub validation use the `x-goog-api-key` header rather than a URL query.
+- Provider metadata: Groq and Gemini are labelled FREEMIUM rather than guaranteed FREE; descriptions state that account billing and quota vary.
+- Latest GitHub CI on this exact head: **975 passed, 2 skipped, 12 warnings**. Ruff, Bandit gate, secret scan (871 tracked files), preflight, attack-regression, and universal-system checks passed.
+- CodeQL on this exact head: **PASS**; Python, JavaScript/TypeScript, and Actions analyses passed; CodeQL reports no new alerts in code changed by this PR.
+- SonarCloud on this exact head: **FAIL**. Quality Gate remains D Security Rating and C Reliability Rating on new code. The connected GitHub check exposes the failed metrics but not actionable issue details; no issue is guessed or hidden.
+- Review: the owner-approved review waiver is recorded, but it is not an independent review. A fresh Codex review was requested for this exact head and is pending.
+- Q10: the last available Q10 artifact is bound to older source SHA `eea74e4df3406c231f22dc6fe5dced4039b20129`; it is **not current evidence** for this PR head. Rerun Q10 against the exact current source SHA before claiming Q10 closure.
+- No live model-generation request was sent. Provider billing/quota has not been verified; no zero-cost guarantee is made.
+- This candidate does not close Q10–Q16 and does not change the Production NO-GO decision.
 
-This is a dated candidate snapshot. Re-check the latest PR head and checks before treating any evidence as current.
-
+This is a dated evidence snapshot. Re-check the exact PR head and checks before any release decision.
 ---
 
 # Release evidence snapshot — 2026-11-19 (PR #380 code baseline)
