@@ -71,20 +71,19 @@ jobs:
           # Move the service supervisor into a child so the delegated root has no internal processes.
           bootstrap = root / ("cknexus-manager-" + str(os.getpid()))
           bootstrap.mkdir()
-          moved = False
-          try:
-              (bootstrap / "cgroup.procs").write_text(str(os.getpid()))
-              moved = True
-              control = root / "cgroup.subtree_control"
-              enabled = set(control.read_text().split())
-              missing = [x for x in ("cpu", "memory", "pids") if x not in enabled]
-              if missing:
-                  control.write_text(" ".join("+" + x for x in missing))
-              print(json.dumps({"delegated_root_subtree_control": control.read_text().split()}, sort_keys=True), flush=True)
+          (bootstrap / "cgroup.procs").write_text(str(os.getpid()))
+          control = root / "cgroup.subtree_control"
+          enabled = set(control.read_text().split())
+          missing = [x for x in ("cpu", "memory", "pids") if x not in enabled]
+          if missing:
+              control.write_text(" ".join("+" + x for x in missing))
+          print(json.dumps({"delegated_root_subtree_control": control.read_text().split()}, sort_keys=True), flush=True)
           result = subprocess.run([
               sys.executable, "scripts/agnes_cgroup_v2_staging_gate.py",
               "--root", str(root)
           ], env={**os.environ, "CKNEXUS_ENVIRONMENT": "staging"}, text=True)
+          (root / "cgroup.procs").write_text(str(os.getpid()))
+          bootstrap.rmdir()
           raise SystemExit(result.returncode)
           ' > q12-systemd-delegation.log 2>&1
           rc=$?
