@@ -1,6 +1,9 @@
 name: Q10 Codex Security Deep Scan (exact frozen subject)
 
 on:
+  push:
+    branches:
+      - ops/q12-github-hosted-cgroup-diagnostic
   workflow_dispatch:
     inputs:
       confirm_api_usage:
@@ -79,7 +82,7 @@ jobs:
           fi
 
       - name: Set up Node.js 24
-        if: ${{ inputs.confirm_api_usage == true && steps.auth.outputs.available == 'true' }}
+        if: ${{ github.event_name == 'push' || (inputs.confirm_api_usage == true && steps.auth.outputs.available == 'true') }}
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: '24'
@@ -87,6 +90,15 @@ jobs:
       - name: Install pinned Codex Security CLI
         if: ${{ inputs.confirm_api_usage == true && steps.auth.outputs.available == 'true' }}
         run: npm install --global @openai/codex-security@${{ env.CODEX_SECURITY_VERSION }}
+
+      - name: Validate Codex Security CLI and exact target without running a scan
+        if: ${{ github.event_name == 'push' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          codex-security --version
+          codex-security scan . --mode deep --auth api-key --dry-run --output-dir "$RUNNER_TEMP/q10-dry-run"
+          echo "Dry run only: no authentication was loaded and no scan/model request was started."
 
       - name: Run native Codex Security Deep Scan
         if: ${{ inputs.confirm_api_usage == true && steps.auth.outputs.available == 'true' }}
