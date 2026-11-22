@@ -1,0 +1,134 @@
+name: Q12 transient systemd delegated cgroup v2 probe
+
+on:
+  push:
+    branches:
+      - ops/q12-github-hosted-cgroup-diagnostic
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  Q12_SOURCE_SHA: 39f5c1adb9d761ab418cf088ff1f051b1ca731d1
+  Q12_SOURCE_TREE: 0525195934f703a8becf8a39f6397b2411e0bb2e
+  Q12_RELEASE_SUBJECT: 89f2925cd871332b16f755f0dae1e058826c38b728f66d2001f2eaaec6301a52
+
+jobs:
+  delegated-probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout exact frozen Q12 subject
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: ${{ env.Q12_SOURCE_SHA }}
+          fetch-depth: 1
+
+      - name: Verify exact source identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$Q12_SOURCE_SHA"
+          test "$(git rev-parse 'HEAD^{tree}')" = "$Q12_SOURCE_TREE"
+          paths=(app creator_app services gateway orchestration idea_engine migrations deploy observability Dockerfile docker-compose.prod.yml main.py pyproject.toml uv.lock)
+          subject="$(git ls-tree -r HEAD -- "${paths[@]}" | sha256sum | awk '{print $1}')"
+          test "$subject" = "$Q12_RELEASE_SUBJECT"
+          test "$(id -u)" -ne 0
+          command -v systemd-run
+          systemctl is-system-running || true
+
+      - name: Run the canonical AGNES cgroup enforcement gate inside a non-root delegated systemd service
+        id: gate
+        shell: bash
+        run: |
+          set +e
+          unit="cknexus-q12-delegation-probe-${GITHUB_RUN_ID}"
+          sudo systemd-run --wait --pipe --collect \
+            --unit="$unit" \
+            --property="User=$(id -un)" \
+            --property="Group=$(id -gn)" \
+            --property="Delegate=yes" \
+            --property="DelegateControllers=cpu memory pids" \
+            --setenv=CKNEXUS_ENVIRONMENT=staging \
+            /usr/bin/python3 -c '
+          import json, os, pathlib, subprocess, sys
+          lines = pathlib.Path("/proc/self/cgroup").read_text().splitlines()
+          rel = next(x.split(":", 2)[2] for x in lines if x.startswith("0::"))
+          root = pathlib.Path("/sys/fs/cgroup") / rel.lstrip("/")
+          print(json.dumps({
+              "runner_uid": os.getuid(),
+              "runner_user": __import__("pwd").getpwuid(os.getuid()).pw_name,
+              "delegated_cgroup_root": str(root),
+              "cgroup_v2": (root / "cgroup.controllers").is_file(),
+              "controllers": (root / "cgroup.controllers").read_text().split() if (root / "cgroup.controllers").is_file() else [],
+              "writable": os.access(root, os.W_OK | os.X_OK)
+          }, sort_keys=True), flush=True)
+          if os.getuid() == 0:
+              raise SystemExit("non-root service identity required")
+          if not os.access(root, os.W_OK | os.X_OK):
+              raise SystemExit("delegated cgroup root is not writable")
+          result = subprocess.run([
+              sys.executable, "scripts/agnes_cgroup_v2_staging_gate.py",
+              "--root", str(root)
+          ], env={**os.environ, "CKNEXUS_ENVIRONMENT": "staging"}, text=True)
+          raise SystemExit(result.returncode)
+          ' > q12-systemd-delegation.log 2>&1
+          rc=$?
+          echo "exit_code=$rc" >> "$GITHUB_OUTPUT"
+          cat q12-systemd-delegation.log
+          exit 0
+
+      - name: Build Q12 diagnostic evidence
+        if: always()
+        env:
+          GATE_RC: ${{ steps.gate.outputs.exit_code }}
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, os
+          from datetime import datetime, timezone
+          from pathlib import Path
+          log = Path("q12-systemd-delegation.log")
+          raw = log.read_text(encoding="utf-8", errors="replace") if log.exists() else ""
+          rc = os.getenv("GATE_RC", "")
+          passed = rc == "0" and '"status": "PASS"' in raw
+          evidence = {
+              "schema_version": 1,
+              "gate": "Q12_DIAGNOSTIC",
+              "source_sha": os.environ["Q12_SOURCE_SHA"],
+              "source_tree": os.environ["Q12_SOURCE_TREE"],
+              "release_subject_manifest_sha256": os.environ["Q12_RELEASE_SUBJECT"],
+              "runner_image": os.getenv("ImageOS", "ubuntu24"),
+              "runner_uid": os.getuid(),
+              "execution_mode": "transient-systemd-service",
+              "delegate": "yes",
+              "delegate_controllers": ["cpu", "memory", "pids"],
+              "gate_exit_code": int(rc) if rc.isdigit() else None,
+              "canonical_agnes_gate_pass": passed,
+              "status": "PASS_CANDIDATE_REQUIRES_REVIEW" if passed else "NOT_VERIFIED",
+              "log_sha256": hashlib.sha256(raw.encode()).hexdigest(),
+              "completed_at": datetime.now(timezone.utc).isoformat(),
+              "production_promotion_allowed": False,
+              "diagnostic_log": raw[-6000:]
+          }
+          Path("Q12_SYSTEMD_DELEGATION_DIAGNOSTIC.json").write_text(json.dumps(evidence, indent=2, sort_keys=True) + "\n")
+          print(json.dumps({k:v for k,v in evidence.items() if k != "diagnostic_log"}, indent=2, sort_keys=True))
+          PY
+
+      - name: Upload Q12 delegated-runner evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: q12-systemd-delegation-${{ github.run_id }}
+          path: |
+            Q12_SYSTEMD_DELEGATION_DIAGNOSTIC.json
+            q12-systemd-delegation.log
+          if-no-files-found: warn
+          retention-days: 90
+
+      - name: Keep diagnostic separate from production gate
+        if: always()
+        run: |
+          echo "A diagnostic pass is not a Q12 PASS until the release owner and independent reviewer accept the evidence."
+          echo "No production promotion is performed by this workflow."
