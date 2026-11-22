@@ -216,16 +216,19 @@ def build_provider_router(settings: Settings, broker: CredentialBroker) -> Provi
         )
         paid_provider_names.append("groq")
 
-    if allow_paid and settings.provider_allow_cloud:
-        if os.environ.get("OPENAI_API_KEY", "").strip():
-            providers.append(
-                OpenAIProviderAdapter(
-                    broker,
-                    model=settings.openai_model,
-                    timeout_seconds=settings.provider_timeout_seconds,
-                )
+    if (
+        allow_paid
+        and settings.provider_allow_cloud
+        and os.environ.get("OPENAI_API_KEY", "").strip()
+    ):
+        providers.append(
+            OpenAIProviderAdapter(
+                broker,
+                model=settings.openai_model,
+                timeout_seconds=settings.provider_timeout_seconds,
             )
-            paid_provider_names.append("openai")
+        )
+        paid_provider_names.append("openai")
 
     # Cloud routing is enabled for Gemini by default; billable providers require
     # both independent opt-ins and are never counted as free-tier providers.
