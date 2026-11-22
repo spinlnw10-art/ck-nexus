@@ -162,11 +162,11 @@ class OpenAIProviderAdapter:
 
 
 def build_provider_router(settings: Settings, broker: CredentialBroker) -> ProviderRouter:
-    """Build a cost-guarded router: Gemini -> Groq, with paid APIs opt-in only.
+    """Build a cost-guarded router with Gemini by default.
 
-    OpenAI is intentionally excluded from automatic routing unless the operator
-    explicitly sets CKNEXUS_PROVIDER_ALLOW_PAID=true. Claude and Mistral keys are
-    retained but are not selected automatically because their API calls may bill.
+    Groq and OpenAI are treated as potentially billable and are available only
+    when both explicit paid-routing opt-ins are enabled. Claude and Mistral are
+    never selected automatically.
     """
     providers = []
     if settings.mock_ai:
@@ -216,11 +216,7 @@ def build_provider_router(settings: Settings, broker: CredentialBroker) -> Provi
         )
         paid_provider_names.append("groq")
 
-    if (
-        allow_paid
-        and settings.provider_allow_cloud
-        and os.environ.get("OPENAI_API_KEY", "").strip()
-    ):
+    if allow_paid and settings.provider_allow_cloud:
         providers.append(
             OpenAIProviderAdapter(
                 broker,
