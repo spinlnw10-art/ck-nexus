@@ -98,32 +98,16 @@ jobs:
           echo "secret_exit_code=$?" >> "$GITHUB_OUTPUT"
           exit 0
 
-      - name: Run security attack regression on isolated runtime
+      - name: Run frozen security integration regression suite
         id: attack
         shell: bash
         run: |
           set +e
           cd q10-target
-          nohup .venv/bin/ck-nexus > ../q10-runtime.log 2>&1 &
-          runtime_pid=$!
-          ready=0
-          for _ in $(seq 1 60); do
-            if curl --silent --fail http://127.0.0.1:8000/health/ready >/dev/null; then
-              ready=1
-              break
-            fi
-            sleep 0.5
-          done
-          if [ "$ready" -eq 1 ]; then
-            CKNEXUS_SECURITY_EVIDENCE=../security-attack-regression.json .venv/bin/python scripts/security_attack_regression.py
-            rc=$?
-          else
-            cat ../q10-runtime.log || true
-            rc=1
-          fi
-          kill "$runtime_pid" 2>/dev/null || true
-          wait "$runtime_pid" 2>/dev/null || true
+          .venv/bin/pytest -q tests/test_integration_security.py --junitxml=../security-attack-regression.xml > ../security-attack-regression.log 2>&1
+          rc=$?
           echo "exit_code=$rc" >> "$GITHUB_OUTPUT"
+          cat ../security-attack-regression.log
           exit 0
 
       - name: Build immutable Q10 scan report
@@ -152,7 +136,12 @@ jobs:
 
           audit = load('q10-pip-audit.json', {'error': 'missing_or_invalid_report'})
           bandit = load('q10-bandit.json', {'error': 'missing_or_invalid_report', 'results': []})
-          attack = load('security-attack-regression.json', {'error': 'missing_or_invalid_report'})
+          import xml.etree.ElementTree as ET
+          try:
+              root = ET.parse('security-attack-regression.xml').getroot()
+              attack = {'tests': int(root.get('tests', '0')), 'failures': int(root.get('failures', '0')), 'errors': int(root.get('errors', '0')), 'skipped': int(root.get('skipped', '0'))}
+          except Exception as exc:
+              attack = {'error': 'missing_or_invalid_junit_report', 'detail': str(exc)}
           dependencies = audit.get('dependencies', []) if isinstance(audit, dict) else audit
           vulnerabilities = sum(len(row.get('vulns', [])) for row in dependencies if isinstance(row, dict))
           findings = bandit.get('results', []) if isinstance(bandit, dict) else []
@@ -186,7 +175,7 @@ jobs:
               'release_subject_manifest_sha256': os.getenv('SUBJECT_MANIFEST', ''),
               'github_run_id': int(os.getenv('RUN_ID', '0')),
               'completed_at': completed,
-              'tools': ['pip-audit', 'Bandit', 'scripts/secret_scan.py', 'scripts/security_attack_regression.py'],
+              'tools': ['pip-audit', 'Bandit', 'scripts/secret_scan.py', 'tests/test_integration_security.py'],
               'checks': checks,
               'bandit_report': bandit,
               'bandit_false_positive_dispositions': [],
@@ -194,6 +183,7 @@ jobs:
               'dependency_report': audit,
               'secret_scan_output': Path('q10-secret-scan.txt').read_text(encoding='utf-8') if Path('q10-secret-scan.txt').exists() else 'missing report',
               'attack_regression_report': attack,
+              'attack_regression_output': Path('security-attack-regression.log').read_text(encoding='utf-8') if Path('security-attack-regression.log').exists() else 'missing report',
               'open_source_security_scan': 'PASS' if passed else 'FAIL',
               'security_review_status': 'REQUIRED',
               'production_promotion_allowed': False,
@@ -216,8 +206,8 @@ jobs:
             q10-pip-audit.json
             q10-bandit.json
             q10-secret-scan.txt
-            security-attack-regression.json
-            q10-runtime.log
+            security-attack-regression.xml
+            security-attack-regression.log
           if-no-files-found: warn
           retention-days: 90
 
