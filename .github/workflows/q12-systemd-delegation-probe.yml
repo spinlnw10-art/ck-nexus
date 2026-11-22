@@ -50,6 +50,7 @@ jobs:
             --property="Group=$(id -gn)" \
             --property="Delegate=cpu memory pids" \
             --setenv=CKNEXUS_ENVIRONMENT=staging \
+            --working-directory="$GITHUB_WORKSPACE" \
             /usr/bin/python3 -c '
           import json, os, pathlib, subprocess, sys
           lines = pathlib.Path("/proc/self/cgroup").read_text().splitlines()
