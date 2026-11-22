@@ -82,7 +82,6 @@ jobs:
               sys.executable, "scripts/agnes_cgroup_v2_staging_gate.py",
               "--root", str(root)
           ], env={**os.environ, "CKNEXUS_ENVIRONMENT": "staging"}, text=True)
-          (root / "cgroup.procs").write_text(str(os.getpid()))
           # The transient systemd unit removes its delegated subtree after the service exits.
           raise SystemExit(result.returncode)
           ' > q12-systemd-delegation.log 2>&1
