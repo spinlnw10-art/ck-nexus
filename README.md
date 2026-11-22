@@ -89,7 +89,7 @@ Legacy launchers may remain for compatibility, but new setup instructions and de
 
 ## Hosted provider routing (candidate)
 
-The provider-router candidate prefers Gemini, then Groq. Hosted routing is disabled when no allow-listed provider key is present; OpenAI, Claude, and Mistral are not automatic fallbacks. Paid-provider routing requires both `CKNEXUS_PROVIDER_ALLOW_PAID=true` and `CKNEXUS_PROVIDER_ALLOW_CLOUD=true`.
+The provider-router candidate enables Gemini when its key is configured. Groq and OpenAI are treated as potentially billable and are only added when both `CKNEXUS_PROVIDER_ALLOW_PAID=true` and `CKNEXUS_PROVIDER_ALLOW_CLOUD=true`; Claude and Mistral are not automatic fallbacks. A Groq API key alone never enables Groq routing.
 
 On Termux, store provider keys outside the repository in `~/.config/ck-nexus/provider-keys.env`. The file must be owned by the current user, be a regular file (not a symlink), and have permissions `0600` or stricter. Example setup (edit the file locally; do not paste keys into shell commands or commit them):
 
@@ -97,7 +97,7 @@ On Termux, store provider keys outside the repository in `~/.config/ck-nexus/pro
 mkdir -p "$HOME/.config/ck-nexus"
 chmod 700 "$HOME/.config/ck-nexus"
 install -m 600 /dev/null "$HOME/.config/ck-nexus/provider-keys.env"
-# Add GEMINI_API_KEY and/or GROQ_API_KEY with a local editor.
+# Add GEMINI_API_KEY with a local editor. Only add GROQ_API_KEY if you explicitly accept possible usage charges and enable both paid-routing flags.
 ~~~
 
 Provider free-tier limits and billing depend on the provider account and can change. A key check or model-list response does not prove free generation quota. Do not enable live generation until the account's billing state and quota are confirmed. No zero-cost guarantee is implied.
