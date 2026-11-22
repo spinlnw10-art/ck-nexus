@@ -1,3 +1,22 @@
+# Current candidate update — 2026-11-23 (PR #392)
+
+**Decision: NO-GO FOR PRODUCTION.** This is a provider-routing candidate only; it is not merged or deployed.
+
+- PR: https://github.com/spinlnw10-art/ck-nexus/pull/392
+- Branch: `ops/provider-free-go-clean`
+- Verified candidate commit before this status-only update: `e4b9c414c9400b83a8343025d5896e29b36aa3c1`
+- Scope: private Termux key-file loading with strict ownership/mode checks; Gemini-first then Groq routing; paid providers excluded unless two explicit opt-ins are enabled; targeted fallback tests.
+- At baseline head `e4b9c414c9400b83a8343025d5896e29b36aa3c1`: CK-NEXUS CI, AI Factory preflight, Security Attack Regression V1, and CodeQL passed. Follow-up Termux provider/credential test selection: 36 passed. A broader collection including `tests/test_credential_vault.py` is blocked by Termux Pydantic v1, which lacks the Pydantic v2 `field_validator` API required by the project.
+- SonarCloud Code Analysis was marked cancelled/failed with zero annotations and only a generic “last analysis has failed” summary. The account-side cause is unknown and is not claimed fixed.
+- PR remains `OPEN`, `BLOCKED`, and `REVIEW_REQUIRED`; no independent review, merge, or deployment is recorded.
+- No live model-generation request was sent. API model-list HTTP 200 is not evidence of generation quota or zero cost. Provider billing/quota must be checked before any live call.
+- Groq's former default `llama-3.3-70b-versatile` was deprecated with shutdown on 2026-08-16; candidate defaults were updated to `openai/gpt-oss-20b`. Gemini API key authentication uses the documented `x-goog-api-key` header rather than a query-string credential.
+- This candidate does not close Q10–Q16 and does not change the production NO-GO decision.
+
+This block is a dated candidate snapshot. Re-check the latest PR head and checks before treating any evidence as current.
+
+---
+
 # Release evidence snapshot — 2026-11-19 (PR #380 code baseline)
 
 **Code-bearing baseline after PR #380:** `0d7b0d1c0efee01d6307b418c848cd0c84411ea0`

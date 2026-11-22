@@ -198,7 +198,7 @@ def build_provider_router(settings: Settings, broker: CredentialBroker) -> Provi
                 name="groq",
                 base_url="https://api.groq.com/openai/v1",
                 env_key="GROQ_API_KEY",
-                model=os.getenv("CKNEXUS_GROQ_MODEL", "llama-3.3-70b-versatile"),
+                model=os.getenv("CKNEXUS_GROQ_MODEL", "openai/gpt-oss-20b"),
                 timeout_seconds=min(settings.provider_timeout_seconds, 20),
                 quota_tracker=quota_tracker,
             )

@@ -38,12 +38,7 @@ PROVIDER_REGISTRY: list[ProviderSpec] = [
         env_key="GROQ_API_KEY",
         tier=ProviderTier.FREE,
         key_validation_endpoint="https://api.groq.com/openai/v1/models",
-        free_models=(
-            "llama-3.3-70b-versatile",
-            "llama-3.1-8b-instant",
-            "gemma2-9b-it",
-            "mixtral-8x7b-32768",
-        ),
+        free_models=("openai/gpt-oss-20b", "openai/gpt-oss-120b"),
         signup_url="https://console.groq.com/keys",
         docs_url="https://console.groq.com/docs",
         description="Fast inference, generous free tier",

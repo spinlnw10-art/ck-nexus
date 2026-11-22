@@ -15,7 +15,7 @@ async function init() {
 
 function getDefaultProviders() {
   return [
-    { name: "Groq", slug: "groq", icon: "⚡", tier: "free", env_key: "GROQ_API_KEY", description: "Fast inference, generous free tier", free_models: ["llama-3.3-70b-versatile", "gemma2-9b-it"], signup_url: "https://console.groq.com/keys" },
+    { name: "Groq", slug: "groq", icon: "⚡", tier: "free", env_key: "GROQ_API_KEY", description: "Fast inference, generous free tier", free_models: ["openai/gpt-oss-20b", "openai/gpt-oss-120b"], signup_url: "https://console.groq.com/keys" },
     { name: "Cerebras", slug: "cerebras", icon: "🧠", tier: "free", env_key: "CEREBRAS_API_KEY", description: "Ultra-fast inference speeds", free_models: ["llama-3.3-70b", "llama-3.1-8b"], signup_url: "https://cloud.cerebras.ai/" },
     { name: "OpenRouter", slug: "openrouter", icon: "🔀", tier: "free", env_key: "OPENROUTER_API_KEY", description: "Gateway to 100+ models, many free", free_models: ["meta-llama/llama-3.3-70b-instruct:free", "qwen/qwen-2.5-72b-instruct:free"], signup_url: "https://openrouter.ai/keys" },
     { name: "Google Gemini", slug: "gemini", icon: "💎", tier: "free", env_key: "GEMINI_API_KEY", description: "Google's latest models, free tier", free_models: ["gemini-2.0-flash", "gemini-1.5-flash"], signup_url: "https://aistudio.google.com/apikey" },
