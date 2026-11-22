@@ -1,10 +1,13 @@
 name: Q10 Native Codex Security Deep Scan (frozen release subject)
 
 on:
+  push:
+    branches:
+      - ops/q12-github-hosted-cgroup-diagnostic
   workflow_dispatch:
     inputs:
       confirm_paid_scan:
-        description: Confirm a live Codex Security Deep Scan. API usage may incur charges; max-time is not a cost cap.
+        description: Confirm a live Codex Security Deep Scan. The $5 limit is an estimate, not a hard billing cap.
         required: true
         type: boolean
         default: false
@@ -19,9 +22,10 @@ env:
 
 jobs:
   native-deep-scan:
-    if: ${{ inputs.confirm_paid_scan == true }}
     runs-on: ubuntu-24.04
     timeout-minutes: 120
+    env:
+      Q10_OUTPUT_DIR: ${{ runner.temp }}/q10-codex-security-output
     steps:
       - name: Checkout exact frozen release subject
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
@@ -31,7 +35,6 @@ jobs:
           persist-credentials: false
 
       - name: Verify exact Q10 scan subject
-        id: subject
         shell: bash
         run: |
           set -euo pipefail
@@ -39,25 +42,8 @@ jobs:
           test "$(git rev-parse 'HEAD^{tree}')" = "$Q10_SOURCE_TREE"
           paths=(app creator_app services gateway orchestration idea_engine migrations deploy observability Dockerfile docker-compose.prod.yml main.py pyproject.toml uv.lock)
           subject="$(git ls-tree -r HEAD -- "${paths[@]}" | sha256sum | awk '{print $1}')"
-          echo "subject_manifest=$subject" >> "$GITHUB_OUTPUT"
           test "$subject" = "$Q10_RELEASE_SUBJECT"
-
-      - name: Check Codex Security credential without exposing it
-        id: auth
-        env:
-          CODEX_SECURITY_API_KEY: ${{ secrets.CODEX_SECURITY_API_KEY }}
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-        shell: bash
-        run: |
-          set -euo pipefail
-          if [ -n "${CODEX_SECURITY_API_KEY:-}" ] || [ -n "${OPENAI_API_KEY:-}" ]; then
-            echo "available=true" >> "$GITHUB_OUTPUT"
-            echo "Codex Security credential is configured (value hidden)."
-          else
-            echo "available=false" >> "$GITHUB_OUTPUT"
-            echo "::error::Set CODEX_SECURITY_API_KEY (preferred) or OPENAI_API_KEY in repository Actions secrets."
-            exit 1
-          fi
+          echo "Exact frozen Q10 subject verified."
 
       - name: Set up Node.js 24 and Python 3.12
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
@@ -71,15 +57,50 @@ jobs:
       - name: Install pinned official Codex Security CLI
         run: npm install --global @openai/codex-security@0.10.1
 
-      - name: Run native Codex Security deep scan
-        id: scan
-        env:
-          OPENAI_API_KEY: ${{ secrets.CODEX_SECURITY_API_KEY || secrets.OPENAI_API_KEY }}
+      - name: Run zero-cost native CLI preflight
+        id: dryrun
         shell: bash
         run: |
           set +e
+          mkdir -p "$Q10_OUTPUT_DIR"
           codex-security --version > q10-version.txt 2>&1
-          codex-security scan . --auth api-key --mode deep --headless --max-time 90 --json > q10-scan.json 2> q10-scan.log
+          codex-security scan . --auth api-key --mode deep --headless --dry-run \
+            --max-cost 5 --max-discovery-runs 10 --workers 2 --subagents 0 \
+            --stop-after-no-new 3 --output-dir "$Q10_OUTPUT_DIR" --json \
+            > q10-dry-run.json 2> q10-dry-run.log
+          rc=$?
+          echo "exit_code=$rc" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Check Codex Security credential without exposing it
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.confirm_paid_scan == true }}
+        id: auth
+        env:
+          CODEX_SECURITY_API_KEY: ${{ secrets.CODEX_SECURITY_API_KEY }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -n "${CODEX_SECURITY_API_KEY:-}" ]; then
+            echo "available=true" >> "$GITHUB_OUTPUT"
+            echo "CODEX_SECURITY_API_KEY is configured (value hidden)."
+          else
+            echo "available=false" >> "$GITHUB_OUTPUT"
+            echo "::error::Set CODEX_SECURITY_API_KEY in repository Actions secrets before starting the paid scan."
+            exit 1
+          fi
+
+      - name: Run native Codex Security deep scan
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.confirm_paid_scan == true && steps.auth.outputs.available == 'true' && steps.dryrun.outputs.exit_code == '0' }}
+        id: scan
+        env:
+          OPENAI_API_KEY: ${{ secrets.CODEX_SECURITY_API_KEY }}
+        shell: bash
+        run: |
+          set +e
+          codex-security scan . --auth api-key --mode deep --headless \
+            --max-cost 5 --max-discovery-runs 10 --workers 2 --subagents 0 \
+            --stop-after-no-new 3 --output-dir "$Q10_OUTPUT_DIR" --json \
+            > q10-scan.json 2> q10-scan.log
           rc=$?
           echo "exit_code=$rc" >> "$GITHUB_OUTPUT"
           exit 0
@@ -88,46 +109,63 @@ jobs:
         if: always()
         env:
           AUTH_AVAILABLE: ${{ steps.auth.outputs.available }}
+          DRY_RUN_RC: ${{ steps.dryrun.outputs.exit_code }}
           SCAN_RC: ${{ steps.scan.outputs.exit_code }}
-          SUBJECT: ${{ steps.subject.outputs.subject_manifest }}
+          CONFIRMED: ${{ github.event_name == 'workflow_dispatch' && inputs.confirm_paid_scan == true }}
         shell: bash
         run: |
           python3 - <<'PY'
           import hashlib, json, os
           from datetime import datetime, timezone
           from pathlib import Path
-          stdout = Path("q10-scan.json").read_text(encoding="utf-8", errors="replace") if Path("q10-scan.json").exists() else ""
-          stderr = Path("q10-scan.log").read_text(encoding="utf-8", errors="replace") if Path("q10-scan.log").exists() else ""
-          version = Path("q10-version.txt").read_text(encoding="utf-8", errors="replace").strip() if Path("q10-version.txt").exists() else None
+          def read(name):
+              p = Path(name)
+              return p.read_text(encoding="utf-8", errors="replace") if p.exists() else ""
+          dry = read("q10-dry-run.json")
+          scan = read("q10-scan.json")
+          scan_log = read("q10-scan.log")
           rc = os.getenv("SCAN_RC", "")
-          status = "COMPLETED_REQUIRES_REVIEW" if rc == "0" and stdout.strip() else "FAILED_OR_INCOMPLETE"
-          report = None
-          scan_id = None
+          dry_rc = os.getenv("DRY_RUN_RC", "")
           try:
-              obj = json.loads(stdout)
-              report = obj.get("reportPath") or obj.get("report_path")
-              scan_id = obj.get("scanId") or obj.get("scan_id")
+              scan_obj = json.loads(scan) if scan else None
           except Exception:
-              pass
+              scan_obj = None
+          output_dir = Path(os.environ["Q10_OUTPUT_DIR"])
+          files = []
+          if output_dir.exists():
+              for p in sorted(x for x in output_dir.rglob("*") if x.is_file()):
+                  files.append({
+                      "path": str(p.relative_to(output_dir)),
+                      "size": p.stat().st_size,
+                      "sha256": hashlib.sha256(p.read_bytes()).hexdigest()
+                  })
+          if os.getenv("CONFIRMED") != "true":
+              status = "PREPARED_NOT_EXECUTED"
+          elif os.getenv("AUTH_AVAILABLE") != "true":
+              status = "BLOCKED_MISSING_CODEX_SECURITY_API_KEY"
+          elif rc == "0" and isinstance(scan_obj, dict) and files:
+              status = "SCAN_COMPLETED_REQUIRES_INDEPENDENT_REVIEW"
+          else:
+              status = "FAILED_OR_INCOMPLETE"
           evidence = {
               "schema_version": 1,
               "gate": "Q10_NATIVE_CODEX_SECURITY",
               "executor": "@openai/codex-security",
-              "executor_version": version,
+              "executor_version": read("q10-version.txt").strip() or None,
               "scan_mode": "deep",
               "target_scope": ".",
               "source_sha": os.environ["Q10_SOURCE_SHA"],
               "source_tree": os.environ["Q10_SOURCE_TREE"],
-              "release_subject_manifest_sha256": os.getenv("SUBJECT"),
+              "release_subject_manifest_sha256": os.environ["Q10_RELEASE_SUBJECT"],
               "credential_configured": os.getenv("AUTH_AVAILABLE") == "true",
               "credential_exposed": False,
+              "dry_run_exit_code": int(dry_rc) if dry_rc.isdigit() else None,
               "scan_exit_code": int(rc) if rc.isdigit() else None,
-              "scan_id": scan_id,
-              "report_path": report,
-              "stdout_sha256": hashlib.sha256(stdout.encode()).hexdigest(),
-              "stderr_sha256": hashlib.sha256(stderr.encode()).hexdigest(),
+              "scan_result_sha256": hashlib.sha256(scan.encode()).hexdigest(),
+              "scan_log_sha256": hashlib.sha256(scan_log.encode()).hexdigest(),
+              "output_artifacts": files,
               "status": status,
-              "completed_at": datetime.now(timezone.utc).isoformat() if rc.isdigit() else None,
+              "completed_at": datetime.now(timezone.utc).isoformat(),
               "production_promotion_allowed": False
           }
           Path("Q10_CODEX_SECURITY_EVIDENCE.json").write_text(json.dumps(evidence, indent=2, sort_keys=True) + "\\n")
@@ -142,10 +180,19 @@ jobs:
           path: |
             Q10_CODEX_SECURITY_EVIDENCE.json
             q10-version.txt
+            q10-dry-run.json
+            q10-dry-run.log
             q10-scan.json
             q10-scan.log
+            ${{ env.Q10_OUTPUT_DIR }}
           if-no-files-found: warn
           retention-days: 90
+
+      - name: Enforce zero-cost preflight
+        if: always()
+        env:
+          DRY_RUN_RC: ${{ steps.dryrun.outputs.exit_code }}
+        run: test "${DRY_RUN_RC:-1}" = "0"
 
       - name: Keep scan result separate from release approval
         if: always()
