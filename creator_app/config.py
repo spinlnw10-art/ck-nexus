@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+import stat
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -103,6 +104,21 @@ class Settings:
         configured_root = os.getenv("CKNEXUS_HOME", "").strip()
         runtime_root = Path(configured_root).expanduser() if configured_root else Path.cwd()
         runtime_root = runtime_root.resolve()
+        # Load the private Termux provider-key file only when it is a regular,
+        # user-owned file with no group/other permissions. Never print its values.
+        provider_key_file = Path.home() / ".config" / "ck-nexus" / "provider-keys.env"
+        try:
+            key_stat = provider_key_file.stat(follow_symlinks=False)
+        except FileNotFoundError:
+            key_stat = None
+        if key_stat is not None:
+            if (
+                not stat.S_ISREG(key_stat.st_mode)
+                or key_stat.st_uid != os.getuid()
+                or stat.S_IMODE(key_stat.st_mode) & 0o077
+            ):
+                raise RuntimeError("Private provider-key file permissions or ownership are unsafe.")
+            load_dotenv(provider_key_file, override=False)
         load_dotenv(runtime_root / ".env.local", override=False)
         database_value = os.getenv("CKNEXUS_DATABASE_PATH", "data/cknexus.db")
         database_path = Path(database_value)

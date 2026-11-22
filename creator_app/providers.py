@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+import os
 from collections.abc import Callable
 from dataclasses import dataclass
 from typing import Any
@@ -14,6 +15,7 @@ from creator_app.credential_broker import (
     CredentialId,
     CredentialUnavailable,
 )
+from creator_app.free_providers import GeminiAdapter, OpenAICompatibleAdapter, QuotaTracker
 from creator_app.provider_router import (
     ProviderCapabilities,
     ProviderKind,
@@ -160,6 +162,12 @@ class OpenAIProviderAdapter:
 
 
 def build_provider_router(settings: Settings, broker: CredentialBroker) -> ProviderRouter:
+    """Build a cost-guarded router: Gemini -> Groq, with paid APIs opt-in only.
+
+    OpenAI is intentionally excluded from automatic routing unless the operator
+    explicitly sets CKNEXUS_PROVIDER_ALLOW_PAID=true. Claude and Mistral keys are
+    retained but are not selected automatically because their API calls may bill.
+    """
     providers = []
     if settings.mock_ai:
         providers.append(MockProviderAdapter())
@@ -172,19 +180,52 @@ def build_provider_router(settings: Settings, broker: CredentialBroker) -> Provi
                 timeout_seconds=settings.provider_timeout_seconds,
             )
         )
-    providers.append(
-        OpenAIProviderAdapter(
-            broker,
-            model=settings.openai_model,
-            timeout_seconds=settings.provider_timeout_seconds,
+
+    quota_tracker = QuotaTracker()
+    free_provider_names: list[str] = []
+    if os.environ.get("GEMINI_API_KEY", "").strip():
+        providers.append(
+            GeminiAdapter(
+                model=os.getenv("CKNEXUS_GEMINI_MODEL", "gemini-2.5-flash"),
+                timeout_seconds=min(settings.provider_timeout_seconds, 30),
+                quota_tracker=quota_tracker,
+            )
         )
-    )
+        free_provider_names.append("gemini")
+    if os.environ.get("GROQ_API_KEY", "").strip():
+        providers.append(
+            OpenAICompatibleAdapter(
+                name="groq",
+                base_url="https://api.groq.com/openai/v1",
+                env_key="GROQ_API_KEY",
+                model=os.getenv("CKNEXUS_GROQ_MODEL", "llama-3.3-70b-versatile"),
+                timeout_seconds=min(settings.provider_timeout_seconds, 20),
+                quota_tracker=quota_tracker,
+            )
+        )
+        free_provider_names.append("groq")
+
+    allow_paid = os.getenv("CKNEXUS_PROVIDER_ALLOW_PAID", "false").strip().lower() in {
+        "1", "true", "yes", "on"
+    }
+    if allow_paid and settings.provider_allow_cloud:
+        providers.append(
+            OpenAIProviderAdapter(
+                broker,
+                model=settings.openai_model,
+                timeout_seconds=settings.provider_timeout_seconds,
+            )
+        )
+
+    # Cloud routing is enabled only for the explicitly allow-listed free adapters.
+    # Paid providers remain absent unless both independent opt-ins are enabled.
+    allow_cloud = bool(free_provider_names) or (allow_paid and settings.provider_allow_cloud)
     return ProviderRouter(
         providers,
         policy=ProviderRouterPolicy(
             local_first=settings.provider_local_first,
-            allow_cloud=settings.provider_allow_cloud,
-            max_attempts=settings.provider_max_attempts,
+            allow_cloud=allow_cloud,
+            max_attempts=min(8, max(settings.provider_max_attempts, len(providers) or 1)),
             failure_threshold=settings.provider_failure_threshold,
             circuit_cooldown_seconds=settings.provider_circuit_cooldown_seconds,
         ),
