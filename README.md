@@ -6,7 +6,7 @@ CK-NEXUS is one platform with one canonical application runtime. **Agnes** is it
 
 > **Release decision: NO-GO for Production.** Do not treat a passing test subset, CI run, implemented feature, or running service as Production approval. The current release decision and gate evidence are maintained in [Release Status](RELEASE_STATUS.md) and the [Q10–Q16 Closure Contract](docs/Q10_Q16_CLOSURE_CONTRACT.md).
 
-> **Current provider-routing candidate:** [PR #392](https://github.com/spinlnw10-art/ck-nexus/pull/392) · branch `ops/provider-free-go-clean`. Termux provider/credential tests: **37 passed**; Ruff, Python compile, JavaScript syntax, and whitespace checks passed locally. GitHub CI for the latest commit is still running. This candidate is **not merged or deployed**; Production remains **NO-GO** pending CI, SonarCloud, independent review, and Q10–Q16 closure.
+> **Current provider-routing candidate:** [PR #392](https://github.com/spinlnw10-art/ck-nexus/pull/392) · branch `ops/provider-free-go-clean`. Termux provider/credential tests: **37 passed**; Ruff, Python compile, JavaScript syntax, and whitespace checks passed locally. GitHub Actions and CodeQL passed on code commit `8eb52e86`; SonarCloud Code Analysis was **cancelled/failed** on the latest checked PR head with zero annotations and a generic failure summary. Independent review is still required. This candidate is **not merged or deployed**; Production remains **NO-GO** pending a successful SonarCloud analysis, independent review, quota/billing evidence, and Q10–Q16 closure.
 
 ## Start here
 

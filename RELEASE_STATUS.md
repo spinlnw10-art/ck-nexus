@@ -7,8 +7,9 @@
 - Latest code commit pushed: `8eb52e86f1570e16a8c6952d8255b85a04e9f062`; the README/status documentation refresh is being committed separately.
 - Scope: private Termux key-file loading with strict ownership/mode checks; Gemini-first then Groq routing; paid providers excluded unless both explicit opt-ins are enabled; Gemini API key sent in the `x-goog-api-key` header; Groq default refreshed to `openai/gpt-oss-20b`; tests cover provider order, paid-provider exclusion, fail-closed behavior, fallback, and key-header handling.
 - Termux provider/credential test selection on the pushed code commit: **37 passed**. Ruff, `compileall`, JavaScript syntax check, and `git diff --check`: PASS.
-- GitHub Actions on the latest pushed code commit were triggered and observed pending at the time of this update: CodeQL Actions/JavaScript/Python, attack-regression, preflight, test, and universal-system. Do not call them passed until completed.
-- SonarCloud had failed on the prior code commit `e4b9c414...`; no completed SonarCloud result was visible yet for `8eb52e86...`. The prior failure is not considered fixed by restored connectivity alone.
+- GitHub Actions and CodeQL on the pushed code commit `8eb52e86...` passed: CK-NEXUS CI, AI Factory preflight, Security Attack Regression V1, universal-system, and CodeQL Actions/JavaScript/Python.
+- The documentation refresh commit `bb62d6a0...` also completed the same GitHub Actions/CodeQL checks successfully. SonarCloud Code Analysis on that latest checked PR head was **cancelled/failed** (check run `137372723238`, zero annotations, generic “last analysis has failed” summary). This is not a passing result. The SonarCloud host responded to a Termux connectivity probe, but unauthenticated project APIs returned “Project doesn't exist”; project-side diagnostics require an authorized SonarCloud session.
+- PR checks are not all green: SonarCloud remains failed/cancelled, and independent review is required.
 - PR remains OPEN and requires independent review. No merge or deployment is recorded.
 - No live model-generation request was sent. API model-list HTTP 200 is not evidence of generation quota or zero cost. Provider billing/quota must be checked before any live call.
 - Full repository pytest is not claimed; the validated local selection is the 37 targeted provider/credential tests.
