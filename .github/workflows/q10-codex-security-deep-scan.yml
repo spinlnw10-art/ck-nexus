@@ -67,7 +67,7 @@ jobs:
         if: ${{ inputs.confirm_api_usage == true }}
         id: auth
         env:
-          CODEX_SECURITY_API_KEY: ${{ secrets.CODEX_SECURITY_API_KEY }}
+          CODEX_SECURITY_API_KEY: ${{ secrets.CODEX_SECURITY_API_KEY || secrets.OPENAI_API_KEY }}
         shell: bash
         run: |
           if [ -n "${CODEX_SECURITY_API_KEY:-}" ]; then
@@ -92,7 +92,7 @@ jobs:
         if: ${{ inputs.confirm_api_usage == true && steps.auth.outputs.available == 'true' }}
         id: scan
         env:
-          CODEX_API_KEY: ${{ secrets.CODEX_SECURITY_API_KEY }}
+          CODEX_API_KEY: ${{ secrets.CODEX_SECURITY_API_KEY || secrets.OPENAI_API_KEY }}
         shell: bash
         run: |
           set +e
