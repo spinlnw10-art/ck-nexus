@@ -162,11 +162,11 @@ class OpenAIProviderAdapter:
 
 
 def build_provider_router(settings: Settings, broker: CredentialBroker) -> ProviderRouter:
-    """Build a cost-guarded router with Gemini by default.
+    """Build a cost-guarded router; no hosted provider is enabled by default.
 
-    Groq and OpenAI are treated as potentially billable and are available only
-    when both explicit paid-routing opt-ins are enabled. Claude and Mistral are
-    never selected automatically.
+    Gemini, Groq, and OpenAI can incur usage charges depending on the account.
+    Every hosted provider therefore requires both explicit paid-routing opt-ins.
+    Claude and Mistral are never selected automatically.
     """
     providers = []
     if settings.mock_ai:
@@ -182,9 +182,17 @@ def build_provider_router(settings: Settings, broker: CredentialBroker) -> Provi
         )
 
     quota_tracker = QuotaTracker()
-    free_provider_names: list[str] = []
     paid_provider_names: list[str] = []
-    if os.environ.get("GEMINI_API_KEY", "").strip():
+    # API keys do not prove a provider account has free quota. Fail closed:
+    # every hosted provider is disabled unless both paid opt-ins are explicit.
+    allow_paid = os.getenv("CKNEXUS_PROVIDER_ALLOW_PAID", "false").strip().lower() in {
+        "1", "true", "yes", "on"
+    }
+    if (
+        os.environ.get("GEMINI_API_KEY", "").strip()
+        and allow_paid
+        and settings.provider_allow_cloud
+    ):
         providers.append(
             GeminiAdapter(
                 model=os.getenv("CKNEXUS_GEMINI_MODEL", "gemini-2.5-flash"),
@@ -192,13 +200,7 @@ def build_provider_router(settings: Settings, broker: CredentialBroker) -> Provi
                 quota_tracker=quota_tracker,
             )
         )
-        free_provider_names.append("gemini")
-
-    # Groq's Developer tier is usage-billed for some models. Never classify it
-    # as free: it is available only after both explicit paid-routing opt-ins.
-    allow_paid = os.getenv("CKNEXUS_PROVIDER_ALLOW_PAID", "false").strip().lower() in {
-        "1", "true", "yes", "on"
-    }
+        paid_provider_names.append("gemini")
     if (
         os.environ.get("GROQ_API_KEY", "").strip()
         and allow_paid
@@ -226,15 +228,14 @@ def build_provider_router(settings: Settings, broker: CredentialBroker) -> Provi
         )
         paid_provider_names.append("openai")
 
-    # Cloud routing is enabled for Gemini by default; billable providers require
-    # both independent opt-ins and are never counted as free-tier providers.
-    allow_cloud = bool(free_provider_names or paid_provider_names)
+    # No hosted route is reachable unless both paid opt-ins admitted it.
+    allow_cloud = bool(paid_provider_names)
     return ProviderRouter(
         providers,
         policy=ProviderRouterPolicy(
             local_first=settings.provider_local_first,
             allow_cloud=allow_cloud,
-            max_attempts=min(8, max(settings.provider_max_attempts, len(providers) or 1)),
+            max_attempts=min(8, max(1, settings.provider_max_attempts)),
             failure_threshold=settings.provider_failure_threshold,
             circuit_cooldown_seconds=settings.provider_circuit_cooldown_seconds,
         ),
