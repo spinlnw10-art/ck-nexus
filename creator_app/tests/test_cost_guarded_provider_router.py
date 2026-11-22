@@ -18,7 +18,10 @@ def test_free_router_prefers_gemini_then_groq_and_excludes_paid(monkeypatch):
     router = build_provider_router(settings, CredentialBroker(environment={}))
     assert [provider.name for provider in router._providers] == ["gemini", "groq"]
     assert router.policy.allow_cloud is True
-    assert all(provider.name not in {"openai", "claude", "mistral"} for provider in router._providers)
+    assert all(
+        provider.name not in {"openai", "claude", "mistral"}
+        for provider in router._providers
+    )
     assert [status.name for status in router.statuses() if status.available] == ["gemini", "groq"]
 
 
