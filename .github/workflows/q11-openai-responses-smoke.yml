@@ -1,6 +1,9 @@
 name: Q11 OpenAI Responses API smoke (exact frozen subject)
 
 on:
+  push:
+    branches:
+      - ops/q12-github-hosted-cgroup-diagnostic
   workflow_dispatch:
     inputs:
       confirm_api_usage:
@@ -39,7 +42,7 @@ jobs:
           test "$subject" = "$Q11_RELEASE_SUBJECT"
 
       - name: Check OpenAI API secret without exposing it
-        if: ${{ inputs.confirm_api_usage == true }}
+        if: ${{ github.event_name == 'push' || inputs.confirm_api_usage == true }}
         id: auth
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
@@ -54,13 +57,13 @@ jobs:
           fi
 
       - name: Set up Python
-        if: ${{ inputs.confirm_api_usage == true && steps.auth.outputs.available == 'true' }}
+        if: ${{ (github.event_name == 'push' || inputs.confirm_api_usage == true) && steps.auth.outputs.available == 'true' }}
         uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: '3.12'
 
       - name: Install frozen dependencies
-        if: ${{ inputs.confirm_api_usage == true && steps.auth.outputs.available == 'true' }}
+        if: ${{ (github.event_name == 'push' || inputs.confirm_api_usage == true) && steps.auth.outputs.available == 'true' }}
         shell: bash
         run: |
           set -euo pipefail
@@ -69,7 +72,7 @@ jobs:
           uv sync --all-extras --dev --frozen
 
       - name: Run one live Responses API smoke request
-        if: ${{ inputs.confirm_api_usage == true && steps.auth.outputs.available == 'true' }}
+        if: ${{ (github.event_name == 'push' || inputs.confirm_api_usage == true) && steps.auth.outputs.available == 'true' }}
         id: smoke
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
@@ -85,7 +88,7 @@ jobs:
       - name: Build Q11 evidence
         if: always()
         env:
-          CONFIRMED: ${{ inputs.confirm_api_usage }}
+          CONFIRMED: ${{ github.event_name == 'push' || inputs.confirm_api_usage == true }}
           AUTH_AVAILABLE: ${{ steps.auth.outputs.available }}
           SMOKE_RC: ${{ steps.smoke.outputs.exit_code }}
         shell: bash
