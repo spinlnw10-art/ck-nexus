@@ -1,6 +1,8 @@
 name: Q10 Open-Source Layered Security Gate
 
 on:
+  push:
+    branches: [ops/q12-github-hosted-cgroup-diagnostic]
   workflow_dispatch:
     inputs:
       target_sha:
@@ -25,6 +27,7 @@ jobs:
       CKNEXUS_GMAIL_OAUTH_ENABLED: 'false'
       CKNEXUS_GMAIL_SEND_ENABLED: 'false'
       CKNEXUS_CONNECTOR_FABRIC_ENABLED: 'false'
+      Q10_TARGET_SHA: 944d7cb70a5d59d53c8fb379752bbee2085f7c8c
     steps:
       - name: Checkout gate definition
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
@@ -38,7 +41,7 @@ jobs:
           REQUESTED_TARGET_SHA: ${{ inputs.target_sha }}
         run: |
           set -euo pipefail
-          target_sha="${REQUESTED_TARGET_SHA:-$GITHUB_SHA}"
+          target_sha="${REQUESTED_TARGET_SHA:-$Q10_TARGET_SHA}"
           [[ "$target_sha" =~ ^[0-9a-f]{40}$ ]]
           if ! git cat-file -e "$target_sha^{commit}" 2>/dev/null; then
             git fetch --no-tags origin "$target_sha"
@@ -158,6 +161,7 @@ jobs:
           completed = datetime.now(UTC).isoformat()
           checks = {
               'pip_audit_exit_code': dependency_rc,
+              'bandit_exit_code': os.getenv('BANDIT_RC', ''),
               'dependency_vulnerabilities': vulnerabilities,
               'bandit_high_findings': high_findings,
               'bandit_medium_findings': medium_findings,
@@ -165,7 +169,7 @@ jobs:
               'secret_scan_exit_code': secret_rc,
               'security_attack_regression_exit_code': attack_rc,
           }
-          passed = dependency_rc == '0' and vulnerabilities == 0 and high_findings == 0 and secret_rc == '0' and attack_rc == '0'
+          passed = dependency_rc == '0' and vulnerabilities == 0 and os.getenv('BANDIT_RC', '') == '0' and high_findings == 0 and secret_rc == '0' and attack_rc == '0'
           report = {
               'schema_version': 1,
               'gate': 'Q10_OPEN_SOURCE_LAYERED_SECURITY',
