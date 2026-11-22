@@ -147,3 +147,53 @@ def test_collect_does_not_use_non_readonly_github_credentials(monkeypatch) -> No
     assert not any(args[:2] == ["gh", "pr"] for args in calls)
     assert not any(args[:2] == ["gh", "issue"] for args in calls)
     assert not any(args[:2] == ["gh", "run"] for args in calls)
+
+
+def test_qwen_probe_uses_pinned_https_transport_for_approved_endpoint(tmp_path, monkeypatch) -> None:
+    import json
+
+    monkeypatch.setattr(collector, "OUTPUT", tmp_path / "dev_status.json")
+    monkeypatch.setenv("DASHSCOPE_API_KEY", "test-secret")
+    monkeypatch.setenv("QWEN_MODEL", "qwen-test")
+    monkeypatch.delenv("DASHSCOPE_BASE_URL", raising=False)
+    calls = {}
+
+    class FakeResponse:
+        status = 200
+
+        def read(self, limit: int) -> bytes:
+            assert limit == 65536
+            return json.dumps({"choices": [{"message": {"content": "OK"}}]}).encode()
+
+    class FakeConnection:
+        def __init__(self, host, port, timeout, context):
+            calls["connection"] = {
+                "host": host, "port": port, "timeout": timeout,
+                "verified_tls_context": context.verify_mode,
+            }
+
+        def request(self, method, path, body, headers):
+            calls["request"] = {
+                "method": method, "path": path,
+                "authorization": headers.get("Authorization"),
+                "content_type": headers.get("Content-Type"),
+                "body": json.loads(body),
+            }
+
+        def getresponse(self):
+            return FakeResponse()
+
+        def close(self):
+            calls["closed"] = True
+
+    monkeypatch.setattr(collector.http.client, "HTTPSConnection", FakeConnection)
+    result = collector.probe_qwen_daily()
+
+    assert result["status"] == "ok"
+    assert calls["connection"]["host"] == "dashscope-intl.aliyuncs.com"
+    assert calls["connection"]["port"] == 443
+    assert calls["request"]["method"] == "POST"
+    assert calls["request"]["path"] == "/compatible-mode/v1/chat/completions"
+    assert calls["request"]["authorization"] == "Bearer test-secret"
+    assert calls["closed"] is True
+    assert (tmp_path / "qwen_probe_state.json").exists()
