@@ -139,7 +139,13 @@ jobs:
           import xml.etree.ElementTree as ET
           try:
               root = ET.parse('security-attack-regression.xml').getroot()
-              attack = {'tests': int(root.get('tests', '0')), 'failures': int(root.get('failures', '0')), 'errors': int(root.get('errors', '0')), 'skipped': int(root.get('skipped', '0'))}
+              suites = [root] if root.tag == 'testsuite' else list(root.iter('testsuite'))
+              attack = {
+                  'tests': sum(int(s.get('tests', '0')) for s in suites),
+                  'failures': sum(int(s.get('failures', '0')) for s in suites),
+                  'errors': sum(int(s.get('errors', '0')) for s in suites),
+                  'skipped': sum(int(s.get('skipped', '0')) for s in suites),
+              }
           except Exception as exc:
               attack = {'error': 'missing_or_invalid_junit_report', 'detail': str(exc)}
           dependencies = audit.get('dependencies', []) if isinstance(audit, dict) else audit
@@ -166,7 +172,7 @@ jobs:
               'security_attack_regression_exit_code': attack_rc,
           }
           bandit_valid = isinstance(bandit, dict) and 'results' in bandit and not bandit.get('errors') and os.getenv('BANDIT_RC', '') in ('0', '1')
-          passed = dependency_rc == '0' and vulnerabilities == 0 and bandit_valid and high_findings == 0 and len(unaccepted_bandit) == 0 and secret_rc == '0' and attack_rc == '0'
+          passed = dependency_rc == '0' and vulnerabilities == 0 and bandit_valid and high_findings == 0 and len(unaccepted_bandit) == 0 and secret_rc == '0' and attack_rc == '0' and attack.get('tests', 0) > 0
           report = {
               'schema_version': 1,
               'gate': 'Q10_OPEN_SOURCE_LAYERED_SECURITY',
