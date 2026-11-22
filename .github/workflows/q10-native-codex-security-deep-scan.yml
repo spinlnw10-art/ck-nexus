@@ -19,6 +19,7 @@ env:
   Q10_SOURCE_SHA: 4ecd04b55ac14af4fbcd4d22339bca41475f16d2
   Q10_SOURCE_TREE: b56dd8d11f6c72d52ee92dead2b357406a42884b
   Q10_RELEASE_SUBJECT: 3d7371215bae7bdc24f77a7abaddb5104ec0437d6a405a59f5e1a08ff8a80005
+  Q10_PAID_SCAN_APPROVED: ${{ (github.event_name == 'workflow_dispatch' && inputs.confirm_paid_scan == true) || (github.event_name == 'push' && contains(github.event.head_commit.message, '[Q10-PAID-SCAN-APPROVED]')) }}
 
 jobs:
   native-deep-scan:
@@ -72,7 +73,7 @@ jobs:
           exit 0
 
       - name: Check Codex Security credential without exposing it
-        if: ${{ github.event_name == 'workflow_dispatch' && inputs.confirm_paid_scan == true }}
+        if: ${{ env.Q10_PAID_SCAN_APPROVED == 'true' }}
         id: auth
         env:
           CODEX_SECURITY_API_KEY: ${{ secrets.CODEX_SECURITY_API_KEY || secrets.OPENAI_API_KEY }}
@@ -89,7 +90,7 @@ jobs:
           fi
 
       - name: Run native Codex Security deep scan
-        if: ${{ github.event_name == 'workflow_dispatch' && inputs.confirm_paid_scan == true && steps.auth.outputs.available == 'true' && steps.dryrun.outputs.exit_code == '0' }}
+        if: ${{ env.Q10_PAID_SCAN_APPROVED == 'true' && steps.auth.outputs.available == 'true' && steps.dryrun.outputs.exit_code == '0' }}
         id: scan
         env:
           OPENAI_API_KEY: ${{ secrets.CODEX_SECURITY_API_KEY || secrets.OPENAI_API_KEY }}
@@ -110,7 +111,7 @@ jobs:
           AUTH_AVAILABLE: ${{ steps.auth.outputs.available }}
           DRY_RUN_RC: ${{ steps.dryrun.outputs.exit_code }}
           SCAN_RC: ${{ steps.scan.outputs.exit_code }}
-          CONFIRMED: ${{ github.event_name == 'workflow_dispatch' && inputs.confirm_paid_scan == true }}
+          CONFIRMED: ${{ env.Q10_PAID_SCAN_APPROVED }}
         shell: bash
         run: |
           python3 - <<'PY'
