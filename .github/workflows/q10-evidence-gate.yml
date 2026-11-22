@@ -27,7 +27,9 @@ jobs:
       CKNEXUS_GMAIL_OAUTH_ENABLED: 'false'
       CKNEXUS_GMAIL_SEND_ENABLED: 'false'
       CKNEXUS_CONNECTOR_FABRIC_ENABLED: 'false'
-      Q10_TARGET_SHA: 944d7cb70a5d59d53c8fb379752bbee2085f7c8c
+      Q10_TARGET_SHA: 39f5c1adb9d761ab418cf088ff1f051b1ca731d1
+      Q10_TARGET_TREE: 0525195934f703a8becf8a39f6397b2411e0bb2e
+      Q10_RELEASE_SUBJECT: 89f2925cd871332b16f755f0dae1e058826c38b728f66d2001f2eaaec6301a52
     steps:
       - name: Checkout gate definition
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
@@ -50,7 +52,9 @@ jobs:
           actual_sha=$(git -C q10-target rev-parse HEAD)
           actual_tree=$(git -C q10-target rev-parse 'HEAD^{tree}')
           subject_manifest=$(git -C q10-target ls-tree -r HEAD -- app creator_app services gateway orchestration idea_engine migrations deploy observability Dockerfile docker-compose.prod.yml main.py pyproject.toml uv.lock | sha256sum | awk '{print $1}')
-          test "$actual_sha" = "$target_sha"
+          test "$actual_sha" = "$Q10_TARGET_SHA"
+          test "$actual_tree" = "$Q10_TARGET_TREE"
+          test "$subject_manifest" = "$Q10_RELEASE_SUBJECT"
           echo "target_sha=$actual_sha" >> "$GITHUB_OUTPUT"
           echo "target_tree=$actual_tree" >> "$GITHUB_OUTPUT"
           echo "subject_manifest=$subject_manifest" >> "$GITHUB_OUTPUT"
@@ -155,15 +159,7 @@ jobs:
           high_findings = sum(row.get('issue_severity') == 'HIGH' for row in findings)
           medium_findings = sum(row.get('issue_severity') == 'MEDIUM' for row in findings)
           low_findings = sum(row.get('issue_severity') == 'LOW' for row in findings)
-          # One narrowly reviewed B310 false positive: the URL is constrained above to HTTPS and an explicit DashScope host allowlist.
-          accepted_bandit = [
-              {'test_id': 'B310', 'filename': 'scripts/collect_dev_status.py', 'line_number': 274,
-               'severity': 'MEDIUM', 'disposition': 'FALSE_POSITIVE_ACCEPTED',
-               'reason': 'DASHSCOPE_BASE_URL is parsed and restricted to HTTPS, port 443, no credentials/query/fragment, and an explicit DashScope hostname allowlist before urlopen.'}
-          ]
-          accepted_keys = {(x['test_id'], x['filename'], x['line_number'], x['severity']) for x in accepted_bandit}
-          unaccepted_bandit = [row for row in findings if row.get('issue_severity') in ('HIGH', 'MEDIUM') and (row.get('test_id'), row.get('filename'), row.get('line_number'), row.get('issue_severity')) not in accepted_keys]
-          accepted_observed = [row for row in findings if (row.get('test_id'), row.get('filename'), row.get('line_number'), row.get('issue_severity')) in accepted_keys]
+          unaccepted_bandit = [row for row in findings if row.get('issue_severity') in ('HIGH', 'MEDIUM')]
           dependency_rc = os.getenv('DEPENDENCY_RC', '')
           secret_rc = os.getenv('SECRET_RC', '')
           attack_rc = os.getenv('ATTACK_RC', '')
@@ -193,7 +189,7 @@ jobs:
               'tools': ['pip-audit', 'Bandit', 'scripts/secret_scan.py', 'scripts/security_attack_regression.py'],
               'checks': checks,
               'bandit_report': bandit,
-              'bandit_false_positive_dispositions': accepted_observed,
+              'bandit_false_positive_dispositions': [],
               'bandit_unaccepted_findings': unaccepted_bandit,
               'dependency_report': audit,
               'secret_scan_output': Path('q10-secret-scan.txt').read_text(encoding='utf-8') if Path('q10-secret-scan.txt').exists() else 'missing report',
