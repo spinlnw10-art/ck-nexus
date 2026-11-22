@@ -123,7 +123,7 @@ jobs:
               "response_id": response_id,
               "output_sha256": hashlib.sha256(text.encode()).hexdigest(),
               "completed_at": datetime.now(timezone.utc).isoformat() if rc.isdigit() else None,
-              "production_promotion_allowed": status == "PASS"
+              "production_promotion_allowed": False
           }
           Path("Q11_OPENAI_LIVE.json").write_text(json.dumps(evidence, indent=2, sort_keys=True) + "\n")
           print(json.dumps(evidence, indent=2, sort_keys=True))
