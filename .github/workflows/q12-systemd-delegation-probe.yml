@@ -48,8 +48,7 @@ jobs:
             --unit="$unit" \
             --property="User=$(id -un)" \
             --property="Group=$(id -gn)" \
-            --property="Delegate=yes" \
-            --property="DelegateControllers=cpu memory pids" \
+            --property="Delegate=cpu memory pids" \
             --setenv=CKNEXUS_ENVIRONMENT=staging \
             /usr/bin/python3 -c '
           import json, os, pathlib, subprocess, sys
