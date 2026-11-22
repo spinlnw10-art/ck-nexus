@@ -83,7 +83,7 @@ jobs:
               "--root", str(root)
           ], env={**os.environ, "CKNEXUS_ENVIRONMENT": "staging"}, text=True)
           (root / "cgroup.procs").write_text(str(os.getpid()))
-          bootstrap.rmdir()
+          # The transient systemd unit removes its delegated subtree after the service exits.
           raise SystemExit(result.returncode)
           ' > q12-systemd-delegation.log 2>&1
           rc=$?
