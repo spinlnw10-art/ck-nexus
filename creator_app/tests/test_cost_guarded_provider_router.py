@@ -8,7 +8,7 @@ from creator_app.free_providers import GeminiAdapter
 from creator_app.providers import build_provider_router
 
 
-def test_free_router_prefers_gemini_then_groq_and_excludes_paid(monkeypatch):
+def test_free_router_uses_only_verified_free_route_by_default(monkeypatch):
     monkeypatch.setenv("GEMINI_API_KEY", "test-gemini-key")
     monkeypatch.setenv("GROQ_API_KEY", "test-groq-key")
     monkeypatch.setenv("OPENAI_API_KEY", "test-openai-key")
@@ -17,14 +17,13 @@ def test_free_router_prefers_gemini_then_groq_and_excludes_paid(monkeypatch):
     monkeypatch.delenv("CKNEXUS_PROVIDER_ALLOW_PAID", raising=False)
     settings = Settings(provider_local_first=False, provider_allow_cloud=False)
     router = build_provider_router(settings, CredentialBroker(environment={}))
-    assert [provider.name for provider in router._providers] == ["gemini", "groq"]
-    assert router._providers[1].model == "openai/gpt-oss-20b"
+    assert [provider.name for provider in router._providers] == ["gemini"]
     assert router.policy.allow_cloud is True
     assert all(
-        provider.name not in {"openai", "claude", "mistral"}
+        provider.name not in {"groq", "openai", "claude", "mistral"}
         for provider in router._providers
     )
-    assert [status.name for status in router.statuses() if status.available] == ["gemini", "groq"]
+    assert [status.name for status in router.statuses() if status.available] == ["gemini"]
 
 
 def test_free_router_fails_closed_without_free_keys(monkeypatch):
@@ -40,9 +39,9 @@ def test_free_router_fails_closed_without_free_keys(monkeypatch):
 async def test_router_fails_over_from_gemini_to_groq_without_paid_provider(monkeypatch):
     monkeypatch.setenv("GEMINI_API_KEY", "test-gemini-key")
     monkeypatch.setenv("GROQ_API_KEY", "test-groq-key")
-    monkeypatch.delenv("CKNEXUS_PROVIDER_ALLOW_PAID", raising=False)
+    monkeypatch.setenv("CKNEXUS_PROVIDER_ALLOW_PAID", "true")
     router = build_provider_router(
-        Settings(provider_local_first=False, provider_allow_cloud=False),
+        Settings(provider_local_first=False, provider_allow_cloud=True),
         CredentialBroker(environment={}),
     )
 
@@ -96,16 +95,24 @@ async def test_gemini_api_key_is_sent_in_header_not_url(monkeypatch):
     assert captured["key_header"] == secret
 
 
-def test_paid_provider_requires_both_explicit_opt_ins(monkeypatch):
+def test_billable_providers_require_both_explicit_opt_ins(monkeypatch):
     monkeypatch.setenv("OPENAI_API_KEY", "test-openai-key")
-    monkeypatch.setenv("CKNEXUS_PROVIDER_ALLOW_PAID", "true")
+    monkeypatch.setenv("GROQ_API_KEY", "test-groq-key")
+    monkeypatch.delenv("CKNEXUS_PROVIDER_ALLOW_PAID", raising=False)
 
+    paid_disabled = build_provider_router(
+        Settings(provider_allow_cloud=True), CredentialBroker(environment={})
+    )
+    assert paid_disabled._providers == ()
+    assert paid_disabled.policy.allow_cloud is False
+
+    monkeypatch.setenv("CKNEXUS_PROVIDER_ALLOW_PAID", "true")
     cloud_disabled = build_provider_router(
         Settings(provider_allow_cloud=False), CredentialBroker(environment={})
     )
-    assert all(provider.name != "openai" for provider in cloud_disabled._providers)
+    assert cloud_disabled._providers == ()
 
     cloud_enabled = build_provider_router(
         Settings(provider_allow_cloud=True), CredentialBroker(environment={})
     )
-    assert [provider.name for provider in cloud_enabled._providers] == ["openai"]
+    assert [provider.name for provider in cloud_enabled._providers] == ["groq", "openai"]
