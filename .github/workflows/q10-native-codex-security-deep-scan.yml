@@ -63,7 +63,7 @@ jobs:
           out="$RUNNER_TEMP/q10-codex-security-output"
           mkdir -p "$out"
           codex-security --version > q10-version.txt 2>&1
-          codex-security scan . --auth api-key --mode deep --headless --dry-run \
+          codex-security scan . --mode deep --headless --dry-run \
             --max-cost 5 --max-discovery-runs 10 --workers 2 --subagents 0 \
             --stop-after-no-new 3 --output-dir "$out" --json \
             > q10-dry-run.json 2> q10-dry-run.log
