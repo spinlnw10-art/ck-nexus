@@ -13,8 +13,8 @@ permissions:
   contents: read
 
 env:
-  Q11_SOURCE_SHA: 944d7cb70a5d59d53c8fb379752bbee2085f7c8c
-  Q11_SOURCE_TREE: 55bc545e5afd6379c46a464608601efeef213a6a
+  Q11_SOURCE_SHA: 39f5c1adb9d761ab418cf088ff1f051b1ca731d1
+  Q11_SOURCE_TREE: 0525195934f703a8becf8a39f6397b2411e0bb2e
 
 jobs:
   q11:
@@ -37,6 +37,7 @@ jobs:
           paths=(app creator_app services gateway orchestration idea_engine migrations deploy observability Dockerfile docker-compose.prod.yml main.py pyproject.toml uv.lock)
           subject="$(git ls-tree -r HEAD -- "${paths[@]}" | sha256sum | awk '{print $1}')"
           echo "subject_manifest=$subject" >> "$GITHUB_OUTPUT"
+          test "$subject" = "89f2925cd871332b16f755f0dae1e058826c38b728f66d2001f2eaaec6301a52"
 
       - name: Check OpenAI API secret without exposing it
         if: ${{ inputs.confirm_api_usage == true }}
@@ -125,7 +126,7 @@ jobs:
               "sentinel_observed": "CK-NEXUS-P0-SMOKE-PASS" in text,
               "output_sha256": hashlib.sha256(text.encode()).hexdigest(),
               "completed_at": datetime.now(timezone.utc).isoformat() if rc.isdigit() else None,
-              "production_promotion_allowed": status == "PASS"
+              "production_promotion_allowed": False
           }
           Path("Q11_OPENAI_LIVE.json").write_text(json.dumps(evidence, indent=2, sort_keys=True) + "\n")
           print(json.dumps(evidence, indent=2, sort_keys=True))
