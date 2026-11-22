@@ -68,6 +68,19 @@ jobs:
               raise SystemExit("non-root service identity required")
           if not os.access(root, os.W_OK | os.X_OK):
               raise SystemExit("delegated cgroup root is not writable")
+          # Move the service supervisor into a child so the delegated root has no internal processes.
+          bootstrap = root / ("cknexus-manager-" + str(os.getpid()))
+          bootstrap.mkdir()
+          moved = False
+          try:
+              (bootstrap / "cgroup.procs").write_text(str(os.getpid()))
+              moved = True
+              control = root / "cgroup.subtree_control"
+              enabled = set(control.read_text().split())
+              missing = [x for x in ("cpu", "memory", "pids") if x not in enabled]
+              if missing:
+                  control.write_text(" ".join("+" + x for x in missing))
+              print(json.dumps({"delegated_root_subtree_control": control.read_text().split()}, sort_keys=True), flush=True)
           result = subprocess.run([
               sys.executable, "scripts/agnes_cgroup_v2_staging_gate.py",
               "--root", str(root)
