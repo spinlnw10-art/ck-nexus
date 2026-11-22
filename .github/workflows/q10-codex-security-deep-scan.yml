@@ -97,7 +97,7 @@ jobs:
         run: |
           set -euo pipefail
           codex-security --version
-          codex-security scan . --mode deep --auth api-key --dry-run --output-dir "$RUNNER_TEMP/q10-dry-run"
+          codex-security scan . --mode deep --dry-run --output-dir "$RUNNER_TEMP/q10-dry-run"
           echo "Dry run only: no authentication was loaded and no scan/model request was started."
 
       - name: Run native Codex Security Deep Scan
