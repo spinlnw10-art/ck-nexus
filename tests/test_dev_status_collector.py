@@ -149,7 +149,9 @@ def test_collect_does_not_use_non_readonly_github_credentials(monkeypatch) -> No
     assert not any(args[:2] == ["gh", "run"] for args in calls)
 
 
-def test_qwen_probe_uses_pinned_https_transport_for_approved_endpoint(tmp_path, monkeypatch) -> None:
+def test_qwen_probe_uses_pinned_https_transport_for_approved_endpoint(
+    tmp_path, monkeypatch
+) -> None:
     import json
 
     monkeypatch.setattr(collector, "OUTPUT", tmp_path / "dev_status.json")
