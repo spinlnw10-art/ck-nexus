@@ -13,11 +13,13 @@ import time
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
-from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = Path(os.getenv("CKNEXUS_DEV_STATUS_FILE", ROOT / "data/dev_status.json"))
 TIMEOUT = 20
+DASHSCOPE_BASE_URL = "https://dashscope-intl.aliyuncs.com/compatible-mode/v1"
+DASHSCOPE_HOST = "dashscope-intl.aliyuncs.com"
+DASHSCOPE_REQUEST_PATH = "/compatible-mode/v1/chat/completions"
 SECRET_PATTERNS = (
     re.compile(r"(?i)(bearer\s+)[A-Za-z0-9._~+/-]+=*"),
     re.compile(r"(?i)(api[_-]?key|token|secret|password)(\s*[=:]\s*)[^\s,;]+"),
@@ -231,34 +233,19 @@ def probe_qwen_daily() -> dict[str, Any]:
                 "status": "error",
             }
         key = os.getenv("DASHSCOPE_API_KEY", "").strip()
-        base = os.getenv(
-            "DASHSCOPE_BASE_URL",
-            "https://dashscope-intl.aliyuncs.com/compatible-mode/v1",
-        ).rstrip("/")
+        configured_base = os.getenv("DASHSCOPE_BASE_URL", "").strip().rstrip("/")
         model = os.getenv("QWEN_MODEL", "").strip()
         if not key or not model:
             return failed(
                 "authenticated Qwen daily probe",
                 RuntimeError("credentials or model not configured; no result cached"),
             )
-        parsed = urlparse(base)
-        allowed_host = (
-            parsed.hostname in {"dashscope-intl.aliyuncs.com", "dashscope.aliyuncs.com"}
-            or bool(parsed.hostname and parsed.hostname.endswith(".maas.aliyuncs.com"))
-        )
-        if (
-            parsed.scheme != "https"
-            or not allowed_host
-            or parsed.port not in (None, 443)
-            or parsed.username
-            or parsed.password
-            or parsed.path != "/compatible-mode/v1"
-            or parsed.query
-            or parsed.fragment
-        ):
+        # Keep the network destination entirely server-controlled. A custom
+        # endpoint is rejected rather than passed into the HTTP client.
+        if configured_base and configured_base != DASHSCOPE_BASE_URL:
             return failed(
                 "authenticated Qwen daily probe",
-                RuntimeError("DASHSCOPE_BASE_URL is not an approved HTTPS DashScope endpoint"),
+                RuntimeError("DASHSCOPE_BASE_URL must match the pinned HTTPS endpoint"),
             )
         body = json.dumps(
             {
@@ -268,8 +255,8 @@ def probe_qwen_daily() -> dict[str, Any]:
             }
         ).encode()
         connection = http.client.HTTPSConnection(
-            parsed.hostname,
-            port=parsed.port or 443,
+            DASHSCOPE_HOST,
+            port=443,
             timeout=15,
             context=ssl.create_default_context(),
         )
@@ -277,7 +264,7 @@ def probe_qwen_daily() -> dict[str, Any]:
         try:
             connection.request(
                 "POST",
-                parsed.path + "/chat/completions",
+                DASHSCOPE_REQUEST_PATH,
                 body=body,
                 headers={
                     "Authorization": "Bearer " + key,
