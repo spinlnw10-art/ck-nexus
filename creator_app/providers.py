@@ -183,6 +183,7 @@ def build_provider_router(settings: Settings, broker: CredentialBroker) -> Provi
 
     quota_tracker = QuotaTracker()
     free_provider_names: list[str] = []
+    paid_provider_names: list[str] = []
     if os.environ.get("GEMINI_API_KEY", "").strip():
         providers.append(
             GeminiAdapter(
@@ -192,7 +193,17 @@ def build_provider_router(settings: Settings, broker: CredentialBroker) -> Provi
             )
         )
         free_provider_names.append("gemini")
-    if os.environ.get("GROQ_API_KEY", "").strip():
+
+    # Groq's Developer tier is usage-billed for some models. Never classify it
+    # as free: it is available only after both explicit paid-routing opt-ins.
+    allow_paid = os.getenv("CKNEXUS_PROVIDER_ALLOW_PAID", "false").strip().lower() in {
+        "1", "true", "yes", "on"
+    }
+    if (
+        os.environ.get("GROQ_API_KEY", "").strip()
+        and allow_paid
+        and settings.provider_allow_cloud
+    ):
         providers.append(
             OpenAICompatibleAdapter(
                 name="groq",
@@ -203,23 +214,22 @@ def build_provider_router(settings: Settings, broker: CredentialBroker) -> Provi
                 quota_tracker=quota_tracker,
             )
         )
-        free_provider_names.append("groq")
+        paid_provider_names.append("groq")
 
-    allow_paid = os.getenv("CKNEXUS_PROVIDER_ALLOW_PAID", "false").strip().lower() in {
-        "1", "true", "yes", "on"
-    }
     if allow_paid and settings.provider_allow_cloud:
-        providers.append(
-            OpenAIProviderAdapter(
-                broker,
-                model=settings.openai_model,
-                timeout_seconds=settings.provider_timeout_seconds,
+        if os.environ.get("OPENAI_API_KEY", "").strip():
+            providers.append(
+                OpenAIProviderAdapter(
+                    broker,
+                    model=settings.openai_model,
+                    timeout_seconds=settings.provider_timeout_seconds,
+                )
             )
-        )
+            paid_provider_names.append("openai")
 
-    # Cloud routing is enabled only for the explicitly allow-listed free adapters.
-    # Paid providers remain absent unless both independent opt-ins are enabled.
-    allow_cloud = bool(free_provider_names) or (allow_paid and settings.provider_allow_cloud)
+    # Cloud routing is enabled for Gemini by default; billable providers require
+    # both independent opt-ins and are never counted as free-tier providers.
+    allow_cloud = bool(free_provider_names or paid_provider_names)
     return ProviderRouter(
         providers,
         policy=ProviderRouterPolicy(
