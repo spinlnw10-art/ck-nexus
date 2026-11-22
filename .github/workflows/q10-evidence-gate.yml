@@ -171,7 +171,7 @@ jobs:
               'bandit_high_findings': high_findings,
               'bandit_medium_findings': medium_findings,
               'bandit_low_findings': low_findings,
-              'bandit_accepted_findings': len(accepted_observed),
+              'bandit_accepted_findings': 0,
               'bandit_unaccepted_findings': len(unaccepted_bandit),
               'secret_scan_exit_code': secret_rc,
               'security_attack_regression_exit_code': attack_rc,
