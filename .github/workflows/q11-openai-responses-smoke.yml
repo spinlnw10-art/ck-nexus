@@ -1,9 +1,6 @@
 name: Q11 OpenAI Responses API smoke (exact frozen subject)
 
 on:
-  push:
-    branches:
-      - ops/q12-github-hosted-cgroup-diagnostic
   workflow_dispatch:
     inputs:
       confirm_api_usage:
