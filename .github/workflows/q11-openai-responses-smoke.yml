@@ -122,9 +122,10 @@ jobs:
               "credential_exposed": False,
               "smoke_exit_code": int(rc) if rc.isdigit() else None,
               "response_id": response_id,
+              "sentinel_observed": "CK-NEXUS-P0-SMOKE-PASS" in text,
               "output_sha256": hashlib.sha256(text.encode()).hexdigest(),
               "completed_at": datetime.now(timezone.utc).isoformat() if rc.isdigit() else None,
-              "production_promotion_allowed": False
+              "production_promotion_allowed": status == "PASS"
           }
           Path("Q11_OPENAI_LIVE.json").write_text(json.dumps(evidence, indent=2, sort_keys=True) + "\n")
           print(json.dumps(evidence, indent=2, sort_keys=True))
