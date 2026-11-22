@@ -103,6 +103,19 @@ def test_qwen_probe_rejects_unapproved_base_url_without_sending_key(tmp_path, mo
     assert not (tmp_path / "qwen_probe_state.json").exists()
 
 
+def test_qwen_probe_rejects_unapproved_https_host_without_sending_key(tmp_path, monkeypatch) -> None:
+    monkeypatch.setattr(collector, "OUTPUT", tmp_path / "dev_status.json")
+    monkeypatch.setenv("DASHSCOPE_API_KEY", "test-secret-never-used")
+    monkeypatch.setenv("QWEN_MODEL", "qwen-test")
+    monkeypatch.setenv(
+        "DASHSCOPE_BASE_URL", "https://attacker.invalid/compatible-mode/v1"
+    )
+    result = collector.probe_qwen_daily()
+    assert result["status"] == "error"
+    assert "test-secret-never-used" not in str(result)
+    assert not (tmp_path / "qwen_probe_state.json").exists()
+
+
 def test_cached_qwen_failure_is_not_reported_as_ok(tmp_path, monkeypatch) -> None:
     import json
     from datetime import UTC, datetime
