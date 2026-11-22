@@ -25,7 +25,6 @@ def test_output_path_ignores_environment_override(monkeypatch) -> None:
     spec.loader.exec_module(module)
 
     assert module.OUTPUT == module.ROOT / "data" / "dev_status.json"
-    assert module.OUTPUT != Path("/tmp/attacker-controlled.json")
 
 
 def test_collector_command_success_json(monkeypatch) -> None:
