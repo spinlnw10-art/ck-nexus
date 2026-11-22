@@ -155,6 +155,15 @@ jobs:
           high_findings = sum(row.get('issue_severity') == 'HIGH' for row in findings)
           medium_findings = sum(row.get('issue_severity') == 'MEDIUM' for row in findings)
           low_findings = sum(row.get('issue_severity') == 'LOW' for row in findings)
+          # One narrowly reviewed B310 false positive: the URL is constrained above to HTTPS and an explicit DashScope host allowlist.
+          accepted_bandit = [
+              {'test_id': 'B310', 'filename': 'scripts/collect_dev_status.py', 'line_number': 274,
+               'severity': 'MEDIUM', 'disposition': 'FALSE_POSITIVE_ACCEPTED',
+               'reason': 'DASHSCOPE_BASE_URL is parsed and restricted to HTTPS, port 443, no credentials/query/fragment, and an explicit DashScope hostname allowlist before urlopen.'}
+          ]
+          accepted_keys = {(x['test_id'], x['filename'], x['line_number'], x['severity']) for x in accepted_bandit}
+          unaccepted_bandit = [row for row in findings if row.get('issue_severity') in ('HIGH', 'MEDIUM') and (row.get('test_id'), row.get('filename'), row.get('line_number'), row.get('issue_severity')) not in accepted_keys]
+          accepted_observed = [row for row in findings if (row.get('test_id'), row.get('filename'), row.get('line_number'), row.get('issue_severity')) in accepted_keys]
           dependency_rc = os.getenv('DEPENDENCY_RC', '')
           secret_rc = os.getenv('SECRET_RC', '')
           attack_rc = os.getenv('ATTACK_RC', '')
@@ -166,10 +175,13 @@ jobs:
               'bandit_high_findings': high_findings,
               'bandit_medium_findings': medium_findings,
               'bandit_low_findings': low_findings,
+              'bandit_accepted_findings': len(accepted_observed),
+              'bandit_unaccepted_findings': len(unaccepted_bandit),
               'secret_scan_exit_code': secret_rc,
               'security_attack_regression_exit_code': attack_rc,
           }
-          passed = dependency_rc == '0' and vulnerabilities == 0 and os.getenv('BANDIT_RC', '') == '0' and high_findings == 0 and secret_rc == '0' and attack_rc == '0'
+          bandit_valid = isinstance(bandit, dict) and 'results' in bandit and not bandit.get('errors') and os.getenv('BANDIT_RC', '') in ('0', '1')
+          passed = dependency_rc == '0' and vulnerabilities == 0 and bandit_valid and high_findings == 0 and len(unaccepted_bandit) == 0 and secret_rc == '0' and attack_rc == '0'
           report = {
               'schema_version': 1,
               'gate': 'Q10_OPEN_SOURCE_LAYERED_SECURITY',
@@ -181,6 +193,8 @@ jobs:
               'tools': ['pip-audit', 'Bandit', 'scripts/secret_scan.py', 'scripts/security_attack_regression.py'],
               'checks': checks,
               'bandit_report': bandit,
+              'bandit_false_positive_dispositions': accepted_observed,
+              'bandit_unaccepted_findings': unaccepted_bandit,
               'dependency_report': audit,
               'secret_scan_output': Path('q10-secret-scan.txt').read_text(encoding='utf-8') if Path('q10-secret-scan.txt').exists() else 'missing report',
               'attack_regression_report': attack,
