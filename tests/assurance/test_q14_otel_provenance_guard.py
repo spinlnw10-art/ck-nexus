@@ -1,14 +1,13 @@
 from __future__ import annotations
 
 import base64
-import json
 import importlib.util
+import json
 import tempfile
 import unittest
 from pathlib import Path
 
 MODULE_PATH = Path(__file__).resolve().parents[2] / "scripts/assurance/q14_otel_provenance_guard.py"
-
 SPEC = importlib.util.spec_from_file_location("q14_otel_provenance_guard", MODULE_PATH)
 assert SPEC and SPEC.loader
 MODULE = importlib.util.module_from_spec(SPEC)
@@ -67,7 +66,7 @@ class Q14ProvenanceGuardTests(unittest.TestCase):
         with self.assertRaisesRegex(MODULE.EvidenceError, "no verified SLSA provenance subject"):
             MODULE.verify_slsa_subject(provenance_document(predicate="https://example.invalid/provenance"), DIGEST)
 
-    def test_binds_report_to_candidate_and_raw_evidence_hashes(self) -> None:
+    def test_binds_verified_report_to_candidate_and_raw_evidence_hashes(self) -> None:
         self.write_documents(signature_document(), provenance_document())
         report = MODULE.build_report(
             self.signature,
@@ -75,21 +74,38 @@ class Q14ProvenanceGuardTests(unittest.TestCase):
             image=IMAGE,
             release_tag="v0.165.0",
             candidate_sha=CANDIDATE,
+            slsa_status="VERIFIED",
         )
         self.assertEqual(report["image_digest"], DIGEST)
         self.assertEqual(report["candidate_sha"], CANDIDATE)
         self.assertEqual(report["signature_verification"], "COSIGN_VERIFIED_BY_WORKFLOW")
-        self.assertEqual(report["provenance_verification"], "SLSA_PROVENANCE_SUBJECT_MATCHED")
+        self.assertEqual(report["slsa_provenance_status"], "VERIFIED")
+        self.assertFalse(report["production_promotion_eligible"])
         self.assertFalse(report["image_layers_pulled"])
         self.assertFalse(report["container_started"])
+        self.assertFalse(report["gate_decision_made"])
+
+    def test_records_missing_slsa_without_promoting_image(self) -> None:
+        self.write_documents(signature_document(), provenance_document())
+        report = MODULE.build_report(
+            self.signature,
+            None,
+            image=IMAGE,
+            release_tag="v0.165.0",
+            candidate_sha=CANDIDATE,
+            slsa_status="NOT_PUBLISHED",
+        )
+        self.assertEqual(report["slsa_provenance_status"], "NOT_PUBLISHED")
+        self.assertIsNone(report["provenance_evidence_sha256"])
+        self.assertFalse(report["production_promotion_eligible"])
         self.assertFalse(report["gate_decision_made"])
 
     def test_rejects_non_official_image_or_invalid_candidate(self) -> None:
         self.write_documents(signature_document(), provenance_document())
         with self.assertRaises(MODULE.EvidenceError):
-            MODULE.build_report(self.signature, self.provenance, image="docker.io/library/alpine:latest", release_tag="v0.165.0", candidate_sha=CANDIDATE)
+            MODULE.build_report(self.signature, self.provenance, image="docker.io/library/alpine:latest", release_tag="v0.165.0", candidate_sha=CANDIDATE, slsa_status="VERIFIED")
         with self.assertRaises(MODULE.EvidenceError):
-            MODULE.build_report(self.signature, self.provenance, image=IMAGE, release_tag="latest", candidate_sha=CANDIDATE)
+            MODULE.build_report(self.signature, self.provenance, image=IMAGE, release_tag="latest", candidate_sha=CANDIDATE, slsa_status="VERIFIED")
 
     def test_rejects_symlink_evidence(self) -> None:
         self.write_documents(signature_document(), provenance_document())
