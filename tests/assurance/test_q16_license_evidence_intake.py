@@ -48,14 +48,32 @@ class Q16IntakeTests(unittest.TestCase):
 
     def test_rejects_unknown_tool_and_invalid_candidate(self) -> None:
         with self.assertRaises(MODULE.IntakeError):
-            MODULE.intake(self.path, tool="other", version="1", candidate_sha=CANDIDATE, allowed_root=Path(self.temp.name))
+            MODULE.intake(
+                self.path,
+                tool="other",
+                version="1",
+                candidate_sha=CANDIDATE,
+                allowed_root=Path(self.temp.name),
+            )
         with self.assertRaises(MODULE.IntakeError):
-            MODULE.intake(self.path, tool="ort", version="1", candidate_sha="bad", allowed_root=Path(self.temp.name))
+            MODULE.intake(
+                self.path,
+                tool="ort",
+                version="1",
+                candidate_sha="bad",
+                allowed_root=Path(self.temp.name),
+            )
 
     def test_rejects_duplicate_keys_and_non_object_json(self) -> None:
         self.path.write_text('{"a":1,"a":2}', encoding="utf-8")
         with self.assertRaises(MODULE.IntakeError):
-            MODULE.intake(self.path, tool="ort", version="1", candidate_sha=CANDIDATE, allowed_root=Path(self.temp.name))
+            MODULE.intake(
+                self.path,
+                tool="ort",
+                version="1",
+                candidate_sha=CANDIDATE,
+                allowed_root=Path(self.temp.name),
+            )
         self.path.write_text("[]", encoding="utf-8")
         with self.assertRaises(MODULE.IntakeError):
             MODULE.intake(self.path, tool="ort", version="1", candidate_sha=CANDIDATE, allowed_root=Path(self.temp.name))
@@ -79,7 +97,13 @@ class Q16IntakeTests(unittest.TestCase):
         link = Path(self.temp.name) / "link.json"
         link.symlink_to(target)
         with self.assertRaises(MODULE.IntakeError):
-            MODULE.intake(link, tool="ort", version="1", candidate_sha=CANDIDATE, allowed_root=Path(self.temp.name))
+            MODULE.intake(
+                link,
+                tool="ort",
+                version="1",
+                candidate_sha=CANDIDATE,
+                allowed_root=Path(self.temp.name),
+            )
         self.path.write_bytes(b"")
         with self.assertRaises(MODULE.IntakeError):
             MODULE.intake(self.path, tool="ort", version="1", candidate_sha=CANDIDATE, allowed_root=Path(self.temp.name))
