@@ -100,14 +100,21 @@ class OTelTelemetryPolicyTests(unittest.TestCase):
             '[{"service.name":"ck-nexus","service.name":"other"}]',
         )
         with self.assertRaisesRegex(TelemetryPolicyError, "duplicate"):
-            load_document(path)
+            load_document(path, self.root)
+
+    def test_rejects_path_outside_allowed_directory(self) -> None:
+        path = self.write_json("outside.json", json.dumps([BASE_EVENT]))
+        other_root = self.root / "other"
+        other_root.mkdir()
+        with self.assertRaisesRegex(TelemetryPolicyError, "within the allowed directory"):
+            load_document(path, other_root)
 
     def test_rejects_symlink_input(self) -> None:
         target = self.write_json("target.json", json.dumps([BASE_EVENT]))
         link = self.root / "link.json"
         link.symlink_to(target)
         with self.assertRaisesRegex(TelemetryPolicyError, "non-symlink"):
-            load_document(link)
+            load_document(link, self.root)
 
     def test_rejects_empty_or_oversized_event_batches(self) -> None:
         for payload in ([], [BASE_EVENT] * 1001):
