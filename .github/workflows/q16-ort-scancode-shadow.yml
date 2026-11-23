@@ -104,10 +104,7 @@ jobs:
 
       - name: Validate Q16 evidence through CK-NEXUS EvidenceGraph
         run: |
-          python scripts/assurance/evidence_graph_intake.py \
-            --manifest "$RUNNER_TEMP/q16/q16-evidence.json" \
-            --allowed-root "$RUNNER_TEMP" \
-            --output "$RUNNER_TEMP/q16/q16-evidence-graph.json"
+          python scripts/assurance/evidence_graph_intake.py --profile q16
 
       - name: Run evidence and graph intake unit tests
         run: |
