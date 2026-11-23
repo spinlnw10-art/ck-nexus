@@ -53,6 +53,11 @@ jobs:
               test -n "$cg"
               root="/sys/fs/cgroup$cg"
               echo "$root" > "$GITHUB_WORKSPACE/q12-delegated-root.txt"
+              # cgroup v2 requires a controller-enabled parent to have no
+              # processes. Move this service shell into a delegated child first.
+              bootstrap="$root/q12-bootstrap"
+              mkdir "$bootstrap"
+              printf '%s\\n' "$" > "$bootstrap/cgroup.procs"
               export CKNEXUS_AGNES_CGROUP_ROOT="$root"
               available=$(cat "$root/cgroup.controllers")
               for controller in cpu memory pids; do grep -qw "$controller" <<< "$available"; done
