@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import importlib.util
 import json
 import tempfile
 import unittest
@@ -11,11 +12,11 @@ MODULE_PATH = (
     / "assurance"
     / "guac_shadow_intake.py"
 )
-SPEC = __import__("importlib.util", fromlist=["util"]).spec_from_file_location(
+SPEC = importlib.util.spec_from_file_location(
     "guac_shadow_intake", MODULE_PATH
 )
 assert SPEC is not None and SPEC.loader is not None
-MODULE = __import__("importlib.util", fromlist=["util"]).util.module_from_spec(SPEC)
+MODULE = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(MODULE)
 IntakeError = MODULE.IntakeError
 build_manifest = MODULE.build_manifest
