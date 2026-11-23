@@ -19,6 +19,13 @@ SPEC.loader.exec_module(MODULE)
 
 
 class Q16EvidenceManifestTests(unittest.TestCase):
+    def _workspace(self, root: Path) -> Path:
+        workspace = root / MODULE.WORKSPACE
+        workspace.mkdir(parents=True)
+        for filename in MODULE.INPUTS.values():
+            (workspace / filename).write_text('{"synthetic":true}', encoding="utf-8")
+        return workspace
+
     def test_digest_is_stable(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "evidence.json"
@@ -31,45 +38,34 @@ class Q16EvidenceManifestTests(unittest.TestCase):
     def test_manifest_binds_candidate_and_fixed_report_hashes(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            (root / "q16").mkdir()
-            paths = (
-                root / "scancode-full-repo.json",
-                root / "scancode-install-report.json",
-                root / "q16" / "analyzer-result.json",
-                root / "q16" / "scan-result.yml",
-            )
-            for path in paths:
-                path.write_text('{"synthetic":true}', encoding="utf-8")
-            manifest = MODULE.build_manifest("a" * 40, root)
+            workspace = self._workspace(root)
+            manifest = MODULE.build_manifest("a" * 40, workspace)
             self.assertEqual(manifest["candidate_commit_sha"], "a" * 40)
             self.assertEqual(
                 manifest["artifacts"]["scancode_full_repo"]["sha256"],
-                hashlib.sha256(paths[0].read_bytes()).hexdigest(),
+                hashlib.sha256(
+                    (workspace / MODULE.INPUTS["scancode_full_repo"]).read_bytes()
+                ).hexdigest(),
             )
             self.assertFalse(manifest["authority"]["gate_decision_made"])
             self.assertFalse(manifest["authority"]["legal_conclusion_made"])
 
     def test_rejects_invalid_candidate_sha(self) -> None:
-        with tempfile.TemporaryDirectory() as directory, self.assertRaisesRegex(
-            ValueError, "candidate SHA"
-        ):
-            MODULE.build_manifest("not-a-sha", Path(directory))
+        with tempfile.TemporaryDirectory() as directory:
+            with self.assertRaisesRegex(ValueError, "candidate SHA"):
+                MODULE.build_manifest("not-a-sha", self._workspace(Path(directory)))
 
     def test_rejects_symlink_report(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            (root / "q16").mkdir()
-            for name in (
-                "scancode-install-report.json",
-                "q16/analyzer-result.json",
-                "q16/scan-result.yml",
-            ):
-                (root / name).write_text("{}", encoding="utf-8")
+            workspace = self._workspace(root)
             target = root / "target.json"
             target.write_text("{}", encoding="utf-8")
-            (root / "scancode-full-repo.json").symlink_to(target)
+            report = workspace / MODULE.INPUTS["scancode_full_repo"]
+            report.unlink()
+            report.symlink_to(target)
             with self.assertRaisesRegex(ValueError, "missing or unsafe"):
-                MODULE.build_manifest("b" * 40, root)
+                MODULE.build_manifest("b" * 40, workspace)
 
 
 if __name__ == "__main__":
