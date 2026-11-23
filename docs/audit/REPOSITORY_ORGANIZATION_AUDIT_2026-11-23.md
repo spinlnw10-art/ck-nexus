@@ -353,3 +353,17 @@ This audit proposes no source-file move, source-file deletion, branch archival o
 ### Snapshot boundary clarification
 
 The repository had 401 pre-existing live branches when the audit branch was created. The audit branch itself is excluded from its own baseline evidence to avoid a self-referential record: adding or updating the evidence files changes that branch's own HEAD and tree. The audit branch is tracked separately by Draft PR #393; the PR head SHA is checked live in the final verification. Thus, the retention baseline covers every pre-existing branch, and the newly created audit branch is separately visible and preserved.
+
+
+## Supplemental current-branch observation after the baseline snapshot
+
+A later live branch check found **403 current remote branches**:
+- The **401 pre-existing branches** in the baseline evidence remain present and their HEAD SHAs are unchanged.
+- `audit/repository-organization-20261123` is this audit's own branch and remains separately tracked by Draft PR #393; it is intentionally excluded from its own baseline scan.
+- `integration/autonomous-engineering-foundation` was created after the 401-branch baseline and is tracked separately by Draft PR #394. It was independently inspected at HEAD `723e9828579678d3ca041241999f110da72d95ae`: 4 commits ahead of main, 4 new Markdown files, 0 changed existing paths, 0 missing paths, and no runtime/workflow/source changes. Its files are:
+  - `docs/AUTONOMOUS_ENGINEERING_DEEP_AUDIT_2026-11-23.md`
+  - `docs/AUTONOMOUS_ENGINEERING_INTEGRATION_PLAN.md`
+  - `docs/AUTONOMOUS_ENGINEERING_MIGRATION_MATRIX.md`
+  - `docs/AUTONOMOUS_ENGINEERING_REPOSITORY_INVENTORY.md`
+
+PR #394 is a separate open Draft PR and was not modified by this audit. The extra branch is not an archival candidate; preserve it for its own review. Thus, all 403 currently observed branch refs are accounted for as 401 baseline branches, this audit branch, and one separately reviewed post-snapshot branch.
