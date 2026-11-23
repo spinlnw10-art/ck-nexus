@@ -1,0 +1,4341 @@
+{
+  "main": "944d7cb70a5d59d53c8fb379752bbee2085f7c8c",
+  "branches_expected": 402,
+  "branches_scanned": 402,
+  "errors": [],
+  "main_files": 870,
+  "total_branch_tree_file_entries": 222770,
+  "summary": {
+    "branches_with_path_differences": 401,
+    "branches_identical_path_blob_tree_to_main": 1,
+    "total_changed_path_instances": 41685,
+    "total_branch_only_path_instances": 11977,
+    "total_main_path_missing_instances": 138947,
+    "aggregate_duplicate_blob_groups_across_branch_trees": 1606,
+    "aggregate_duplicate_extra_paths_across_branch_trees": 4083
+  },
+  "top_path_delta_branches": [
+    {
+      "branch": "arch/unified-architecture-package-v01",
+      "files": 414,
+      "same_path_same_blob": 224,
+      "changed_paths": 82,
+      "branch_only_paths": 108,
+      "main_paths_missing": 564,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "arch/cognitive-governor-contracts-v01",
+      "files": 407,
+      "same_path_same_blob": 224,
+      "changed_paths": 82,
+      "branch_only_paths": 101,
+      "main_paths_missing": 564,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "arch/recovery-q14-contracts-v01",
+      "files": 397,
+      "same_path_same_blob": 224,
+      "changed_paths": 82,
+      "branch_only_paths": 91,
+      "main_paths_missing": 564,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "verify/q04-exact-sha",
+      "files": 319,
+      "same_path_same_blob": 150,
+      "changed_paths": 152,
+      "branch_only_paths": 17,
+      "main_paths_missing": 568,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "feat/facebook-meta-connector",
+      "files": 318,
+      "same_path_same_blob": 150,
+      "changed_paths": 152,
+      "branch_only_paths": 16,
+      "main_paths_missing": 568,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "fix/q03-dependency-closure",
+      "files": 318,
+      "same_path_same_blob": 150,
+      "changed_paths": 152,
+      "branch_only_paths": 16,
+      "main_paths_missing": 568,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "fix/q04-q05-ci-repro",
+      "files": 318,
+      "same_path_same_blob": 150,
+      "changed_paths": 152,
+      "branch_only_paths": 16,
+      "main_paths_missing": 568,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "noop",
+      "files": 318,
+      "same_path_same_blob": 150,
+      "changed_paths": 152,
+      "branch_only_paths": 16,
+      "main_paths_missing": 568,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "verify/q04-q05-converged-final",
+      "files": 318,
+      "same_path_same_blob": 150,
+      "changed_paths": 152,
+      "branch_only_paths": 16,
+      "main_paths_missing": 568,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "verify/q04-q05-converged-v2",
+      "files": 318,
+      "same_path_same_blob": 150,
+      "changed_paths": 152,
+      "branch_only_paths": 16,
+      "main_paths_missing": 568,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "arch/observability-evidence-contracts-v01",
+      "files": 389,
+      "same_path_same_blob": 224,
+      "changed_paths": 82,
+      "branch_only_paths": 83,
+      "main_paths_missing": 564,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "fix/q05-ruff-baseline",
+      "files": 318,
+      "same_path_same_blob": 160,
+      "changed_paths": 142,
+      "branch_only_paths": 16,
+      "main_paths_missing": 568,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "arch/knowledge-memory-ingestion-v01",
+      "files": 379,
+      "same_path_same_blob": 224,
+      "changed_paths": 82,
+      "branch_only_paths": 73,
+      "main_paths_missing": 564,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "arch/control-plane-contracts-v01",
+      "files": 367,
+      "same_path_same_blob": 224,
+      "changed_paths": 82,
+      "branch_only_paths": 61,
+      "main_paths_missing": 564,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "sale/launch-ops-v1.2",
+      "files": 366,
+      "same_path_same_blob": 223,
+      "changed_paths": 83,
+      "branch_only_paths": 60,
+      "main_paths_missing": 564,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "post-p0/agnes-s-delta-v1",
+      "files": 360,
+      "same_path_same_blob": 224,
+      "changed_paths": 82,
+      "branch_only_paths": 54,
+      "main_paths_missing": 564,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "post-p0/agnes-capability-fabric-v1",
+      "files": 357,
+      "same_path_same_blob": 224,
+      "changed_paths": 82,
+      "branch_only_paths": 51,
+      "main_paths_missing": 564,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "sale/seller-sales-kit-v1.1",
+      "files": 355,
+      "same_path_same_blob": 223,
+      "changed_paths": 83,
+      "branch_only_paths": 49,
+      "main_paths_missing": 564,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "arch/fabric-hardening-v02",
+      "files": 355,
+      "same_path_same_blob": 224,
+      "changed_paths": 82,
+      "branch_only_paths": 49,
+      "main_paths_missing": 564,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "post-p0/gen4-fusion-v0.2",
+      "files": 343,
+      "same_path_same_blob": 224,
+      "changed_paths": 82,
+      "branch_only_paths": 37,
+      "main_paths_missing": 564,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "sale/dev-preview-package-v1",
+      "files": 390,
+      "same_path_same_blob": 240,
+      "changed_paths": 98,
+      "branch_only_paths": 52,
+      "main_paths_missing": 532,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "arch/base44-cknexus-federation-v01",
+      "files": 341,
+      "same_path_same_blob": 224,
+      "changed_paths": 82,
+      "branch_only_paths": 35,
+      "main_paths_missing": 564,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "feat/telegram-control-v1",
+      "files": 388,
+      "same_path_same_blob": 240,
+      "changed_paths": 98,
+      "branch_only_paths": 50,
+      "main_paths_missing": 532,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "ui/unified-command-center-v01",
+      "files": 340,
+      "same_path_same_blob": 224,
+      "changed_paths": 82,
+      "branch_only_paths": 34,
+      "main_paths_missing": 564,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "fix/q05-ruff-format",
+      "files": 318,
+      "same_path_same_blob": 207,
+      "changed_paths": 95,
+      "branch_only_paths": 16,
+      "main_paths_missing": 568,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "r33-closure-hardening-v02",
+      "files": 318,
+      "same_path_same_blob": 207,
+      "changed_paths": 95,
+      "branch_only_paths": 16,
+      "main_paths_missing": 568,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "feat/approval-durability-verifier-v1",
+      "files": 386,
+      "same_path_same_blob": 240,
+      "changed_paths": 98,
+      "branch_only_paths": 48,
+      "main_paths_missing": 532,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "ops/q10-q12-master-prep-v2",
+      "files": 380,
+      "same_path_same_blob": 235,
+      "changed_paths": 103,
+      "branch_only_paths": 42,
+      "main_paths_missing": 532,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "sale/creator-source-package-v1",
+      "files": 336,
+      "same_path_same_blob": 223,
+      "changed_paths": 83,
+      "branch_only_paths": 30,
+      "main_paths_missing": 564,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "arch/autonomous-platform-fabric-gen3-v01",
+      "files": 336,
+      "same_path_same_blob": 224,
+      "changed_paths": 82,
+      "branch_only_paths": 30,
+      "main_paths_missing": 564,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    }
+  ],
+  "branches": [
+    {
+      "branch": "agent/closure-diagnostics-2026-10-02",
+      "files": 596,
+      "same_path_same_blob": 452,
+      "changed_paths": 124,
+      "branch_only_paths": 20,
+      "main_paths_missing": 294,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "agent/unified-control-package",
+      "files": 534,
+      "same_path_same_blob": 394,
+      "changed_paths": 121,
+      "branch_only_paths": 19,
+      "main_paths_missing": 355,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "arch/autonomous-platform-fabric-gen3-v01",
+      "files": 336,
+      "same_path_same_blob": 224,
+      "changed_paths": 82,
+      "branch_only_paths": 30,
+      "main_paths_missing": 564,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "arch/autonomous-platform-fabric-v01",
+      "files": 333,
+      "same_path_same_blob": 224,
+      "changed_paths": 82,
+      "branch_only_paths": 27,
+      "main_paths_missing": 564,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "arch/base44-cknexus-federation-v01",
+      "files": 341,
+      "same_path_same_blob": 224,
+      "changed_paths": 82,
+      "branch_only_paths": 35,
+      "main_paths_missing": 564,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "arch/cognitive-governor-contracts-v01",
+      "files": 407,
+      "same_path_same_blob": 224,
+      "changed_paths": 82,
+      "branch_only_paths": 101,
+      "main_paths_missing": 564,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "arch/control-plane-contracts-v01",
+      "files": 367,
+      "same_path_same_blob": 224,
+      "changed_paths": 82,
+      "branch_only_paths": 61,
+      "main_paths_missing": 564,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "arch/fabric-hardening-v02",
+      "files": 355,
+      "same_path_same_blob": 224,
+      "changed_paths": 82,
+      "branch_only_paths": 49,
+      "main_paths_missing": 564,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "arch/knowledge-memory-ingestion-v01",
+      "files": 379,
+      "same_path_same_blob": 224,
+      "changed_paths": 82,
+      "branch_only_paths": 73,
+      "main_paths_missing": 564,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "arch/monorepo-layered-v01",
+      "files": 324,
+      "same_path_same_blob": 224,
+      "changed_paths": 82,
+      "branch_only_paths": 18,
+      "main_paths_missing": 564,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "arch/monorepo-layered-v1",
+      "files": 323,
+      "same_path_same_blob": 224,
+      "changed_paths": 82,
+      "branch_only_paths": 17,
+      "main_paths_missing": 564,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "arch/observability-evidence-contracts-v01",
+      "files": 389,
+      "same_path_same_blob": 224,
+      "changed_paths": 82,
+      "branch_only_paths": 83,
+      "main_paths_missing": 564,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "arch/recovery-q14-contracts-v01",
+      "files": 397,
+      "same_path_same_blob": 224,
+      "changed_paths": 82,
+      "branch_only_paths": 91,
+      "main_paths_missing": 564,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "arch/unified-architecture-package-v01",
+      "files": 414,
+      "same_path_same_blob": 224,
+      "changed_paths": 82,
+      "branch_only_paths": 108,
+      "main_paths_missing": 564,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "audit/20261014-readonly-baseline",
+      "files": 660,
+      "same_path_same_blob": 506,
+      "changed_paths": 123,
+      "branch_only_paths": 31,
+      "main_paths_missing": 241,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "audit/bootstrap-v5.2.3",
+      "files": 652,
+      "same_path_same_blob": 508,
+      "changed_paths": 122,
+      "branch_only_paths": 22,
+      "main_paths_missing": 240,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "audit/canonical-evidence-ledger-20261001",
+      "files": 596,
+      "same_path_same_blob": 452,
+      "changed_paths": 124,
+      "branch_only_paths": 20,
+      "main_paths_missing": 294,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "audit/repository-organization-20261123",
+      "files": 873,
+      "same_path_same_blob": 869,
+      "changed_paths": 1,
+      "branch_only_paths": 3,
+      "main_paths_missing": 0,
+      "duplicate_blob_groups": 2,
+      "duplicate_extra_paths": 9
+    },
+    {
+      "branch": "automation/capability-registry-weekly-2026-11-09",
+      "files": 865,
+      "same_path_same_blob": 852,
+      "changed_paths": 12,
+      "branch_only_paths": 1,
+      "main_paths_missing": 6,
+      "duplicate_blob_groups": 2,
+      "duplicate_extra_paths": 9
+    },
+    {
+      "branch": "backup/ck-nexus-snapshot-2026-08-21",
+      "files": 614,
+      "same_path_same_blob": 387,
+      "changed_paths": 125,
+      "branch_only_paths": 102,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 10
+    },
+    {
+      "branch": "backup/pre-consolidation-20261031",
+      "files": 848,
+      "same_path_same_blob": 711,
+      "changed_paths": 114,
+      "branch_only_paths": 23,
+      "main_paths_missing": 45,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "backup/reinstall-2026-08-25",
+      "files": 532,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 20,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "backup/termux-20261029",
+      "files": 848,
+      "same_path_same_blob": 711,
+      "changed_paths": 114,
+      "branch_only_paths": 23,
+      "main_paths_missing": 45,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "brand/github-presentation-20261008",
+      "files": 653,
+      "same_path_same_blob": 504,
+      "changed_paths": 125,
+      "branch_only_paths": 24,
+      "main_paths_missing": 241,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "c2-only",
+      "files": 653,
+      "same_path_same_blob": 513,
+      "changed_paths": 117,
+      "branch_only_paths": 23,
+      "main_paths_missing": 240,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "chore/auto-update-badge-system",
+      "files": 874,
+      "same_path_same_blob": 857,
+      "changed_paths": 7,
+      "branch_only_paths": 10,
+      "main_paths_missing": 6,
+      "duplicate_blob_groups": 2,
+      "duplicate_extra_paths": 9
+    },
+    {
+      "branch": "chore/q10-rebaseline",
+      "files": 845,
+      "same_path_same_blob": 763,
+      "changed_paths": 63,
+      "branch_only_paths": 19,
+      "main_paths_missing": 44,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "ci/development-infra-evidence-boundary-v1",
+      "files": 531,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 19,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "cknexus/auto-dev/11c25d2fc2eb5bdb",
+      "files": 847,
+      "same_path_same_blob": 703,
+      "changed_paths": 122,
+      "branch_only_paths": 22,
+      "main_paths_missing": 45,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "cknexus/auto-dev/20261026-final-gate",
+      "files": 850,
+      "same_path_same_blob": 712,
+      "changed_paths": 114,
+      "branch_only_paths": 24,
+      "main_paths_missing": 44,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "cknexus/auto-dev/371efa6adc491a8a",
+      "files": 962,
+      "same_path_same_blob": 690,
+      "changed_paths": 136,
+      "branch_only_paths": 136,
+      "main_paths_missing": 44,
+      "duplicate_blob_groups": 23,
+      "duplicate_extra_paths": 31
+    },
+    {
+      "branch": "cknexus/auto-dev/857789e8232d1642",
+      "files": 962,
+      "same_path_same_blob": 690,
+      "changed_paths": 136,
+      "branch_only_paths": 136,
+      "main_paths_missing": 44,
+      "duplicate_blob_groups": 23,
+      "duplicate_extra_paths": 31
+    },
+    {
+      "branch": "cknexus/auto-dev/9c71df302c5d1f68-bff3ef06b6e2",
+      "files": 847,
+      "same_path_same_blob": 709,
+      "changed_paths": 116,
+      "branch_only_paths": 22,
+      "main_paths_missing": 45,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "cknexus/auto-dev/a240f6777fbce37b",
+      "files": 847,
+      "same_path_same_blob": 703,
+      "changed_paths": 122,
+      "branch_only_paths": 22,
+      "main_paths_missing": 45,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "cknexus/auto-dev/cc836a629922ca99",
+      "files": 847,
+      "same_path_same_blob": 703,
+      "changed_paths": 122,
+      "branch_only_paths": 22,
+      "main_paths_missing": 45,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "cknexus/auto-dev/dc18b325364a804a",
+      "files": 847,
+      "same_path_same_blob": 709,
+      "changed_paths": 116,
+      "branch_only_paths": 22,
+      "main_paths_missing": 45,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "cknexus/auto-dev/e42fc04424360811",
+      "files": 962,
+      "same_path_same_blob": 690,
+      "changed_paths": 136,
+      "branch_only_paths": 136,
+      "main_paths_missing": 44,
+      "duplicate_blob_groups": 23,
+      "duplicate_extra_paths": 31
+    },
+    {
+      "branch": "closure/no-go-20261001",
+      "files": 600,
+      "same_path_same_blob": 452,
+      "changed_paths": 124,
+      "branch_only_paths": 24,
+      "main_paths_missing": 294,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "closure/one-shot-evidence-closure-20261002",
+      "files": 597,
+      "same_path_same_blob": 449,
+      "changed_paths": 127,
+      "branch_only_paths": 21,
+      "main_paths_missing": 294,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "closure/q10-q16-unification-20261105",
+      "files": 888,
+      "same_path_same_blob": 809,
+      "changed_paths": 54,
+      "branch_only_paths": 25,
+      "main_paths_missing": 7,
+      "duplicate_blob_groups": 2,
+      "duplicate_extra_paths": 9
+    },
+    {
+      "branch": "code-coverage-agent/fix-341440761-1333067619-504675e3-5573-4c55-8a40-02cfbfbc651f",
+      "files": 649,
+      "same_path_same_blob": 506,
+      "changed_paths": 123,
+      "branch_only_paths": 20,
+      "main_paths_missing": 241,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "codex/q11-capability-gates",
+      "files": 352,
+      "same_path_same_blob": 239,
+      "changed_paths": 92,
+      "branch_only_paths": 21,
+      "main_paths_missing": 539,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "codex/q11-p02-error-classification",
+      "files": 355,
+      "same_path_same_blob": 238,
+      "changed_paths": 93,
+      "branch_only_paths": 24,
+      "main_paths_missing": 539,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "design/contextual-automation-workspace",
+      "files": 868,
+      "same_path_same_blob": 852,
+      "changed_paths": 12,
+      "branch_only_paths": 4,
+      "main_paths_missing": 6,
+      "duplicate_blob_groups": 2,
+      "duplicate_extra_paths": 9
+    },
+    {
+      "branch": "dev/agnes-cognitive-fabric-v1",
+      "files": 559,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 47,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "dev/agnes-design-intelligence-v1",
+      "files": 541,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 29,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "dev/freemium-intelligence-mesh-v1",
+      "files": 561,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 49,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "dev/state-projector-v1",
+      "files": 553,
+      "same_path_same_blob": 387,
+      "changed_paths": 125,
+      "branch_only_paths": 41,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "dev/system-skills-harvest-v1",
+      "files": 535,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 23,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "diag/pr181-ruff-import-v1",
+      "files": 538,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 26,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "docs/automation-intake-gateway",
+      "files": 650,
+      "same_path_same_blob": 506,
+      "changed_paths": 123,
+      "branch_only_paths": 21,
+      "main_paths_missing": 241,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "docs/autonomous-platform-knowledge-base-2026-10-31",
+      "files": 859,
+      "same_path_same_blob": 761,
+      "changed_paths": 65,
+      "branch_only_paths": 33,
+      "main_paths_missing": 44,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "docs/control-state-foundation-2026-10-12",
+      "files": 655,
+      "same_path_same_blob": 506,
+      "changed_paths": 123,
+      "branch_only_paths": 26,
+      "main_paths_missing": 241,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "docs/dgx-spark-ai-server-launch-20260904",
+      "files": 532,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 20,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "docs/evidence-closure-system-2026-10-12",
+      "files": 655,
+      "same_path_same_blob": 506,
+      "changed_paths": 123,
+      "branch_only_paths": 26,
+      "main_paths_missing": 241,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "docs/gen7-capability-gap-matrix-v1",
+      "files": 358,
+      "same_path_same_blob": 243,
+      "changed_paths": 95,
+      "branch_only_paths": 20,
+      "main_paths_missing": 532,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "docs/knowledge-source-learning-blueprints-20260904",
+      "files": 542,
+      "same_path_same_blob": 389,
+      "changed_paths": 124,
+      "branch_only_paths": 29,
+      "main_paths_missing": 357,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "docs/master-recovery-ledger-2026-10-12",
+      "files": 650,
+      "same_path_same_blob": 506,
+      "changed_paths": 123,
+      "branch_only_paths": 21,
+      "main_paths_missing": 241,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "docs/q10-q12-runbook-subject89",
+      "files": 357,
+      "same_path_same_blob": 234,
+      "changed_paths": 104,
+      "branch_only_paths": 19,
+      "main_paths_missing": 532,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "docs/q10-q16-current-state-20261120",
+      "files": 877,
+      "same_path_same_blob": 831,
+      "changed_paths": 39,
+      "branch_only_paths": 7,
+      "main_paths_missing": 0,
+      "duplicate_blob_groups": 2,
+      "duplicate_extra_paths": 9
+    },
+    {
+      "branch": "docs/readme-operational-status-20261117",
+      "files": 864,
+      "same_path_same_blob": 857,
+      "changed_paths": 7,
+      "branch_only_paths": 0,
+      "main_paths_missing": 6,
+      "duplicate_blob_groups": 2,
+      "duplicate_extra_paths": 9
+    },
+    {
+      "branch": "docs/readme-rc-disclosure-agnes-5d-20261112",
+      "files": 864,
+      "same_path_same_blob": 857,
+      "changed_paths": 7,
+      "branch_only_paths": 0,
+      "main_paths_missing": 6,
+      "duplicate_blob_groups": 2,
+      "duplicate_extra_paths": 9
+    },
+    {
+      "branch": "docs/release-status-candidates-20261101",
+      "files": 857,
+      "same_path_same_blob": 791,
+      "changed_paths": 47,
+      "branch_only_paths": 19,
+      "main_paths_missing": 32,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "docs/repository-consolidation-20261104",
+      "files": 878,
+      "same_path_same_blob": 841,
+      "changed_paths": 18,
+      "branch_only_paths": 19,
+      "main_paths_missing": 11,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "feat/adaptive-cognitive-chat-ui",
+      "files": 534,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 22,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "feat/adk-graph-execution-adapter",
+      "files": 597,
+      "same_path_same_blob": 452,
+      "changed_paths": 124,
+      "branch_only_paths": 21,
+      "main_paths_missing": 294,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "feat/agnes-cognitive-foundation-v1",
+      "files": 544,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 32,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "feat/agnes-experiential-memory-v1",
+      "files": 358,
+      "same_path_same_blob": 243,
+      "changed_paths": 95,
+      "branch_only_paths": 20,
+      "main_paths_missing": 532,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "feat/agnes-expert-fabric-v1",
+      "files": 537,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 25,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "feat/agnes-idea-experimenter-v1",
+      "files": 362,
+      "same_path_same_blob": 243,
+      "changed_paths": 95,
+      "branch_only_paths": 24,
+      "main_paths_missing": 532,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "feat/agnes-persistent-ops-memory-20261110",
+      "files": 883,
+      "same_path_same_blob": 832,
+      "changed_paths": 32,
+      "branch_only_paths": 19,
+      "main_paths_missing": 6,
+      "duplicate_blob_groups": 2,
+      "duplicate_extra_paths": 9
+    },
+    {
+      "branch": "feat/agnes-sentinel-evidence-auditor-20261105",
+      "files": 868,
+      "same_path_same_blob": 846,
+      "changed_paths": 18,
+      "branch_only_paths": 4,
+      "main_paths_missing": 6,
+      "duplicate_blob_groups": 2,
+      "duplicate_extra_paths": 9
+    },
+    {
+      "branch": "feat/agnes-skill-foundry-v1",
+      "files": 360,
+      "same_path_same_blob": 243,
+      "changed_paths": 95,
+      "branch_only_paths": 22,
+      "main_paths_missing": 532,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "feat/ai-product-evolution-factory-20261006",
+      "files": 648,
+      "same_path_same_blob": 493,
+      "changed_paths": 135,
+      "branch_only_paths": 20,
+      "main_paths_missing": 242,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "feat/apidog-capability-gateway-20261008",
+      "files": 651,
+      "same_path_same_blob": 504,
+      "changed_paths": 125,
+      "branch_only_paths": 22,
+      "main_paths_missing": 241,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "feat/approval-durability-verifier-v1",
+      "files": 386,
+      "same_path_same_blob": 240,
+      "changed_paths": 98,
+      "branch_only_paths": 48,
+      "main_paths_missing": 532,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "feat/assurance-profile-20260903",
+      "files": 536,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 24,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "feat/canonical-release-subject-forensics-20261110",
+      "files": 867,
+      "same_path_same_blob": 848,
+      "changed_paths": 16,
+      "branch_only_paths": 3,
+      "main_paths_missing": 6,
+      "duplicate_blob_groups": 2,
+      "duplicate_extra_paths": 9
+    },
+    {
+      "branch": "feat/ck-nexus-platform-scaffold",
+      "files": 333,
+      "same_path_same_blob": 224,
+      "changed_paths": 82,
+      "branch_only_paths": 27,
+      "main_paths_missing": 564,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "feat/ck-nexus-test-portal",
+      "files": 875,
+      "same_path_same_blob": 846,
+      "changed_paths": 18,
+      "branch_only_paths": 11,
+      "main_paths_missing": 6,
+      "duplicate_blob_groups": 2,
+      "duplicate_extra_paths": 9
+    },
+    {
+      "branch": "feat/cknexus-agent-operating-model-main-20261105",
+      "files": 879,
+      "same_path_same_blob": 849,
+      "changed_paths": 15,
+      "branch_only_paths": 15,
+      "main_paths_missing": 6,
+      "duplicate_blob_groups": 2,
+      "duplicate_extra_paths": 9
+    },
+    {
+      "branch": "feat/cknexus-certification-portal-v1",
+      "files": 889,
+      "same_path_same_blob": 845,
+      "changed_paths": 19,
+      "branch_only_paths": 25,
+      "main_paths_missing": 6,
+      "duplicate_blob_groups": 2,
+      "duplicate_extra_paths": 10
+    },
+    {
+      "branch": "feat/cloud-worker-bridge-20261101",
+      "files": 886,
+      "same_path_same_blob": 814,
+      "changed_paths": 41,
+      "branch_only_paths": 31,
+      "main_paths_missing": 15,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "feat/cognitive-control-universe-v1",
+      "files": 329,
+      "same_path_same_blob": 224,
+      "changed_paths": 82,
+      "branch_only_paths": 23,
+      "main_paths_missing": 564,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "feat/credential-scope-termux-sandbox-v1",
+      "files": 369,
+      "same_path_same_blob": 243,
+      "changed_paths": 95,
+      "branch_only_paths": 31,
+      "main_paths_missing": 532,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "feat/didit-kyb-react-native",
+      "files": 554,
+      "same_path_same_blob": 393,
+      "changed_paths": 122,
+      "branch_only_paths": 39,
+      "main_paths_missing": 355,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "feat/facebook-meta-connector",
+      "files": 318,
+      "same_path_same_blob": 150,
+      "changed_paths": 152,
+      "branch_only_paths": 16,
+      "main_paths_missing": 568,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "feat/free-fallback-85",
+      "files": 533,
+      "same_path_same_blob": 386,
+      "changed_paths": 126,
+      "branch_only_paths": 21,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "feat/gemini-provider-20261119",
+      "files": 873,
+      "same_path_same_blob": 861,
+      "changed_paths": 9,
+      "branch_only_paths": 3,
+      "main_paths_missing": 0,
+      "duplicate_blob_groups": 2,
+      "duplicate_extra_paths": 9
+    },
+    {
+      "branch": "feat/live-development-status-20261101",
+      "files": 857,
+      "same_path_same_blob": 794,
+      "changed_paths": 44,
+      "branch_only_paths": 19,
+      "main_paths_missing": 32,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "feat/llm-keypool",
+      "files": 326,
+      "same_path_same_blob": 219,
+      "changed_paths": 84,
+      "branch_only_paths": 23,
+      "main_paths_missing": 567,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "feat/n8n-runtime-registration-guard-v1",
+      "files": 554,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 42,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "feat/omni-runtime-binding-20261006",
+      "files": 632,
+      "same_path_same_blob": 488,
+      "changed_paths": 124,
+      "branch_only_paths": 20,
+      "main_paths_missing": 258,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "feat/phase0-governed-contracts",
+      "files": 384,
+      "same_path_same_blob": 249,
+      "changed_paths": 103,
+      "branch_only_paths": 32,
+      "main_paths_missing": 518,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "feat/provider-council-omni-fabric-v1",
+      "files": 364,
+      "same_path_same_blob": 243,
+      "changed_paths": 95,
+      "branch_only_paths": 26,
+      "main_paths_missing": 532,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "feat/real-provider-adapters-v1",
+      "files": 371,
+      "same_path_same_blob": 242,
+      "changed_paths": 96,
+      "branch_only_paths": 33,
+      "main_paths_missing": 532,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "feat/research-control-profiles-20261006",
+      "files": 630,
+      "same_path_same_blob": 481,
+      "changed_paths": 125,
+      "branch_only_paths": 24,
+      "main_paths_missing": 264,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "feat/search-control-registry-20261101",
+      "files": 883,
+      "same_path_same_blob": 823,
+      "changed_paths": 36,
+      "branch_only_paths": 24,
+      "main_paths_missing": 11,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 12
+    },
+    {
+      "branch": "feat/signed-approval-authority-v1",
+      "files": 374,
+      "same_path_same_blob": 240,
+      "changed_paths": 98,
+      "branch_only_paths": 36,
+      "main_paths_missing": 532,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "feat/telegram-alerting-control-universe-v1",
+      "files": 329,
+      "same_path_same_blob": 224,
+      "changed_paths": 82,
+      "branch_only_paths": 23,
+      "main_paths_missing": 564,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "feat/telegram-control-v1",
+      "files": 388,
+      "same_path_same_blob": 240,
+      "changed_paths": 98,
+      "branch_only_paths": 50,
+      "main_paths_missing": 532,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "feat/universal-ai-standard-20261006",
+      "files": 641,
+      "same_path_same_blob": 490,
+      "changed_paths": 131,
+      "branch_only_paths": 20,
+      "main_paths_missing": 249,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "feat/universal-omni-mainline-20261006",
+      "files": 649,
+      "same_path_same_blob": 496,
+      "changed_paths": 133,
+      "branch_only_paths": 20,
+      "main_paths_missing": 241,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "feat/universal-provider-onboarding-v1",
+      "files": 366,
+      "same_path_same_blob": 243,
+      "changed_paths": 95,
+      "branch_only_paths": 28,
+      "main_paths_missing": 532,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "feature/autonomous-brain-foundation",
+      "files": 979,
+      "same_path_same_blob": 702,
+      "changed_paths": 141,
+      "branch_only_paths": 136,
+      "main_paths_missing": 27,
+      "duplicate_blob_groups": 23,
+      "duplicate_extra_paths": 31
+    },
+    {
+      "branch": "feature/ck-codex-account-switcher",
+      "files": 605,
+      "same_path_same_blob": 452,
+      "changed_paths": 124,
+      "branch_only_paths": 29,
+      "main_paths_missing": 294,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "feature/cknexus-agent-operating-model-20261031",
+      "files": 862,
+      "same_path_same_blob": 711,
+      "changed_paths": 115,
+      "branch_only_paths": 36,
+      "main_paths_missing": 44,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "feature/claude-provider-bridge-release-20261117",
+      "files": 874,
+      "same_path_same_blob": 846,
+      "changed_paths": 18,
+      "branch_only_paths": 10,
+      "main_paths_missing": 6,
+      "duplicate_blob_groups": 2,
+      "duplicate_extra_paths": 9
+    },
+    {
+      "branch": "feature/claude-provider-pr-20261117",
+      "files": 875,
+      "same_path_same_blob": 846,
+      "changed_paths": 18,
+      "branch_only_paths": 11,
+      "main_paths_missing": 6,
+      "duplicate_blob_groups": 2,
+      "duplicate_extra_paths": 9
+    },
+    {
+      "branch": "feature/github-identity-portal",
+      "files": 853,
+      "same_path_same_blob": 710,
+      "changed_paths": 115,
+      "branch_only_paths": 28,
+      "main_paths_missing": 45,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "feature/global-knowledge-discovery-20260907",
+      "files": 537,
+      "same_path_same_blob": 393,
+      "changed_paths": 125,
+      "branch_only_paths": 19,
+      "main_paths_missing": 352,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "feature/merge-history-package",
+      "files": 543,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 31,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "fix/agnes-omni-context-injection-20261011",
+      "files": 652,
+      "same_path_same_blob": 507,
+      "changed_paths": 122,
+      "branch_only_paths": 23,
+      "main_paths_missing": 241,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "fix/agnes-triad-attestation-test-fixtures-v1",
+      "files": 561,
+      "same_path_same_blob": 387,
+      "changed_paths": 125,
+      "branch_only_paths": 49,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "fix/agnes-triad-dashboard-authority-tamper-v1",
+      "files": 567,
+      "same_path_same_blob": 387,
+      "changed_paths": 125,
+      "branch_only_paths": 55,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "fix/agnes-triad-evidence-attestation-ruff-v1",
+      "files": 561,
+      "same_path_same_blob": 387,
+      "changed_paths": 125,
+      "branch_only_paths": 49,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "fix/agnes-triad-evidence-publisher-attestation-v1",
+      "files": 561,
+      "same_path_same_blob": 387,
+      "changed_paths": 125,
+      "branch_only_paths": 49,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "fix/agnes-triad-evidence-test-attestation-v1",
+      "files": 561,
+      "same_path_same_blob": 387,
+      "changed_paths": 125,
+      "branch_only_paths": 49,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "fix/agnes-triad-revision-lineage-v1",
+      "files": 557,
+      "same_path_same_blob": 387,
+      "changed_paths": 125,
+      "branch_only_paths": 45,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "fix/ai-harvester-safe-error-classification",
+      "files": 650,
+      "same_path_same_blob": 507,
+      "changed_paths": 123,
+      "branch_only_paths": 20,
+      "main_paths_missing": 240,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "fix/aikido-security-findings-20260828",
+      "files": 531,
+      "same_path_same_blob": 387,
+      "changed_paths": 125,
+      "branch_only_paths": 19,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "fix/allowlist-checkout-tag",
+      "files": 878,
+      "same_path_same_blob": 842,
+      "changed_paths": 17,
+      "branch_only_paths": 19,
+      "main_paths_missing": 11,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "fix/ci-release-evidence-boundary-20261006",
+      "files": 649,
+      "same_path_same_blob": 496,
+      "changed_paths": 133,
+      "branch_only_paths": 20,
+      "main_paths_missing": 241,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "fix/claim-registry-global-ci-v1",
+      "files": 539,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 27,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "fix/claim-registry-ruff-v1",
+      "files": 539,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 27,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "fix/connector-snapshot-serialization",
+      "files": 350,
+      "same_path_same_blob": 241,
+      "changed_paths": 91,
+      "branch_only_paths": 18,
+      "main_paths_missing": 538,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "fix/connector-snapshot-serialization-v2",
+      "files": 356,
+      "same_path_same_blob": 243,
+      "changed_paths": 95,
+      "branch_only_paths": 18,
+      "main_paths_missing": 532,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "fix/evidence-source-tree-binding-20261012",
+      "files": 650,
+      "same_path_same_blob": 506,
+      "changed_paths": 123,
+      "branch_only_paths": 21,
+      "main_paths_missing": 241,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "fix/failure-memory-event-schema-v1",
+      "files": 620,
+      "same_path_same_blob": 384,
+      "changed_paths": 128,
+      "branch_only_paths": 108,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 10
+    },
+    {
+      "branch": "fix/failure-memory-fingerprint-replay-v1",
+      "files": 620,
+      "same_path_same_blob": 384,
+      "changed_paths": 128,
+      "branch_only_paths": 108,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 10
+    },
+    {
+      "branch": "fix/final-package-provenance-binding",
+      "files": 349,
+      "same_path_same_blob": 239,
+      "changed_paths": 92,
+      "branch_only_paths": 18,
+      "main_paths_missing": 539,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "fix/issue-65-peer-bound-connector-transport",
+      "files": 504,
+      "same_path_same_blob": 357,
+      "changed_paths": 128,
+      "branch_only_paths": 19,
+      "main_paths_missing": 385,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "fix/n8n-webhook-registration-v1",
+      "files": 552,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 40,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "fix/omega-bounded-timeout-20261018",
+      "files": 653,
+      "same_path_same_blob": 507,
+      "changed_paths": 123,
+      "branch_only_paths": 23,
+      "main_paths_missing": 240,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "fix/omega-bounded-timeout-pipe-20261018",
+      "files": 652,
+      "same_path_same_blob": 508,
+      "changed_paths": 122,
+      "branch_only_paths": 22,
+      "main_paths_missing": 240,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "fix/p0-authorization-bypass-20261112",
+      "files": 869,
+      "same_path_same_blob": 836,
+      "changed_paths": 28,
+      "branch_only_paths": 5,
+      "main_paths_missing": 6,
+      "duplicate_blob_groups": 2,
+      "duplicate_extra_paths": 9
+    },
+    {
+      "branch": "fix/p0-ruff-lint",
+      "files": 848,
+      "same_path_same_blob": 711,
+      "changed_paths": 115,
+      "branch_only_paths": 22,
+      "main_paths_missing": 44,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "fix/pr365-office-archive-hardening-20261111",
+      "files": 886,
+      "same_path_same_blob": 826,
+      "changed_paths": 38,
+      "branch_only_paths": 22,
+      "main_paths_missing": 6,
+      "duplicate_blob_groups": 2,
+      "duplicate_extra_paths": 9
+    },
+    {
+      "branch": "fix/pr46-cknexus-ci-ruff-v1",
+      "files": 383,
+      "same_path_same_blob": 260,
+      "changed_paths": 105,
+      "branch_only_paths": 18,
+      "main_paths_missing": 505,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "fix/q03-dependency-closure",
+      "files": 318,
+      "same_path_same_blob": 150,
+      "changed_paths": 152,
+      "branch_only_paths": 16,
+      "main_paths_missing": 568,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "fix/q04-q05-ci-repro",
+      "files": 318,
+      "same_path_same_blob": 150,
+      "changed_paths": 152,
+      "branch_only_paths": 16,
+      "main_paths_missing": 568,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "fix/q05-bandit",
+      "files": 318,
+      "same_path_same_blob": 223,
+      "changed_paths": 79,
+      "branch_only_paths": 16,
+      "main_paths_missing": 568,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "fix/q05-bandit-hardening",
+      "files": 318,
+      "same_path_same_blob": 221,
+      "changed_paths": 81,
+      "branch_only_paths": 16,
+      "main_paths_missing": 568,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "fix/q05-e501",
+      "files": 320,
+      "same_path_same_blob": 224,
+      "changed_paths": 80,
+      "branch_only_paths": 16,
+      "main_paths_missing": 566,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "fix/q05-import-order-final",
+      "files": 318,
+      "same_path_same_blob": 221,
+      "changed_paths": 81,
+      "branch_only_paths": 16,
+      "main_paths_missing": 568,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "fix/q05-ruff-baseline",
+      "files": 318,
+      "same_path_same_blob": 160,
+      "changed_paths": 142,
+      "branch_only_paths": 16,
+      "main_paths_missing": 568,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "fix/q05-ruff-format",
+      "files": 318,
+      "same_path_same_blob": 207,
+      "changed_paths": 95,
+      "branch_only_paths": 16,
+      "main_paths_missing": 568,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "fix/q09-governance-binding",
+      "files": 322,
+      "same_path_same_blob": 224,
+      "changed_paths": 82,
+      "branch_only_paths": 16,
+      "main_paths_missing": 564,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "fix/q10-archive-policy-evidence-20261110",
+      "files": 883,
+      "same_path_same_blob": 830,
+      "changed_paths": 34,
+      "branch_only_paths": 19,
+      "main_paths_missing": 6,
+      "duplicate_blob_groups": 2,
+      "duplicate_extra_paths": 9
+    },
+    {
+      "branch": "fix/q10-attachment-hardening-20261123",
+      "files": 879,
+      "same_path_same_blob": 842,
+      "changed_paths": 28,
+      "branch_only_paths": 9,
+      "main_paths_missing": 0,
+      "duplicate_blob_groups": 2,
+      "duplicate_extra_paths": 9
+    },
+    {
+      "branch": "fix/q10-dependency-audit",
+      "files": 350,
+      "same_path_same_blob": 238,
+      "changed_paths": 93,
+      "branch_only_paths": 19,
+      "main_paths_missing": 539,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "fix/q10-dependency-vulnerabilities-20261119",
+      "files": 358,
+      "same_path_same_blob": 238,
+      "changed_paths": 98,
+      "branch_only_paths": 22,
+      "main_paths_missing": 534,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "fix/q10-gate-medium-and-report-20261119",
+      "files": 877,
+      "same_path_same_blob": 831,
+      "changed_paths": 39,
+      "branch_only_paths": 7,
+      "main_paths_missing": 0,
+      "duplicate_blob_groups": 2,
+      "duplicate_extra_paths": 9
+    },
+    {
+      "branch": "fix/q12-current-subject-20261006",
+      "files": 649,
+      "same_path_same_blob": 496,
+      "changed_paths": 133,
+      "branch_only_paths": 20,
+      "main_paths_missing": 241,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "fix/q12-delegation-preflight-20260905",
+      "files": 531,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 19,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "fix/q12-verifier-branch-preflight-20260905",
+      "files": 358,
+      "same_path_same_blob": 243,
+      "changed_paths": 96,
+      "branch_only_paths": 19,
+      "main_paths_missing": 531,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "fix/q15-launcher-mode",
+      "files": 334,
+      "same_path_same_blob": 226,
+      "changed_paths": 90,
+      "branch_only_paths": 18,
+      "main_paths_missing": 554,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "fix/q15-launcher-mode-v2",
+      "files": 334,
+      "same_path_same_blob": 226,
+      "changed_paths": 90,
+      "branch_only_paths": 18,
+      "main_paths_missing": 554,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "fix/q16-sandbox-chroot-path-20261011",
+      "files": 649,
+      "same_path_same_blob": 506,
+      "changed_paths": 123,
+      "branch_only_paths": 20,
+      "main_paths_missing": 241,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "fix/qwen-probe-httpsconnection",
+      "files": 857,
+      "same_path_same_blob": 791,
+      "changed_paths": 47,
+      "branch_only_paths": 19,
+      "main_paths_missing": 32,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "fix/refresh-main-candidate-evidence-20260907",
+      "files": 534,
+      "same_path_same_blob": 394,
+      "changed_paths": 121,
+      "branch_only_paths": 19,
+      "main_paths_missing": 355,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "fix/refresh-q05-q08-q09-a6e74b5d-20260907",
+      "files": 534,
+      "same_path_same_blob": 394,
+      "changed_paths": 121,
+      "branch_only_paths": 19,
+      "main_paths_missing": 355,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "fix/release-evidence-provenance",
+      "files": 349,
+      "same_path_same_blob": 239,
+      "changed_paths": 92,
+      "branch_only_paths": 18,
+      "main_paths_missing": 539,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "fix/release-q10-lock-20261119",
+      "files": 356,
+      "same_path_same_blob": 233,
+      "changed_paths": 103,
+      "branch_only_paths": 20,
+      "main_paths_missing": 534,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "fix/secret-scan-token-boundary-20261031",
+      "files": 848,
+      "same_path_same_blob": 712,
+      "changed_paths": 114,
+      "branch_only_paths": 22,
+      "main_paths_missing": 44,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "fix/security-deps-20261006",
+      "files": 626,
+      "same_path_same_blob": 481,
+      "changed_paths": 125,
+      "branch_only_paths": 20,
+      "main_paths_missing": 264,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "fix/security-deps-20261006-v2",
+      "files": 626,
+      "same_path_same_blob": 481,
+      "changed_paths": 125,
+      "branch_only_paths": 20,
+      "main_paths_missing": 264,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "fix/triad-subject-sha-validation-v1",
+      "files": 569,
+      "same_path_same_blob": 387,
+      "changed_paths": 125,
+      "branch_only_paths": 57,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "fix/trusted-verifier-image-path",
+      "files": 878,
+      "same_path_same_blob": 842,
+      "changed_paths": 17,
+      "branch_only_paths": 19,
+      "main_paths_missing": 11,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "fix/windows-sandbox-platform-gate-v1",
+      "files": 533,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 21,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "hardening/scanner-api-least-privilege-20261012",
+      "files": 653,
+      "same_path_same_blob": 506,
+      "changed_paths": 123,
+      "branch_only_paths": 24,
+      "main_paths_missing": 241,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "hardening/scorecard-remediation-20260905",
+      "files": 540,
+      "same_path_same_blob": 399,
+      "changed_paths": 113,
+      "branch_only_paths": 28,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "infra/q12-linux-host-preflight-v1",
+      "files": 533,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 21,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "infra/windows-vps-worker-bootstrap-v1",
+      "files": 534,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 22,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "integration/termux-change-sync-policy-20261117",
+      "files": 900,
+      "same_path_same_blob": 819,
+      "changed_paths": 45,
+      "branch_only_paths": 36,
+      "main_paths_missing": 6,
+      "duplicate_blob_groups": 2,
+      "duplicate_extra_paths": 10
+    },
+    {
+      "branch": "main",
+      "files": 870,
+      "same_path_same_blob": 870,
+      "changed_paths": 0,
+      "branch_only_paths": 0,
+      "main_paths_missing": 0,
+      "duplicate_blob_groups": 2,
+      "duplicate_extra_paths": 9
+    },
+    {
+      "branch": "noop",
+      "files": 318,
+      "same_path_same_blob": 150,
+      "changed_paths": 152,
+      "branch_only_paths": 16,
+      "main_paths_missing": 568,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "noop-check",
+      "files": 612,
+      "same_path_same_blob": 384,
+      "changed_paths": 128,
+      "branch_only_paths": 100,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 10
+    },
+    {
+      "branch": "noop-should-not-create",
+      "files": 554,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 42,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "ops/buyer-download-probe-20260905",
+      "files": 532,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 20,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "ops/buyer-ready-clean-package-20260906",
+      "files": 536,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 24,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "ops/canonical-export-20260904",
+      "files": 538,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 26,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "ops/canonical-export-20260904-run",
+      "files": 531,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 19,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "ops/canonical-export-20260904-trigger",
+      "files": 531,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 19,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "ops/github-governance-hardening-v1-20260904",
+      "files": 535,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 23,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "ops/independent-verification-source-export-v1",
+      "files": 532,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 20,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "ops/production-evidence-manifest-v2-1",
+      "files": 535,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 23,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "ops/project-state-20261110",
+      "files": 865,
+      "same_path_same_blob": 857,
+      "changed_paths": 7,
+      "branch_only_paths": 1,
+      "main_paths_missing": 6,
+      "duplicate_blob_groups": 2,
+      "duplicate_extra_paths": 9
+    },
+    {
+      "branch": "ops/provider-free-go-clean",
+      "files": 882,
+      "same_path_same_blob": 840,
+      "changed_paths": 30,
+      "branch_only_paths": 12,
+      "main_paths_missing": 0,
+      "duplicate_blob_groups": 2,
+      "duplicate_extra_paths": 9
+    },
+    {
+      "branch": "ops/q10-exact-subject-closure-20260829",
+      "files": 535,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 23,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "ops/q10-host-qualification-20260904",
+      "files": 372,
+      "same_path_same_blob": 243,
+      "changed_paths": 95,
+      "branch_only_paths": 34,
+      "main_paths_missing": 532,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "ops/q10-linux-execution-20260829",
+      "files": 359,
+      "same_path_same_blob": 243,
+      "changed_paths": 95,
+      "branch_only_paths": 21,
+      "main_paths_missing": 532,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "ops/q10-q12-master-prep-v2",
+      "files": 380,
+      "same_path_same_blob": 235,
+      "changed_paths": 103,
+      "branch_only_paths": 42,
+      "main_paths_missing": 532,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "ops/q10-q12-production-closure",
+      "files": 355,
+      "same_path_same_blob": 240,
+      "changed_paths": 96,
+      "branch_only_paths": 19,
+      "main_paths_missing": 534,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "ops/q10-readonly-materialize-20260827",
+      "files": 358,
+      "same_path_same_blob": 235,
+      "changed_paths": 103,
+      "branch_only_paths": 20,
+      "main_paths_missing": 532,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "ops/q10-source-materialization-helper",
+      "files": 357,
+      "same_path_same_blob": 243,
+      "changed_paths": 95,
+      "branch_only_paths": 19,
+      "main_paths_missing": 532,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "ops/q11-live-provider-smoke-v1",
+      "files": 355,
+      "same_path_same_blob": 240,
+      "changed_paths": 96,
+      "branch_only_paths": 19,
+      "main_paths_missing": 534,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "ops/q12-github-hosted-cgroup-diagnostic",
+      "files": 874,
+      "same_path_same_blob": 868,
+      "changed_paths": 2,
+      "branch_only_paths": 4,
+      "main_paths_missing": 0,
+      "duplicate_blob_groups": 2,
+      "duplicate_extra_paths": 9
+    },
+    {
+      "branch": "ops/security-evidence-delta-20260903",
+      "files": 533,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 21,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "package/full-system-inventory",
+      "files": 351,
+      "same_path_same_blob": 239,
+      "changed_paths": 92,
+      "branch_only_paths": 20,
+      "main_paths_missing": 539,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "post-p0/a2a-agent-admission-v1",
+      "files": 535,
+      "same_path_same_blob": 387,
+      "changed_paths": 125,
+      "branch_only_paths": 23,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/agent-security-governance-2026-v1",
+      "files": 538,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 26,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/agnes-capability-fabric-v1",
+      "files": 357,
+      "same_path_same_blob": 224,
+      "changed_paths": 82,
+      "branch_only_paths": 51,
+      "main_paths_missing": 564,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "post-p0/agnes-capability-gap-matrix-v2026",
+      "files": 610,
+      "same_path_same_blob": 387,
+      "changed_paths": 125,
+      "branch_only_paths": 98,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 10
+    },
+    {
+      "branch": "post-p0/agnes-cognitive-foundation-v1",
+      "files": 544,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 32,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/agnes-connected-source-intelligence-v1",
+      "files": 505,
+      "same_path_same_blob": 358,
+      "changed_paths": 127,
+      "branch_only_paths": 20,
+      "main_paths_missing": 385,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/agnes-expert-fabric-reconcile-v2",
+      "files": 539,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 27,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/agnes-frontier-model-governance-v1",
+      "files": 616,
+      "same_path_same_blob": 384,
+      "changed_paths": 128,
+      "branch_only_paths": 104,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 10
+    },
+    {
+      "branch": "post-p0/agnes-frontier-model-governance-v1-temp-check",
+      "files": 612,
+      "same_path_same_blob": 384,
+      "changed_paths": 128,
+      "branch_only_paths": 100,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 10
+    },
+    {
+      "branch": "post-p0/agnes-knowledge-repository-v1",
+      "files": 543,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 31,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/agnes-learning-consolidator-v1",
+      "files": 565,
+      "same_path_same_blob": 387,
+      "changed_paths": 125,
+      "branch_only_paths": 53,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/agnes-qwen38-delta-v2",
+      "files": 554,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 42,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/agnes-runtime-p0-delta-v1",
+      "files": 547,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 35,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/agnes-s-delta-v1",
+      "files": 360,
+      "same_path_same_blob": 224,
+      "changed_paths": 82,
+      "branch_only_paths": 54,
+      "main_paths_missing": 564,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "post-p0/agnes-triad-dashboard-projection-v1",
+      "files": 567,
+      "same_path_same_blob": 387,
+      "changed_paths": 125,
+      "branch_only_paths": 55,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/agnes-triad-debate-schema-v1",
+      "files": 557,
+      "same_path_same_blob": 387,
+      "changed_paths": 125,
+      "branch_only_paths": 45,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/agnes-triad-evidence-evaluator-v1",
+      "files": 561,
+      "same_path_same_blob": 387,
+      "changed_paths": 125,
+      "branch_only_paths": 49,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/agnes-triad-evidence-test-attestation-v1",
+      "files": 561,
+      "same_path_same_blob": 387,
+      "changed_paths": 125,
+      "branch_only_paths": 49,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/agnes-triad-memory-v1",
+      "files": 559,
+      "same_path_same_blob": 387,
+      "changed_paths": 125,
+      "branch_only_paths": 47,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/agnes-triad-parallel-scheduler-v1",
+      "files": 555,
+      "same_path_same_blob": 387,
+      "changed_paths": 125,
+      "branch_only_paths": 43,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/agnes-triad-pipeline-provenance-v1",
+      "files": 569,
+      "same_path_same_blob": 387,
+      "changed_paths": 125,
+      "branch_only_paths": 57,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/agnes-triad-pulse-v1",
+      "files": 563,
+      "same_path_same_blob": 387,
+      "changed_paths": 125,
+      "branch_only_paths": 51,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/agnes-triad-runtime-v1",
+      "files": 587,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 75,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/agnes-triad-strict-priority-reconcile-v1",
+      "files": 569,
+      "same_path_same_blob": 387,
+      "changed_paths": 125,
+      "branch_only_paths": 57,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/agnes-triad-strict-priority-v1",
+      "files": 555,
+      "same_path_same_blob": 387,
+      "changed_paths": 125,
+      "branch_only_paths": 43,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/agnes-voice-persona-v1",
+      "files": 537,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 25,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/anyclaw-cleanroom-bridge-v1",
+      "files": 509,
+      "same_path_same_blob": 363,
+      "changed_paths": 127,
+      "branch_only_paths": 19,
+      "main_paths_missing": 380,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/anyclaw-cleanroom-mcp-v2",
+      "files": 515,
+      "same_path_same_blob": 367,
+      "changed_paths": 129,
+      "branch_only_paths": 19,
+      "main_paths_missing": 374,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/assurance-profile-x1-20260905",
+      "files": 541,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 29,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/authzen-authorization-adapter-v1",
+      "files": 546,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 34,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/capability-ai-gateway-v1",
+      "files": 483,
+      "same_path_same_blob": 336,
+      "changed_paths": 128,
+      "branch_only_paths": 19,
+      "main_paths_missing": 406,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/capability-aware-model-fabric-v1",
+      "files": 608,
+      "same_path_same_blob": 387,
+      "changed_paths": 125,
+      "branch_only_paths": 96,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 10
+    },
+    {
+      "branch": "post-p0/chat-b-digital-twin-v2",
+      "files": 556,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 44,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/chat-b-digital-twin-v2-check",
+      "files": 554,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 42,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/chat-b-renderer-adapter-v2",
+      "files": 552,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 40,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/chat-mcp-bridge-v1",
+      "files": 579,
+      "same_path_same_blob": 387,
+      "changed_paths": 125,
+      "branch_only_paths": 67,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 10
+    },
+    {
+      "branch": "post-p0/ci-lane-classifier-v2",
+      "files": 533,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 21,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/ck-v3-coordination-runtime-v1",
+      "files": 521,
+      "same_path_same_blob": 374,
+      "changed_paths": 128,
+      "branch_only_paths": 19,
+      "main_paths_missing": 368,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/ck-v3-execution-planner-v1",
+      "files": 526,
+      "same_path_same_blob": 376,
+      "changed_paths": 131,
+      "branch_only_paths": 19,
+      "main_paths_missing": 363,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/ck-v3-readonly-executor-v1",
+      "files": 529,
+      "same_path_same_blob": 384,
+      "changed_paths": 126,
+      "branch_only_paths": 19,
+      "main_paths_missing": 360,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/claim-registry-v1",
+      "files": 539,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 27,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/cognitive-digital-twin-renderer-v2",
+      "files": 553,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 41,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/cognitive-digital-twin-v1",
+      "files": 548,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 36,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/cognitive-digital-twin-v2",
+      "files": 549,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 37,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/cognitive-governor-v1",
+      "files": 511,
+      "same_path_same_blob": 350,
+      "changed_paths": 131,
+      "branch_only_paths": 30,
+      "main_paths_missing": 389,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/cognitive-knowledge-fabric-v1-20260903",
+      "files": 540,
+      "same_path_same_blob": 389,
+      "changed_paths": 124,
+      "branch_only_paths": 27,
+      "main_paths_missing": 357,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/commercial-readiness-evidence-v1",
+      "files": 540,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 28,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/connector-observability-v1",
+      "files": 535,
+      "same_path_same_blob": 350,
+      "changed_paths": 131,
+      "branch_only_paths": 54,
+      "main_paths_missing": 389,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/creator-intelligence-v1-20260904",
+      "files": 535,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 23,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/data-contract-lineage-v1",
+      "files": 535,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 23,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/dev-assistant-execution-contract-v1",
+      "files": 447,
+      "same_path_same_blob": 311,
+      "changed_paths": 117,
+      "branch_only_paths": 19,
+      "main_paths_missing": 442,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/dev-assistant-fabric-v1",
+      "files": 442,
+      "same_path_same_blob": 307,
+      "changed_paths": 116,
+      "branch_only_paths": 19,
+      "main_paths_missing": 447,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/device-bridge-attested-descriptor-v1",
+      "files": 518,
+      "same_path_same_blob": 372,
+      "changed_paths": 127,
+      "branch_only_paths": 19,
+      "main_paths_missing": 371,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/dual-track-fabric-integration",
+      "files": 552,
+      "same_path_same_blob": 387,
+      "changed_paths": 125,
+      "branch_only_paths": 40,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 10
+    },
+    {
+      "branch": "post-p0/durable-execution-correctness-v2",
+      "files": 569,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 57,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/durable-execution-reconcile-v3",
+      "files": 537,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 25,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/dynamic-patch-verifier-v1",
+      "files": 461,
+      "same_path_same_blob": 319,
+      "changed_paths": 123,
+      "branch_only_paths": 19,
+      "main_paths_missing": 428,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/event-contract-standards-v1",
+      "files": 555,
+      "same_path_same_blob": 387,
+      "changed_paths": 125,
+      "branch_only_paths": 43,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/evidence-signing-coc-v1-20260904",
+      "files": 539,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 27,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/evidence-signing-custody-v1-20260904",
+      "files": 535,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 23,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/execution-verifier-v2",
+      "files": 519,
+      "same_path_same_blob": 350,
+      "changed_paths": 131,
+      "branch_only_paths": 38,
+      "main_paths_missing": 389,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/external-access-governance-v1",
+      "files": 534,
+      "same_path_same_blob": 387,
+      "changed_paths": 125,
+      "branch_only_paths": 22,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/failure-memory-fingerprint-replay-v1",
+      "files": 620,
+      "same_path_same_blob": 384,
+      "changed_paths": 128,
+      "branch_only_paths": 108,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 10
+    },
+    {
+      "branch": "post-p0/failure-memory-regression-immune-v1",
+      "files": 620,
+      "same_path_same_blob": 384,
+      "changed_paths": 128,
+      "branch_only_paths": 108,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 10
+    },
+    {
+      "branch": "post-p0/free-fallback-85",
+      "files": 540,
+      "same_path_same_blob": 386,
+      "changed_paths": 126,
+      "branch_only_paths": 28,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/gen4-fusion-v0.2",
+      "files": 343,
+      "same_path_same_blob": 224,
+      "changed_paths": 82,
+      "branch_only_paths": 37,
+      "main_paths_missing": 564,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "post-p0/gen6-2-elastic-swarm-v1",
+      "files": 570,
+      "same_path_same_blob": 387,
+      "changed_paths": 125,
+      "branch_only_paths": 58,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 10
+    },
+    {
+      "branch": "post-p0/gen6-3-cognitive-memory-v1",
+      "files": 576,
+      "same_path_same_blob": 387,
+      "changed_paths": 125,
+      "branch_only_paths": 64,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 10
+    },
+    {
+      "branch": "post-p0/gen6-3-memory-skill-v1",
+      "files": 576,
+      "same_path_same_blob": 387,
+      "changed_paths": 125,
+      "branch_only_paths": 64,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 10
+    },
+    {
+      "branch": "post-p0/gen6-4-research-formal-v1",
+      "files": 582,
+      "same_path_same_blob": 387,
+      "changed_paths": 125,
+      "branch_only_paths": 70,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 10
+    },
+    {
+      "branch": "post-p0/gen6-5-ui-multimodal-v1",
+      "files": 590,
+      "same_path_same_blob": 387,
+      "changed_paths": 125,
+      "branch_only_paths": 78,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 10
+    },
+    {
+      "branch": "post-p0/gen6-runtime-contracts-v1",
+      "files": 564,
+      "same_path_same_blob": 387,
+      "changed_paths": 125,
+      "branch_only_paths": 52,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 10
+    },
+    {
+      "branch": "post-p0/github-governance-hardening-v1-20260904",
+      "files": 535,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 23,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/gmail-oauth-setup-doc-v1",
+      "files": 501,
+      "same_path_same_blob": 352,
+      "changed_paths": 130,
+      "branch_only_paths": 19,
+      "main_paths_missing": 388,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/image-intelligence-pipeline-v1-20260904",
+      "files": 542,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 30,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/independent-patch-verifier-v1",
+      "files": 456,
+      "same_path_same_blob": 317,
+      "changed_paths": 120,
+      "branch_only_paths": 19,
+      "main_paths_missing": 433,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/inter-chat-communication-bus-v1",
+      "files": 555,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 43,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/knowledge-lexical-retrieval-v1-20260904",
+      "files": 552,
+      "same_path_same_blob": 393,
+      "changed_paths": 125,
+      "branch_only_paths": 34,
+      "main_paths_missing": 352,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/knowledge-persistence-v2-20260903",
+      "files": 547,
+      "same_path_same_blob": 393,
+      "changed_paths": 125,
+      "branch_only_paths": 29,
+      "main_paths_missing": 352,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/knowledge-retrieval-evaluation-v1-20260904",
+      "files": 555,
+      "same_path_same_blob": 393,
+      "changed_paths": 125,
+      "branch_only_paths": 37,
+      "main_paths_missing": 352,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/master-capability-evidence-registry-v1",
+      "files": 543,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 31,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/master-controller-v1-20260904",
+      "files": 535,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 23,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/mcp-admission-otel-bridge-v1",
+      "files": 534,
+      "same_path_same_blob": 387,
+      "changed_paths": 125,
+      "branch_only_paths": 22,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/mobile-proof-benchmark-v1",
+      "files": 535,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 23,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/n8n-development-agent-fabric",
+      "files": 552,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 40,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/n8n-runtime-registration-guard-v1",
+      "files": 554,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 42,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/nexus-omni-resilience-v1",
+      "files": 600,
+      "same_path_same_blob": 387,
+      "changed_paths": 125,
+      "branch_only_paths": 88,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 10
+    },
+    {
+      "branch": "post-p0/nexus-omni-ultra-governance-v1",
+      "files": 604,
+      "same_path_same_blob": 387,
+      "changed_paths": 125,
+      "branch_only_paths": 92,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 10
+    },
+    {
+      "branch": "post-p0/opencode-control-bridge-v1",
+      "files": 383,
+      "same_path_same_blob": 260,
+      "changed_paths": 105,
+      "branch_only_paths": 18,
+      "main_paths_missing": 505,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "post-p0/openfeature-evaluation-bridge-v1",
+      "files": 537,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 25,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/personal-data-plane-v1",
+      "files": 500,
+      "same_path_same_blob": 351,
+      "changed_paths": 130,
+      "branch_only_paths": 19,
+      "main_paths_missing": 389,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/personal-intelligence-v1",
+      "files": 475,
+      "same_path_same_blob": 328,
+      "changed_paths": 128,
+      "branch_only_paths": 19,
+      "main_paths_missing": 414,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/polyglot-engineering-fabric-v1",
+      "files": 540,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 28,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/production-evidence-manifest-v2-1",
+      "files": 535,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 23,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/repo-file-retention-audit-v1-20260904",
+      "files": 535,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 23,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/research-persistence-v1-20260907",
+      "files": 553,
+      "same_path_same_blob": 396,
+      "changed_paths": 126,
+      "branch_only_paths": 31,
+      "main_paths_missing": 348,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/sandbox-executor-v1",
+      "files": 452,
+      "same_path_same_blob": 314,
+      "changed_paths": 119,
+      "branch_only_paths": 19,
+      "main_paths_missing": 437,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/secure-remote-mcp-contract-v1",
+      "files": 521,
+      "same_path_same_blob": 372,
+      "changed_paths": 130,
+      "branch_only_paths": 19,
+      "main_paths_missing": 368,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/secure-remote-mcp-http-canary-v1",
+      "files": 522,
+      "same_path_same_blob": 377,
+      "changed_paths": 126,
+      "branch_only_paths": 19,
+      "main_paths_missing": 367,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/security-attack-regression-v1",
+      "files": 503,
+      "same_path_same_blob": 354,
+      "changed_paths": 130,
+      "branch_only_paths": 19,
+      "main_paths_missing": 386,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/security-issue-65-peer-binding",
+      "files": 504,
+      "same_path_same_blob": 359,
+      "changed_paths": 126,
+      "branch_only_paths": 19,
+      "main_paths_missing": 385,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/security-issue-66-attachment-validation",
+      "files": 504,
+      "same_path_same_blob": 351,
+      "changed_paths": 133,
+      "branch_only_paths": 20,
+      "main_paths_missing": 386,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/security-regression-evidence-reconcile-v1",
+      "files": 504,
+      "same_path_same_blob": 358,
+      "changed_paths": 127,
+      "branch_only_paths": 19,
+      "main_paths_missing": 385,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/self-capability-reconcile-v1",
+      "files": 386,
+      "same_path_same_blob": 260,
+      "changed_paths": 105,
+      "branch_only_paths": 21,
+      "main_paths_missing": 505,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "post-p0/sonar-quality-automation-v1-20260904",
+      "files": 539,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 27,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/standards-integration-v1",
+      "files": 531,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 19,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/standards-refresh-2026-08-v1",
+      "files": 561,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 49,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/stress-lab-level2-write-activation-gate-v1",
+      "files": 531,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 19,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/system-skills-harvest-v1",
+      "files": 537,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 25,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/test-standards-enforcement-v1",
+      "files": 590,
+      "same_path_same_blob": 387,
+      "changed_paths": 125,
+      "branch_only_paths": 78,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 10
+    },
+    {
+      "branch": "post-p0/tool-vps-helper-policy-20260904",
+      "files": 532,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 20,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/trusted-registry-verifier-profile-v1",
+      "files": 532,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 20,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/trusted-verifier-allowlist-v1",
+      "files": 468,
+      "same_path_same_blob": 323,
+      "changed_paths": 126,
+      "branch_only_paths": 19,
+      "main_paths_missing": 421,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/trusted-verifier-image-v1",
+      "files": 466,
+      "same_path_same_blob": 320,
+      "changed_paths": 127,
+      "branch_only_paths": 19,
+      "main_paths_missing": 423,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/twin-dialogue-bridge-v1",
+      "files": 391,
+      "same_path_same_blob": 260,
+      "changed_paths": 105,
+      "branch_only_paths": 26,
+      "main_paths_missing": 505,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "post-p0/two-chat-coordination-v1",
+      "files": 550,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 38,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/universal-model-capability-fabric-v1",
+      "files": 508,
+      "same_path_same_blob": 356,
+      "changed_paths": 129,
+      "branch_only_paths": 23,
+      "main_paths_missing": 385,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/universal-system-clean-v2",
+      "files": 442,
+      "same_path_same_blob": 307,
+      "changed_paths": 116,
+      "branch_only_paths": 19,
+      "main_paths_missing": 447,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/universal-system-v1",
+      "files": 506,
+      "same_path_same_blob": 304,
+      "changed_paths": 113,
+      "branch_only_paths": 89,
+      "main_paths_missing": 453,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 15
+    },
+    {
+      "branch": "post-p0/verifier-shadow-ledger-wiring-v1",
+      "files": 537,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 25,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/verifier-subject-gap-analysis-v1",
+      "files": 535,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 23,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "post-p0/windows-sandbox-platform-gate-v1",
+      "files": 533,
+      "same_path_same_blob": 385,
+      "changed_paths": 127,
+      "branch_only_paths": 21,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "prep/closure-operator-pack-v1",
+      "files": 373,
+      "same_path_same_blob": 235,
+      "changed_paths": 103,
+      "branch_only_paths": 35,
+      "main_paths_missing": 532,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "prep/q10-native-deep-scan-contract-v2",
+      "files": 360,
+      "same_path_same_blob": 235,
+      "changed_paths": 103,
+      "branch_only_paths": 22,
+      "main_paths_missing": 532,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "prep/q10-q12-closure-autopilot-v1",
+      "files": 358,
+      "same_path_same_blob": 235,
+      "changed_paths": 103,
+      "branch_only_paths": 20,
+      "main_paths_missing": 532,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "prep/q11-live-smoke-hardening-v2",
+      "files": 356,
+      "same_path_same_blob": 240,
+      "changed_paths": 96,
+      "branch_only_paths": 20,
+      "main_paths_missing": 534,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "prep/q12-verifier-hardening-v2",
+      "files": 360,
+      "same_path_same_blob": 243,
+      "changed_paths": 96,
+      "branch_only_paths": 21,
+      "main_paths_missing": 531,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "prepare/q11-subject-89f2925c",
+      "files": 357,
+      "same_path_same_blob": 243,
+      "changed_paths": 96,
+      "branch_only_paths": 18,
+      "main_paths_missing": 531,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "prepare/q12-subject-89f2925c",
+      "files": 357,
+      "same_path_same_blob": 243,
+      "changed_paths": 96,
+      "branch_only_paths": 18,
+      "main_paths_missing": 531,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "prepare/q14-subject-89f2925c",
+      "files": 357,
+      "same_path_same_blob": 243,
+      "changed_paths": 95,
+      "branch_only_paths": 19,
+      "main_paths_missing": 532,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "product/commercial-value-roadmap-20261105",
+      "files": 864,
+      "same_path_same_blob": 855,
+      "changed_paths": 7,
+      "branch_only_paths": 2,
+      "main_paths_missing": 8,
+      "duplicate_blob_groups": 2,
+      "duplicate_extra_paths": 9
+    },
+    {
+      "branch": "q10/aikido-frozen-39f5c1ad",
+      "files": 356,
+      "same_path_same_blob": 243,
+      "changed_paths": 95,
+      "branch_only_paths": 18,
+      "main_paths_missing": 532,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "q10/aikido-frozen-39f5c1ad-20260829",
+      "files": 356,
+      "same_path_same_blob": 243,
+      "changed_paths": 95,
+      "branch_only_paths": 18,
+      "main_paths_missing": 532,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "q10/deep-security-preflight-v1",
+      "files": 326,
+      "same_path_same_blob": 224,
+      "changed_paths": 82,
+      "branch_only_paths": 20,
+      "main_paths_missing": 564,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "q10/deep-security-preflight-v1-copycheck",
+      "files": 326,
+      "same_path_same_blob": 224,
+      "changed_paths": 82,
+      "branch_only_paths": 20,
+      "main_paths_missing": 564,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "q10/frozen-39f5c1ad-aikido",
+      "files": 356,
+      "same_path_same_blob": 243,
+      "changed_paths": 95,
+      "branch_only_paths": 18,
+      "main_paths_missing": 532,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "r33-closure-hardening-v02",
+      "files": 318,
+      "same_path_same_blob": 207,
+      "changed_paths": 95,
+      "branch_only_paths": 16,
+      "main_paths_missing": 568,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "refresh/subject-89f2925c",
+      "files": 357,
+      "same_path_same_blob": 235,
+      "changed_paths": 103,
+      "branch_only_paths": 19,
+      "main_paths_missing": 532,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "release/q04-q08-clean",
+      "files": 320,
+      "same_path_same_blob": 224,
+      "changed_paths": 80,
+      "branch_only_paths": 16,
+      "main_paths_missing": 566,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "release/q04-q08-multilane",
+      "files": 321,
+      "same_path_same_blob": 224,
+      "changed_paths": 78,
+      "branch_only_paths": 19,
+      "main_paths_missing": 568,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "release/q10-q16-closure",
+      "files": 355,
+      "same_path_same_blob": 240,
+      "changed_paths": 96,
+      "branch_only_paths": 19,
+      "main_paths_missing": 534,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "research/agentic-systems-gap-map-20261117",
+      "files": 876,
+      "same_path_same_blob": 846,
+      "changed_paths": 18,
+      "branch_only_paths": 12,
+      "main_paths_missing": 6,
+      "duplicate_blob_groups": 2,
+      "duplicate_extra_paths": 9
+    },
+    {
+      "branch": "research/ai-company-os-intel-20261119",
+      "files": 892,
+      "same_path_same_blob": 858,
+      "changed_paths": 12,
+      "branch_only_paths": 22,
+      "main_paths_missing": 0,
+      "duplicate_blob_groups": 2,
+      "duplicate_extra_paths": 9
+    },
+    {
+      "branch": "research/ai-tool-registry-20261002",
+      "files": 601,
+      "same_path_same_blob": 452,
+      "changed_paths": 124,
+      "branch_only_paths": 25,
+      "main_paths_missing": 294,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "research/ai-tooling-2026-10-25",
+      "files": 870,
+      "same_path_same_blob": 711,
+      "changed_paths": 114,
+      "branch_only_paths": 45,
+      "main_paths_missing": 45,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "research/blocker-substitution-20260904",
+      "files": 534,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 22,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "research/continuous-20261006-agent-controls",
+      "files": 626,
+      "same_path_same_blob": 480,
+      "changed_paths": 126,
+      "branch_only_paths": 20,
+      "main_paths_missing": 264,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "research/mcp-2026-07-28-cosign-baseline-v1",
+      "files": 534,
+      "same_path_same_blob": 384,
+      "changed_paths": 126,
+      "branch_only_paths": 24,
+      "main_paths_missing": 360,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "research/universal-ai-os-capability-map-20260827",
+      "files": 534,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 22,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "revert/pr-348",
+      "files": 878,
+      "same_path_same_blob": 843,
+      "changed_paths": 16,
+      "branch_only_paths": 19,
+      "main_paths_missing": 11,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "review/q11-exact-subject-reconcile-v1",
+      "files": 355,
+      "same_path_same_blob": 240,
+      "changed_paths": 96,
+      "branch_only_paths": 19,
+      "main_paths_missing": 534,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "sale/creator-source-package-v1",
+      "files": 336,
+      "same_path_same_blob": 223,
+      "changed_paths": 83,
+      "branch_only_paths": 30,
+      "main_paths_missing": 564,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "sale/dev-preview-package-v1",
+      "files": 390,
+      "same_path_same_blob": 240,
+      "changed_paths": 98,
+      "branch_only_paths": 52,
+      "main_paths_missing": 532,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "sale/launch-ops-v1.2",
+      "files": 366,
+      "same_path_same_blob": 223,
+      "changed_paths": 83,
+      "branch_only_paths": 60,
+      "main_paths_missing": 564,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "sale/seller-sales-kit-v1.1",
+      "files": 355,
+      "same_path_same_blob": 223,
+      "changed_paths": 83,
+      "branch_only_paths": 49,
+      "main_paths_missing": 564,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "security/aikido-q10-hardening-v1",
+      "files": 532,
+      "same_path_same_blob": 387,
+      "changed_paths": 125,
+      "branch_only_paths": 20,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "security/aikido-remediation-20260828",
+      "files": 531,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 19,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "security/buyer-delivery-path-hardening-20261119",
+      "files": 865,
+      "same_path_same_blob": 855,
+      "changed_paths": 9,
+      "branch_only_paths": 1,
+      "main_paths_missing": 6,
+      "duplicate_blob_groups": 2,
+      "duplicate_extra_paths": 9
+    },
+    {
+      "branch": "security/close-public-beta-surface-20261119",
+      "files": 870,
+      "same_path_same_blob": 866,
+      "changed_paths": 4,
+      "branch_only_paths": 0,
+      "main_paths_missing": 0,
+      "duplicate_blob_groups": 2,
+      "duplicate_extra_paths": 9
+    },
+    {
+      "branch": "security/codeql-ssrf-hardening-20261117",
+      "files": 874,
+      "same_path_same_blob": 860,
+      "changed_paths": 10,
+      "branch_only_paths": 4,
+      "main_paths_missing": 0,
+      "duplicate_blob_groups": 2,
+      "duplicate_extra_paths": 9
+    },
+    {
+      "branch": "security/collect-dev-status-path-hardening-20261119",
+      "files": 864,
+      "same_path_same_blob": 855,
+      "changed_paths": 9,
+      "branch_only_paths": 0,
+      "main_paths_missing": 6,
+      "duplicate_blob_groups": 2,
+      "duplicate_extra_paths": 9
+    },
+    {
+      "branch": "security/command-line-hardening-20261117",
+      "files": 872,
+      "same_path_same_blob": 857,
+      "changed_paths": 13,
+      "branch_only_paths": 2,
+      "main_paths_missing": 0,
+      "duplicate_blob_groups": 2,
+      "duplicate_extra_paths": 9
+    },
+    {
+      "branch": "security/ghas-codeql-remediation-20261105",
+      "files": 874,
+      "same_path_same_blob": 862,
+      "changed_paths": 8,
+      "branch_only_paths": 4,
+      "main_paths_missing": 0,
+      "duplicate_blob_groups": 2,
+      "duplicate_extra_paths": 9
+    },
+    {
+      "branch": "security/no-file-deletions-guard-20261119",
+      "files": 871,
+      "same_path_same_blob": 870,
+      "changed_paths": 0,
+      "branch_only_paths": 1,
+      "main_paths_missing": 0,
+      "duplicate_blob_groups": 2,
+      "duplicate_extra_paths": 9
+    },
+    {
+      "branch": "security/p0-n8n-export-guard-20261010",
+      "files": 651,
+      "same_path_same_blob": 506,
+      "changed_paths": 123,
+      "branch_only_paths": 22,
+      "main_paths_missing": 241,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "security/scorecard-remediation-20260905",
+      "files": 540,
+      "same_path_same_blob": 399,
+      "changed_paths": 113,
+      "branch_only_paths": 28,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "security/semgrep-exact-proof-20260904",
+      "files": 533,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 21,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "security/sqlite-hardening-20261117",
+      "files": 868,
+      "same_path_same_blob": 852,
+      "changed_paths": 12,
+      "branch_only_paths": 4,
+      "main_paths_missing": 6,
+      "duplicate_blob_groups": 2,
+      "duplicate_extra_paths": 9
+    },
+    {
+      "branch": "temp-do-not-use",
+      "files": 556,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 44,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "tmp-do-not-use",
+      "files": 349,
+      "same_path_same_blob": 238,
+      "changed_paths": 92,
+      "branch_only_paths": 19,
+      "main_paths_missing": 540,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "ui/cognitive-control-interface-v2",
+      "files": 531,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 19,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "ui/unified-command-center-v01",
+      "files": 340,
+      "same_path_same_blob": 224,
+      "changed_paths": 82,
+      "branch_only_paths": 34,
+      "main_paths_missing": 564,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "upgrade/cognitive-knowledge-fabric-v1-20260903",
+      "files": 540,
+      "same_path_same_blob": 389,
+      "changed_paths": 124,
+      "branch_only_paths": 27,
+      "main_paths_missing": 357,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "upgrade/collaborative-development-framework-v1-20260905",
+      "files": 538,
+      "same_path_same_blob": 392,
+      "changed_paths": 127,
+      "branch_only_paths": 19,
+      "main_paths_missing": 351,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "upgrade/creator-intelligence-v1-20260904",
+      "files": 537,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 25,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "upgrade/enforcement-stack-vnext-20261002",
+      "files": 602,
+      "same_path_same_blob": 449,
+      "changed_paths": 127,
+      "branch_only_paths": 26,
+      "main_paths_missing": 294,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "upgrade/frontier-roadmap-p0-agent-security-20260903",
+      "files": 532,
+      "same_path_same_blob": 387,
+      "changed_paths": 125,
+      "branch_only_paths": 20,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "upgrade/image-intelligence-pipeline-v1-20260904",
+      "files": 536,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 24,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "upgrade/install-ux-a1-20260903",
+      "files": 537,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 25,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "upgrade/knowledge-persistence-v2-20260903",
+      "files": 547,
+      "same_path_same_blob": 393,
+      "changed_paths": 125,
+      "branch_only_paths": 29,
+      "main_paths_missing": 352,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "upgrade/omni-control-plane-20261006",
+      "files": 629,
+      "same_path_same_blob": 484,
+      "changed_paths": 125,
+      "branch_only_paths": 20,
+      "main_paths_missing": 261,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "upgrade/system-wide-20260920",
+      "files": 598,
+      "same_path_same_blob": 451,
+      "changed_paths": 125,
+      "branch_only_paths": 22,
+      "main_paths_missing": 294,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "verify/category-a-canonical",
+      "files": 627,
+      "same_path_same_blob": 481,
+      "changed_paths": 125,
+      "branch_only_paths": 21,
+      "main_paths_missing": 264,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "verify/cloud-phase3-linux-v1",
+      "files": 381,
+      "same_path_same_blob": 240,
+      "changed_paths": 98,
+      "branch_only_paths": 43,
+      "main_paths_missing": 532,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "verify/docker-full-capability-20260903",
+      "files": 535,
+      "same_path_same_blob": 388,
+      "changed_paths": 124,
+      "branch_only_paths": 23,
+      "main_paths_missing": 358,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "verify/q04-exact-sha",
+      "files": 319,
+      "same_path_same_blob": 150,
+      "changed_paths": 152,
+      "branch_only_paths": 17,
+      "main_paths_missing": 568,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "verify/q04-q05-converged",
+      "files": 320,
+      "same_path_same_blob": 224,
+      "changed_paths": 78,
+      "branch_only_paths": 18,
+      "main_paths_missing": 568,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "verify/q04-q05-converged-final",
+      "files": 318,
+      "same_path_same_blob": 150,
+      "changed_paths": 152,
+      "branch_only_paths": 16,
+      "main_paths_missing": 568,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "verify/q04-q05-converged-v2",
+      "files": 318,
+      "same_path_same_blob": 150,
+      "changed_paths": 152,
+      "branch_only_paths": 16,
+      "main_paths_missing": 568,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "verify/q04-q05-converged-v3",
+      "files": 318,
+      "same_path_same_blob": 223,
+      "changed_paths": 79,
+      "branch_only_paths": 16,
+      "main_paths_missing": 568,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "verify/q05-exact-ci",
+      "files": 318,
+      "same_path_same_blob": 221,
+      "changed_paths": 81,
+      "branch_only_paths": 16,
+      "main_paths_missing": 568,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "verify/q06-q07-main-a8f18",
+      "files": 321,
+      "same_path_same_blob": 224,
+      "changed_paths": 80,
+      "branch_only_paths": 17,
+      "main_paths_missing": 566,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "verify/q09-live-evidence",
+      "files": 322,
+      "same_path_same_blob": 224,
+      "changed_paths": 81,
+      "branch_only_paths": 17,
+      "main_paths_missing": 565,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "verify/q09-live-evidence-v2",
+      "files": 322,
+      "same_path_same_blob": 224,
+      "changed_paths": 81,
+      "branch_only_paths": 17,
+      "main_paths_missing": 565,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "verify/q10-dependency-audit",
+      "files": 322,
+      "same_path_same_blob": 224,
+      "changed_paths": 82,
+      "branch_only_paths": 16,
+      "main_paths_missing": 564,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "verify/q11-final-subject",
+      "files": 357,
+      "same_path_same_blob": 243,
+      "changed_paths": 96,
+      "branch_only_paths": 18,
+      "main_paths_missing": 531,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "verify/q11-main-944d7cb-20261120",
+      "files": 871,
+      "same_path_same_blob": 870,
+      "changed_paths": 0,
+      "branch_only_paths": 1,
+      "main_paths_missing": 0,
+      "duplicate_blob_groups": 2,
+      "duplicate_extra_paths": 9
+    },
+    {
+      "branch": "verify/q12-delegation-v2",
+      "files": 336,
+      "same_path_same_blob": 226,
+      "changed_paths": 90,
+      "branch_only_paths": 20,
+      "main_paths_missing": 554,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "verify/q12-final-subject",
+      "files": 358,
+      "same_path_same_blob": 243,
+      "changed_paths": 96,
+      "branch_only_paths": 19,
+      "main_paths_missing": 531,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "verify/q14-final-subject",
+      "files": 357,
+      "same_path_same_blob": 243,
+      "changed_paths": 95,
+      "branch_only_paths": 19,
+      "main_paths_missing": 532,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "verify/sale-gates-20260922",
+      "files": 366,
+      "same_path_same_blob": 244,
+      "changed_paths": 94,
+      "branch_only_paths": 28,
+      "main_paths_missing": 532,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    },
+    {
+      "branch": "verify/sale-gates-v2-20260922",
+      "files": 366,
+      "same_path_same_blob": 244,
+      "changed_paths": 94,
+      "branch_only_paths": 28,
+      "main_paths_missing": 532,
+      "duplicate_blob_groups": 4,
+      "duplicate_extra_paths": 8
+    }
+  ]
+}
