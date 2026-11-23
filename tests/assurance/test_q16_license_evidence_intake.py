@@ -29,6 +29,7 @@ class Q16IntakeTests(unittest.TestCase):
         result = MODULE.intake(
             self.path, tool="ort", version="synthetic-1",
             candidate_sha=CANDIDATE,
+            allowed_root=Path(self.temp.name),
         )
         self.assertEqual(result["intake_status"], "INTEGRITY_VERIFIED_ONLY")
         self.assertFalse(result["license_assessment_performed"])
@@ -39,6 +40,7 @@ class Q16IntakeTests(unittest.TestCase):
         result = MODULE.intake(
             self.path, tool="scancode", version="synthetic-1",
             candidate_sha=CANDIDATE,
+            allowed_root=Path(self.temp.name),
         )
         self.assertEqual(result["tool"], "scancode")
         self.assertEqual(len(result["evidence_sha256"]), 64)
@@ -56,6 +58,19 @@ class Q16IntakeTests(unittest.TestCase):
         self.path.write_text("[]", encoding="utf-8")
         with self.assertRaises(MODULE.IntakeError):
             MODULE.intake(self.path, tool="ort", version="1", candidate_sha=CANDIDATE)
+
+    def test_rejects_path_outside_allowed_root(self) -> None:
+        outside = Path(self.temp.name).parent / (Path(self.temp.name).name + "-outside.json")
+        outside.write_text("{}", encoding="utf-8")
+        self.addCleanup(outside.unlink)
+        with self.assertRaisesRegex(MODULE.IntakeError, "inside the allowed root"):
+            MODULE.intake(
+                outside,
+                tool="ort",
+                version="1",
+                candidate_sha=CANDIDATE,
+                allowed_root=Path(self.temp.name),
+            )
 
     def test_rejects_symlink_and_empty_file(self) -> None:
         target = Path(self.temp.name) / "target.json"
