@@ -47,15 +47,19 @@ def validate(report: dict[str, Any], expected: dict[str, str], raw_digest: str) 
     missing = [key for key in REQUIRED if key not in report]
     mismatches: list[str] = []
 
-    for key in ("source_sha", "source_tree", "runtime_subject_sha256", "artifact_digest"):
+    for key in ("source_sha", "source_tree"):
+        value = report.get(key)
+        if not isinstance(value, str) or not GIT_SHA_RE.fullmatch(value):
+            mismatches.append(f"invalid_{key}")
+        elif expected.get(key) and value != expected[key]:
+            mismatches.append(f"{key}_mismatch")
+
+    for key in ("runtime_subject_sha256", "artifact_digest"):
         value = report.get(key)
         if not isinstance(value, str) or not SHA256_RE.fullmatch(value):
             mismatches.append(f"invalid_{key}")
         elif expected.get(key) and value != expected[key]:
             mismatches.append(f"{key}_mismatch")
-
-    if not isinstance(report.get("source_sha"), str) or not GIT_SHA_RE.fullmatch(report.get("source_sha", "")):
-        mismatches.append("invalid_source_sha_format")
     if not isinstance(report.get("workflow_run_id"), (str, int)) or str(report.get("workflow_run_id", "")).strip() == "":
         mismatches.append("invalid_workflow_run_id")
     if report.get("scope_complete") is not True:
@@ -109,7 +113,15 @@ def main() -> int:
                 raise ValueError(f"expected {key} must be 64 lowercase hex characters")
         result = validate(report, expected, sha256_file(args.input))
         args.output.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-        print(json.dumps({k: result[k] for k in ("status", "gate_state_changed", "gate_pass_claimed", "missing_fields", "binding_or_scope_errors", "raw_report_sha256")}, sort_keys=True))
+        summary_keys = (
+            "status",
+            "gate_state_changed",
+            "gate_pass_claimed",
+            "missing_fields",
+            "binding_or_scope_errors",
+            "raw_report_sha256",
+        )
+        print(json.dumps({key: result[key] for key in summary_keys}, sort_keys=True))
         return 0 if result["status"] == "EVIDENCE_READY_FOR_GATE_EVALUATION" else 2
     except (OSError, json.JSONDecodeError, ValueError) as exc:
         print(f"adapter input error: {type(exc).__name__}: {exc}", file=sys.stderr)
