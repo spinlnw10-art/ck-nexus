@@ -15,7 +15,7 @@ class EvidenceAdapterTests(unittest.TestCase):
     def setUp(self) -> None:
         self.expected = {
             "source_sha": "a" * 40,
-            "source_tree": "b" * 64,
+            "source_tree": "b" * 40,
             "runtime_subject_sha256": "c" * 64,
             "artifact_digest": "d" * 64,
         }
