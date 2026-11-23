@@ -11,7 +11,8 @@ MODULE_PATH = (
     / "scripts/assurance/q16_license_evidence_intake.py"
 )
 SPEC = importlib.util.spec_from_file_location("q16_license_evidence_intake", MODULE_PATH)
-assert SPEC and SPEC.loader
+assert SPEC is not None
+assert SPEC.loader is not None
 MODULE = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(MODULE)
 
