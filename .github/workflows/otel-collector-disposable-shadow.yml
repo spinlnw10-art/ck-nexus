@@ -69,6 +69,7 @@ jobs:
           docker network create --internal ck-nexus-otel-shadow
           docker run --detach --name ck-nexus-otel-shadow \
             --network ck-nexus-otel-shadow \
+            --publish 127.0.0.1:4318:4318 \
             --read-only --cap-drop=ALL --security-opt=no-new-privileges \
             --pids-limit=64 --memory=256m --cpus=1 \
             --tmpfs /tmp:rw,noexec,nosuid,size=16m \
@@ -77,9 +78,7 @@ jobs:
             if [ "$(docker inspect --format '{{.State.Running}}' ck-nexus-otel-shadow)" != "true" ]; then
               break
             fi
-            COLLECTOR_IP="$(docker inspect --format '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ck-nexus-otel-shadow)"
-            if [ -n "$COLLECTOR_IP" ] && curl --silent --output /dev/null --connect-timeout 1 "http://$COLLECTOR_IP:4318/v1/traces"; then
-              echo "OTEL_SHADOW_ENDPOINT=http://$COLLECTOR_IP:4318" >> "$GITHUB_ENV"
+            if curl --silent --output /dev/null --connect-timeout 1 http://127.0.0.1:4318/v1/traces; then
               exit 0
             fi
             sleep 1
@@ -89,9 +88,7 @@ jobs:
           exit 1
 
       - name: Send synthetic traces and metrics
-        env:
-          OTEL_SHADOW_ENDPOINT: ${{ env.OTEL_SHADOW_ENDPOINT }}
-        run: python tests/assurance/otel_collector_shadow_smoke.py "$OTEL_SHADOW_ENDPOINT"
+        run: python tests/assurance/otel_collector_shadow_smoke.py
 
       - name: Assert trace propagation, metrics, and secret removal
         run: |
