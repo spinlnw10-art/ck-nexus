@@ -37,7 +37,7 @@ thoroughly tested integration.
 
 ## Coverage boundary
 
-ScanCode covers the checked-out repository source tree. ORT Analyzer/Scanner currently exercises the isolated synthetic fixture only; it does **not** yet resolve and scan all CK-NEXUS dependency trees or every OS/native/frontend package manager. Full dependency inventory requires a separately reviewed, isolated analyzer policy and dependency-source download boundary. This PR must not be described as complete system-wide dependency license clearance.
+ScanCode covers the checked-out repository source tree. ORT is configured to analyze and scan the full repository's NPM and PIP dependency graph in an isolated copy, as well as the deterministic synthetic fixture. The current repository inventory contains two NPM `package.json` files and Python `pyproject.toml` / `requirements-dev.txt`, but no NPM or Python lockfiles. Dynamic versions are therefore enabled for this shadow run; the resolved versions and download hashes are captured in ORT reports. This is an exploratory snapshot, not a reproducible lockfile-based release gate. No other package-manager manifests were found in the inspected repository tree. The result must not be described as legal approval or final system-wide license clearance.
 
 ## Safety
 
