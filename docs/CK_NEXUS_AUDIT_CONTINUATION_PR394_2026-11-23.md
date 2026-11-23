@@ -81,3 +81,35 @@ Disposition:
 No file is approved for deletion by this continuation. The apparent duplicates are still referenced by deployment contracts, checksum inventory, runtime tests or external host paths. The next safe reduction should be a reviewed deprecation/migration PR with tests and rollback evidence, not an immediate deletion.
 
 Production remains NO-GO until exact-candidate Q10–Q16 gates pass.
+
+
+## 6. VPS script inventory — first static pass
+
+A recursive Git tree at base commit `944d7cb70a5d59d53c8fb379752bbee2085f7c8c` returned **46 tracked files** under `ops/vps/scripts/`. The tree response was not truncated. This is an inventory of repository files, not a statement about what is installed on any VPS.
+
+Static inspection has covered a subset of the 46 scripts so far. Important findings:
+
+| Script | Observed behavior from source | Risk / disposition |
+|---|---|---|
+| `ck-cleanup.sh` | Removes named files in `/root`, matching `nano.*.save`, empty top-level directories and `/tmp/{sbx,q10,codex,check}-*` | Destructive and pattern-based; do not run without target preview and owner confirmation |
+| `ck-v9.sh` | Removes matching temporary directories and issues a remote Sandbox CLI delete for a specific sandbox ID | High risk: remote resource deletion; preserve as historical until ownership and sandbox state are verified |
+| `ck-q16.sh` | Contains `rm -rf ~/work/ck-nexus`, then performs Docker build/test and writes a checksum manifest | High risk: deletes a named working clone; do not run on a host that may hold unique work |
+| `ck-q11q16.sh` | Installs PostgreSQL client packages, creates/uses a protected environment file, makes HTTP requests and writes `SHA256SUMS` | Mutating setup/verification script, not a read-only audit |
+| `ck-push.sh` | Executes `git push origin main` | Release-affecting; do not run under this audit authorization |
+| `cknexus-final-cleanup.sh` | Deletes old temp files, Python caches/bytecode and a selected temporary clone; vacuums journal; runs `docker system prune -f` | High risk to rollback caches/images and audit history; do not run |
+| `cknexus-safe-cleanup.sh` | Cleans apt/npm caches, deletes temp files older than seven days and Mesa shader cache, vacuums journal | Destructive despite “safe” name; requires per-target preview and log-retention decision |
+| `quick-reclaim.sh` | Cleans uv cache, apt cache, vacuums journal, removes selected Docker images and can recursively delete sandbox directories older than three days after prompt | High risk: sandbox state and rollback images may be lost |
+| `reclaim2.sh` | Can purge Google Cloud CLI packages and run autoremove | Can remove operational tooling; require explicit package-ownership review |
+| `cknexus-reboot-cycle.sh` | Captures n8n DB/service and Docker state around a reboot; probes n8n and Docker | Mutates host by rebooting; also demonstrates retained n8n operational assumptions |
+| `cknexus-rm-audit.sh`, `cknexus-disk-audit.sh`, `cknexus-cleanup-target-check.sh` | Primarily inspect files, large objects, Docker usage, running services and cleanup candidates | Candidate read-only audit tools; still require full review before execution because shell side effects and external commands must be checked |
+| `cknexus-q11-rootcause.sh` | Creates protected temporary probe/API/output files, calls HTTP endpoints, then removes temporary files | Diagnostic with temporary filesystem writes/deletes; not strictly read-only |
+| `cknexus-postboot-verify.sh` | Checks n8n, Docker and reboot state, captures service/database state | Writes recovery-capture files; not strictly read-only |
+
+Other scripts in the 46-file inventory include Q10/Q11/Q16 test/signoff/handover helpers, GitHub helpers, setup scripts, n8n wrappers, model/API probes and Pangolin setup. Their names alone are not enough to classify them.
+
+### Immediate controls
+- Do not run any script whose name contains cleanup, reclaim, fix, push, reboot, setup, Q10/Q16 or signoff until its full source and exact target host/state are reviewed.
+- The word “safe” in a script name is not a safety guarantee.
+- No script has been executed in this audit.
+- No host service state, package inventory, sandbox ownership, Docker image usage or backup status has been verified live.
+- The next pass must inspect the remaining scripts and build a command-level capability matrix, then separate genuinely read-only probes from scripts with filesystem, package, service, network, Docker, Git or reboot effects.
