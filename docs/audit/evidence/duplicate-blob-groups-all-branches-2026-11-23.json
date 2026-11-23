@@ -1,8 +1,8 @@
 {
   "snapshot_date": "2026-11-23",
-  "branches_scanned": 401,
+  "branches_scanned": 402,
   "errors": [],
-  "duplicate_group_occurrences": 1604,
+  "duplicate_group_occurrences": 1606,
   "distinct_duplicate_group_signatures": 28,
   "groups": [
     {
@@ -12,7 +12,7 @@
         "migrations/postgresql/001_email_gateway.sql",
         "services/email_gateway/migrations/postgresql.sql"
       ],
-      "branch_occurrences": 401,
+      "branch_occurrences": 402,
       "branches": [
         "agent/closure-diagnostics-2026-10-02",
         "agent/unified-control-package",
@@ -31,6 +31,7 @@
         "audit/20261014-readonly-baseline",
         "audit/bootstrap-v5.2.3",
         "audit/canonical-evidence-ledger-20261001",
+        "audit/repository-organization-20261123",
         "automation/capability-registry-weekly-2026-11-09",
         "backup/ck-nexus-snapshot-2026-08-21",
         "backup/pre-consolidation-20261031",
@@ -1175,13 +1176,14 @@
         "services/billing/__init__.py",
         "tests/__init__.py"
       ],
-      "branch_occurrences": 267,
+      "branch_occurrences": 268,
       "branches": [
         "agent/closure-diagnostics-2026-10-02",
         "agent/unified-control-package",
         "audit/20261014-readonly-baseline",
         "audit/bootstrap-v5.2.3",
         "audit/canonical-evidence-ledger-20261001",
+        "audit/repository-organization-20261123",
         "automation/capability-registry-weekly-2026-11-09",
         "backup/pre-consolidation-20261031",
         "backup/reinstall-2026-08-25",
@@ -1929,6 +1931,5 @@
         "feat/search-control-registry-20261101"
       ]
     }
-  ],
-  "scope_note": "Baseline covers the 401 pre-existing live remote branches at audit start. The audit branch audit/repository-organization-20261123 is excluded from its own evidence to avoid self-referential HEAD/tree snapshots; it is tracked separately by Draft PR #393."
+  ]
 }
