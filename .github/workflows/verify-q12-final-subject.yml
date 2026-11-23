@@ -59,6 +59,10 @@ jobs:
                 if [ "$hierarchy" = "0" ]; then cg="$path"; fi
               done < /proc/self/cgroup
               test -n "$cg"
+              case "$cg" in
+                */q12-bootstrap) cg="${cg%/q12-bootstrap}" ;;
+                *) echo "systemd delegated subgroup missing from cgroup path: $cg" > "$GITHUB_WORKSPACE/q12-gate-error.txt"; exit 2 ;;
+              esac
               root="/sys/fs/cgroup$cg"
               echo "$root" > "$GITHUB_WORKSPACE/q12-delegated-root.txt"
               # systemd 254+ places the service process in this delegated
