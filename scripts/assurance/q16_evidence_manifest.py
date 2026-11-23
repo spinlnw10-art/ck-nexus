@@ -13,8 +13,10 @@ WORKSPACE = Path("evidence/assurance/shadow/q16")
 INPUTS = {
     "scancode_full_repo": "scancode-full-repo.json",
     "scancode_install_report": "scancode-install-report.json",
-    "ort_analyzer": "analyzer-result.json",
-    "ort_scanner": "scan-result.yml",
+    "ort_full_repo_analyzer": "ort-full-repo-analyzer-result.json",
+    "ort_full_repo_scanner": "ort-full-repo-scan-result.yml",
+    "ort_synthetic_analyzer": "analyzer-result.json",
+    "ort_synthetic_scanner": "scan-result.yml",
 }
 
 
@@ -47,7 +49,7 @@ def build_manifest(candidate_sha: str, workspace: Path) -> dict:
             "repository_source_scan": (
                 "full checked-out source tree; generated and VCS directories excluded"
             ),
-            "ort_pipeline": "synthetic fixture only; no project dependency resolution requested",
+            "ort_pipeline": "full repository NPM/PIP dependency analysis and ScanCode scan with dynamic versions enabled for shadow only; deterministic synthetic fixture also scanned",
         },
         "artifacts": artifacts,
         "authority": {
