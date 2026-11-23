@@ -88,7 +88,7 @@ jobs:
           test -f "$WHEEL"
           echo "$SCANCODE_SHA256  $WHEEL" | sha256sum --check
           printf "pluggy==1.6.0\\n" > "$RUNNER_TEMP/scancode-constraints.txt"
-          python -m pip install --only-binary=:all: --no-deps --constraint "$RUNNER_TEMP/scancode-constraints.txt" --report "$RUNNER_TEMP/scancode-install-report.json" "$WHEEL"
+          python -m pip install --only-binary=:all: --constraint "$RUNNER_TEMP/scancode-constraints.txt" --report "$RUNNER_TEMP/scancode-install-report.json" "$WHEEL"
           scancode --version
 
       - name: Scan complete CK-NEXUS source tree with ScanCode
@@ -109,7 +109,7 @@ jobs:
           WHEEL="$RUNNER_TEMP/python-inspector-wheel/python_inspector-0.15.2-py3-none-any.whl"
           test -f "$WHEEL"
           echo "$PYTHON_INSPECTOR_SHA256  $WHEEL" | sha256sum --check
-          python -m pip install --only-binary=:all: --no-deps --constraint "$RUNNER_TEMP/scancode-constraints.txt" --report "$RUNNER_TEMP/python-inspector-install-report.json" "$WHEEL"
+          python -m pip install --only-binary=:all: --constraint "$RUNNER_TEMP/scancode-constraints.txt" --report "$RUNNER_TEMP/python-inspector-install-report.json" "$WHEEL"
           python-inspector --version
           # python-inspector 0.15.2 imports distutils; Python 3.12 removed it.
           # Setuptools' pinned compatibility shim restores the import without
