@@ -6,6 +6,7 @@ on:
       - "tests/fixtures/q16-license/**"
       - "scripts/assurance/q16_evidence_manifest.py"
       - "scripts/assurance/evidence_graph_intake.py"
+      - "scripts/assurance/Q16_ORT_SCANCODE_SHADOW.md"
       - "tests/assurance/test_evidence_graph_intake.py"
       - "scripts/assurance/ort-q16-config.yml"
       - "tests/assurance/test_q16_evidence_manifest.py"
