@@ -1,3 +1,45 @@
+# Current verified snapshot — 2026-11-23 13:56 ICT
+
+**This section supersedes the older “current candidate” snapshots below.** Older dated entries are retained as history.
+
+**Decision: NO-GO FOR PRODUCTION.**
+
+## Repository and CI identity
+
+- Repository: `spinlnw10-art/ck-nexus`; review path: [PR #392](https://github.com/spinlnw10-art/ck-nexus/pull/392), base `main`, head branch `ops/provider-free-go-clean`.
+- Latest candidate commit inspected in the current work ledger: `bdf224b66e2798920f9fc3b3ae872086bb737ee5`.
+- Latest documentation commit in this update: `256c461aaa7d5dd5a2002af9bf957ae575c6e4f8`.
+- `main` remains `944d7cb70a5d59d53c8fb379752bbee2085f7c8c`; no merge or deployment has occurred.
+- Latest observed workflow batch for candidate commit `bdf224b6`: preflight, attack-regression, and universal-system completed successfully; the main `test` workflow failed during import/collection. The work ledger records an import-path correction; a successful rerun has not yet been verified.
+- The README documentation update triggered CK-NEXUS CI run `45127564198`, observed as QUEUED. Do not infer a result until GitHub reports completion.
+- Provider-focused regression subset: 32/32 passed. This is not the complete required test suite.
+- Canonical Q10–Q16 manifest recorded by the current work ledger: `370f8a8f405e9b960e8b41722d0f61a4269237d137b94c014a1c2598e75e08de`.
+
+## Gate status
+
+| Gate | Current status |
+|---|---|
+| Q10 | NOT_VERIFIED; no-repeat lock until 2026-11-24 07:50 ICT |
+| Q11 | BLOCKED; previous OpenAI Responses API probe returned 401 invalid_api_key |
+| Q12 | NOT_VERIFIED; revised systemd delegated-cgroup method awaits successful evidence |
+| Q13 | PASS_CANDIDATE only |
+| Q14 | Rerun required under corrected installer policy |
+| Q15 | NOT_VERIFIED; prior attempt failed before test execution |
+| Q16 image and licenses | PASS_CANDIDATE only |
+
+Evidence from a different source subject or manifest must not be combined. A scanner result, candidate result, CI subset, or AI-assisted finding review is not whole-gate closure or independent sign-off.
+
+## Buyer and seller documentation
+
+- Added [Buyer Technical Due-Diligence Brief](docs/BUYER_TECHNICAL_DUE_DILIGENCE.md) to distinguish documented capabilities from verified live behavior and identify buyer acceptance requirements.
+- Replaced stale seller checklist claims bound to old runtime subject `96dcd0f0...` and old 55-distribution inventory with current candidate gate statuses.
+- Updated README status text and linked the buyer brief.
+- These are documentation corrections only; they do not change runtime code or close any release gate.
+
+**Release decision remains NO-GO.** No merge, production tag, package publication, or deployment has been performed.
+
+---
+
 # Live status update — 2026-11-23 (PR #392 current branch head)
 
 **Decision: NO-GO FOR PRODUCTION.**
