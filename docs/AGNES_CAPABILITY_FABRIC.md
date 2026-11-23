@@ -63,7 +63,7 @@ python scripts/system_skill_admission.py --auto-safe
 ## Platform and runtime limits
 
 - An executable found on `PATH` is not proof that its runtime is healthy. `runtime_verified` remains false until a real health check and bounded end-to-end task are recorded.
-- The current Termux environment rejects user-namespace creation (`unshare -Ur`), so the namespace-based sandbox must not be represented as an active isolation boundary on this device.
+- A bare `unshare -Urmpn /bin/true` canary passes on the current Termux device, but the full namespace/mount/chroot runner fails because `/bin/bash` is unavailable in the current PRoot rootfs. The sandbox remains BLOCKED and must not be represented as an active isolation boundary until the full health probe passes.
 - OpenCode, Aider, OpenHands, Codex CLI, provider adapters, and the GitHub Actions cloud worker remain candidates until their exact runtime, permissions, cost, and end-to-end evidence are verified.
 - No paid model/API or cloud worker is invoked by these components. No production credential is read or granted.
 

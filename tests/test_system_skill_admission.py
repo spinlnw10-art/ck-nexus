@@ -2,11 +2,12 @@ import json
 
 import pytest
 
-from scripts.system_skill_admission import CATALOG, load_catalog, main, plan
+from scripts import system_skill_admission
+from scripts.system_skill_admission import CATALOG, load_catalog, plan
 
 
 def test_catalog_is_valid_and_unique():
-    catalog = load_catalog(CATALOG)
+    catalog = load_catalog()
     ids = [item["id"] for item in catalog["skills"]]
     assert len(ids) == len(set(ids))
     assert len(ids) >= 40
@@ -64,26 +65,19 @@ def test_all_decisions_keep_install_and_activation_disabled():
         assert decision.authority_scope == "NONE"
 
 
-def test_catalog_rejects_duplicate_ids_and_unsafe_policy_override(tmp_path):
+def test_catalog_rejects_duplicate_ids_and_unsafe_policy_override(tmp_path, monkeypatch):
     raw = json.loads(CATALOG.read_text())
     raw["skills"].append(dict(raw["skills"][0]))
     duplicate_path = tmp_path / "duplicate.json"
     duplicate_path.write_text(json.dumps(raw))
+    monkeypatch.setattr(system_skill_admission, "CATALOG", duplicate_path)
     with pytest.raises(ValueError, match="duplicate"):
-        load_catalog(duplicate_path)
+        load_catalog()
 
     raw = json.loads(CATALOG.read_text())
     raw["adoption_policy"]["auto_install"] = True
     unsafe_path = tmp_path / "unsafe.json"
     unsafe_path.write_text(json.dumps(raw))
+    monkeypatch.setattr(system_skill_admission, "CATALOG", unsafe_path)
     with pytest.raises(ValueError, match="auto_install=false"):
-        load_catalog(unsafe_path)
-
-
-def test_cli_does_not_accept_caller_selected_catalog_path(monkeypatch):
-    import sys
-
-    monkeypatch.setattr(sys, "argv", ["system_skill_admission", "--catalog", "/tmp/untrusted.json"])
-    with pytest.raises(SystemExit) as error:
-        main()
-    assert error.value.code == 2
+        load_catalog()

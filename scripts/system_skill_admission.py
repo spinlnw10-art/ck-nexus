@@ -38,9 +38,9 @@ class AdmissionDecision:
     authority_scope: str = "NONE"
 
 
-def load_catalog(path: Path = CATALOG) -> dict[str, Any]:
+def load_catalog() -> dict[str, Any]:
     try:
-        raw = json.loads(path.read_text(encoding="utf-8"))
+        raw = json.loads(CATALOG.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError) as exc:
         raise ValueError("system skills catalog cannot be read or parsed") from exc
     if raw.get("schema") != "cknexus.system-skills.catalog.v1":
@@ -107,8 +107,8 @@ def decide(skill: dict[str, Any]) -> AdmissionDecision:
     )
 
 
-def plan(path: Path = CATALOG) -> list[AdmissionDecision]:
-    catalog = load_catalog(path)
+def plan() -> list[AdmissionDecision]:
+    catalog = load_catalog()
     return [decide(item) for item in catalog["skills"]]
 
 
