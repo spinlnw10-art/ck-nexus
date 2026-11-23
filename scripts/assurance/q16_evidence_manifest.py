@@ -55,7 +55,7 @@ def build_manifest(
             "repository_source_scan": (
                 "full checked-out source tree; generated and VCS directories excluded"
             ),
-            "ort_pipeline": "synthetic fixture only; no dependency download requested",
+            "ort_pipeline": "synthetic fixture only; no project dependency resolution requested",
         },
         "artifacts": artifacts,
         "authority": {
