@@ -12,9 +12,9 @@ Status: PHASE 1 INVENTORY / READ-ONLY / NO FILE OR BRANCH DELETION AUTHORIZED
 - Tracked files: 870
 - Directories: 115
 - Tracked content size reported by Git tree: 4,541,646 bytes
-- Remote branches: 401
-- Pull requests returned across all states: 354
-- Open PRs: 219
+- Remote branches: 402 (including this audit branch)
+- Pull requests returned across all states: 355
+- Open PRs: 220
 - Closed PRs: 135
 - Merged PRs: 88
 - Closed but unmerged PRs: 47
@@ -180,4 +180,35 @@ Use the existing architecture rather than a disruptive monorepo migration:
 
 ## Limitations and open work
 
-This document is a verified phase-1 snapshot of the full current main tree and the complete branch/PR name inventory. A full per-branch content/unique-blob scan for all 401 branches and exhaustive external consumer search remains pending. Therefore this is not a final deletion manifest and authorizes no destructive operation.
+This document is a verified phase-1 snapshot of the full current main tree and the complete branch/PR name inventory. A full per-branch content/unique-blob scan for all 402 branches and exhaustive external consumer search remains pending. Therefore this is not a final deletion manifest and authorizes no destructive operation.
+
+
+## Addendum — local Git head/tree inventory (2026-11-23)
+
+A read-only inventory was run against the Termux clone's fetched remote-tracking refs and cross-checked against `git ls-remote --heads origin`.
+
+- Live remote branch refs: **402**
+- Local remote-tracking refs present: 407
+- Local-only stale tracking refs (not present in current live remote listing): 5
+  - `docs/clarify-release-evidence-baseline-20261119`
+  - `docs/rebaseline-release-status-20261119`
+  - `feature/public-beta-feedback-20261119`
+  - `pr-387`
+  - `pr-392-audit`
+- Distinct branch head commits: **381**
+- Distinct root tree SHAs: **373**
+- Branch refs whose tips are merged into main according to `git branch -r --merged origin/main`: **30** (includes `main`)
+- Branch refs not merged into main: **372**
+- Only `main` has the same root tree SHA as current `main`.
+- Same-HEAD groups: **18** groups (including backup pairs and parallel feature/fix/post-p0/verify/Q10 branches).
+- Same-tree groups: **22** groups (some branches have different commits but identical root trees).
+
+The exact per-branch name, head SHA, tree SHA, merged-into-main boolean, and local SHA comparison are preserved in [branch-head-tree-inventory-2026-11-23.json](evidence/branch-head-tree-inventory-2026-11-23.json).
+
+Important interpretation:
+- Same HEAD/tree is evidence of identical snapshots only; it does not prove the branch has no PR, tags, deployment, backup or recovery purpose.
+- A branch tip being merged into main does not alone authorize deletion; branch protection, PR references, tags/releases, GitHub Actions, deployments, and recovery policies must still be checked.
+- The five stale local tracking refs are not current remote branches. They were left untouched; their local presence may still be useful for forensic comparison.
+- This head/tree inventory does not yet compute per-branch unique blob sets, complete ahead/behind commit counts, or external workflow/deployment references. Those remain mandatory before any archival recommendation.
+
+PR inventory was refreshed after opening this audit PR: **355 total**, **220 open**, **135 closed** (**88 merged**, **47 closed-unmerged**). These counts are a point-in-time snapshot and will change as PR activity continues.
