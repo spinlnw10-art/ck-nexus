@@ -71,7 +71,7 @@ jobs:
             exit 2
           fi
           version="${RELEASE_TAG#v}"
-          curl --fail --silent --show-error --location --retry 2 \
+          curl --fail --silent --show-error --location --retry 2 --proto '=https' --proto-redir '=https' \
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: Bearer $GH_TOKEN" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
