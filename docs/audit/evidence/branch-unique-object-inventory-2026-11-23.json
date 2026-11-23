@@ -1,15 +1,15 @@
 {
   "main": "944d7cb70a5d59d53c8fb379752bbee2085f7c8c",
-  "live_remote_branches": 402,
-  "branches_scanned": 402,
+  "live_remote_branches": 401,
+  "branches_scanned": 401,
   "errors": [],
   "summary": {
-    "ahead_nonzero": 372,
+    "ahead_nonzero": 371,
     "behind_nonzero": 387,
-    "unique_commits_nonzero": 372,
-    "unique_blobs_nonzero": 368,
-    "total_unique_blobs_across_branch_scans": 10301,
-    "total_unique_commits_across_branch_scans": 7002
+    "unique_commits_nonzero": 371,
+    "unique_blobs_nonzero": 367,
+    "total_unique_blobs_across_branch_scans": 10279,
+    "total_unique_commits_across_branch_scans": 6980
   },
   "branches": [
     {
@@ -181,16 +181,6 @@
       "unique_trees_vs_main": 2,
       "unique_objects_vs_main": 4,
       "head_date": "2026-10-01T12:01:39+07:00"
-    },
-    {
-      "branch": "audit/repository-organization-20261123",
-      "ahead": 22,
-      "behind": 0,
-      "unique_commits_vs_main": 22,
-      "unique_blobs_vs_main": 22,
-      "unique_trees_vs_main": 78,
-      "unique_objects_vs_main": 122,
-      "head_date": "2026-11-23T04:31:22-05:00"
     },
     {
       "branch": "automation/capability-registry-weekly-2026-11-09",
@@ -4032,5 +4022,6 @@
       "unique_objects_vs_main": 56,
       "head_date": "2026-09-21T23:33:14Z"
     }
-  ]
+  ],
+  "scope_note": "Baseline covers 401 pre-existing live remote branches at audit start. The audit branch audit/repository-organization-20261123 is excluded from its own evidence to avoid self-referential HEAD/tree snapshots; it is tracked separately by Draft PR #393."
 }
