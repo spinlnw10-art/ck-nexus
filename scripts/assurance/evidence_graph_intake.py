@@ -102,7 +102,11 @@ def build_graph_document(manifest: dict[str, Any], allowed_root: Path) -> dict[s
             raise EvidenceIntakeError("artifact path and SHA-256 are required")
         if not re.fullmatch(r"[0-9a-f]{64}", declared_sha):
             raise EvidenceIntakeError("artifact SHA-256 is invalid")
-        if isinstance(declared_size, bool) or not isinstance(declared_size, int) or declared_size < 0:
+        if (
+            isinstance(declared_size, bool)
+            or not isinstance(declared_size, int)
+            or declared_size < 0
+        ):
             raise EvidenceIntakeError("artifact size is invalid")
 
         resolved = _resolve_within(Path(raw_path), root)
