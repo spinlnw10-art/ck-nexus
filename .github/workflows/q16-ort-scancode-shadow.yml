@@ -44,7 +44,7 @@ jobs:
           echo "$ORT_SIGNATURE_SHA256  ort.tgz.asc" | sha256sum --check
           mkdir -p "$RUNNER_TEMP/ort-dist"
           tar -xzf ort.tgz -C "$RUNNER_TEMP/ort-dist"
-          ORT_BIN="$(find "$RUNNER_TEMP/ort-dist" -type f -path '*/bin/ort' -print -quit)"
+          ORT_BIN="$(find "$RUNNER_TEMP/ort-dist" -path '*/bin/ort' -print -quit)"
           test -n "$ORT_BIN"
           chmod +x "$ORT_BIN"
           echo "ORT_BIN=$ORT_BIN" >> "$GITHUB_ENV"
@@ -60,15 +60,16 @@ jobs:
           echo "$SCANCODE_SHA256  scancode.tar.gz" | sha256sum --check
           mkdir -p "$RUNNER_TEMP/scancode-dist"
           tar -xzf scancode.tar.gz -C "$RUNNER_TEMP/scancode-dist"
-          SCANCODE_BIN="$(find "$RUNNER_TEMP/scancode-dist" -type f -name scancode -perm -u+x -print -quit)"
+          SCANCODE_BIN="$(find "$RUNNER_TEMP/scancode-dist" -name scancode -print -quit)"
           test -n "$SCANCODE_BIN"
+          chmod +x "$SCANCODE_BIN"
           echo "$(dirname "$SCANCODE_BIN")" >> "$GITHUB_PATH"
           "$SCANCODE_BIN" --version
 
       - name: Scan complete CK-NEXUS source tree with ScanCode
         run: |
           set -euo pipefail
-          scancode --license --copyright --package --info --json-pp "$RUNNER_TEMP/scancode-full-repo.json" .             --ignore ".git/**"             --ignore ".venv/**"             --ignore "node_modules/**"             --ignore "**/__pycache__/**"             --ignore "**/.pytest_cache/**"             --ignore "**/dist/**"             --ignore "**/build/**"
+          scancode --license --copyright --package --info --json-pp "$RUNNER_TEMP/scancode-full-repo.json" . --ignore ".git/**" --ignore ".venv/**" --ignore "node_modules/**" --ignore "**/__pycache__/**" --ignore "**/.pytest_cache/**" --ignore "**/dist/**" --ignore "**/build/**"
 
       - name: Run ORT analyzer and ScanCode-backed scanner on synthetic fixture
         env:
@@ -77,7 +78,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p "$ORT_DATA_DIR" "$RUNNER_TEMP/q16/analyzer" "$RUNNER_TEMP/q16/scanner"
-          "$ORT_BIN" --info analyze -f JSON             -i tests/fixtures/q16-license             -o "$RUNNER_TEMP/q16/analyzer"
+          "$ORT_BIN" --info analyze -f JSON -i tests/fixtures/q16-license -o "$RUNNER_TEMP/q16/analyzer"
           ANALYZER_RESULT="$(find "$RUNNER_TEMP/q16/analyzer" -maxdepth 1 -type f \( -name 'analyzer-result.json' -o -name 'analyzer-result.yml' \) -print -quit)"
           test -n "$ANALYZER_RESULT"
           "$ORT_BIN" scan -i "$ANALYZER_RESULT" -o "$RUNNER_TEMP/q16/scanner"
@@ -88,7 +89,7 @@ jobs:
 
       - name: Create candidate-bound Q16 evidence manifest
         run: |
-          python scripts/assurance/q16_evidence_manifest.py             --candidate-sha "$GITHUB_SHA"             --scancode-report "$RUNNER_TEMP/scancode-full-repo.json"             --ort-analyzer-result "$ORT_ANALYZER_RESULT"             --ort-scan-result "$ORT_SCAN_RESULT"             --output "$RUNNER_TEMP/q16/q16-evidence.json"
+          python scripts/assurance/q16_evidence_manifest.py --candidate-sha "$GITHUB_SHA" --scancode-report "$RUNNER_TEMP/scancode-full-repo.json" --ort-analyzer-result "$ORT_ANALYZER_RESULT" --ort-scan-result "$ORT_SCAN_RESULT" --output "$RUNNER_TEMP/q16/q16-evidence.json"
           cat "$RUNNER_TEMP/q16/q16-evidence.json"
 
       - name: Run evidence manifest unit tests
