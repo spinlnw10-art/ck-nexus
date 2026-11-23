@@ -67,7 +67,8 @@ jobs:
           WHEEL="$(find "$RUNNER_TEMP/scancode-wheel" -maxdepth 1 -type f -name 'scancode_toolkit-32.5.0-cp312-none-any.whl' -print -quit)"
           test -n "$WHEEL"
           echo "$SCANCODE_SHA256  $WHEEL" | sha256sum --check
-          python -m pip install --report "$RUNNER_TEMP/scancode-install-report.json" "$WHEEL"
+          printf "pluggy==1.6.0\\n" > "$RUNNER_TEMP/scancode-constraints.txt"
+          python -m pip install --constraint "$RUNNER_TEMP/scancode-constraints.txt" --report "$RUNNER_TEMP/scancode-install-report.json" "$WHEEL"
           echo "SCANCODE_INSTALL_REPORT=$RUNNER_TEMP/scancode-install-report.json" >> "$GITHUB_ENV"
           scancode --version
 
