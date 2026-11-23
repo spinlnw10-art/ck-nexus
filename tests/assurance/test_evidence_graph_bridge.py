@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import importlib.util
+import json
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -11,7 +13,8 @@ MODULE_PATH = (
     / "evidence_graph_bridge.py"
 )
 SPEC = importlib.util.spec_from_file_location("evidence_graph_bridge", MODULE_PATH)
-assert SPEC is not None and SPEC.loader is not None
+assert SPEC is not None
+assert SPEC.loader is not None
 MODULE = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(MODULE)
 
@@ -44,6 +47,17 @@ Q16 = {
 
 
 class EvidenceGraphBridgeTests(unittest.TestCase):
+    def test_read_json_rejects_path_outside_allowed_root(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            outside = root.parent / (root.name + "-outside.json")
+            outside.write_text(json.dumps({"safe": True}), encoding="utf-8")
+            self.addCleanup(outside.unlink)
+            with self.assertRaisesRegex(
+                MODULE.EvidenceGraphError, "inside the allowed root"
+            ):
+                MODULE.read_json(outside, allowed_root=root)
+
     def test_builds_graph_with_candidate_tool_and_artifact_edges(self) -> None:
         graph = MODULE.build_graph(CANDIDATE, OTEL, DIGEST, Q16, "e" * 64)
         self.assertEqual(graph["candidate_commit_sha"], CANDIDATE)
