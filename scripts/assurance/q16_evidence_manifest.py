@@ -59,6 +59,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--candidate-sha", required=True)
     parser.add_argument("--scancode-report", type=Path, required=True)
+    parser.add_argument("--scancode-install-report", type=Path, required=True)
     parser.add_argument("--ort-analyzer-result", type=Path, required=True)
     parser.add_argument("--ort-scan-result", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
@@ -69,6 +70,7 @@ def main() -> int:
             args.candidate_sha,
             {
                 "scancode_full_repo": args.scancode_report,
+                "scancode_install_report": args.scancode_install_report,
                 "ort_analyzer": args.ort_analyzer_result,
                 "ort_scanner": args.ort_scan_result,
             },
@@ -82,7 +84,7 @@ def main() -> int:
         )
     except (OSError, ValueError) as exc:
         parser.error(str(exc))
-    print(json.dumps({"status": "EVIDENCE_MANIFEST_CREATED", "artifacts": 3}))
+    print(json.dumps({"status": "EVIDENCE_MANIFEST_CREATED", "artifacts": 4}))
     return 0
 
 
