@@ -40,7 +40,9 @@ def build_manifest(candidate_sha: str, inputs: dict[str, Path]) -> dict:
         "evidence_type": "CK-NEXUS-Q16-LICENSE-SCAN",
         "candidate_commit_sha": candidate_sha,
         "scope": {
-            "repository_source_scan": "full checked-out source tree; generated and VCS directories excluded",
+            "repository_source_scan": (
+                "full checked-out source tree; generated and VCS directories excluded"
+            ),
             "ort_pipeline": "synthetic fixture only; no dependency download requested",
         },
         "artifacts": artifacts,
