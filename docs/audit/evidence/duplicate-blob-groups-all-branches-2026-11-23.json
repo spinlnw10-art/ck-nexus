@@ -1,8 +1,8 @@
 {
   "snapshot_date": "2026-11-23",
-  "branches_scanned": 402,
+  "branches_scanned": 401,
   "errors": [],
-  "duplicate_group_occurrences": 1606,
+  "duplicate_group_occurrences": 1604,
   "distinct_duplicate_group_signatures": 28,
   "groups": [
     {
@@ -12,7 +12,7 @@
         "migrations/postgresql/001_email_gateway.sql",
         "services/email_gateway/migrations/postgresql.sql"
       ],
-      "branch_occurrences": 402,
+      "branch_occurrences": 401,
       "branches": [
         "agent/closure-diagnostics-2026-10-02",
         "agent/unified-control-package",
@@ -31,7 +31,6 @@
         "audit/20261014-readonly-baseline",
         "audit/bootstrap-v5.2.3",
         "audit/canonical-evidence-ledger-20261001",
-        "audit/repository-organization-20261123",
         "automation/capability-registry-weekly-2026-11-09",
         "backup/ck-nexus-snapshot-2026-08-21",
         "backup/pre-consolidation-20261031",
@@ -1176,14 +1175,13 @@
         "services/billing/__init__.py",
         "tests/__init__.py"
       ],
-      "branch_occurrences": 268,
+      "branch_occurrences": 267,
       "branches": [
         "agent/closure-diagnostics-2026-10-02",
         "agent/unified-control-package",
         "audit/20261014-readonly-baseline",
         "audit/bootstrap-v5.2.3",
         "audit/canonical-evidence-ledger-20261001",
-        "audit/repository-organization-20261123",
         "automation/capability-registry-weekly-2026-11-09",
         "backup/pre-consolidation-20261031",
         "backup/reinstall-2026-08-25",
