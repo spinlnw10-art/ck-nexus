@@ -26,6 +26,10 @@ def canonical_json(value: Any) -> bytes:
     return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=True).encode()
 
 
+def _reject_non_finite(_value: str) -> None:
+    raise EvidenceGraphError("non-finite JSON number is not permitted")
+
+
 def read_json(path: Path, *, allowed_root: Path) -> tuple[dict[str, Any], str]:
     root = allowed_root.resolve(strict=True)
     if path.is_symlink() or not path.is_file():
@@ -42,9 +46,7 @@ def read_json(path: Path, *, allowed_root: Path) -> tuple[dict[str, Any], str]:
         value = json.loads(
             raw,
             object_pairs_hook=_unique_object,
-            parse_constant=lambda _value: (_ for _ in ()).throw(
-                EvidenceGraphError("non-finite JSON number is not permitted")
-            ),
+            parse_constant=_reject_non_finite,
         )
     except (UnicodeError, json.JSONDecodeError) as exc:
         raise EvidenceGraphError("evidence input is not valid JSON") from exc
