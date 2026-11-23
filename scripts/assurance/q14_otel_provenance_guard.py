@@ -2,8 +2,8 @@
 """Fail-closed validation and evidence binding for verified OTel image provenance.
 
 Cosign performs cryptographic signature and certificate verification. This helper
-only checks the verified JSON payloads, binds them to one image digest and source
-candidate, and emits non-authoritative evidence. It never makes a gate decision.
+checks verified JSON payloads, binds them to one image digest and source candidate,
+and emits non-authoritative evidence. It never makes a gate decision.
 """
 from __future__ import annotations
 
@@ -19,6 +19,7 @@ from typing import Any
 DIGEST_RE = re.compile(r"^sha256:[0-9a-f]{64}$")
 COMMIT_RE = re.compile(r"^[0-9a-f]{40}$")
 SLSA_PREFIX = "https://slsa.dev/provenance/"
+SLSA_STATUSES = {"VERIFIED", "NOT_PUBLISHED", "VERIFICATION_ERROR"}
 
 
 class EvidenceError(ValueError):
@@ -69,10 +70,7 @@ def extract_verified_digest(document: Any) -> str:
         image = critical.get("image", critical.get("Image"))
         if not isinstance(image, dict):
             continue
-        digest = image.get(
-            "docker-manifest-digest",
-            image.get("Docker-manifest-digest"),
-        )
+        digest = image.get("docker-manifest-digest", image.get("Docker-manifest-digest"))
         if isinstance(digest, str) and DIGEST_RE.fullmatch(digest):
             found.add(digest)
     if len(found) != 1:
@@ -127,11 +125,12 @@ def verify_slsa_subject(document: Any, expected_digest: str) -> dict[str, Any]:
 
 def build_report(
     signature_path: Path,
-    provenance_path: Path,
+    provenance_path: Path | None,
     *,
     image: str,
     release_tag: str,
     candidate_sha: str,
+    slsa_status: str,
 ) -> dict[str, Any]:
     if not COMMIT_RE.fullmatch(candidate_sha):
         raise EvidenceError("candidate SHA must be 40 lowercase hexadecimal characters")
@@ -139,11 +138,26 @@ def build_report(
         raise EvidenceError("release tag must be a stable vX.Y.Z tag")
     if not image.startswith("ghcr.io/open-telemetry/opentelemetry-collector-releases/"):
         raise EvidenceError("image must come from the official OpenTelemetry GHCR namespace")
+    if slsa_status not in SLSA_STATUSES:
+        raise EvidenceError("SLSA status is invalid")
 
     signature_doc, signature_raw = load_json(signature_path)
-    provenance_doc, provenance_raw = load_json(provenance_path)
     digest = extract_verified_digest(signature_doc)
-    provenance = verify_slsa_subject(provenance_doc, digest)
+    provenance_hash = None
+    provenance_summary = {
+        "matched_attestations": 0,
+        "predicate_types": [],
+        "subject_names": [],
+    }
+    if slsa_status == "VERIFIED":
+        if provenance_path is None:
+            raise EvidenceError("verified SLSA status requires provenance evidence")
+        provenance_doc, provenance_raw = load_json(provenance_path)
+        provenance_summary = verify_slsa_subject(provenance_doc, digest)
+        provenance_hash = hashlib.sha256(provenance_raw).hexdigest()
+    elif provenance_path is not None:
+        raise EvidenceError("unverified SLSA status must not include provenance evidence")
+
     return {
         "schema": "ck-nexus.q14.otel-image-provenance-evidence.v1",
         "candidate_sha": candidate_sha,
@@ -152,12 +166,13 @@ def build_report(
         "image_digest": digest,
         "signature_verification": "COSIGN_VERIFIED_BY_WORKFLOW",
         "signature_evidence_sha256": hashlib.sha256(signature_raw).hexdigest(),
-        "provenance_verification": "SLSA_PROVENANCE_SUBJECT_MATCHED",
-        "provenance_evidence_sha256": hashlib.sha256(provenance_raw).hexdigest(),
-        **provenance,
+        "slsa_provenance_status": slsa_status,
+        "provenance_evidence_sha256": provenance_hash,
+        **provenance_summary,
         "image_layers_pulled": False,
         "container_started": False,
         "network_accessed": True,
+        "production_promotion_eligible": False,
         "gate_decision_made": False,
         "approval_granted": False,
         "authority": "CK-NEXUS_CORE_ONLY",
@@ -168,6 +183,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--signature-input", type=Path, required=True)
     parser.add_argument("--provenance-input", type=Path)
+    parser.add_argument("--slsa-status", choices=sorted(SLSA_STATUSES), required=True)
     parser.add_argument("--image")
     parser.add_argument("--release-tag")
     parser.add_argument("--candidate-sha")
@@ -179,19 +195,20 @@ def main() -> int:
         if args.extract_digest:
             print(extract_verified_digest(signature_doc))
             return 0
-        if not all((args.provenance_input, args.image, args.release_tag, args.candidate_sha, args.output)):
-            parser.error("report mode requires provenance input, image, release tag, candidate SHA, and output")
+        if not all((args.image, args.release_tag, args.candidate_sha, args.output)):
+            parser.error("report mode requires image, release tag, candidate SHA, and output")
         report = build_report(
             args.signature_input,
             args.provenance_input,
             image=args.image,
             release_tag=args.release_tag,
             candidate_sha=args.candidate_sha,
+            slsa_status=args.slsa_status,
         )
         args.output.write_text(json.dumps(report, sort_keys=True, indent=2) + "\n", encoding="utf-8")
     except (EvidenceError, OSError) as exc:
         parser.error(str(exc))
-    print("Q14_IMAGE_PROVENANCE_EVIDENCE_VALIDATED")
+    print("Q14_IMAGE_PROVENANCE_EVIDENCE_RECORDED")
     return 0
 
 
