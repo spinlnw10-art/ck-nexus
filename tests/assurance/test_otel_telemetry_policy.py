@@ -59,9 +59,10 @@ class OTelTelemetryPolicyTests(unittest.TestCase):
 
     def test_rejects_unknown_attributes_including_user_and_prompt_fields(self) -> None:
         for key in ("user.email", "tenant.id", "prompt", "tool.arguments", "http.url"):
-            with self.subTest(key=key):
-                with self.assertRaisesRegex(TelemetryPolicyError, "non-allowlisted"):
-                    validate_document([{**BASE_EVENT, key: "synthetic-value"}])
+            with self.subTest(key=key), self.assertRaisesRegex(
+                TelemetryPolicyError, "non-allowlisted"
+            ):
+                validate_document([{**BASE_EVENT, key: "synthetic-value"}])
 
     def test_rejects_production_environment(self) -> None:
         with self.assertRaisesRegex(TelemetryPolicyError, "environment"):
@@ -73,15 +74,15 @@ class OTelTelemetryPolicyTests(unittest.TestCase):
             ("ck_nexus.operation", "credential_read"),
             ("ck_nexus.outcome", "approved"),
         ):
-            with self.subTest(key=key):
-                with self.assertRaises(TelemetryPolicyError):
-                    validate_document([{**BASE_EVENT, key: value}])
+            with self.subTest(key=key), self.assertRaises(TelemetryPolicyError):
+                validate_document([{**BASE_EVENT, key: value}])
 
     def test_rejects_boolean_nan_and_out_of_range_duration(self) -> None:
         for duration in (True, float("nan"), float("inf"), -1, 600_001, 10**10000):
-            with self.subTest(duration_type=type(duration).__name__):
-                with self.assertRaises(TelemetryPolicyError):
-                    validate_document([{**BASE_EVENT, "ck_nexus.duration_ms": duration}])
+            with self.subTest(duration_type=type(duration).__name__), self.assertRaises(
+                TelemetryPolicyError
+            ):
+                validate_document([{**BASE_EVENT, "ck_nexus.duration_ms": duration}])
 
     def test_rejects_non_string_dimensions_without_crashing(self) -> None:
         for key in (
@@ -90,9 +91,8 @@ class OTelTelemetryPolicyTests(unittest.TestCase):
             "ck_nexus.outcome",
             "deployment.environment.name",
         ):
-            with self.subTest(key=key):
-                with self.assertRaises(TelemetryPolicyError):
-                    validate_document([{**BASE_EVENT, key: ["unexpected"]}])
+            with self.subTest(key=key), self.assertRaises(TelemetryPolicyError):
+                validate_document([{**BASE_EVENT, key: ["unexpected"]}])
 
     def test_rejects_duplicate_json_keys(self) -> None:
         path = self.write_json(
@@ -111,9 +111,8 @@ class OTelTelemetryPolicyTests(unittest.TestCase):
 
     def test_rejects_empty_or_oversized_event_batches(self) -> None:
         for payload in ([], [BASE_EVENT] * 1001):
-            with self.subTest(count=len(payload)):
-                with self.assertRaises(TelemetryPolicyError):
-                    validate_document(payload)
+            with self.subTest(count=len(payload)), self.assertRaises(TelemetryPolicyError):
+                validate_document(payload)
 
 
 if __name__ == "__main__":
