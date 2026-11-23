@@ -111,6 +111,11 @@ jobs:
           echo "$PYTHON_INSPECTOR_SHA256  $WHEEL" | sha256sum --check
           python -m pip install --constraint "$RUNNER_TEMP/scancode-constraints.txt" --report "$RUNNER_TEMP/python-inspector-install-report.json" "$WHEEL"
           python-inspector --version
+          # python-inspector 0.15.2 imports distutils; Python 3.12 removed it.
+          # Setuptools' pinned compatibility shim restores the import without
+          # changing the interpreter or weakening ORT's unresolved-issue policy.
+          python -m pip install --no-deps "setuptools==80.9.0"
+          python -c "import distutils.core; import setuptools; print('setuptools compatibility shim:', setuptools.__version__)"
 
       - name: Run ORT analyzer and ScanCode-backed scanner on synthetic fixture
         env:
