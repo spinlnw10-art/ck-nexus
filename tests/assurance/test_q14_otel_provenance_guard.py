@@ -2,12 +2,12 @@ from __future__ import annotations
 
 import base64
 import json
+import importlib.util
 import tempfile
 import unittest
 from pathlib import Path
 
 MODULE_PATH = Path(__file__).resolve().parents[2] / "scripts/assurance/q14_otel_provenance_guard.py"
-import importlib.util
 
 SPEC = importlib.util.spec_from_file_location("q14_otel_provenance_guard", MODULE_PATH)
 assert SPEC and SPEC.loader
