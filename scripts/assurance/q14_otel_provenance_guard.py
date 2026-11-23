@@ -218,7 +218,7 @@ def main() -> None:
         )
         if args.extract_digest:
             print(extract_verified_digest(signature_doc))
-            return 0
+            return
         if not all((args.image, args.release_tag, args.candidate_sha, args.output)):
             parser.error("report mode requires image, release tag, candidate SHA, and output")
         report = build_report(
@@ -230,8 +230,18 @@ def main() -> None:
             slsa_status=args.slsa_status,
             allowed_root=allowed_root,
         )
+        if args.output.is_symlink():
+            raise EvidenceError("output must not be a symlink")
+        output_parent = args.output.parent.resolve(strict=False)
+        try:
+            output_parent.relative_to(allowed_root)
+        except ValueError as exc:
+            raise EvidenceError("output must remain inside the allowed root") from exc
+        output_parent.mkdir(parents=True, exist_ok=True)
+        output_path = output_parent / args.output.name
         rendered = json.dumps(report, sort_keys=True, indent=2) + "\n"
-        args.output.write_text(rendered, encoding="utf-8")
+        with output_path.open("x", encoding="utf-8") as stream:
+            stream.write(rendered)
     except (EvidenceError, OSError) as exc:
         parser.error(str(exc))
     print("Q14_IMAGE_PROVENANCE_EVIDENCE_RECORDED")
