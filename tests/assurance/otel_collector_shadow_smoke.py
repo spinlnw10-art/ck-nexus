@@ -1,13 +1,14 @@
 # ruff: noqa: I001
 from __future__ import annotations
 
+import http.client
 import json
 import time
-import urllib.error
-import urllib.request
 
 
-ENDPOINT = "http://127.0.0.1:4318"
+COLLECTOR_HOST = "127.0.0.1"
+COLLECTOR_PORT = 4318
+ALLOWED_PATHS = frozenset({"/v1/traces", "/v1/metrics"})
 TRACE_ID = "5b8aa5a2d2c872e8321cf37308d69df2"
 PARENT_SPAN_ID = "051581bf3cb55c13"
 CHILD_SPAN_ID = "93564f51e1abe1c2"
@@ -20,19 +21,29 @@ SECRET_MARKERS = (
 
 
 def post(path: str, payload: dict) -> None:
+    if path not in ALLOWED_PATHS:
+        raise ValueError("unsupported local Collector endpoint")
     body = json.dumps(payload, separators=(",", ":")).encode()
-    request = urllib.request.Request(
-        f"{ENDPOINT}{path}",
-        data=body,
-        headers={"Content-Type": "application/json"},
-        method="POST",
+    connection = http.client.HTTPConnection(
+        host=COLLECTOR_HOST,
+        port=COLLECTOR_PORT,
+        timeout=10,
     )
     try:
-        with urllib.request.urlopen(request, timeout=10) as response:
-            if response.status not in (200, 202):
-                raise AssertionError(f"{path} returned HTTP {response.status}")
-    except urllib.error.URLError as exc:
+        connection.request(
+            "POST",
+            path,
+            body=body,
+            headers={"Content-Type": "application/json"},
+        )
+        response = connection.getresponse()
+        if response.status not in (200, 202):
+            raise AssertionError(f"{path} returned HTTP {response.status}")
+        response.read()
+    except OSError as exc:
         raise AssertionError(f"Collector did not accept {path}") from exc
+    finally:
+        connection.close()
 
 
 def attr(key: str, value: str) -> dict:
