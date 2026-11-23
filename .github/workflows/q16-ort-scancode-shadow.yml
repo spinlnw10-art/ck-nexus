@@ -53,14 +53,10 @@ jobs:
           echo "$ORT_SIGNATURE_SHA256  ort.tgz.asc" | sha256sum --check
           python - <<'PY'
           import os
-          import shutil
-          import tarfile
-          from pathlib import Path, PurePosixPath
-          python - <<'PY'
           import tarfile
           from pathlib import Path, PurePosixPath
 
-          target_root = Path(__import__("os").environ["RUNNER_TEMP"]) / "ort-dist"
+          target_root = Path(os.environ["RUNNER_TEMP"]) / "ort-dist"
           target_root.mkdir()
           with tarfile.open("ort.tgz", "r:gz") as archive:
               members = archive.getmembers()
@@ -70,7 +66,7 @@ jobs:
                       raise SystemExit("ORT archive contains an unsafe path")
                   if not (member.isdir() or member.isfile() or member.issym()):
                       raise SystemExit("ORT archive contains an unsupported file type")
-              # Python 3.12 data filter blocks escaping symlinks and unsafe extraction targets.
+              # Python 3.12 data filter rejects links that escape the extraction root.
               archive.extractall(path=target_root, members=members, filter="data")
           PY
           ORT_BIN="$(find "$RUNNER_TEMP/ort-dist" -type f -path '*/bin/ort' -print -quit)"
@@ -79,8 +75,6 @@ jobs:
           chmod 700 "$ORT_BIN"
           echo "ORT_BIN=$ORT_BIN" >> "$GITHUB_ENV"
           "$ORT_BIN" --version
-          chmod 700 "$RUNNER_TEMP/ort-bin"
-          "$RUNNER_TEMP/ort-bin" --version
 
       - name: Download and verify ScanCode Toolkit v32.5.0 PyPI wheel
         env:
