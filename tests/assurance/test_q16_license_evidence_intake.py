@@ -6,7 +6,10 @@ import tempfile
 import unittest
 from pathlib import Path
 
-MODULE_PATH = Path(__file__).resolve().parents[2] / "scripts/assurance/q16_license_evidence_intake.py"
+MODULE_PATH = (
+    Path(__file__).resolve().parents[2]
+    / "scripts/assurance/q16_license_evidence_intake.py"
+)
 SPEC = importlib.util.spec_from_file_location("q16_license_evidence_intake", MODULE_PATH)
 assert SPEC and SPEC.loader
 MODULE = importlib.util.module_from_spec(SPEC)
