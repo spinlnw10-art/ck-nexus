@@ -46,8 +46,8 @@ These are upstream release observations, not approved production pins. Re-check 
 
 | Tool | Upstream release observed | Evidence |
 |---|---:|---|
-| Syft | 1.57.1 | Official release page lists checksum and Sigstore bundle assets |
-| Grype | 0.121.3 | Official release page lists checksums and Sigstore bundle assets |
+| Syft | 1.57.2 | Linux amd64 tarball SHA-256: `ad92bd3ec1b94a3df01d4d0aec199afa9c42b72e86da436ff5f837914d32706b`; release checksum file also has Sigstore bundle |
+| Grype | 0.122.1 | Linux amd64 tarball SHA-256: `f1ba7e2917ee1395618de20a98da0aa7c0fb1788927797651047c50502a37538`; release checksum file also has Sigstore bundle |
 | Promptfoo | 0.126.0 | Official release page; Node.js 24+ is required for its full-repository code scans |
 | PyRIT | 1.1.0 | Official release page; Python support listed as >=3.10 and <3.15 |
 | OpenTelemetry Collector | 0.165.0 in official Docker installation example | Use an explicit version and verify the selected distribution/components |
