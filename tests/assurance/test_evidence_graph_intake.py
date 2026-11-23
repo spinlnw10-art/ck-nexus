@@ -66,7 +66,7 @@ class EvidenceGraphIntakeTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             manifest = self._manifest(root)
-            (root / "scancode-full-repo.json").write_text(
+            (root / MODULE.ARTIFACT_PATHS["q16"]["scancode_full_repo"]).write_text(
                 '{"tampered":true}', encoding="utf-8"
             )
             with self.assertRaisesRegex(MODULE.EvidenceIntakeError, "does not match"):
