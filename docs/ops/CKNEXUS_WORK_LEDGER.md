@@ -1,3 +1,26 @@
+# Live work update — 2026-11-23 13:56 ICT — buyer diligence and stale seller-evidence correction
+
+This section records the documentation work performed after the prior 08:52 handoff snapshot. It does not change application code or release-gate evidence.
+
+- Added `docs/BUYER_TECHNICAL_DUE_DILIGENCE.md` (commit `0318ca37f2a3edf5011a3c7fbccf971b0f8d6480`). It distinguishes documented features from verified behavior, records known limits, and lists buyer acceptance requirements.
+- Replaced `docs/SELLER_CHECKLIST.md` (commit `610db1bd59b6b9dd4370b498c5abc46ecb772fed`). The former checklist incorrectly treated evidence tied to old runtime subject `96dcd0f0...` and a 55-distribution inventory as current. Current Q13/Q16 are labelled candidate-only; Q14 rerun required; Q15/Q12 not verified; Q10 lock and Q11 credential blocker are explicit.
+- Updated the README status and added buyer-review links (commit `256c461aaa7d5dd5a2002af9bf957ae575c6e4f8`).
+- Added a superseding current snapshot to `RELEASE_STATUS.md` (commit `60c6d53a457a2f11f35db3cc1f0e3800ec89b63e`), preserving older entries as historical.
+- Latest candidate code commit used for the CI/gate status summary remains `bdf224b66e2798920f9fc3b3ae872086bb737ee5`; current canonical manifest in the ledger remains `370f8a8f405e9b960e8b41722d0f61a4269237d137b94c014a1c2598e75e08de`.
+- On `bdf224b6`, the latest observed CI batch had preflight, attack-regression, and universal-system pass; main test failed during import/collection. The correction is recorded but a successful rerun is not yet verified.
+- Documentation commit `256c461` triggered CK-NEXUS CI run `45127564198`, observed QUEUED. Subsequent documentation commits also trigger CI; fetch the latest run for the final ledger commit before reporting final CI status.
+- No workflow_dispatch was run. No Q10 or Q12–Q16 gate was rerun. Q10 no-repeat lock remains until 2026-11-24 07:50 ICT. Q11 remains blocked by invalid_api_key. No merge, release, or deployment was performed.
+- Buyer-facing source document: [BUYER_TECHNICAL_DUE_DILIGENCE.md](../BUYER_TECHNICAL_DUE_DILIGENCE.md).
+
+## Next actions
+1. Read back the final documentation commit and check the CI run it triggered.
+2. Resolve the main CI test failure with a successful run; do not infer success from the code correction alone.
+3. After the Q10 lock expires, follow the closure contract and exact-source rules before any Q10 rerun.
+4. Continue Q11 only after the owner replaces the invalid project credential through GitHub Secrets; never expose the value in chat.
+5. Run Q12/Q14/Q15 only through the approved candidate workflows; preserve Q13/Q16 as candidate-only until all exact-subject and review requirements are met.
+
+---
+
 # CK-NEXUS Work Ledger — Single Source of Work State
 
 Updated: 2026-11-23 08:52 ICT (+07:00)
