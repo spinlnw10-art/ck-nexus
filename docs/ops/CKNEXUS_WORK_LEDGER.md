@@ -1,6 +1,6 @@
 # CK-NEXUS Work Ledger — Single Source of Work State
 
-Updated: 2026-11-23 07:50 ICT (+07:00)
+Updated: 2026-11-23 08:20 ICT (+07:00)
 Do-not-repeat window: until 2026-11-24 07:50 ICT (+07:00)
 Purpose: prevent duplicate scans, duplicate fixes, and conflicting status reports.
 
@@ -27,6 +27,19 @@ Purpose: prevent duplicate scans, duplicate fixes, and conflicting status report
 - Latest remote refs verified before this policy commit: both `fix/q10-attachment-hardening-20261123` and `ops/provider-free-go-clean` -> `787ef3729caa9bf2bb876c2dc097c51fa0821361`.
 - PR #392 was last observed OPEN / BLOCKED / REVIEW_REQUIRED before the final documentation-only push; recheck the exact PR head and checks before making a current-state claim.
 - No merge or deploy performed.
+
+> **Ledger precedence:** The newest dated section at the top is the current truth. Older dated entries below are historical snapshots and may contain statuses that were true at that time but have since changed. If any older entry conflicts with the latest section or AI_HANDOFF_CURRENT_TRUTH.md, do not repeat its task or status.
+
+## Current-subject gate preparation — 2026-11-23 08:20 ICT
+
+- Current code candidate: efbb2ee157fcfdedfde054508fafaf21cbaf88fa; tree 2da60b807af2c389f1a798a1443fa475f91a94ed; runtime manifest be62b62b04827ee7c90a090e59da8adf55212ed477671b99cb0dd885fa5a3d4b.
+- Current PR head when checked: c869dd61f0491de584a4917657f55d66900008ea; checks PASS for CodeQL, attack-regression, preflight, test, universal-system, Analyze Actions/JS/TS/Python; SonarCloud FAIL. PR remains OPEN / BLOCKED / REVIEW_REQUIRED.
+- Issue #66 is CLOSED at 2026-10-31T17:31:32Z, referenced closing commit ad2fac7aa0752117dde065c7ad9b0b8d41136aa2. Do not count as an open blocker; regression tests cover content signatures, MIME, Office ZIP bomb/path traversal, Office parts and macro payload.
+- Q11 evidence is BLOCKED and Q12–Q16 evidence are PASS/PASS_CANDIDATE only for old manifest 96dcd0f0...; all are stale for current manifest be62b62b....
+- Added source-context review report for 107 non-test Bandit LOW findings: docs/security/Q10_BANDIT_REVIEW_efbb2ee.md. It is AI-assisted triage, not owner/independent sign-off. Q10 remains REVIEW_REQUIRED; do not edit machine evidence to force PASS.
+- Prepared current-subject gate orchestration: candidate-automated-gates.yml supports skip_q10 and optional authenticated Sonar export; Q11/Q12/Q14/Q16 workflows are reusable; Q13/Q15 now emit the exact runtime subject manifest. Q12 uses an ephemeral GitHub-hosted runner and provisions delegated cgroup v2, removing dependency on the offline self-hosted VPS runner.
+- These workflows have not yet been dispatched. Next action after push: dispatch candidate-automated-gates.yml with skip_q10=true and export_sonar_issues=true; then download, inspect, and commit each exact-subject evidence artifact.
+- Existing no-repeat lock remains active until 2026-11-24 07:50 ICT (+07:00). Do not rerun Q10/Bandit/secret/attack scans for unchanged application source.
 
 ## Current AI handoff and verified PR head — 2026-11-23
 
@@ -93,13 +106,13 @@ Reasons currently evidenced:
 2. PR #392 is OPEN / BLOCKED / REVIEW_REQUIRED.
 3. SonarCloud Code Analysis currently FAIL; issue-level actionable details not yet reviewed in this ledger.
 4. Q11–Q16 current-subject closure is not established by the evidence collected in this session.
-5. Issue #66 acceptance criteria are not verified as fully closed.
+5. Historical statement superseded: Issue #66 is CLOSED as of 2026-10-31; do not treat it as an open task.
 
 ## Next actions — do these in order, without repeating completed checks
 1. Recheck PR #392 head SHA and checks after the latest documentation-only push; do not rerun application scans.
 2. Review the 107 non-test Bandit LOW findings from the saved JSON; record dispositions and only remediate real risks.
 3. Review SonarCloud actionable issues; separate real release blockers from maintainability/quality findings.
-4. Verify Issue #66 acceptance criteria against current code/tests; do not reopen already-passed tests without a reason.
+4. Do not reopen Issue #66; it is CLOSED and has attachment signature/MIME/Office archive regression coverage.
 5. Work on only the remaining current-subject Q11–Q16 evidence gaps.
 6. Obtain required review; PR merge and deployment remain separate approval steps.
 

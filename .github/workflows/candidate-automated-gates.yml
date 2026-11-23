@@ -4,12 +4,24 @@ on:
   push:
     branches: [release/q10-q16-closure]
   workflow_dispatch:
+    inputs:
+      skip_q10:
+        description: "Reuse existing valid Q10 evidence; do not repeat the locked scan"
+        type: boolean
+        required: false
+        default: false
+      export_sonar_issues:
+        description: "Export authenticated SonarCloud issues for PR 392"
+        type: boolean
+        required: false
+        default: false
 
 permissions:
   contents: read
 
 jobs:
   q10_dependency_component:
+    if: ${{ github.event_name != 'workflow_dispatch' || inputs.skip_q10 != true }}
     runs-on: ubuntu-24.04
     timeout-minutes: 25
     env:
@@ -210,6 +222,88 @@ jobs:
             Q16_DEPENDENCY_LICENSE_INVENTORY.json
           if-no-files-found: warn
 
+  q11_live_provider:
+    uses: ./.github/workflows/verify-q11-final-subject.yml
+    permissions:
+      contents: read
+    secrets: inherit
+
+  q14_observability:
+    uses: ./.github/workflows/q14-observability-alert.yml
+    permissions:
+      contents: read
+
+  q16_production_image:
+    uses: ./.github/workflows/candidate-production-image.yml
+    permissions:
+      contents: read
+
+  q16_runtime_licenses:
+    uses: ./.github/workflows/candidate-runtime-licenses.yml
+    permissions:
+      contents: read
+
+  sonar_issue_export:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.export_sonar_issues == true }}
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Query authenticated SonarCloud PR findings
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "$SONAR_TOKEN"
+          curl -fsS -u "$SONAR_TOKEN:" --get \
+            --data-urlencode 'componentKeys=spinlnw10-art_ck-nexus' \
+            --data-urlencode 'pullRequest=392' \
+            --data-urlencode 'sinceLeakPeriod=true' \
+            --data-urlencode 'ps=500' \
+            'https://sonarcloud.io/api/issues/search' > sonar-issues.json
+          curl -fsS -u "$SONAR_TOKEN:" --get \
+            --data-urlencode 'projectKey=spinlnw10-art_ck-nexus' \
+            --data-urlencode 'pullRequest=392' \
+            'https://sonarcloud.io/api/qualitygates/project_status' > sonar-quality-gate.json
+          curl -fsS -u "$SONAR_TOKEN:" --get \
+            --data-urlencode 'projectKey=spinlnw10-art_ck-nexus' \
+            --data-urlencode 'pullRequest=392' \
+            --data-urlencode 'ps=500' \
+            'https://sonarcloud.io/api/hotspots/search' > sonar-hotspots.json
+          python - <<'PYSONAR'
+          import json
+          from collections import Counter
+          issues=json.load(open('sonar-issues.json',encoding='utf-8'))
+          gate=json.load(open('sonar-quality-gate.json',encoding='utf-8'))
+          hotspots=json.load(open('sonar-hotspots.json',encoding='utf-8'))
+          rows=issues.get('issues',[])
+          counts=Counter((x.get('type','?'),x.get('severity','?')) for x in rows)
+          conditions=gate.get('projectStatus',{}).get('conditions',[])
+          print('Sonar PR issue total:',issues.get('total'))
+          for (kind,severity),count in sorted(counts.items()):
+              print(f'{kind} {severity}: {count}')
+          print('Quality gate:',gate.get('projectStatus',{}).get('status'))
+          for c in conditions:
+              print('GATE',c.get('metricKey'),c.get('status'),c.get('actualValue'),c.get('errorThreshold'))
+          print('Security hotspots total:',hotspots.get('paging',{}).get('total'))
+          for x in rows:
+              print('ISSUE',x.get('type'),x.get('severity'),x.get('rule'),x.get('component'),x.get('line'),x.get('message'))
+          PYSONAR
+      - name: Upload SonarCloud issue evidence
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: sonarcloud-pr392-triage-${{ github.sha }}
+          path: |
+            sonar-issues.json
+            sonar-quality-gate.json
+            sonar-hotspots.json
+          if-no-files-found: error
+          retention-days: 90
+
+  q12_delegated_cgroup:
+    uses: ./.github/workflows/verify-q12-final-subject.yml
+    permissions:
+      contents: read
+
   q13_postgres_dr:
     runs-on: ubuntu-24.04
     services:
@@ -269,15 +363,17 @@ jobs:
           HEAD_SHA: ${{ github.sha }}
         run: |
           tree=$(git rev-parse HEAD^{tree})
-          python - "$HEAD_SHA" "$tree" "$RUN_ID" <<'PY'
+          manifest=$(git ls-tree -r HEAD -- app creator_app services gateway orchestration idea_engine migrations deploy observability Dockerfile docker-compose.prod.yml main.py pyproject.toml uv.lock | sha256sum | awk '{print $1}')
+          python - "$HEAD_SHA" "$tree" "$manifest" "$RUN_ID" <<'PY'
           import json,sys
-          sha,tree,run_id=sys.argv[1:]
+          sha,tree,manifest,run_id=sys.argv[1:]
           raw=json.load(open('Q13_POSTGRES_DR.json'))
           raw.update({
               'schema_version':2,
               'gate':'Q13',
               'source_sha':sha,
               'source_tree':tree,
+              'release_subject_manifest_sha256':manifest,
               'github_run_id':int(run_id),
               'environment_class':'ephemeral-isolated-staging',
               'production_data_used':False,
@@ -349,14 +445,16 @@ jobs:
           finish=$(date +%s)
           duration=$((finish-Q15_INSTALL_STARTED))
           tree=$(git rev-parse HEAD^{tree})
-          .venv/bin/python - "$HEAD_SHA" "$tree" "$RUN_ID" "$duration" <<'PY'
+          manifest=$(git ls-tree -r HEAD -- app creator_app services gateway orchestration idea_engine migrations deploy observability Dockerfile docker-compose.prod.yml main.py pyproject.toml uv.lock | sha256sum | awk '{print $1}')
+          .venv/bin/python - "$HEAD_SHA" "$tree" "$manifest" "$RUN_ID" "$duration" <<'PY'
           import json,os,platform,sys
-          sha,tree,run_id,duration=sys.argv[1:]
+          sha,tree,manifest,run_id,duration=sys.argv[1:]
           evidence={
               'schema_version':2,
               'gate':'Q15',
               'source_sha':sha,
               'source_tree':tree,
+              'release_subject_manifest_sha256':manifest,
               'github_run_id':int(run_id),
               'host_class':'fresh-github-hosted-vm',
               'os':platform.platform(),

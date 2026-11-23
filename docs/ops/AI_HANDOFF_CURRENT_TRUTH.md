@@ -2,9 +2,9 @@
 
 **Purpose:** First file every incoming AI/agent must read. It prevents duplicate work, false completion claims, stale SHA use, and confusion between similarly named documents.
 
-**Last verified:** 2026-11-23 (ICT)  
-**Repository:** spinlnw10-art/ck-nexus  
-**Production decision:** **NO-GO**  
+**Last verified:** 2026-11-23 08:20 ICT (+07:00)
+**Repository:** spinlnw10-art/ck-nexus
+**Production decision:** **NO-GO**
 **Canonical task ledger:** [CKNEXUS_WORK_LEDGER.md](CKNEXUS_WORK_LEDGER.md)
 
 ## 1. Read this before doing anything
@@ -25,10 +25,12 @@ Do not start from chat history, old reports, README text, or a remembered SHA. T
 | Moving PR head | Must be read live from GitHub | Never treat a SHA stored in this document as the current branch head |
 | Previous observed PR head | 0944ffd179e3789838185412dbcf2944caafb7e2 | Head before the handoff document was pushed |
 | Code candidate SHA | efbb2ee157fcfdedfde054508fafaf21cbaf88fa | Application source subject for the current Q10 report |
+| Code candidate tree | 2da60b807af2c389f1a798a1443fa475f91a94ed | Exact source tree for Q10 report |
+| Runtime subject manifest | be62b62b04827ee7c90a090e59da8adf55212ed477671b99cb0dd885fa5a3d4b | Shared application/runtime identity used by current-subject gates |
 | Main branch SHA | 944d7cb70a5d59d53c8fb379752bbee2085f7c8c | Main has not received PR #392 |
 | Remote branches | fix/q10-attachment-hardening-20261123, ops/provider-free-go-clean | Both were verified equal before the handoff update; query live refs for the current head. |
 
-Commits after the code candidate through the handoff update are documentation-only. Verified changed files between efbb2ee... and 0944ffd...:
+Commits after the code candidate through the handoff update are documentation/workflow-only. Application source and runtime manifest remain unchanged. Verified changed files between efbb2ee... and 0944ffd...:
 - README.md
 - RELEASE_STATUS.md
 - docs/UNIVERSAL_AI_OPERATING_STANDARD_V1.md
@@ -43,7 +45,7 @@ Therefore: **Q10 report source SHA remains efbb2ee, while current PR head is 094
 - Merge state: **BLOCKED**
 - Review decision: **REVIEW_REQUIRED**
 - Latest PR head: read live with gh pr view 392; do not use a stored SHA as current
-- The complete check set last observed on the previous head 0944ffd...:
+- The complete check set last observed on PR head c869dd61...:
   - PASS: CodeQL, Analyze Actions, Analyze JavaScript/TypeScript, Analyze Python, attack-regression, preflight, test, universal-system
   - FAIL: SonarCloud Code Analysis
   - SKIPPING: CodeRabbit
@@ -71,8 +73,8 @@ Therefore: **Q10 report source SHA remains efbb2ee, while current PR head is 094
 
 1. Q10 independent security review and finding dispositions. Review the saved Bandit JSON; 107 LOW findings are outside test paths. Do not rerun Bandit just to inspect them.
 2. SonarCloud FAIL: inspect its actual issues and separate actionable defects from quality-only findings.
-3. Issue #66: attachment acceptance criteria are not verified as fully closed.
-4. Q11–Q16: exact-current-candidate runtime/deployment evidence is not established.
+3. Issue #66 is CLOSED (2026-10-31) via ad2fac7aa0752117dde065c7ad9b0b8d41136aa2; tests cover signature mismatch, MIME, Office ZIP bombs, traversal, Office package parts, and macro payload. Do not reopen it without new failing evidence.
+4. Q11–Q16: files in evidence/ are stale. Q11/Q13/Q14/Q15/Q16 use old manifest 96dcd0f0...; Q12 also uses that old manifest. Current runtime manifest is be62b62b.... A single candidate workflow now has optional Q10-skip and current-subject jobs for Q11/Q12/Q13/Q14/Q15/Q16 plus authenticated Sonar issue export. It has not been dispatched yet.
 5. PR #392: review is required; merge is not authorized by this handoff.
 6. Production verification and deployment have not occurred.
 
@@ -114,4 +116,4 @@ For every proposed task:
 5. Status words have fixed meanings: DONE = outcome verified; PUBLISHED = pushed and remote SHA read back; BLOCKED = action or verification failed.
 6. Never merge, deploy, force-push, delete evidence, or change permissions without separate explicit authorization.
 
-**Next work order:** review SonarCloud issues and the saved 107 non-test Bandit findings; verify Issue #66 acceptance criteria; then close only the missing exact-subject Q11–Q16 evidence. Do not repeat completed Q10 scanner, dependency, secret, attack-regression, or test runs while their evidence remains valid.
+**Next work order:** push the prepared current-subject gate orchestration, then dispatch candidate-automated-gates.yml with skip_q10=true and export_sonar_issues=true. This runs Q11/Q12/Q13/Q14/Q15/Q16 plus Sonar issue export without repeating Q10. Q12 now provisions a delegated cgroup v2 subtree on an ephemeral GitHub-hosted Linux runner, so it does not require the old VPS. Download and verify each resulting artifact before committing it under evidence/. Do not rerun Q10 before the existing lock expires at 2026-11-24 07:50 ICT.
