@@ -75,16 +75,17 @@ class EvidenceGraphIntakeTests(unittest.TestCase):
                 MODULE.build_graph_document(manifest, root)
 
     def test_rejects_empty_artifact_set(self) -> None:
-        with tempfile.TemporaryDirectory() as directory:
-            with self.assertRaisesRegex(MODULE.EvidenceIntakeError, "1 to 50"):
-                MODULE.build_graph_document(
-                    {
-                        "candidate_commit_sha": "c" * 40,
-                        "evidence_type": "CK-NEXUS-OTEL-SHADOW",
-                        "artifacts": {},
-                    },
-                    Path(directory),
-                )
+        with tempfile.TemporaryDirectory() as directory, self.assertRaisesRegex(
+            MODULE.EvidenceIntakeError, "1 to 50"
+        ):
+            MODULE.build_graph_document(
+                {
+                    "candidate_commit_sha": "c" * 40,
+                    "evidence_type": "CK-NEXUS-OTEL-SHADOW",
+                    "artifacts": {},
+                },
+                Path(directory),
+            )
 
 
 if __name__ == "__main__":
