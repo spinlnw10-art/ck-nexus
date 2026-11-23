@@ -32,7 +32,14 @@ def _unique_object(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
     return result
 
 
-def intake(path: Path, *, tool: str, version: str, candidate_sha: str) -> dict[str, Any]:
+def intake(
+    path: Path,
+    *,
+    tool: str,
+    version: str,
+    candidate_sha: str,
+    allowed_root: Path,
+) -> dict[str, Any]:
     if tool not in TOOLS:
         raise IntakeError("tool must be ort or scancode")
     if not SHA_RE.fullmatch(candidate_sha):
@@ -40,16 +47,22 @@ def intake(path: Path, *, tool: str, version: str, candidate_sha: str) -> dict[s
     if not version or len(version) > 80 or any(ord(c) < 32 for c in version):
         raise IntakeError("tool version is missing or invalid")
 
+    root = allowed_root.resolve(strict=True)
     try:
         info = path.lstat()
     except OSError as exc:
         raise IntakeError("evidence file cannot be accessed") from exc
     if stat.S_ISLNK(info.st_mode) or not stat.S_ISREG(info.st_mode):
         raise IntakeError("evidence must be a regular non-symlink file")
+    resolved = path.resolve(strict=True)
+    try:
+        resolved.relative_to(root)
+    except ValueError as exc:
+        raise IntakeError("evidence must remain inside the allowed root") from exc
     if info.st_size == 0 or info.st_size > MAX_BYTES:
         raise IntakeError("evidence size is outside the permitted range")
 
-    raw = path.read_bytes()
+    raw = resolved.read_bytes()
     if len(raw) != info.st_size:
         raise IntakeError("evidence changed while being read")
     try:
@@ -86,6 +99,7 @@ def main() -> int:
         result = intake(
             args.input, tool=args.tool, version=args.version,
             candidate_sha=args.candidate_sha,
+            allowed_root=Path.cwd(),
         )
     except IntakeError as exc:
         parser.error(str(exc))
