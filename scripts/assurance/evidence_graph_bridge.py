@@ -26,12 +26,18 @@ def canonical_json(value: Any) -> bytes:
     return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=True).encode()
 
 
-def read_json(path: Path) -> tuple[dict[str, Any], str]:
+def read_json(path: Path, *, allowed_root: Path) -> tuple[dict[str, Any], str]:
+    root = allowed_root.resolve(strict=True)
     if path.is_symlink() or not path.is_file():
         raise EvidenceGraphError("evidence input must be a regular non-symlink file")
-    if path.stat().st_size > MAX_INPUT_BYTES:
+    resolved = path.resolve(strict=True)
+    try:
+        resolved.relative_to(root)
+    except ValueError as exc:
+        raise EvidenceGraphError("evidence input must remain inside the allowed root") from exc
+    if resolved.stat().st_size > MAX_INPUT_BYTES:
         raise EvidenceGraphError("evidence input exceeds the 4 MiB limit")
-    raw = path.read_bytes()
+    raw = resolved.read_bytes()
     try:
         value = json.loads(
             raw,
@@ -236,7 +242,7 @@ def make_statement(graph: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def main() -> int:
+def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--candidate-sha", required=True)
     parser.add_argument("--otel-evidence", type=Path, required=True)
@@ -246,21 +252,28 @@ def main() -> int:
     args = parser.parse_args()
 
     try:
-        otel, otel_sha = read_json(args.otel_evidence)
-        q16, q16_sha = read_json(args.q16_evidence)
+        allowed_root = Path.cwd().resolve(strict=True)
+        otel, otel_sha = read_json(args.otel_evidence, allowed_root=allowed_root)
+        q16, q16_sha = read_json(args.q16_evidence, allowed_root=allowed_root)
         graph = build_graph(args.candidate_sha, otel, otel_sha, q16, q16_sha)
         statement = make_statement(graph)
+        outputs = []
         for output in (args.output_graph, args.output_statement):
             if output.is_symlink():
                 raise EvidenceGraphError("output must not be a symlink")
-            output.parent.mkdir(parents=True, exist_ok=True)
-        args.output_graph.write_text(
+            parent = output.parent.resolve(strict=True)
+            try:
+                parent.relative_to(allowed_root)
+            except ValueError as exc:
+                raise EvidenceGraphError("output must remain inside the allowed root") from exc
+            outputs.append(parent / output.name)
+        outputs[0].write_text(
             json.dumps(graph, indent=2, sort_keys=True) + "\\n", encoding="utf-8"
         )
-        args.output_statement.write_text(
+        outputs[1].write_text(
             json.dumps(statement, indent=2, sort_keys=True) + "\\n", encoding="utf-8"
         )
-    except (OSError, EvidenceGraphError, ValueError) as exc:
+    except (OSError, ValueError) as exc:
         parser.error(str(exc))
     print(
         json.dumps(
@@ -271,8 +284,7 @@ def main() -> int:
             }
         )
     )
-    return 0
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    main()
