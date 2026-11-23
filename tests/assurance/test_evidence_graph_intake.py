@@ -81,17 +81,18 @@ class EvidenceGraphIntakeTests(unittest.TestCase):
                 MODULE.build_graph_document(manifest, root, "q16")
 
     def test_rejects_empty_artifact_set(self) -> None:
-        with tempfile.TemporaryDirectory() as directory:
-            with self.assertRaisesRegex(MODULE.EvidenceIntakeError, "fixed profile"):
-                MODULE.build_graph_document(
-                    {
-                        "candidate_commit_sha": "c" * 40,
-                        "evidence_type": "CK-NEXUS-Q16-LICENSE-SCAN",
-                        "artifacts": {},
-                    },
-                    Path(directory),
-                    "q16",
-                )
+        with tempfile.TemporaryDirectory() as directory, self.assertRaisesRegex(
+            MODULE.EvidenceIntakeError, "fixed profile"
+        ):
+            MODULE.build_graph_document(
+                {
+                    "candidate_commit_sha": "c" * 40,
+                    "evidence_type": "CK-NEXUS-Q16-LICENSE-SCAN",
+                    "artifacts": {},
+                },
+                Path(directory),
+                "q16",
+            )
 
 
 if __name__ == "__main__":
