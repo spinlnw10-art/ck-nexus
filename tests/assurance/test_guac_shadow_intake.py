@@ -5,7 +5,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from scripts.assurance.guac_shadow_intake import IntakeError, build_manifest
+from scripts.assurance.guac_shadow_intake import (\n    IntakeError,\n    build_manifest,\n)
 
 
 CANDIDATE = "a" * 40
