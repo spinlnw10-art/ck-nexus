@@ -20,7 +20,7 @@ Status: PHASE 1 INVENTORY / READ-ONLY / NO FILE OR BRANCH DELETION AUTHORIZED
 - Closed but unmerged PRs: 47
 - Branch names with no PR head association in the enumerated PR set: 102
 
-This phase inventories the complete current main tree and enumerates branch and PR references. It does not yet claim a complete per-branch tree/blob/unique-object review for all 401 branches. The older PR #225 retention audit inspected 274 branches at its 2026-09-04 baseline; its detailed decisions remain useful historical evidence but cannot substitute for re-auditing the 127 additional/currently changed branch references.
+This phase inventories the complete current main tree and has now completed a read-only Git object and path/blob comparison for all 402 live remote branches. It also enumerates the point-in-time branch and PR references. External deployment/workflow history, tag/release use, local worktree ownership and recovery intent remain open gates before any archival decision. The older PR #225 retention audit inspected 274 branches at its 2026-09-04 baseline and remains historical evidence only.
 
 ## Main tree composition
 
@@ -82,7 +82,7 @@ Decision: REVIEW / CONSOLIDATION CANDIDATE ONLY. Keep `migrations/postgresql/001
 
 ## Branch and pull-request inventory
 
-Branch prefix counts (401 total):
+Branch prefix counts (402 live remote branches; includes this audit branch):
 
 | Prefix | Count |
 |---|---:|
@@ -146,16 +146,21 @@ The old audit also identified exact duplicate JSON/SQLite migration pairs that a
 
 No DELETE_CANDIDATE is approved by this phase.
 
-## Required next audit phase — all 401 branches
+## Completed all-branch scan and remaining retention gates
 
-Before proposing branch archival or deletion:
-1. Freeze the branch inventory with names, head SHAs, commit dates, protection flags and default-branch relation.
-2. Enumerate all open/closed PR references and branch head/base relationships; preserve every open PR head.
-3. For every branch, compute merge-base/ahead/behind versus main, commit reachability, tree SHA, file paths, blob SHA and branch-only unique blobs.
-4. Identify same-head and same-tree groups; identical HEAD/tree is a review signal, not deletion authorization.
-5. Search workflow YAML, scripts, docs, tags, releases, deployments, GitHub Actions run references and external runbooks for branch-name references.
-6. Classify each branch KEEP, KEEP_RETAIN_HISTORY, REVIEW or ARCHIVE_CANDIDATE. Do not use DELETE_CANDIDATE until all required evidence is present.
-7. Preserve full commit/object history and produce a machine-readable CSV/JSON evidence manifest.
+Completed read-only gates:
+1. Frozen 402 live branch names, head/tree SHAs, local tracking-ref comparison and protection metadata in evidence manifests.
+2. Captured 355 PRs (220 open, 135 closed) and branch-to-PR head associations; preserved all refs.
+3. Computed ahead/behind, unique commit/blob/tree/object counts and path/blob differences for 402/402 branch tips; zero scan errors.
+4. Identified same-HEAD and same-tree groups without treating equality as deletion authorization.
+5. Checked exact textual branch/path references in current main for the 13 archive candidates; one nearby zero-delta branch is retained because workflow CI references it.
+6. Produced machine-readable JSON/TSV evidence manifests.
+
+Still required before proposing archival or deletion:
+1. Reconcile GitHub Actions run history, environments, deployments, rulesets, release assets and external runbooks for each candidate.
+2. Verify local worktree ownership and restore/recovery intent; five stale local tracking refs and 25 worktrees remain untouched.
+3. Complete the migration consumer/package-data audit before any migration consolidation.
+4. Obtain explicit owner approval and prepare a verified immutable archive/rollback before any separate deletion request.
 
 ## File organization plan
 
@@ -180,7 +185,7 @@ Use the existing architecture rather than a disruptive monorepo migration:
 
 ## Limitations and open work
 
-This document is a verified phase-1 snapshot of the full current main tree and the complete branch/PR name inventory. The all-branch Git object and path-level comparison is now complete for the 402 live remote refs. External deployment/workflow history, release/tag use, local worktree ownership and recovery intent remain incomplete. This is not a final deletion manifest and authorizes no destructive operation.
+This document is a verified read-only inventory of the full current main tree plus all 402 live remote branch tips, PR associations and Git object/path comparisons. External deployment/workflow history, release/tag use, local worktree ownership and recovery intent remain incomplete. This is not a final deletion manifest and authorizes no destructive operation.
 
 
 ## Addendum — local Git head/tree inventory (2026-11-23)
