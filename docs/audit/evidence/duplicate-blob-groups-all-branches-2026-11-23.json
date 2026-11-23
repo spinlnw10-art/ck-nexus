@@ -1929,5 +1929,6 @@
         "feat/search-control-registry-20261101"
       ]
     }
-  ]
+  ],
+  "scope_note": "Baseline covers the 401 pre-existing live remote branches at audit start. The audit branch audit/repository-organization-20261123 is excluded from its own evidence to avoid self-referential HEAD/tree snapshots; it is tracked separately by Draft PR #393."
 }
