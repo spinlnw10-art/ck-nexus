@@ -13,7 +13,8 @@ MODULE_PATH = (
     / "evidence_graph_intake.py"
 )
 SPEC = importlib.util.spec_from_file_location("evidence_graph_intake", MODULE_PATH)
-assert SPEC is not None and SPEC.loader is not None
+assert SPEC is not None
+assert SPEC.loader is not None
 MODULE = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(MODULE)
 
