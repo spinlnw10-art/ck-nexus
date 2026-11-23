@@ -34,6 +34,7 @@ class Q16EvidenceManifestTests(unittest.TestCase):
             manifest = MODULE.build_manifest(
                 "a" * 40,
                 {"synthetic": path},
+                Path(directory),
             )
             self.assertEqual(manifest["candidate_commit_sha"], "a" * 40)
             self.assertEqual(
@@ -42,6 +43,15 @@ class Q16EvidenceManifestTests(unittest.TestCase):
             )
             self.assertFalse(manifest["authority"]["gate_decision_made"])
             self.assertFalse(manifest["authority"]["legal_conclusion_made"])
+
+    def test_rejects_artifact_outside_allowed_root(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory) / "root"
+            outside = Path(directory) / "outside.json"
+            root.mkdir()
+            outside.write_text("{}", encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "within the allowed directory"):
+                MODULE.build_manifest("c" * 40, {"outside": outside}, root)
 
     def test_rejects_invalid_candidate_sha(self) -> None:
         with self.assertRaisesRegex(ValueError, "candidate SHA"):
@@ -54,8 +64,8 @@ class Q16EvidenceManifestTests(unittest.TestCase):
             target.write_text("{}", encoding="utf-8")
             link = root / "link.json"
             link.symlink_to(target)
-            with self.assertRaisesRegex(ValueError, "non-symlink"):
-                MODULE.build_manifest("b" * 40, {"linked": link})
+            with self.assertRaisesRegex(ValueError, "symlink"):
+                MODULE.build_manifest("b" * 40, {"linked": link}, root)
 
 
 if __name__ == "__main__":
