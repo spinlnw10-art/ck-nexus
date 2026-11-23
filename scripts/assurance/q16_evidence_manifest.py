@@ -49,7 +49,10 @@ def build_manifest(candidate_sha: str, workspace: Path) -> dict:
             "repository_source_scan": (
                 "full checked-out source tree; generated and VCS directories excluded"
             ),
-            "ort_pipeline": "full repository NPM/PIP dependency analysis and ScanCode scan with dynamic versions enabled for shadow only; deterministic synthetic fixture also scanned",
+            "ort_pipeline": "full repository NPM/PIP dependency analysis and ScanCode scan; deterministic synthetic fixture also scanned",
+            "package_managers": ["NPM", "PIP"],
+            "dynamic_versions_allowed": True,
+            "release_gate_eligible": False,
         },
         "artifacts": artifacts,
         "authority": {
