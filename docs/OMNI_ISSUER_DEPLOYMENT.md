@@ -22,14 +22,14 @@ Status: issuer core, loopback HTTP transport, and launcher implemented; producti
 6. Exercise the real HTTP boundary, restart/replay, concurrent consume/revoke races, key rotation, expiry, clock skew, and service-unavailable behavior in staging.
 7. Wire the AGNES production runtime only after those tests and a configuration gate pass. Until then, the existing production gate must remain fail-closed.
 
+## AGNES runtime credential layout
+
+When `CKNEXUS_OMNI_ENABLED=true`, AGNES reads only these fixed filenames beneath the configured AGNES ledger parent:
+
+- `omni-credentials/issuer-public-key.pem` — pinned Ed25519 issuer public key; the issuer private key must never be copied here.
+- `omni-credentials/service-token.txt` — short-lived AGNES service token; the directory must be mode `0700` or stricter and the token file mode `0600` or stricter.
+- `omni-replay.sqlite3` — durable one-use execution replay database, created beneath the same runtime data directory.
+
+The runtime deliberately does not accept environment-provided filesystem paths for these files. HTTP is permitted only for loopback issuer URLs; non-loopback URLs must use HTTPS. Token contents are read dynamically for rotation and are never returned to the UI or logs.
+
 The issuer core tests use ephemeral test keys and temporary SQLite databases only. Passing them is not evidence that a production issuer is deployed or configured.
-
-## AGNES client credential layout
-
-When `CKNEXUS_OMNI_ENABLED=true`, AGNES reads its pinned issuer public key and rotatable service token only from the fixed, application-owned directory under `agnes_ledger_path.parent`:
-
-- `omni/issuer-public.pem` — pinned Ed25519 public key (public material; regular file, not a symlink).
-- `omni/service-token` — short-lived AGNES service token (regular file, mode `0600` or stricter; not a symlink).
-- `omni-replay.sqlite3` — durable local replay database managed by AGNES.
-
-Create the `omni` directory before enabling the integration and restrict directory access to the CK-NEXUS runtime account. File paths are deliberately not accepted from environment variables, preventing runtime path redirection. The token contents are never logged and are reread for each authority request to support rotation. Keep `CKNEXUS_OMNI_URL` and `CKNEXUS_OMNI_ISSUER_ID` as explicit non-secret configuration. A configured client is not evidence of a live issuer connection or production authorization.
