@@ -97,7 +97,7 @@ jobs:
 
       - name: Create candidate-bound Q16 evidence manifest
         run: |
-          python scripts/assurance/q16_evidence_manifest.py --candidate-sha "$GITHUB_SHA" --scancode-report "$RUNNER_TEMP/scancode-full-repo.json" --scancode-install-report "$SCANCODE_INSTALL_REPORT" --ort-analyzer-result "$ORT_ANALYZER_RESULT" --ort-scan-result "$ORT_SCAN_RESULT" --output "$RUNNER_TEMP/q16/q16-evidence.json"
+          python scripts/assurance/q16_evidence_manifest.py --candidate-sha "$GITHUB_SHA" --allowed-root "$RUNNER_TEMP" --scancode-report "$RUNNER_TEMP/scancode-full-repo.json" --scancode-install-report "$SCANCODE_INSTALL_REPORT" --ort-analyzer-result "$ORT_ANALYZER_RESULT" --ort-scan-result "$ORT_SCAN_RESULT" --output "$RUNNER_TEMP/q16/q16-evidence.json"
           cat "$RUNNER_TEMP/q16/q16-evidence.json"
 
       - name: Run evidence manifest unit tests
