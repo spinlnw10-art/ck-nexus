@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import importlib.util
 import tempfile
 import unittest
@@ -27,45 +28,47 @@ class Q16EvidenceManifestTests(unittest.TestCase):
                 "a8198524f58e72b56283ab71ebddada22840f108b46ef7165bb3fca9919c5558",
             )
 
-    def test_manifest_binds_candidate_and_artifact_hashes(self) -> None:
+    def test_manifest_binds_candidate_and_fixed_report_hashes(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
-            path = Path(directory) / "evidence.json"
-            path.write_text('{"synthetic":true}', encoding="utf-8")
-            manifest = MODULE.build_manifest(
-                "a" * 40,
-                {"synthetic": path},
-                Path(directory),
+            root = Path(directory)
+            (root / "q16").mkdir()
+            paths = (
+                root / "scancode-full-repo.json",
+                root / "scancode-install-report.json",
+                root / "q16" / "analyzer-result.json",
+                root / "q16" / "scan-result.yml",
             )
+            for path in paths:
+                path.write_text('{"synthetic":true}', encoding="utf-8")
+            manifest = MODULE.build_manifest("a" * 40, root)
             self.assertEqual(manifest["candidate_commit_sha"], "a" * 40)
             self.assertEqual(
-                manifest["artifacts"]["synthetic"]["sha256"],
-                MODULE.digest(path),
+                manifest["artifacts"]["scancode_full_repo"]["sha256"],
+                hashlib.sha256(paths[0].read_bytes()).hexdigest(),
             )
             self.assertFalse(manifest["authority"]["gate_decision_made"])
             self.assertFalse(manifest["authority"]["legal_conclusion_made"])
 
-    def test_rejects_artifact_outside_allowed_root(self) -> None:
-        with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory) / "root"
-            outside = Path(directory) / "outside.json"
-            root.mkdir()
-            outside.write_text("{}", encoding="utf-8")
-            with self.assertRaisesRegex(ValueError, "within the allowed directory"):
-                MODULE.build_manifest("c" * 40, {"outside": outside}, root)
-
     def test_rejects_invalid_candidate_sha(self) -> None:
-        with self.assertRaisesRegex(ValueError, "candidate SHA"):
-            MODULE.build_manifest("not-a-sha", {})
+        with tempfile.TemporaryDirectory() as directory:
+            with self.assertRaisesRegex(ValueError, "candidate SHA"):
+                MODULE.build_manifest("not-a-sha", Path(directory))
 
-    def test_rejects_symlink_artifact(self) -> None:
+    def test_rejects_symlink_report(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
+            (root / "q16").mkdir()
+            for name in (
+                "scancode-install-report.json",
+                "q16/analyzer-result.json",
+                "q16/scan-result.yml",
+            ):
+                (root / name).write_text("{}", encoding="utf-8")
             target = root / "target.json"
             target.write_text("{}", encoding="utf-8")
-            link = root / "link.json"
-            link.symlink_to(target)
-            with self.assertRaisesRegex(ValueError, "symlink"):
-                MODULE.build_manifest("b" * 40, {"linked": link}, root)
+            (root / "scancode-full-repo.json").symlink_to(target)
+            with self.assertRaisesRegex(ValueError, "missing or unsafe"):
+                MODULE.build_manifest("b" * 40, root)
 
 
 if __name__ == "__main__":
