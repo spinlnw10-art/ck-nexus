@@ -115,12 +115,12 @@ jobs:
           mkdir -p "$ORT_DATA_DIR" "$ORT_CONFIG_DIR" "$RUNNER_TEMP/q16/analyzer" "$RUNNER_TEMP/q16/scanner"
           cp scripts/assurance/ort-q16-config.yml "$ORT_CONFIG_DIR/config.yml"
           "$ORT_BIN" --info analyze -f JSON -i tests/fixtures/q16-license -o "$RUNNER_TEMP/q16/analyzer"
-          ANALYZER_RESULT="$(find "$RUNNER_TEMP/q16/analyzer" -maxdepth 1 -type f \( -name 'analyzer-result.json' -o -name 'analyzer-result.yml' \) -print -quit)"
-          test -n "$ANALYZER_RESULT"
+          ANALYZER_RESULT="$RUNNER_TEMP/q16/analyzer/analyzer-result.json"
+          test -f "$ANALYZER_RESULT"
           cp "$ANALYZER_RESULT" evidence/assurance/shadow/q16/analyzer-result.json
           "$ORT_BIN" scan -i "$ANALYZER_RESULT" -o "$RUNNER_TEMP/q16/scanner"
-          SCAN_RESULT="$(find "$RUNNER_TEMP/q16/scanner" -maxdepth 1 -type f \( -name 'scan-result.yml' -o -name 'scan-result.json' \) -print -quit)"
-          test -n "$SCAN_RESULT"
+          SCAN_RESULT="$RUNNER_TEMP/q16/scanner/scan-result.yml"
+          test -f "$SCAN_RESULT"
           cp "$SCAN_RESULT" evidence/assurance/shadow/q16/scan-result.yml
 
       - name: Create candidate-bound Q16 evidence manifest
