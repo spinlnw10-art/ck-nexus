@@ -108,7 +108,10 @@ jobs:
             sleep 0.5
           done
           if [ "$ready" -eq 1 ]; then
-            CKNEXUS_SECURITY_EVIDENCE=../security-attack-regression.json .venv/bin/python scripts/security_attack_regression.py
+            (
+              cd ..
+              PYTHONPATH=q10-target q10-target/.venv/bin/python q10-target/scripts/security_attack_regression.py
+            )
             rc=$?
           else
             cat ../q10-runtime.log || true

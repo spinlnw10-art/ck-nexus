@@ -27,7 +27,7 @@ from services.email_gateway.attachments import scan_attachment
 
 BASE_URL = os.getenv("CKNEXUS_SECURITY_BASE_URL", "http://127.0.0.1:8000").rstrip("/")
 ACCESS_TOKEN = os.getenv("CKNEXUS_SECURITY_ACCESS_TOKEN", "test-access-value")
-EVIDENCE_PATH = Path(os.getenv("CKNEXUS_SECURITY_EVIDENCE", "security-attack-regression.json"))
+EVIDENCE_PATH = Path("security-attack-regression.json")
 _LOOPBACK_HOSTS = frozenset({"127.0.0.1", "localhost", "::1"})
 
 
