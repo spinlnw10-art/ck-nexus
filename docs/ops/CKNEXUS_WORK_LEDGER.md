@@ -1,3 +1,14 @@
+# Documentation verification follow-up — 2026-11-23
+
+- Updated the buyer brief with the successful CI rerun evidence: commit `443dbcff3cd9f57f4c5264cad006a7f569e10712`.
+- Updated README to state that the earlier import-path test failure was followed by a successful four-workflow run on documentation-only commit `bb49f89c5389c8782b11f5bf526f81986e6a9658`: CK-NEXUS CI, preflight, attack-regression, and universal-system all SUCCESS. README commit: `c629df978ddd353982a9849eb7a73fa16c1e9472`.
+- Updated the current Release Status snapshot with the same verified CI result: commit `254231b71eca2c443102769b4662de84f31e7fa6`.
+- CI on the later documentation commit `254231b` is still running at the time of this note: preflight run `45127922900` SUCCESS; universal-system `45127922897` SUCCESS; CK-NEXUS CI `45127922874` IN_PROGRESS; attack-regression `45127923062` IN_PROGRESS.
+- These are documentation-only changes. No application code, runtime manifest, or Q10–Q16 evidence was changed. Production remains NO-GO; no workflow_dispatch, merge, release, or deployment.
+- PR #392 comment `7093860541` summarizes the documentation correction and earlier 4/4 CI pass.
+
+---
+
 # Verification follow-up — 2026-11-23 14:00 ICT
 
 - Read-back of documentation commit `bb49f89c5389c8782b11f5bf526f81986e6a9658` succeeded.
