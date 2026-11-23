@@ -92,6 +92,7 @@ jobs:
         shell: bash
         env:
           TARGET_DIR: ${{ steps.subject.outputs.target_dir }}
+          TARGET_SHA: ${{ steps.subject.outputs.target_sha }}
         run: |
           set -euo pipefail
           mkdir -p "$RUNNER_TEMP/q10-evidence"
