@@ -73,13 +73,14 @@ Blob SHA: `a7c91587f2d3d461ae845a041cec21a59cb16789`; each file is 2,484 bytes.
 - `services/email_gateway/migrations/postgresql.sql`
 
 Evidence:
-- Current `services/email_gateway/repository.py` explicitly documents production PostgreSQL schema at `migrations/postgresql/001_email_gateway.sql`.
-- The same module loads the SQLite migration from `services/email_gateway/migrations/sqlite.sql`.
-- GitHub code search for the exact `migrations/001_email_journal.sql` path text returned only `SHA256SUMS`.
-- GitHub code search for the exact `services/email_gateway/migrations/postgresql.sql` path text returned only `SHA256SUMS`.
-- GitHub code search for `migrations/postgresql/001_email_gateway.sql` returned `services/email_gateway/repository.py` and `SHA256SUMS`.
+- `docker-compose.p0.yml` mounts `./migrations/postgresql` at `/migrations` and executes `/migrations/001_email_gateway.sql` during PostgreSQL initialization. This makes `migrations/postgresql/001_email_gateway.sql` an active deployment input.
+- `services/email_gateway/postgres_repository.py` loads `services/email_gateway/migrations/postgresql.sql` at runtime using a path relative to the installed package.
+- `pyproject.toml` explicitly packages `services.email_gateway` data with `migrations/*.sql`; the package-local PostgreSQL migration is required for installed-wheel execution.
+- `services/email_gateway/repository.py` documents the Docker/global migration path and separately loads the package-local SQLite migration.
+- `SHA256SUMS` contains all three identical PostgreSQL files. Any removal or relocation requires regenerating and verifying this manifest.
+- A read-only `git grep` of `origin/main` found no in-repository code/workflow reference to `migrations/001_email_journal.sql` beyond `SHA256SUMS`. This does not rule out external scripts, old deployments or operator runbooks.
 
-Decision: REVIEW / CONSOLIDATION CANDIDATE ONLY. Keep `migrations/postgresql/001_email_gateway.sql` as the provisional canonical source because it is explicitly named by runtime code. Do not remove the other two copies until package-data rules, installers, CI, external deployment scripts, migration discovery/globs and checksum generation are checked. If consolidated, update package metadata and SHA256SUMS in the same change and add tests proving runtime/package behavior.
+Decision: **KEEP the two operationally consumed copies** at `migrations/postgresql/001_email_gateway.sql` (Docker initialization) and `services/email_gateway/migrations/postgresql.sql` (installed package/runtime). Mark `migrations/001_email_journal.sql` **REVIEW / possible archive candidate only** because no in-repository runtime consumer was found; do not remove it until external deployment/runbook references and historical migration policy are checked. The long-term maintainable option is to establish one canonical source and generate/synchronize the two required deployment/package artifacts with a deterministic check, but that is a separate behavior-sensitive change requiring tests for Docker initialization, installed-wheel resource availability and checksum integrity.
 
 ## Branch and pull-request inventory
 
@@ -262,7 +263,7 @@ Full per-branch ahead/behind, unique commit/blob/tree/object counts and head dat
 - Branches with exactly the same path/blob tree as main: **1** (`main`)
 - Aggregate branch-tree comparison instances: **41,684 changed-path instances**, **11,974 branch-only path instances**, and **138,947 main-path-missing instances**. These are summed across branch snapshots, not unique repository files.
 - Across all branch snapshots, the scanner recorded **1,604 duplicate-blob group occurrences** across **28 distinct blob/path signatures**, and **4,074 duplicate extra-path instances**. These are per-tree group occurrences, not 1,604 duplicate-group occurrences, not 1,604 distinct repository-wide duplicate files.
-- Current main still has exactly the two duplicate-content groups documented above: 8 empty package markers (KEEP) and 3 identical PostgreSQL migration copies (REVIEW).
+- Current main still has exactly the two duplicate-content groups documented above: 8 empty package markers (KEEP) and 3 identical PostgreSQL migration copies (KEEP two active consumer copies; REVIEW the unreferenced root-level copy).
 
 Full per-branch file counts, changed paths, branch-only paths, main paths missing and duplicate-group counts: [branch-path-diff-summary-2026-11-23.json](evidence/branch-path-diff-summary-2026-11-23.json).
 
@@ -337,7 +338,7 @@ The 1,604 figure is the number of duplicate-group occurrences across 401 pre-exi
 
 | Scope | Candidate | Proposed decision | Why / required gate |
 |---|---|---|---|
-| Current main | Two extra PostgreSQL migration copies | REVIEW / possible consolidation | Runtime references one canonical path; inspect package data, all installers, deployment globs, checksum manifests and migration tests first |
+| Current main | Three identical PostgreSQL migration copies | KEEP two active copies; REVIEW root-level copy only | Docker Compose consumes `migrations/postgresql/001_email_gateway.sql`; installed package runtime consumes `services/email_gateway/migrations/postgresql.sql`; root copy has no in-repo runtime reference but may have external consumers |
 | Current main | Eight empty `__init__.py` files | KEEP | Python package discovery/import behavior |
 | Historical branches | Duplicate orchestration JSON pair | KEEP in history; REVIEW only on any future active branch merge | Not present as an exact duplicate pair in current main; map consumers before moving |
 | Historical branches | Duplicate SQLite migration pair | KEEP in history; REVIEW on any future active branch merge | Runtime/package path and migration-discovery contract must be tested |
