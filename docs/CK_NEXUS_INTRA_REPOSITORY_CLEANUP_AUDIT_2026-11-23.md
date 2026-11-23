@@ -107,3 +107,35 @@ Not yet established:
 | env examples and Compose files | KEEP distinct until environment contract map proves redundancy |
 
 No source, branch, backup, production configuration, database, credential or host state was modified. No cleanup command was executed.
+
+
+## 8. Follow-up dependency search and deletion decision — 2026-11-23
+
+A further targeted GitHub code search was performed against the canonical default branch. GitHub code search can be incomplete and is not a substitute for a full checkout, so results below are positive evidence only; absence from results is not proof of no dependency.
+
+### SQL migration paths
+
+Positive references found:
+- `docker-compose.p0.yml` mounts `migrations/postgresql` and executes `/migrations/001_email_gateway.sql`, resolving to `migrations/postgresql/001_email_gateway.sql`.
+- `services/email_gateway/repository.py` explicitly names `migrations/postgresql/001_email_gateway.sql` as the production PostgreSQL schema contract.
+- `SHA256SUMS` contains entries for all three identical SQL paths, so deleting any path without updating and re-verifying the manifest would leave the integrity manifest inconsistent.
+
+No complete packaging, external automation, or historical deployment scan has yet been established for the other two paths. Therefore, despite byte identity, **none of the three SQL paths is approved for deletion in this pass**. The PostgreSQL path is the best-supported canonical candidate, but a compatibility/manifest migration plan is still required before removing either alias.
+
+### n8n positive dependency evidence
+
+Targeted searches found:
+- `creator_app/brain/runtime.py` imports `AgentLearningMemory` from `creator_app.n8n_intelligence.learning`.
+- Four operational script modules import the n8n intelligence package: `cknexus_n8n_intelligence.py`, `cknexus_n8n_proactive.py`, `cknexus_n8n_auto_gitops.py`, and `cknexus_n8n_auto_developer.py`.
+- Multiple tests directly import the package and its behavior.
+- `ops/vps/systemd/cknexus-n8n-intelligence.service` and `cknexus-n8n-proactive.service` invoke the corresponding Python modules; timer units reference multiple n8n service units.
+- `ops/vps/systemd/cknexus-n8n-workflows-ui.service` runs `/usr/local/libexec/cknexus_n8n_workflows_ui.py`; the repository also contains the corresponding service source, UI HTML, and gateway contract tests.
+- `SHA256SUMS` records checksums for these n8n scripts, units, and UI assets.
+
+This confirms that n8n residue is not an isolated orphaned folder. Some of it remains directly imported, tested, or wired into systemd definitions. The repository policy that n8n is absent from active runtime is therefore not sufficient by itself to justify deletion. A separate architecture decision must clarify whether these are intentionally retained compatibility/optional capabilities or should be retired, followed by a read-only host inventory and a staged deactivation/archive PR.
+
+### Deletion decision
+
+**Zero files were deleted.** This is an evidence-based HOLD, not a failure to act: every candidate reviewed in this follow-up either has a positive source/test/deployment/checksum reference or lacks enough complete dependency evidence to prove safe removal. No branch, backup, runtime, deployment, VPS service, or cleanup script was changed or executed.
+
+Next eligible cleanup work is non-destructive: complete the migration consumer map, classify n8n artifacts individually, inventory all VPS scripts and systemd references, and create an explicit archive/deprecation manifest. Only then propose narrowly scoped deletions in a dedicated cleanup PR with tests and rollback evidence.
