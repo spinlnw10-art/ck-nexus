@@ -12,7 +12,8 @@ MODULE_PATH = (
     / "scripts/assurance/q14_otel_provenance_guard.py"
 )
 SPEC = importlib.util.spec_from_file_location("q14_otel_provenance_guard", MODULE_PATH)
-assert SPEC and SPEC.loader
+assert SPEC is not None
+assert SPEC.loader is not None
 MODULE = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(MODULE)
 
@@ -57,28 +58,28 @@ class Q14ProvenanceGuardTests(unittest.TestCase):
     def test_extracts_one_digest_from_cosign_verify_output(self) -> None:
         self.assertEqual(MODULE.extract_verified_digest(signature_document()), DIGEST)
 
-    def test_rejects_ambiguous_or_missing_signature_digest(self) -> None:
+    def test_rejects_missing_signature_digest(self) -> None:
         with self.assertRaises(MODULE.EvidenceError):
             MODULE.extract_verified_digest([])
+
+    def test_rejects_ambiguous_signature_digests(self) -> None:
+        ambiguous = signature_document("sha256:" + "c" * 64) + signature_document()
         with self.assertRaises(MODULE.EvidenceError):
-            MODULE.extract_verified_digest(
-                signature_document("sha256:" + "c" * 64) + signature_document()
-            )
+            MODULE.extract_verified_digest(ambiguous)
 
     def test_accepts_matching_slsa_v1_subject(self) -> None:
         result = MODULE.verify_slsa_subject(provenance_document(), DIGEST)
         self.assertEqual(result["matched_attestations"], 1)
 
     def test_rejects_wrong_subject_digest(self) -> None:
+        document = provenance_document("sha256:" + "c" * 64)
         with self.assertRaisesRegex(MODULE.EvidenceError, "no verified SLSA provenance subject"):
-            MODULE.verify_slsa_subject(provenance_document("sha256:" + "c" * 64), DIGEST)
+            MODULE.verify_slsa_subject(document, DIGEST)
 
     def test_rejects_non_slsa_predicate(self) -> None:
+        document = provenance_document(predicate="https://example.invalid/provenance")
         with self.assertRaisesRegex(MODULE.EvidenceError, "no verified SLSA provenance subject"):
-            MODULE.verify_slsa_subject(
-                provenance_document(predicate="https://example.invalid/provenance"),
-                DIGEST,
-            )
+            MODULE.verify_slsa_subject(document, DIGEST)
 
     def test_binds_verified_report_to_candidate_and_raw_evidence_hashes(self) -> None:
         self.write_documents(signature_document(), provenance_document())
@@ -125,7 +126,7 @@ class Q14ProvenanceGuardTests(unittest.TestCase):
                 image="docker.io/library/alpine:latest",
                 release_tag="v0.165.0",
                 candidate_sha=CANDIDATE,
-            allowed_root=self.root,
+                allowed_root=self.root,
                 slsa_status="VERIFIED",
             )
         with self.assertRaises(MODULE.EvidenceError):
