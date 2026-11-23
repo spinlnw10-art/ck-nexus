@@ -38,38 +38,51 @@ class AdmissionDecision:
     authority_scope: str = "NONE"
 
 
-def load_catalog() -> dict[str, Any]:
-    try:
-        raw = json.loads(CATALOG.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as exc:
-        raise ValueError("system skills catalog cannot be read or parsed") from exc
-    if raw.get("schema") != "cknexus.system-skills.catalog.v1":
-        raise ValueError("unsupported system skills catalog schema")
-    policy = raw.get("adoption_policy", {})
+def _validate_policy(policy: Any) -> None:
+    if not isinstance(policy, dict):
+        raise ValueError("catalog adoption policy must be an object")
     for field in ("auto_install", "auto_activate", "auto_merge", "auto_deploy"):
         if policy.get(field) is not False:
             raise ValueError(f"adoption policy must keep {field}=false")
     if policy.get("authority_scope") != "NONE":
         raise ValueError("external capability catalog cannot carry authority")
-    skills = raw.get("skills", [])
+
+
+def _validate_skill(item: Any) -> str:
+    if not isinstance(item, dict):
+        raise ValueError("each skill entry must be an object")
+    skill_id = str(item.get("id", ""))
+    if not _SKILL_ID.fullmatch(skill_id):
+        raise ValueError("catalog requires valid non-empty skill ids")
+    if item.get("decision") not in VALID_DECISIONS:
+        raise ValueError(f"invalid decision for {skill_id}")
+    if item.get("risk") not in VALID_RISKS:
+        raise ValueError(f"invalid risk for {skill_id}")
+    evidence = item.get("evidence")
+    if not isinstance(evidence, str) or not evidence.strip():
+        raise ValueError(f"missing evidence for {skill_id}")
+    return skill_id
+
+
+def _validate_skills(skills: Any) -> None:
     if not isinstance(skills, list) or not skills:
         raise ValueError("catalog requires a non-empty skills list")
-    ids = []
-    for item in skills:
-        if not isinstance(item, dict):
-            raise ValueError("each skill entry must be an object")
-        skill_id = str(item.get("id", ""))
-        ids.append(skill_id)
-        if not _SKILL_ID.fullmatch(skill_id):
-            raise ValueError("catalog requires valid non-empty skill ids")
-        if item.get("decision") not in VALID_DECISIONS:
-            raise ValueError(f"invalid decision for {skill_id}")
-        if item.get("risk") not in VALID_RISKS:
-            raise ValueError(f"invalid risk for {skill_id}")
-        if not isinstance(item.get("evidence"), str) or not item["evidence"].strip():
-            raise ValueError(f"missing evidence for {skill_id}")
+    ids = [_validate_skill(item) for item in skills]
     if len(ids) != len(set(ids)):
         raise ValueError("duplicate skill ids")
+
+
+def load_catalog() -> dict[str, Any]:
+    try:
+        raw = json.loads(CATALOG.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise ValueError("system skills catalog cannot be read or parsed") from exc
+    if not isinstance(raw, dict):
+        raise ValueError("system skills catalog root must be an object")
+    if raw.get("schema") != "cknexus.system-skills.catalog.v1":
+        raise ValueError("unsupported system skills catalog schema")
+    _validate_policy(raw.get("adoption_policy", {}))
+    _validate_skills(raw.get("skills", []))
     return raw
 
 
