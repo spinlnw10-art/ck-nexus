@@ -66,10 +66,10 @@ jobs:
       - name: Start isolated collector with no external egress
         run: |
           set -euo pipefail
-          docker network create --internal ck-nexus-otel-shadow
+          docker network create --internal --subnet 172.30.0.0/24 ck-nexus-otel-shadow
           docker run --detach --name ck-nexus-otel-shadow \
             --network ck-nexus-otel-shadow \
-            --publish 127.0.0.1:4318:4318 \
+            --ip 172.30.0.2 \
             --read-only --cap-drop=ALL --security-opt=no-new-privileges \
             --pids-limit=64 --memory=256m --cpus=1 \
             --tmpfs /tmp:rw,noexec,nosuid,size=16m \
@@ -78,7 +78,7 @@ jobs:
             if [ "$(docker inspect --format '{{.State.Running}}' ck-nexus-otel-shadow)" != "true" ]; then
               break
             fi
-            if curl --silent --output /dev/null --connect-timeout 1 http://127.0.0.1:4318/v1/traces; then
+            if curl --noproxy "*" --silent --output /dev/null --connect-timeout 1 http://172.30.0.2:4318/v1/traces; then
               exit 0
             fi
             sleep 1
