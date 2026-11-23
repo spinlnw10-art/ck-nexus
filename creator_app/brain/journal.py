@@ -11,6 +11,9 @@ from datetime import UTC, datetime
 from pathlib import Path
 from uuid import uuid4
 
+BRAIN_ROOT = Path(__file__).resolve().parents[2]
+BRAIN_JOURNAL_PATH = BRAIN_ROOT / ".state" / "brain.sqlite3"
+
 _OUTCOMES = frozenset({"reported_success", "reported_failure", "blocked", "unknown"})
 _REASON_RE = re.compile(r"^[A-Za-z0-9_.:-]{1,80}$")
 _REF_RE = re.compile(r"^[A-Za-z0-9_.:/-]{1,200}$")
@@ -34,8 +37,8 @@ _ALLOWED_METRICS = frozenset(
 class BrainJournal:
     """SQLite append-only observations and unapproved improvement candidates."""
 
-    def __init__(self, database: str | Path) -> None:
-        self.database = Path(database)
+    def __init__(self) -> None:
+        self.database = BRAIN_JOURNAL_PATH
         self.database.parent.mkdir(parents=True, exist_ok=True)
         with closing(self._connect()) as db:
             db.execute("PRAGMA journal_mode=WAL")

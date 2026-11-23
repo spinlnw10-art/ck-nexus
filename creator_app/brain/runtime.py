@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import os
 import sqlite3
 from pathlib import Path
 
@@ -16,9 +15,15 @@ from creator_app.dev_assistants.orchestrator import DevAssistantFabric
 from creator_app.expert_fabric import ExpertRouter
 from creator_app.n8n_intelligence.learning import AgentLearningMemory
 
+from . import journal as brain_journal
 from .journal import BrainJournal
 
+BRAIN_ROOT = Path(__file__).resolve().parents[2]
 STATE_DIRECTORY = ".state"
+TASK_DATABASE_PATH = BRAIN_ROOT / STATE_DIRECTORY / "control-plane.sqlite3"
+KNOWLEDGE_DATABASE_PATH = Path("/var/lib/cknexus-knowledge/ebooks.sqlite3")
+EVIDENCE_DIRECTORY = BRAIN_ROOT / "evidence" / "auto_dev"
+FABRIC_LEDGER_PATH = BRAIN_ROOT / STATE_DIRECTORY / "agnes-fabric-ledger.jsonl"
 
 
 class BrainRuntime:
@@ -27,38 +32,21 @@ class BrainRuntime:
     def __init__(
         self,
         *,
-        root: str | Path,
-        journal_path=None,
-        task_db_path=None,
-        knowledge_db_path=None,
-        evidence_dir=None,
         orchestrator=None,
         expert_router=None,
         dev_assistant_fabric=None,
-        fabric_ledger_path=None,
         approval_verifier: CoreApprovalVerifier | None = None,
     ):
-        self.root = Path(root)
+        self.root = BRAIN_ROOT
         self.catalog_path = self.root / "config" / "capability_catalog.json"
-        self.journal_path = Path(
-            journal_path
-            or os.getenv("CKNEXUS_BRAIN_DB", self.root / STATE_DIRECTORY / "brain.sqlite3")
-        )
-        self.task_db_path = Path(
-            task_db_path
-            or os.getenv("CKNEXUS_TASK_DB", self.root / STATE_DIRECTORY / "control-plane.sqlite3")
-        )
-        self.knowledge_db_path = Path(
-            knowledge_db_path
-            or os.getenv("CKNEXUS_EBOOK_DB", "/var/lib/cknexus-knowledge/ebooks.sqlite3")
-        )
-        self.evidence_dir = Path(evidence_dir or self.root / "evidence" / "auto_dev")
+        self.journal_path = brain_journal.BRAIN_JOURNAL_PATH
+        self.task_db_path = TASK_DATABASE_PATH
+        self.knowledge_db_path = KNOWLEDGE_DATABASE_PATH
+        self.evidence_dir = EVIDENCE_DIRECTORY
         self.orchestrator = orchestrator or ControlPlaneOrchestrator()
         self.expert_router = expert_router or ExpertRouter()
         self.dev_assistant_fabric = dev_assistant_fabric or DevAssistantFabric()
-        self.fabric_ledger_path = Path(
-            fabric_ledger_path or self.root / STATE_DIRECTORY / "agnes-fabric-ledger.jsonl"
-        )
+        self.fabric_ledger_path = FABRIC_LEDGER_PATH
         self.fabric_ledger = AppendOnlyLedger(self.fabric_ledger_path)
         self.experiential_memory = ExperientialMemory(
             self.fabric_ledger, approval_verifier=approval_verifier
@@ -122,7 +110,7 @@ class BrainRuntime:
         journal = {"database_present": self.journal_path.is_file()}
         if self.journal_path.is_file():
             try:
-                journal.update(BrainJournal(self.journal_path).summary(limit=3))
+                journal.update(BrainJournal().summary(limit=3))
             except (OSError, ValueError):
                 journal["status"] = "unavailable"
         else:
@@ -231,10 +219,10 @@ class BrainRuntime:
         return AgentLearningMemory(self.evidence_dir, max_records=20).context_for(task)
 
     def record_observation(self, **kwargs):
-        return BrainJournal(self.journal_path).record_observation(**kwargs)
+        return BrainJournal().record_observation(**kwargs)
 
     def propose_improvement(self, **kwargs):
-        return BrainJournal(self.journal_path).propose_improvement(**kwargs)
+        return BrainJournal().propose_improvement(**kwargs)
 
     def journal_summary(self):
         if not self.journal_path.is_file():
@@ -243,7 +231,7 @@ class BrainRuntime:
                 "pending_improvement_candidates": 0,
                 "raw_prompts_or_outputs_stored": False,
             }
-        return BrainJournal(self.journal_path).summary()
+        return BrainJournal().summary()
 
     def record_experience(self, **kwargs):
         return self.experiential_memory.record_experience(**kwargs).as_dict()

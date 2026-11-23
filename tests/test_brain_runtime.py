@@ -8,6 +8,8 @@ import pytest
 
 from creator_app.agnes_approval import CoreApprovalDecision
 from creator_app.brain import BrainJournal, BrainRuntime
+from creator_app.brain import journal as brain_journal
+from creator_app.brain import runtime as brain_runtime
 from creator_app.dev_assistants.orchestrator import DevAssistantFabric
 
 
@@ -39,14 +41,24 @@ def _root(tmp_path: Path) -> Path:
     return root
 
 
-def test_brain_status_composes_components_and_fails_closed(tmp_path):
-    brain = BrainRuntime(
-        root=_root(tmp_path),
-        journal_path=tmp_path / "brain.sqlite3",
-        task_db_path=tmp_path / "tasks.sqlite3",
-        knowledge_db_path=tmp_path / "missing.sqlite3",
-        evidence_dir=tmp_path / "missing",
+def _configure_brain(
+    monkeypatch, tmp_path: Path, *, dev_assistant_fabric=None, approval_verifier=None
+):
+    root = _root(tmp_path)
+    monkeypatch.setattr(brain_runtime, "BRAIN_ROOT", root)
+    monkeypatch.setattr(brain_journal, "BRAIN_JOURNAL_PATH", tmp_path / "brain.sqlite3")
+    monkeypatch.setattr(brain_runtime, "TASK_DATABASE_PATH", tmp_path / "tasks.sqlite3")
+    monkeypatch.setattr(brain_runtime, "KNOWLEDGE_DATABASE_PATH", tmp_path / "missing.sqlite3")
+    monkeypatch.setattr(brain_runtime, "EVIDENCE_DIRECTORY", tmp_path / "missing")
+    monkeypatch.setattr(brain_runtime, "FABRIC_LEDGER_PATH", tmp_path / "fabric.jsonl")
+    return BrainRuntime(
+        dev_assistant_fabric=dev_assistant_fabric,
+        approval_verifier=approval_verifier,
     )
+
+
+def test_brain_status_composes_components_and_fails_closed(tmp_path, monkeypatch):
+    brain = _configure_brain(monkeypatch, tmp_path)
     status = brain.status()
     assert (
         status["brain_status"] == "ready_for_planning" and status["catalog"]["artifact_count"] == 2
@@ -61,23 +73,20 @@ def test_brain_status_composes_components_and_fails_closed(tmp_path):
     assert status["specialist_fabric"]["external_runtime_verified_count"] == 0
 
 
-def test_brain_plan_never_executes_or_grants_authority(tmp_path):
-    brain = BrainRuntime(
-        root=_root(tmp_path),
-        journal_path=tmp_path / "brain.sqlite3",
-        task_db_path=tmp_path / "tasks.sqlite3",
-        knowledge_db_path=tmp_path / "missing.sqlite3",
-        evidence_dir=tmp_path / "missing",
-    )
+def test_brain_plan_never_executes_or_grants_authority(tmp_path, monkeypatch):
+    brain = _configure_brain(monkeypatch, tmp_path)
     result = brain.plan("Improve model fallback and verify tests", priority=2)
     assert result["execution_state"] == "PLANNED_NOT_EXECUTED" and len(result["plan"]["nodes"]) == 4
     assert result["external_mutation_authorized"] is False
     assert all(x["external_mutation_authorized"] is False for x in result["queue_payloads"])
 
 
-def test_journal_stores_fingerprint_not_raw_task_and_never_claims_verification(tmp_path):
-    db = tmp_path / "brain.sqlite3"
-    journal = BrainJournal(db)
+def test_journal_stores_fingerprint_not_raw_task_and_never_claims_verification(
+    tmp_path, monkeypatch
+):
+    monkeypatch.setattr(brain_journal, "BRAIN_JOURNAL_PATH", tmp_path / "brain.sqlite3")
+    db = brain_journal.BRAIN_JOURNAL_PATH
+    journal = BrainJournal()
     task = "private prompt marker DO_NOT_PERSIST"
     result = journal.record_observation(
         task=task,
@@ -93,8 +102,9 @@ def test_journal_stores_fingerprint_not_raw_task_and_never_claims_verification(t
     assert summary["self_reported_outcomes_are_verified"] is False
 
 
-def test_improvement_proposals_remain_candidates_until_owner_review(tmp_path):
-    journal = BrainJournal(tmp_path / "brain.sqlite3")
+def test_improvement_proposals_remain_candidates_until_owner_review(tmp_path, monkeypatch):
+    monkeypatch.setattr(brain_journal, "BRAIN_JOURNAL_PATH", tmp_path / "brain.sqlite3")
+    journal = BrainJournal()
     item = journal.propose_improvement(
         candidate_type="retrieval_quality",
         title="Add multilingual semantic retrieval",
@@ -111,8 +121,9 @@ def test_improvement_proposals_remain_candidates_until_owner_review(tmp_path):
     assert journal.summary()["pending_improvement_candidates"] == 1
 
 
-def test_journal_rejects_untrusted_outcomes_and_secret_shaped_refs(tmp_path):
-    journal = BrainJournal(tmp_path / "brain.sqlite3")
+def test_journal_rejects_untrusted_outcomes_and_secret_shaped_refs(tmp_path, monkeypatch):
+    monkeypatch.setattr(brain_journal, "BRAIN_JOURNAL_PATH", tmp_path / "brain.sqlite3")
+    journal = BrainJournal()
     with pytest.raises(ValueError):
         journal.record_observation(task="task", outcome="verified")
     with pytest.raises(ValueError):
@@ -121,13 +132,12 @@ def test_journal_rejects_untrusted_outcomes_and_secret_shaped_refs(tmp_path):
         )
 
 
-def test_brain_plan_composes_internal_experts_and_external_assistant_candidates(tmp_path):
-    brain = BrainRuntime(
-        root=_root(tmp_path),
-        journal_path=tmp_path / "brain.sqlite3",
-        task_db_path=tmp_path / "tasks.sqlite3",
-        knowledge_db_path=tmp_path / "missing.sqlite3",
-        evidence_dir=tmp_path / "missing",
+def test_brain_plan_composes_internal_experts_and_external_assistant_candidates(
+    tmp_path, monkeypatch
+):
+    brain = _configure_brain(
+        monkeypatch,
+        tmp_path,
         dev_assistant_fabric=DevAssistantFabric(path_lookup=lambda _command: None),
     )
     result = brain.plan("Audit security vulnerability in authentication")
@@ -156,8 +166,8 @@ class _CoreApprovalVerifier:
         )
 
 
-def test_brain_status_exposes_fail_closed_knowledge_fabric(tmp_path):
-    brain = BrainRuntime(root=_root(tmp_path), fabric_ledger_path=tmp_path / "fabric.jsonl")
+def test_brain_status_exposes_fail_closed_knowledge_fabric(tmp_path, monkeypatch):
+    brain = _configure_brain(monkeypatch, tmp_path)
     status = brain.status()
     fabric = status["knowledge_fabric"]
     assert fabric["status"] == "available"
@@ -170,10 +180,10 @@ def test_brain_status_exposes_fail_closed_knowledge_fabric(tmp_path):
     assert fabric["authority_scope"] == "NONE"
 
 
-def test_brain_uses_only_core_validated_experiences_in_future_plans(tmp_path):
-    brain = BrainRuntime(
-        root=_root(tmp_path),
-        fabric_ledger_path=tmp_path / "fabric.jsonl",
+def test_brain_uses_only_core_validated_experiences_in_future_plans(tmp_path, monkeypatch):
+    brain = _configure_brain(
+        monkeypatch,
+        tmp_path,
         approval_verifier=_CoreApprovalVerifier(),
         dev_assistant_fabric=DevAssistantFabric(path_lookup=lambda _command: None),
     )
@@ -201,8 +211,8 @@ def test_brain_uses_only_core_validated_experiences_in_future_plans(tmp_path):
     assert plan["execution_state"] == "PLANNED_NOT_EXECUTED"
 
 
-def test_brain_skill_foundry_records_candidates_without_installing(tmp_path):
-    brain = BrainRuntime(root=_root(tmp_path), fabric_ledger_path=tmp_path / "fabric.jsonl")
+def test_brain_skill_foundry_records_candidates_without_installing(tmp_path, monkeypatch):
+    brain = _configure_brain(monkeypatch, tmp_path)
     candidate = brain.discover_skill_candidate(
         skill_id="safe-reader",
         version="1.0.0",
@@ -217,11 +227,11 @@ def test_brain_skill_foundry_records_candidates_without_installing(tmp_path):
     assert brain.status()["knowledge_fabric"]["skill_foundry"]["candidate_count"] == 1
 
 
-def test_brain_skill_foundry_requires_quarantine_release_and_independent_review(tmp_path):
-    brain = BrainRuntime(
-        root=_root(tmp_path),
-        fabric_ledger_path=tmp_path / "fabric.jsonl",
-        approval_verifier=_CoreApprovalVerifier(),
+def test_brain_skill_foundry_requires_quarantine_release_and_independent_review(
+    tmp_path, monkeypatch
+):
+    brain = _configure_brain(
+        monkeypatch, tmp_path, approval_verifier=_CoreApprovalVerifier()
     )
     candidate = brain.discover_skill_candidate(
         skill_id="scripted-tool",
@@ -264,3 +274,17 @@ def test_brain_skill_foundry_requires_quarantine_release_and_independent_review(
     )
     assert registerable["state"] == "REGISTERABLE"
     assert registerable["activation_allowed"] is False
+
+
+def test_brain_runtime_ignores_environment_path_overrides(monkeypatch, tmp_path):
+    brain = _configure_brain(monkeypatch, tmp_path)
+    monkeypatch.setenv("CKNEXUS_BRAIN_DB", str(tmp_path / "outside-brain.sqlite3"))
+    monkeypatch.setenv("CKNEXUS_TASK_DB", str(tmp_path / "outside-tasks.sqlite3"))
+    monkeypatch.setenv("CKNEXUS_EBOOK_DB", str(tmp_path / "outside-ebooks.sqlite3"))
+
+    assert brain.journal_path == tmp_path / "brain.sqlite3"
+    assert brain.task_db_path == tmp_path / "tasks.sqlite3"
+    assert brain.knowledge_db_path == tmp_path / "missing.sqlite3"
+    assert not (tmp_path / "outside-brain.sqlite3").exists()
+    assert not (tmp_path / "outside-tasks.sqlite3").exists()
+    assert not (tmp_path / "outside-ebooks.sqlite3").exists()
