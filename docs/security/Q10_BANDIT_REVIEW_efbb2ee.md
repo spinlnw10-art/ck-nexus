@@ -1,5 +1,7 @@
 # Q10 Bandit finding review — exact code candidate efbb2ee
 
+> Historical review only: this report is bound to source efbb2ee157fcfdedfde054508fafaf21cbaf88fa. Subsequent security fixes changed application/source files and introduced a canonical Q10–Q16 manifest. Do not use this report as current-candidate sign-off; generate and review the new Q10 artifact for the new source SHA.
+
 **Review type:** AI-assisted source-context triage; not an independent third-party audit.
 **Decision:** Owner sign-off still required. Q10 remains REVIEW_REQUIRED / NOT_VERIFIED.
 

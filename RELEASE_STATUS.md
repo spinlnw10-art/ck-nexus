@@ -1,6 +1,8 @@
 # Current candidate update — 2026-11-23 (PR #392)
 
-**Decision: NO-GO FOR PRODUCTION.** This snapshot distinguishes the application code subject from the documentation-only PR head.
+**Decision: NO-GO FOR PRODUCTION.**
+
+- Current canonical Q10–Q16 manifest: 370f8a8f405e9b960e8b41722d0f61a4269237d137b94c014a1c2598e75e08de (computed from the staged remediation tree). This snapshot distinguishes the application code subject from the documentation-only PR head.
 
 - PR: https://github.com/spinlnw10-art/ck-nexus/pull/392
 - PR state: OPEN; merge state BLOCKED; review decision REVIEW_REQUIRED; base main.
@@ -48,7 +50,7 @@ All 541 findings are LOW. Grouped from the saved JSON artifact:
 2. Issue #66 is CLOSED as of 2026-10-31 via ad2fac7aa0752117dde065c7ad9b0b8d41136aa2. Regression coverage exists in tests/test_attachment_magic_66.py, tests/test_attachment_signature_66.py, and tests/test_attachment_hardening_q10.py for signature mismatch, MIME, Office ZIP bombs, traversal, expected Office parts, and macro payloads. This development issue closure does not close Q10.
 3. Existing Q11–Q16 evidence files are stale for this code candidate: Q11/Q13/Q14/Q15/Q16 bind to source 4cf17cd3... and manifest 96dcd0f0...; Q12 binds to source 512837c8... and the same old manifest. Current code manifest is be62b62b.... Current-subject workflow orchestration has been prepared but not yet executed.
 4. PR #392 requires review; no merge or deploy has occurred.
-5. SonarCloud failed on PR #392 (Security Rating D / Reliability Rating C). An authenticated issue-export job has been added to the candidate workflow; actual issue-level findings are not yet retrieved.
+5. SonarCloud failed on PR #392 (Security Rating D / Reliability Rating C). Authenticated Sonar issue export (run 45093845262) retrieved 43 issues: 1 CRITICAL + 3 MAJOR vulnerabilities, 4 MAJOR bugs, 35 code smells, 0 hotspots. The blocking TLS, workflow-install, and signup Promise findings have been remediated in the new candidate; fresh Sonar analysis is pending.
 
 ## Work deduplication record
 

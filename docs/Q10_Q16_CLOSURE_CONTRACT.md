@@ -1,5 +1,16 @@
 # CK-NEXUS Q10-Q16 Production Closure Contract
 
+## Canonical release-subject manifest (mandatory for Q10–Q16)
+
+Every Q10–Q16 evidence file MUST use the exact output of
+scripts/release_subject_manifest.py. Do not duplicate path lists in individual
+workflows. The script hashes the Git tree listing for the canonical runtime
+paths, including scripts/; therefore Q10 and Q11–Q16 evidence can be compared
+directly. A missing or different manifest is stale evidence, even when the
+individual gate says PASS. Update the final-package expected subject only from
+the canonical script output for the candidate being packaged.
+
+
 Adopted for the canonical Q09 baseline `45fde79c717b09f8675645aa541a5834ebd4f433`.
 
 This document maps the remaining production blockers into explicit gates. It is a new closure contract for the current release line; it does not rewrite historical R-series evidence. Every gate is fail-closed. `PASS` applies only to evidence bound to the same immutable release identity. A partial/component pass never promotes the whole gate.

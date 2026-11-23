@@ -23,50 +23,55 @@ jobs:
           set -euo pipefail
           sha=$(git rev-parse HEAD)
           tree=$(git rev-parse 'HEAD^{tree}')
-          manifest=$(git ls-tree -r HEAD -- app creator_app services gateway orchestration idea_engine migrations deploy observability Dockerfile docker-compose.prod.yml main.py pyproject.toml uv.lock | sha256sum | awk '{print $1}')
+          manifest=$(python3 scripts/release_subject_manifest.py)
           test "$sha" = "$GITHUB_SHA"
           echo "source_sha=$sha" >> "$GITHUB_OUTPUT"
           echo "source_tree=$tree" >> "$GITHUB_OUTPUT"
           echo "release_subject=$manifest" >> "$GITHUB_OUTPUT"
-      - name: Prove non-root runner identity
-        shell: bash
-        run: |
-          set -euo pipefail
-          test "$(id -u)" -ne 0
-          echo "runner_user=$(id -un)"
-          echo "runner_uid=$(id -u)"
-          test -f /sys/fs/cgroup/cgroup.controllers
-      - name: Create isolated delegated cgroup v2 subtree
-        id: delegate
-        shell: bash
-        run: |
-          set -euo pipefail
-          root="/sys/fs/cgroup/cknexus-q12-$GITHUB_RUN_ID"
-          available=$(cat /sys/fs/cgroup/cgroup.controllers)
-          for controller in cpu memory pids; do grep -qw "$controller" <<< "$available"; done
-          current=$(cat /sys/fs/cgroup/cgroup.subtree_control)
-          ops=""
-          for controller in cpu memory pids; do
-            if ! grep -qw "$controller" <<< "$current"; then ops="$ops +$controller"; fi
-          done
-          if [ -n "$ops" ]; then printf '%s\n' "$ops" | sudo tee /sys/fs/cgroup/cgroup.subtree_control >/dev/null; fi
-          sudo mkdir "$root"
-          sudo chown "$(id -u):$(id -g)" "$root"
-          sudo chown "$(id -u):$(id -g)" "$root/cgroup.procs" "$root/cgroup.subtree_control"
-          child_available=$(cat "$root/cgroup.controllers")
-          for controller in cpu memory pids; do grep -qw "$controller" <<< "$child_available"; done
-          printf '+cpu +memory +pids\n' > "$root/cgroup.subtree_control"
-          test -w "$root" && test -w "$root/cgroup.procs" && test -w "$root/cgroup.subtree_control"
-          echo "CKNEXUS_AGNES_CGROUP_ROOT=$root" >> "$GITHUB_ENV"
-          echo "delegated_root=$root" >> "$GITHUB_OUTPUT"
-      - name: Run actual kernel-enforced Q12 gate as non-root
+      - name: Run Q12 inside a delegated systemd service as non-root
         id: gate
         shell: bash
         run: |
           set +e
-          python3 scripts/agnes_cgroup_v2_staging_gate.py >Q12_CGROUP_RAW.json 2>q12-gate-error.txt
+          unit="cknexus-q12-$GITHUB_RUN_ID"
+          sudo systemd-run --wait --pipe --collect --unit="$unit" \
+            --property="User=$(id -un)" \
+            --property="Group=$(id -gn)" \
+            --property="Delegate=yes" \
+            --property="DelegateControllers=cpu memory pids" \
+            --property="WorkingDirectory=$GITHUB_WORKSPACE" \
+            --setenv="GITHUB_WORKSPACE=$GITHUB_WORKSPACE" \
+            --setenv="CKNEXUS_ENVIRONMENT=staging" \
+            --setenv="PATH=$PATH" \
+            --setenv="HOME=$HOME" \
+            --setenv="USER=$(id -un)" \
+            /bin/bash -lc '
+              set -euo pipefail
+              cg=""
+              while IFS=: read -r hierarchy controllers path; do
+                if [ "$hierarchy" = "0" ]; then cg="$path"; fi
+              done < /proc/self/cgroup
+              test -n "$cg"
+              root="/sys/fs/cgroup$cg"
+              echo "$root" > "$GITHUB_WORKSPACE/q12-delegated-root.txt"
+              export CKNEXUS_AGNES_CGROUP_ROOT="$root"
+              available=$(cat "$root/cgroup.controllers")
+              for controller in cpu memory pids; do grep -qw "$controller" <<< "$available"; done
+              current=$(cat "$root/cgroup.subtree_control")
+              ops=""
+              for controller in cpu memory pids; do
+                if ! grep -qw "$controller" <<< "$current"; then ops="$ops +$controller"; fi
+              done
+              if [ -n "$ops" ]; then printf "%s\n" "$ops" > "$root/cgroup.subtree_control"; fi
+              enabled=$(cat "$root/cgroup.subtree_control")
+              for controller in cpu memory pids; do grep -qw "$controller" <<< "$enabled"; done
+              python3 scripts/agnes_cgroup_v2_staging_gate.py > "$GITHUB_WORKSPACE/Q12_CGROUP_RAW.json" 2> "$GITHUB_WORKSPACE/q12-gate-error.txt"
+            '
           rc=$?
           echo "rc=$rc" >> "$GITHUB_OUTPUT"
+          if [ -f q12-delegated-root.txt ]; then
+            echo "delegated_root=$(cat q12-delegated-root.txt)" >> "$GITHUB_OUTPUT"
+          fi
           exit 0
       - name: Emit exact Q12 evidence
         if: always()
@@ -79,7 +84,7 @@ jobs:
           RUNNER_OS_VALUE: ${{ runner.os }}
           RUNNER_ARCH_VALUE: ${{ runner.arch }}
           GATE_RC: ${{ steps.gate.outputs.rc }}
-          DELEGATED_ROOT: ${{ steps.delegate.outputs.delegated_root }}
+          DELEGATED_ROOT: ${{ steps.gate.outputs.delegated_root }}
         shell: bash
         run: |
           python3 - <<'PYTHON'
@@ -90,19 +95,20 @@ jobs:
           except (FileNotFoundError,json.JSONDecodeError): raw=None
           try: diagnostic=Path("q12-gate-error.txt").read_text(encoding="utf-8")
           except FileNotFoundError: diagnostic=""
-          passed=gate_rc==0 and isinstance(raw,dict) and raw.get("status")=="PASS"
           root=os.getenv("DELEGATED_ROOT","")
           controllers=Path(root,"cgroup.controllers").read_text().split() if root and Path(root,"cgroup.controllers").exists() else []
+          passed=gate_rc==0 and isinstance(raw,dict) and raw.get("status")=="PASS"
           evidence={
             "schema_version":7,"gate":"Q12",
             "source_sha":os.getenv("SOURCE_SHA"),"source_tree":os.getenv("SOURCE_TREE"),
             "release_subject_manifest_sha256":os.getenv("RELEASE_SUBJECT"),
             "github_run_id":int(os.getenv("RUN_ID","0")),
-            "environment_class":"ephemeral-github-hosted-linux-delegated-cgroup-v2",
+            "environment_class":"ephemeral-github-hosted-linux-systemd-delegated-cgroup-v2",
             "runner_name":os.getenv("RUNNER_NAME_VALUE"),"runner_os":os.getenv("RUNNER_OS_VALUE"),
             "runner_arch":os.getenv("RUNNER_ARCH_VALUE"),"runner_user":os.getenv("USER"),
-            "required_identity":"non-root CK-NEXUS service identity","delegated_root":root,
-            "controllers":controllers,"delegation_ready":bool(root),"gate_exit_code":gate_rc,"raw":raw,
+            "required_identity":"non-root CK-NEXUS service identity",
+            "delegated_root":root,"controllers":controllers,
+            "delegation_ready":bool(root),"gate_exit_code":gate_rc,"raw":raw,
             "actual_kernel_enforcement":passed,
             "result":"PASS" if passed else ("BLOCKED" if gate_rc==2 else "FAIL"),
             "production_promotion_allowed":passed,"diagnostic":diagnostic[:2000],
@@ -119,6 +125,7 @@ jobs:
             Q12_CGROUP_V2.json
             Q12_CGROUP_RAW.json
             q12-gate-error.txt
+            q12-delegated-root.txt
           if-no-files-found: warn
           retention-days: 90
       - name: Enforce Q12

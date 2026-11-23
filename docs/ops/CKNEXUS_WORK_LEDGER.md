@@ -1,6 +1,6 @@
 # CK-NEXUS Work Ledger — Single Source of Work State
 
-Updated: 2026-11-23 08:20 ICT (+07:00)
+Updated: 2026-11-23 09:00 ICT (+07:00)
 Do-not-repeat window: until 2026-11-24 07:50 ICT (+07:00)
 Purpose: prevent duplicate scans, duplicate fixes, and conflicting status reports.
 
@@ -30,9 +30,22 @@ Purpose: prevent duplicate scans, duplicate fixes, and conflicting status report
 
 > **Ledger precedence:** The newest dated section at the top is the current truth. Older dated entries below are historical snapshots and may contain statuses that were true at that time but have since changed. If any older entry conflicts with the latest section or AI_HANDOFF_CURRENT_TRUTH.md, do not repeat its task or status.
 
-## Current-subject gate preparation — 2026-11-23 08:20 ICT
+## Sonar remediation and canonical Q10–Q16 manifest — 2026-11-23
 
-- Current code candidate: efbb2ee157fcfdedfde054508fafaf21cbaf88fa; tree 2da60b807af2c389f1a798a1443fa475f91a94ed; runtime manifest be62b62b04827ee7c90a090e59da8adf55212ed477671b99cb0dd885fa5a3d4b.
+- New candidate canonical manifest (includes scripts/): 370f8a8f405e9b960e8b41722d0f61a4269237d137b94c014a1c2598e75e08de. Source SHA is the live PR #392 head after the remediation push; read it from GitHub rather than copying an older SHA.
+
+- SonarCloud baseline export from run 45093845262 is retained at evidence/sonarcloud/pr392-6a960b9c/. It reported 43 issues: 1 CRITICAL + 3 MAJOR vulnerabilities, 4 MAJOR bugs, 35 code smells, 0 hotspots; Security D / Reliability C.
+- Remediated the blocking findings in the working candidate: explicit TLS CERT_REQUIRED + hostname validation; pinned uv 0.12.4 wheel-only install and frozen binary-only dependencies; signup autoScan/provider scan promises awaited; clipboard promise rejection handled; init promise rejection handled.
+- Added scripts/release_subject_manifest.py as the only Q10–Q16 manifest source. It includes scripts/ in the runtime subject, so Q10 and Q11–Q16 cannot silently calculate different path sets. Updated Q10, Q11–Q16, CI, refresh-evidence, and final package workflows to use it.
+- Q12 now runs inside a systemd Delegate=yes service as the non-root Actions runner on ubuntu-24.04. The first direct chown approach failed with PermissionError; the new systemd method is not yet verified.
+- Previous batch run 45093845262 is not promoted: Q13/Q15/Q16 individual jobs passed but used a mismatched manifest; Q11 failed with 401 invalid_api_key; Q12 failed with PermissionError; Q14 was cancelled. The Sonar JSON is retained as historical triage only.
+- OPENAI_API_KEY GitHub secret is configured but the Q11 Responses API call returned 401 invalid_api_key. The OpenAI Platform key setup flow was opened; owner must create a valid project key and replace the GitHub repository secret. Do not paste the key into chat.
+- Next batch: dispatch candidate-automated-gates.yml with skip_q10=false, skip_q11=true, export_sonar_issues=true. This runs a new Q10 scan for the changed source and Q12–Q16 on the same canonical manifest; Q11 is rerun separately after the secret is corrected.
+- The old 24-hour no-repeat lock applies only to the superseded efbb2ee source. This is a changed source candidate, so one new Q10 scan is justified. Do not repeat it again unless the application source changes or evidence is invalidated.
+
+## Historical gate preparation — superseded candidate efbb2ee
+
+- Previous code candidate: efbb2ee157fcfdedfde054508fafaf21cbaf88fa; tree 2da60b807af2c389f1a798a1443fa475f91a94ed; historical manifest be62b62b04827ee7c90a090e59da8adf55212ed477671b99cb0dd885fa5a3d4b.
 - Current PR head when checked: c869dd61f0491de584a4917657f55d66900008ea; checks PASS for CodeQL, attack-regression, preflight, test, universal-system, Analyze Actions/JS/TS/Python; SonarCloud FAIL. PR remains OPEN / BLOCKED / REVIEW_REQUIRED.
 - Issue #66 is CLOSED at 2026-10-31T17:31:32Z, referenced closing commit ad2fac7aa0752117dde065c7ad9b0b8d41136aa2. Do not count as an open blocker; regression tests cover content signatures, MIME, Office ZIP bomb/path traversal, Office parts and macro payload.
 - Q11 evidence is BLOCKED and Q12–Q16 evidence are PASS/PASS_CANDIDATE only for old manifest 96dcd0f0...; all are stale for current manifest be62b62b....

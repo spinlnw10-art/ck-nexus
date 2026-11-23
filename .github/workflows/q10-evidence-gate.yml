@@ -46,7 +46,7 @@ jobs:
           git worktree add q10-target "$target_sha"
           actual_sha=$(git -C q10-target rev-parse HEAD)
           actual_tree=$(git -C q10-target rev-parse 'HEAD^{tree}')
-          subject_manifest=$(git -C q10-target ls-tree -r HEAD -- app creator_app services scripts gateway orchestration idea_engine migrations deploy observability Dockerfile docker-compose.prod.yml main.py pyproject.toml uv.lock | sha256sum | awk '{print $1}')
+          subject_manifest=$(python3 q10-target/scripts/release_subject_manifest.py)
           test "$actual_sha" = "$target_sha"
           echo "target_sha=$actual_sha" >> "$GITHUB_OUTPUT"
           echo "target_tree=$actual_tree" >> "$GITHUB_OUTPUT"
@@ -64,10 +64,10 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python -m pip install --upgrade pip uv
+          python -m pip install --only-binary :all: --no-deps "uv==0.12.4"
           cd q10-target
           uv lock --check
-          uv sync --all-extras --dev --frozen
+          uv sync --all-extras --dev --frozen --no-install-project --only-binary :all:
 
       - name: Run frozen dependency vulnerability audit
         id: dependencies
@@ -97,7 +97,7 @@ jobs:
         run: |
           set +e
           cd q10-target
-          nohup .venv/bin/ck-nexus > ../q10-runtime.log 2>&1 &
+          nohup .venv/bin/python main.py > ../q10-runtime.log 2>&1 &
           runtime_pid=$!
           ready=0
           for _ in $(seq 1 60); do

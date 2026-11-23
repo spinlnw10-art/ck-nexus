@@ -22,7 +22,7 @@ permissions:
   contents: read
 
 env:
-  EXPECTED_RELEASE_SUBJECT: be62b62b04827ee7c90a090e59da8adf55212ed477671b99cb0dd885fa5a3d4b
+  EXPECTED_RELEASE_SUBJECT: 370f8a8f405e9b960e8b41722d0f61a4269237d137b94c014a1c2598e75e08de
 
 jobs:
   preflight:
@@ -46,7 +46,7 @@ jobs:
         id: gate
         shell: bash
         run: |
-          subject=$(git ls-tree -r HEAD -- app creator_app services gateway orchestration idea_engine migrations deploy observability Dockerfile docker-compose.prod.yml main.py pyproject.toml uv.lock | sha256sum | awk '{print $1}')
+          subject=$(python3 scripts/release_subject_manifest.py)
           python - "$subject" "$EXPECTED_RELEASE_SUBJECT" "$GITHUB_OUTPUT" <<'PY'
           import json,sys
           from pathlib import Path
@@ -134,7 +134,7 @@ jobs:
           python - <<'PY'
           import json
           from pathlib import Path
-          subject='be62b62b04827ee7c90a090e59da8adf55212ed477671b99cb0dd885fa5a3d4b'
+          subject='370f8a8f405e9b960e8b41722d0f61a4269237d137b94c014a1c2598e75e08de'
           names=['Q10_DEPENDENCY_AUDIT.json','Q11_OPENAI_LIVE.json','Q12_CGROUP_V2.json','Q13_POSTGRES_DR.json','Q14_OBSERVABILITY_ALERT.json','Q15_CLEAN_MACHINE.json','Q16_PRODUCTION_IMAGE.json','Q16_RUNTIME_LICENSE_SUMMARY.json']
           rows={name:json.loads(Path('evidence',name).read_text(encoding='utf-8')) for name in names}
           assert all(row.get('release_subject_manifest_sha256')==subject for row in rows.values())
@@ -213,7 +213,7 @@ jobs:
           python - "$sha" "$archive_sha" <<'PY'
           import json,sys
           sha,archive_sha=sys.argv[1:]
-          manifest={'schema_version':1,'release_commit':sha,'runtime_subject_sha256':'be62b62b04827ee7c90a090e59da8adf55212ed477671b99cb0dd885fa5a3d4b','archive_sha256':archive_sha,'production_gate':'PASS','third_party_runtime_inventory_included':True,'third_party_license_files_included':True,'release_evidence_provenance':'PASS'}
+          manifest={'schema_version':1,'release_commit':sha,'runtime_subject_sha256':'370f8a8f405e9b960e8b41722d0f61a4269237d137b94c014a1c2598e75e08de','archive_sha256':archive_sha,'production_gate':'PASS','third_party_runtime_inventory_included':True,'third_party_license_files_included':True,'release_evidence_provenance':'PASS'}
           with open('dist/RELEASE_MANIFEST.json','w',encoding='utf-8') as f:
               json.dump(manifest,f,indent=2,sort_keys=True); f.write('\n')
           PY

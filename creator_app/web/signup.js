@@ -10,7 +10,7 @@ async function init() {
   }
   renderProviders();
   populateSelect();
-  autoScan();
+  await autoScan();
 }
 
 function getDefaultProviders() {
@@ -189,7 +189,7 @@ async function addKey() {
     if (data.success) {
       result.innerHTML = `<span style="color:#22c55e">✅ Key added for ${slug}</span>`;
       document.getElementById('apiKeyInput').value = '';
-      scanProviders();
+      await scanProviders();
     } else {
       result.innerHTML = `<span style="color:#ef4444">❌ ${data.error}</span>`;
     }
@@ -267,11 +267,20 @@ function generateEnv() {
 
 function copyEnv() {
   const content = document.getElementById('envContent').textContent;
-  navigator.clipboard.writeText(content).then(() => {
-    const btn = event.target;
-    btn.textContent = '✅ Copied!';
-    setTimeout(() => btn.textContent = '📋 Copy', 2000);
-  });
+  const btn = document.activeElement;
+  navigator.clipboard.writeText(content)
+    .then(() => {
+      if (btn instanceof HTMLElement) {
+        btn.textContent = '✅ Copied!';
+        setTimeout(() => { btn.textContent = '📋 Copy'; }, 2000);
+      }
+    })
+    .catch((error) => {
+      if (btn instanceof HTMLElement) btn.textContent = '❌ Copy failed';
+      console.error('Unable to copy environment configuration', error);
+    });
 }
 
-init();
+void init().catch((error) => {
+  console.error('Signup initialization failed', error);
+});

@@ -254,11 +254,14 @@ def probe_qwen_daily() -> dict[str, Any]:
                 "max_tokens": 8,
             }
         ).encode()
+        tls_context = ssl.create_default_context(ssl.Purpose.SERVER_AUTH)
+        tls_context.verify_mode = ssl.CERT_REQUIRED
+        tls_context.check_hostname = True
         connection = http.client.HTTPSConnection(
             DASHSCOPE_HOST,
             port=443,
             timeout=15,
-            context=ssl.create_default_context(),
+            context=tls_context,
         )
         started = time.monotonic()
         try:

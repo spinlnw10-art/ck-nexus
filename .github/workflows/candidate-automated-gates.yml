@@ -10,6 +10,11 @@ on:
         type: boolean
         required: false
         default: false
+      skip_q11:
+        description: "Skip the live OpenAI request until OPENAI_API_KEY is valid"
+        type: boolean
+        required: false
+        default: false
       export_sonar_issues:
         description: "Export authenticated SonarCloud issues for PR 392"
         type: boolean
@@ -43,9 +48,9 @@ jobs:
           python-version: '3.12'
       - name: Frozen candidate environment
         run: |
-          python -m pip install --upgrade pip uv
+          python -m pip install --only-binary :all: --no-deps "uv==0.12.4"
           uv lock --check
-          uv sync --all-extras --dev --frozen
+          uv sync --all-extras --dev --frozen --no-install-project --only-binary :all:
       - name: Exact frozen dependency audit
         shell: bash
         run: |
@@ -76,7 +81,7 @@ jobs:
         shell: bash
         run: |
           set +e
-          nohup .venv/bin/ck-nexus > /tmp/cknexus-q10-runtime.log 2>&1 &
+          nohup .venv/bin/python main.py > /tmp/cknexus-q10-runtime.log 2>&1 &
           runtime_pid=$!
           echo "$runtime_pid" > /tmp/cknexus-q10-runtime.pid
           ready=0
@@ -126,7 +131,7 @@ jobs:
           HEAD_SHA: ${{ github.sha }}
         run: |
           tree=$(git rev-parse HEAD^{tree})
-          manifest=$(git ls-tree -r HEAD -- app creator_app services gateway orchestration idea_engine migrations deploy observability Dockerfile docker-compose.prod.yml main.py pyproject.toml uv.lock | sha256sum | awk '{print $1}')
+          manifest=$(python3 scripts/release_subject_manifest.py)
           .venv/bin/python - "$HEAD_SHA" "$tree" "$manifest" "$RUN_ID" "$Q10_AUDIT_RC" "$Q10_BANDIT_RC" "$Q10_SECRET_SCAN_RC" "$Q10_ATTACK_REGRESSION_RC" <<'PY'
           import hashlib, json, sys
           from datetime import UTC, datetime
@@ -186,7 +191,7 @@ jobs:
               'subject_manifest_sha256': manifest,
               'release_subject_manifest_sha256': manifest,
               'github_run_id': int(run_id),
-              'dependency_install': 'uv sync --all-extras --dev --frozen',
+              'dependency_install': 'uv sync --all-extras --dev --frozen --no-install-project --only-binary :all:',
               'auditor': 'pip-audit',
               'vulnerabilities_found': vulns,
               'pip_audit_exit_code': audit_rc,
@@ -223,6 +228,7 @@ jobs:
           if-no-files-found: warn
 
   q11_live_provider:
+    if: ${{ github.event_name != 'workflow_dispatch' || inputs.skip_q11 != true }}
     uses: ./.github/workflows/verify-q11-final-subject.yml
     permissions:
       contents: read
@@ -363,7 +369,7 @@ jobs:
           HEAD_SHA: ${{ github.sha }}
         run: |
           tree=$(git rev-parse HEAD^{tree})
-          manifest=$(git ls-tree -r HEAD -- app creator_app services gateway orchestration idea_engine migrations deploy observability Dockerfile docker-compose.prod.yml main.py pyproject.toml uv.lock | sha256sum | awk '{print $1}')
+          manifest=$(python3 scripts/release_subject_manifest.py)
           python - "$HEAD_SHA" "$tree" "$manifest" "$RUN_ID" <<'PY'
           import json,sys
           sha,tree,manifest,run_id=sys.argv[1:]
@@ -403,9 +409,9 @@ jobs:
         shell: bash
         run: |
           start=$(date +%s)
-          python -m pip install --upgrade pip uv
+          python -m pip install --only-binary :all: --no-deps "uv==0.12.4"
           uv lock --check
-          uv sync --all-extras --dev --frozen
+          uv sync --all-extras --dev --frozen --no-install-project --only-binary :all:
           .venv/bin/python -m compileall -q main.py creator_app services scripts
           .venv/bin/ruff check main.py creator_app services tests scripts
           .venv/bin/pytest -q --ignore=tests/test_agnes_execution_kernel_phase2.py --ignore=tests/test_agnes_execution_kernel_phase3.py
@@ -445,7 +451,7 @@ jobs:
           finish=$(date +%s)
           duration=$((finish-Q15_INSTALL_STARTED))
           tree=$(git rev-parse HEAD^{tree})
-          manifest=$(git ls-tree -r HEAD -- app creator_app services gateway orchestration idea_engine migrations deploy observability Dockerfile docker-compose.prod.yml main.py pyproject.toml uv.lock | sha256sum | awk '{print $1}')
+          manifest=$(python3 scripts/release_subject_manifest.py)
           .venv/bin/python - "$HEAD_SHA" "$tree" "$manifest" "$RUN_ID" "$duration" <<'PY'
           import json,os,platform,sys
           sha,tree,manifest,run_id,duration=sys.argv[1:]
@@ -461,7 +467,7 @@ jobs:
               'runner_name':os.getenv('RUNNER_NAME'),
               'image_os':os.getenv('ImageOS'),
               'image_version':os.getenv('ImageVersion'),
-              'install':'uv sync --all-extras --dev --frozen',
+              'install':'uv sync --all-extras --dev --frozen --no-install-project --only-binary :all:',
               'portable_regression':'PASS',
               'unified_health_smoke':'PASS',
               'unified_control_smoke':'PASS',

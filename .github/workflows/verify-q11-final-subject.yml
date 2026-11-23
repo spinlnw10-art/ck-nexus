@@ -27,7 +27,7 @@ jobs:
           set -euo pipefail
           sha=$(git rev-parse HEAD)
           tree=$(git rev-parse 'HEAD^{tree}')
-          subject=$(git ls-tree -r HEAD -- app creator_app services gateway orchestration idea_engine migrations deploy observability Dockerfile docker-compose.prod.yml main.py pyproject.toml uv.lock | sha256sum | awk '{print $1}')
+          subject=$(python3 scripts/release_subject_manifest.py)
           test "$sha" = "$GITHUB_SHA"
           echo "source_sha=$sha" >> "$GITHUB_OUTPUT"
           echo "source_tree=$tree" >> "$GITHUB_OUTPUT"
