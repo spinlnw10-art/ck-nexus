@@ -153,7 +153,7 @@ def build_report(
 ) -> dict[str, Any]:
     if not COMMIT_RE.fullmatch(candidate_sha):
         raise EvidenceError("candidate SHA must be 40 lowercase hexadecimal characters")
-    if not re.fullmatch(r"v[0-9]+\.[0-9]+\.[0-9]+", release_tag):
+    if not re.fullmatch(r"v\d+\.\d+\.\d+", release_tag):
         raise EvidenceError("release tag must be a stable vX.Y.Z tag")
     if not image.startswith("ghcr.io/open-telemetry/opentelemetry-collector-releases/"):
         raise EvidenceError("image must come from the official OpenTelemetry GHCR namespace")
