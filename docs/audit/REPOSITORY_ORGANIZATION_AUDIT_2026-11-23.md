@@ -296,3 +296,43 @@ Do not confuse the 30 branches with zero unique commits/blobs with deletable bra
 6. For any approved archive, create and verify a recoverable immutable ref/backup first, then request a separate explicit approval before deletion.
 
 No branch archival, deletion, or merge is performed in this audit PR.
+
+
+## Addendum — exact duplicate blob groups across all 402 branch trees
+
+A second pass grouped every repeated blob SHA by its exact set of repository paths in each live branch tree.
+
+- Branch trees scanned: **402 / 402**
+- Scan errors: **0**
+- Duplicate group occurrences across branch snapshots: **1,606**
+- Distinct duplicate SHA + path-set signatures: **28**
+
+The complete list records each blob SHA, exact paths and every branch containing that exact duplicate group: [duplicate-blob-groups-all-branches-2026-11-23.json](evidence/duplicate-blob-groups-all-branches-2026-11-23.json).
+
+High-frequency findings:
+
+| Exact duplicate group | Branch occurrences | Decision |
+|---|---:|---|
+| PostgreSQL email migration copies at the three paths listed in D2 | 402 | REVIEW; runtime explicitly names `migrations/postgresql/001_email_gateway.sql`; do not remove copies before package/deploy/checksum analysis |
+| `config/orchestration_patterns.json` and `orchestration/patterns.json` | 363 | Historical/branch-only finding; not a duplicate group in current main; preserve until active consumer mapping |
+| `migrations/sqlite/001_email_gateway.sql` and `services/email_gateway/migrations/sqlite.sql` | 363 | Historical/branch-only finding; not a duplicate group in current main; verify runtime/package consumers before any consolidation |
+| Empty Python `__init__.py` package-marker sets (multiple historical variants) | 268, 109, 21, 2, 1, 1 | KEEP; do not remove package markers based on identical empty content |
+| Three n8n systemd alert drop-in configs | 4 | REVIEW; identical content at different unit paths may be intentional; check service-specific semantics |
+| Mirrored `.agents/skills/**` and `.claude/skills/**` skill files | 4 per signature | KEEP pending owner decision; these may intentionally support different agent runtimes |
+
+The 1,606 figure is the number of duplicate-group occurrences across 402 separate branch snapshots, not 1,606 distinct files to delete. Many are the same historical duplicate repeated across many branches. The 28 signatures are the distinct path-set/blob combinations. Do not sum branch occurrences as unique file count.
+
+## Consolidation / move / delete decision matrix
+
+| Scope | Candidate | Proposed decision | Why / required gate |
+|---|---|---|---|
+| Current main | Two extra PostgreSQL migration copies | REVIEW / possible consolidation | Runtime references one canonical path; inspect package data, all installers, deployment globs, checksum manifests and migration tests first |
+| Current main | Eight empty `__init__.py` files | KEEP | Python package discovery/import behavior |
+| Historical branches | Duplicate orchestration JSON pair | KEEP in history; REVIEW only on any future active branch merge | Not present as an exact duplicate pair in current main; map consumers before moving |
+| Historical branches | Duplicate SQLite migration pair | KEEP in history; REVIEW on any future active branch merge | Runtime/package path and migration-discovery contract must be tested |
+| Historical branches | Systemd alert drop-in copies | KEEP pending review | Different unit directories can be semantically required even with identical bytes |
+| Historical branches | `.agents` / `.claude` mirrored skills | KEEP pending owner choice | Different tool runtimes may intentionally require separate paths |
+| Historical branches | 13 low-delta, no-PR branches listed above | ARCHIVE_CANDIDATE_PENDING | Zero unique commits/blobs and no main-text refs, but tags, deployment history, local worktrees and owner intent still need confirmation |
+| Historical branches | Backup refs or refs with unique commits / unmerged PRs | KEEP / KEEP_RETAIN_HISTORY | Preserve recovery, provenance and unreconciled commit objects |
+
+This audit proposes no source-file move, source-file deletion, branch archival or branch deletion. The next implementation PR must be separately scoped after the remaining consumer and recovery gates pass.
