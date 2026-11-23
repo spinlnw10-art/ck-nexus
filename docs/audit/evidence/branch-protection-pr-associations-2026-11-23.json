@@ -1,9 +1,9 @@
 {
   "snapshot_date": "2026-11-23",
   "repository": "spinlnw10-art/ck-nexus",
-  "branch_api_count": 402,
+  "branch_api_count": 401,
   "protected_branch_count": 1,
-  "branches_with_open_pr": 219,
+  "branches_with_open_pr": 0,
   "branches_without_any_pr": 102,
   "pr_inventory": {
     "total": 355,
@@ -244,22 +244,6 @@
       "head_sha": "a7d2588c885a2d29fe09faa9369be008da79081a",
       "protected": false,
       "prs": []
-    },
-    {
-      "name": "audit/repository-organization-20261123",
-      "head_sha": "4b92a45906488bb79ae2a0ac03fbf796bf1109a8",
-      "protected": false,
-      "prs": [
-        {
-          "number": 393,
-          "state": "open",
-          "merged": false,
-          "draft": true,
-          "title": "docs(audit): repository organization inventory and safe consolidation plan",
-          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/393",
-          "head_sha": "4b92a45906488bb79ae2a0ac03fbf796bf1109a8"
-        }
-      ]
     },
     {
       "name": "automation/capability-registry-weekly-2026-11-09",
