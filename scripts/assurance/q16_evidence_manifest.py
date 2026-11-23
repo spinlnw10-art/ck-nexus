@@ -94,7 +94,7 @@ def main() -> int:
         parent.relative_to(root)
         output_path = parent / args.output.name
         with output_path.open("x", encoding="utf-8") as stream:
-            stream.write(json.dumps(evidence, indent=2, sort_keys=True) + "\\n")
+            stream.write(json.dumps(evidence, indent=2, sort_keys=True) + "\n")
     except (OSError, ValueError) as exc:
         parser.error(str(exc))
     print(json.dumps({"status": "EVIDENCE_MANIFEST_CREATED", "artifacts": 4}))
