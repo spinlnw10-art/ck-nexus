@@ -1,0 +1,252 @@
+name: OTel Collector Disposable Shadow
+
+on:
+  pull_request:
+    paths:
+      - "config/otel/collector-shadow.yaml"
+      - "Dockerfile.otelcol-shadow"
+      - "tests/assurance/otel_collector_shadow_smoke.py"
+      - "scripts/assurance/evidence_graph_intake.py"
+      - "scripts/assurance/OTEL_COLLECTOR_DISPOSABLE_SHADOW.md"
+      - "tests/assurance/test_evidence_graph_intake.py"
+      - ".github/workflows/otel-collector-disposable-shadow.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: otel-collector-disposable-shadow-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  disposable-collector:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout exact pull request candidate
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+
+      - name: Set up Go for pinned Cosign
+        uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16
+        with:
+          go-version: "1.25.5"
+
+      - name: Install pinned Cosign verifier
+        run: |
+          GOBIN="$RUNNER_TEMP/bin" go install github.com/sigstore/cosign/v2/cmd/cosign@v2.5.3
+          echo "$RUNNER_TEMP/bin" >> "$GITHUB_PATH"
+
+      - name: Download and verify official Collector release asset
+        env:
+          ASSET_SHA256: 78570dd4bd6570bc41eb327869ef913bbf91b87dd8170ebebbf43bec71f6370d
+          BUNDLE_SHA256: 57b0d726808d75cfc35e3f4c3e9cf7f836157e5b0375086dde33cbd05959c8b6
+        run: |
+          set -euo pipefail
+          base="https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.165.0"
+          curl --fail --location --retry 3 "$base/otelcol_0.165.0_linux_amd64.tar.gz" -o otelcol.tar.gz
+          curl --fail --location --retry 3 "$base/otelcol_0.165.0_linux_amd64.tar.gz.sigstore.json" -o otelcol.tar.gz.sigstore.json
+          echo "$ASSET_SHA256  otelcol.tar.gz" | sha256sum --check
+          echo "$BUNDLE_SHA256  otelcol.tar.gz.sigstore.json" | sha256sum --check
+          cosign verify-blob otelcol.tar.gz             --bundle otelcol.tar.gz.sigstore.json             --certificate-identity-regexp '^https://github.com/open-telemetry/opentelemetry-collector-releases/.github/workflows/.+@refs/tags/v0\.165\.0$'             --certificate-oidc-issuer 'https://token.actions.githubusercontent.com'
+          tar -xzf otelcol.tar.gz otelcol
+          test -x otelcol
+          ./otelcol --version
+
+      - name: Build disposable local image and record immutable image ID
+        run: |
+          set -euo pipefail
+          docker build --pull=false --file Dockerfile.otelcol-shadow --tag ck-nexus/otelcol-shadow:0.165.0 .
+          docker image inspect ck-nexus/otelcol-shadow:0.165.0 --format '{{.Id}}' | tee collector-image-id.txt
+          grep -Eq '^sha256:[0-9a-f]{64}$' collector-image-id.txt
+          docker save ck-nexus/otelcol-shadow:0.165.0 -o otelcol-shadow-image.tar
+          sha256sum otelcol-shadow-image.tar | tee collector-image-archive.sha256
+
+      - name: Start isolated collector with no external egress
+        run: |
+          set -euo pipefail
+          docker network create --internal --subnet 172.30.0.0/24 ck-nexus-otel-shadow
+          docker run --detach --name ck-nexus-otel-shadow \
+            --network ck-nexus-otel-shadow \
+            --ip 172.30.0.2 \
+            --read-only --cap-drop=ALL --security-opt=no-new-privileges \
+            --pids-limit=64 --memory=256m --cpus=1 \
+            --tmpfs /tmp:rw,noexec,nosuid,size=16m \
+            ck-nexus/otelcol-shadow:0.165.0
+          for attempt in $(seq 1 20); do
+            if [ "$(docker inspect --format '{{.State.Running}}' ck-nexus-otel-shadow)" != "true" ]; then
+              break
+            fi
+            if curl --noproxy "*" --silent --output /dev/null --connect-timeout 1 http://172.30.0.2:4318/v1/traces; then
+              exit 0
+            fi
+            sleep 1
+          done
+          docker ps --all
+          docker logs ck-nexus-otel-shadow
+          exit 1
+
+      - name: Send synthetic traces and metrics
+        run: python tests/assurance/otel_collector_shadow_smoke.py
+
+      - name: Assert trace propagation, metrics, and secret removal
+        run: |
+          set -euo pipefail
+          sleep 2
+          docker logs ck-nexus-otel-shadow > collector-shadow.log 2>&1
+          grep -q '5b8aa5a2d2c872e8321cf37308d69df2' collector-shadow.log
+          grep -q '051581bf3cb55c13' collector-shadow.log
+          grep -q '93564f51e1abe1c2' collector-shadow.log
+          grep -q 'ck_nexus_shadow_requests' collector-shadow.log
+          grep -q 'synthetic-parent' collector-shadow.log
+          grep -q 'synthetic-child' collector-shadow.log
+          if grep -E 'SYNTHETIC_SECRET_DO_NOT_LOG_407|synthetic-user@example.invalid|SYNTHETIC_TENANT_407|SYNTHETIC_TOOL_ARGUMENT_407' collector-shadow.log; then
+            echo "Sensitive synthetic marker leaked into Collector output" >&2
+            exit 1
+          fi
+          echo "PASS: trace IDs and parent-child linkage observed; metric observed; secret markers absent."
+
+      - name: Record synthetic telemetry test evidence
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          result = {
+              "schema_version": 1,
+              "status": "PASS",
+              "synthetic_only": True,
+              "trace_id": "5b8aa5a2d2c872e8321cf37308d69df2",
+              "parent_span_id": "051581bf3cb55c13",
+              "child_span_id": "93564f51e1abe1c2",
+              "parent_child_propagation": "PASS",
+              "metric": "ck_nexus_shadow_requests",
+              "metric_observed": True,
+              "secret_marker_count_in_collector_output": 0,
+              "external_exporter_configured": False,
+              "gate_decision_made": False,
+          }
+          Path("otel-shadow-test-result.json").write_text(
+              json.dumps(result, indent=2, sort_keys=True) + "\n",
+              encoding="utf-8",
+          )
+          PY
+
+      - name: Record candidate-bound local image provenance evidence
+        env:
+          CANDIDATE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          image_id = Path("collector-image-id.txt").read_text(encoding="utf-8").strip()
+          archive_line = Path("collector-image-archive.sha256").read_text(encoding="utf-8").split()
+          if not image_id.startswith("sha256:") or len(image_id) != 71:
+              raise SystemExit("invalid local image config digest")
+          if not archive_line or len(archive_line[0]) != 64:
+              raise SystemExit("invalid image archive SHA-256")
+          evidence = {
+              "schema_version": 1,
+              "evidence_type": "CK-NEXUS-OTEL-COLLECTOR-IMAGE-PROVENANCE-SHADOW",
+              "candidate_commit_sha": "\${{ github.sha }}",
+              "upstream": {
+                  "repository": "open-telemetry/opentelemetry-collector-releases",
+                  "release_tag": "v0.165.0",
+                  "asset_sha256": "78570dd4bd6570bc41eb327869ef913bbf91b87dd8170ebebbf43bec71f6370d",
+                  "sigstore_bundle_sha256": "57b0d726808d75cfc35e3f4c3e9cf7f836157e5b0375086dde33cbd05959c8b6",
+                  "cosign_blob_signature_verified": True,
+                  "certificate_identity": "open-telemetry/opentelemetry-collector-releases workflow at refs/tags/v0.165.0",
+              },
+              "local_image": {
+                  "config_digest": image_id,
+                  "archive_sha256": archive_line[0],
+                  "registry_push": False,
+              },
+              "authority": {
+                  "gate_decision_made": False,
+                  "external_tool_authority": "evidence only",
+              },
+          }
+          output = Path("collector-image-provenance.json")
+          output.write_text(json.dumps(evidence, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+          print(json.dumps({"status": "LOCAL_PROVENANCE_EVIDENCE_RECORDED", "image_digest": image_id}))
+          PY
+          sha256sum collector-image-provenance.json | tee collector-image-provenance.sha256
+
+      - name: Build candidate-bound telemetry evidence manifest
+        env:
+          CANDIDATE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+
+          names = {
+              "collector_image_provenance": Path("collector-image-provenance.json"),
+              "collector_image_id": Path("collector-image-id.txt"),
+              "collector_image_archive_digest": Path("collector-image-archive.sha256"),
+              "collector_shadow_log": Path("collector-shadow.log"),
+              "synthetic_telemetry_test": Path("otel-shadow-test-result.json"),
+          }
+          artifacts = {}
+          for name, path in names.items():
+              data = path.read_bytes()
+              artifacts[name] = {
+                  "size_bytes": len(data),
+                  "sha256": hashlib.sha256(data).hexdigest(),
+              }
+          manifest = {
+              "schema_version": 1,
+              "evidence_type": "CK-NEXUS-OTEL-SHADOW",
+              "candidate_commit_sha": os.environ["CANDIDATE_SHA"],
+              "artifacts": artifacts,
+              "authority": {
+                  "gate_decision_made": False,
+                  "external_tool_authority": "evidence only",
+              },
+          }
+          Path("otel-shadow-evidence-manifest.json").write_text(
+              json.dumps(manifest, indent=2, sort_keys=True) + "\n",
+              encoding="utf-8",
+          )
+          PY
+
+      - name: Validate telemetry evidence through CK-NEXUS EvidenceGraph
+        env:
+          PYTHONPATH: .
+        run: |
+          python scripts/assurance/evidence_graph_intake.py
+
+      - name: Run EvidenceGraph intake unit tests
+        run: python -m unittest tests.assurance.test_evidence_graph_intake -v
+
+      - name: Retain candidate-bound OTel shadow evidence bundle
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: otel-shadow-evidence-${{ github.sha }}
+          path: |
+            collector-image-provenance.json
+            collector-image-provenance.sha256
+            collector-image-id.txt
+            collector-image-archive.sha256
+            collector-shadow.log
+            otel-shadow-test-result.json
+            otel-shadow-evidence-manifest.json
+            otel-shadow-evidence-graph.json
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Stop and remove disposable resources
+        if: always()
+        run: |
+          docker rm --force ck-nexus-otel-shadow 2>/dev/null || true
+          docker network rm ck-nexus-otel-shadow 2>/dev/null || true

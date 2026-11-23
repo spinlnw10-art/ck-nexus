@@ -1,0 +1,64 @@
+receivers:
+  otlp:
+    protocols:
+      http:
+        endpoint: 0.0.0.0:4318
+
+processors:
+  memory_limiter:
+    check_interval: 1s
+    limit_mib: 128
+    spike_limit_mib: 32
+  transform/sanitize:
+    error_mode: ignore
+    trace_statements:
+      - context: resource
+        statements:
+          - delete_key(attributes, "user.email")
+          - delete_key(attributes, "tenant.id")
+          - delete_key(attributes, "authorization")
+          - delete_key(attributes, "api.key")
+          - delete_key(attributes, "credential.reference")
+      - context: span
+        statements:
+          - delete_key(attributes, "prompt")
+          - delete_key(attributes, "tool.arguments")
+          - delete_key(attributes, "http.url")
+          - delete_key(attributes, "db.statement")
+    metric_statements:
+      - context: resource
+        statements:
+          - delete_key(attributes, "user.email")
+          - delete_key(attributes, "tenant.id")
+          - delete_key(attributes, "authorization")
+          - delete_key(attributes, "api.key")
+          - delete_key(attributes, "credential.reference")
+      - context: datapoint
+        statements:
+          - delete_key(attributes, "user.email")
+          - delete_key(attributes, "tenant.id")
+          - delete_key(attributes, "authorization")
+          - delete_key(attributes, "api.key")
+          - delete_key(attributes, "credential.reference")
+          - delete_key(attributes, "prompt")
+          - delete_key(attributes, "tool.arguments")
+          - delete_key(attributes, "http.url")
+          - delete_key(attributes, "db.statement")
+  batch:
+    timeout: 1s
+    send_batch_size: 128
+
+exporters:
+  debug:
+    verbosity: detailed
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [memory_limiter, transform/sanitize, batch]
+      exporters: [debug]
+    metrics:
+      receivers: [otlp]
+      processors: [memory_limiter, transform/sanitize, batch]
+      exporters: [debug]
