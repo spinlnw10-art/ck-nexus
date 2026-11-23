@@ -101,11 +101,21 @@ Branch prefix counts (401 pre-existing branches; audit branch excluded):
 | research | 8 |
 | dev | 5 |
 | prep | 5 |
+| q10 | 5 |
 | backup | 4 |
 | sale | 4 |
 | audit | 3 |
 | closure | 3 |
-| other prefixes/root names | 63 |
+| prepare | 3 |
+| release | 3 |
+| agent | 2 |
+| chore | 2 |
+| codex | 2 |
+| hardening | 2 |
+| infra | 2 |
+| ui | 2 |
+| Other one-off prefixes | 12 |
+| Root-level names | 8 |
 
 PR inventory:
 - 219 open PRs; these are active review references and must not be treated as cleanup candidates.
@@ -251,7 +261,7 @@ Full per-branch ahead/behind, unique commit/blob/tree/object counts and head dat
 - Branches with a path/blob difference from main: **400**
 - Branches with exactly the same path/blob tree as main: **1** (`main`)
 - Aggregate branch-tree comparison instances: **41,684 changed-path instances**, **11,974 branch-only path instances**, and **138,947 main-path-missing instances**. These are summed across branch snapshots, not unique repository files.
-- Across all branch snapshots, the scanner recorded **1,604 duplicate-blob group occurrences** across **28 distinct blob/path signatures**, and **4,074 duplicate extra-path instances**. These are per-tree group occurrences, not 1,606 distinct repository-wide duplicate files.
+- Across all branch snapshots, the scanner recorded **1,604 duplicate-blob group occurrences** across **28 distinct blob/path signatures**, and **4,074 duplicate extra-path instances**. These are per-tree group occurrences, not 1,604 duplicate-group occurrences, not 1,604 distinct repository-wide duplicate files.
 - Current main still has exactly the two duplicate-content groups documented above: 8 empty package markers (KEEP) and 3 identical PostgreSQL migration copies (REVIEW).
 
 Full per-branch file counts, changed paths, branch-only paths, main paths missing and duplicate-group counts: [branch-path-diff-summary-2026-11-23.json](evidence/branch-path-diff-summary-2026-11-23.json).
@@ -321,7 +331,7 @@ High-frequency findings:
 | Three n8n systemd alert drop-in configs | 4 | REVIEW; identical content at different unit paths may be intentional; check service-specific semantics |
 | Mirrored `.agents/skills/**` and `.claude/skills/**` skill files | 4 per signature | KEEP pending owner decision; these may intentionally support different agent runtimes |
 
-The 1,604 figure is the number of duplicate-group occurrences across 401 pre-existing branch snapshots, not 1,606 distinct files to delete. Many are the same historical duplicate repeated across many branches. The 28 signatures are the distinct path-set/blob combinations. Do not sum branch occurrences as unique file count.
+The 1,604 figure is the number of duplicate-group occurrences across 401 pre-existing branch snapshots, not 1,604 distinct files to delete. Many are the same historical duplicate repeated across many branches. The 28 signatures are the distinct path-set/blob combinations. Do not sum branch occurrences as unique file count.
 
 ## Consolidation / move / delete decision matrix
 
