@@ -60,11 +60,11 @@ class Q14ProvenanceGuardTests(unittest.TestCase):
         self.assertEqual(result["matched_attestations"], 1)
 
     def test_rejects_wrong_subject_digest(self) -> None:
-        with self.assertRaisesRegex(MODULE.EvidenceError, "does not match"):
+        with self.assertRaisesRegex(MODULE.EvidenceError, "no verified SLSA provenance subject"):
             MODULE.verify_slsa_subject(provenance_document("sha256:" + "c" * 64), DIGEST)
 
     def test_rejects_non_slsa_predicate(self) -> None:
-        with self.assertRaisesRegex(MODULE.EvidenceError, "does not match"):
+        with self.assertRaisesRegex(MODULE.EvidenceError, "no verified SLSA provenance subject"):
             MODULE.verify_slsa_subject(provenance_document(predicate="https://example.invalid/provenance"), DIGEST)
 
     def test_binds_report_to_candidate_and_raw_evidence_hashes(self) -> None:
