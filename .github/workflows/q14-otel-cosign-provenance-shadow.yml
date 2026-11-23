@@ -95,11 +95,12 @@ jobs:
             --certificate-oidc-issuer="$OIDC_ISSUER" \
             > signature-verification.json
           digest="$(python scripts/assurance/q14_otel_provenance_guard.py \
-            --signature-input signature-verification.json --extract-digest)"
+            --signature-input signature-verification.json --slsa-status VERIFICATION_ERROR --extract-digest)"
           echo "digest=$digest" >> "$GITHUB_OUTPUT"
           echo "identity=$identity" >> "$GITHUB_OUTPUT"
           echo "Verified signed image digest: $digest"
-      - name: Verify SLSA provenance for the exact signed digest
+      - name: Check SLSA provenance for the exact signed digest
+        id: provenance
         env:
           IMAGE: ${{ steps.image.outputs.image }}
           DIGEST: ${{ steps.signature.outputs.digest }}
@@ -107,19 +108,44 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          cosign verify-attestation "$IMAGE@$DIGEST" \
+          if cosign verify-attestation "$IMAGE@$DIGEST" \
             --type slsaprovenance \
             --certificate-identity="$IDENTITY" \
             --certificate-oidc-issuer="$OIDC_ISSUER" \
-            > provenance-verification.json
-          python scripts/assurance/q14_otel_provenance_guard.py \
-            --signature-input signature-verification.json \
-            --provenance-input provenance-verification.json \
-            --image "$IMAGE" \
-            --release-tag "$RELEASE_TAG" \
-            --candidate-sha "$CANDIDATE_SHA" \
+            > provenance-verification.json 2> provenance-verification.stderr; then
+            echo "slsa_status=VERIFIED" >> "$GITHUB_OUTPUT"
+          elif grep -Fq "none of the attestations matched the predicate type: slsaprovenance" provenance-verification.stderr; then
+            echo "slsa_status=NOT_PUBLISHED" >> "$GITHUB_OUTPUT"
+            echo "Upstream image registry has no SLSA provenance attestation for this digest." > provenance-status.txt
+          else
+            echo "slsa_status=VERIFICATION_ERROR" >> "$GITHUB_OUTPUT"
+            cat provenance-verification.stderr >&2
+            exit 1
+          fi
+      - name: Assemble candidate-bound evidence report
+        id: report
+        if: always() && steps.signature.outcome == 'success'
+        env:
+          IMAGE: ${{ steps.image.outputs.image }}
+          RELEASE_TAG: ${{ steps.image.outputs.release_tag }}
+          SLSA_STATUS: ${{ steps.provenance.outputs.slsa_status || 'VERIFICATION_ERROR' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          args=(
+            --signature-input signature-verification.json
+            --slsa-status "$SLSA_STATUS"
+            --image "$IMAGE"
+            --release-tag "$RELEASE_TAG"
+            --candidate-sha "$CANDIDATE_SHA"
             --output q14-image-provenance-evidence.json
+          )
+          if [[ "$SLSA_STATUS" == "VERIFIED" ]]; then
+            args+=(--provenance-input provenance-verification.json)
+          fi
+          python scripts/assurance/q14_otel_provenance_guard.py "${args[@]}"
       - name: Publish non-authoritative verification evidence
+        if: always() && steps.report.outcome == 'success'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: q14-otel-image-provenance-${{ github.run_id }}
@@ -127,15 +153,18 @@ jobs:
             q14-image-provenance-evidence.json
             signature-verification.json
             provenance-verification.json
+            provenance-verification.stderr
+            provenance-status.txt
             release.json
-          if-no-files-found: error
+          if-no-files-found: ignore
           retention-days: 14
       - name: Write verification summary
-        if: success()
+        if: always() && steps.report.outcome == 'success'
         env:
           IMAGE: ${{ steps.image.outputs.image }}
           DIGEST: ${{ steps.signature.outputs.digest }}
           RELEASE_TAG: ${{ steps.image.outputs.release_tag }}
+          SLSA_STATUS: ${{ steps.provenance.outputs.slsa_status || 'VERIFICATION_ERROR' }}
         run: |
           {
             echo "## Q14 OTel image verification"
@@ -144,8 +173,14 @@ jobs:
             echo "- Image: `$IMAGE`"
             echo "- Digest: `$DIGEST`"
             echo "- Cosign signature: verified against exact release workflow identity"
-            echo "- SLSA provenance: verified and subject digest matched"
+            echo "- SLSA provenance: `$SLSA_STATUS`"
             echo "- Image layers pulled: no"
             echo "- Container started: no"
+            echo "- Production promotion eligible: no"
             echo "- CK-NEXUS gate decision: not made"
           } >> "$GITHUB_STEP_SUMMARY"
+      - name: Enforce SLSA provenance requirement
+        if: always() && steps.signature.outcome == 'success' && steps.provenance.outputs.slsa_status != 'VERIFIED'
+        run: |
+          echo "NO-GO: image signature is valid, but SLSA provenance is absent or unverified." >&2
+          exit 1
