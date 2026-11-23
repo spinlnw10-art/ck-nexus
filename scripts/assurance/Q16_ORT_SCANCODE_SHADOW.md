@@ -30,7 +30,7 @@ thoroughly tested integration.
 1. Scan the checked-out CK-NEXUS source tree with ScanCode, excluding only VCS metadata,
    dependency caches, bytecode caches and generated build outputs.
 2. Run ORT Analyzer and its ScanCode-backed Scanner on the synthetic fixture in
-   `tests/fixtures/q16-license`; no external dependencies are declared.
+   `tests/fixtures/q16-license`; the synthetic fixture declares one exact-version public PyPI dependency in requirements.txt.
 3. Generate a manifest bound to the exact CI candidate commit SHA and SHA-256 of all reports.
 4. Emit evidence only. The manifest explicitly records that no gate decision, legal conclusion
    or license approval was made.
