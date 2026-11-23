@@ -165,7 +165,7 @@ jobs:
 
   q10_dependency_component:
     needs: validate_reused_evidence
-    if: ${{ github.event_name != 'workflow_dispatch' || inputs.skip_q10 != true }}
+    if: ${{ github.event_name != 'workflow_dispatch' || (inputs.skip_q10 != true && inputs.export_sonar_issues != true) }}
     runs-on: ubuntu-24.04
     timeout-minutes: 25
     env:
@@ -368,7 +368,7 @@ jobs:
 
   q11_live_provider:
     needs: validate_reused_evidence
-    if: ${{ github.event_name != 'workflow_dispatch' || inputs.skip_q11 != true }}
+    if: ${{ github.event_name != 'workflow_dispatch' || (inputs.skip_q11 != true && inputs.export_sonar_issues != true) }}
     uses: ./.github/workflows/verify-q11-final-subject.yml
     permissions:
       contents: read
@@ -376,20 +376,21 @@ jobs:
 
   q14_observability:
     needs: validate_reused_evidence
+    if: ${{ github.event_name != 'workflow_dispatch' || inputs.export_sonar_issues != true }}
     uses: ./.github/workflows/q14-observability-alert.yml
     permissions:
       contents: read
 
   q16_production_image:
     needs: validate_reused_evidence
-    if: ${{ github.event_name != 'workflow_dispatch' || inputs.skip_q16 != true }}
+    if: ${{ github.event_name != 'workflow_dispatch' || (inputs.skip_q16 != true && inputs.export_sonar_issues != true) }}
     uses: ./.github/workflows/candidate-production-image.yml
     permissions:
       contents: read
 
   q16_runtime_licenses:
     needs: validate_reused_evidence
-    if: ${{ github.event_name != 'workflow_dispatch' || inputs.skip_q16 != true }}
+    if: ${{ github.event_name != 'workflow_dispatch' || (inputs.skip_q16 != true && inputs.export_sonar_issues != true) }}
     uses: ./.github/workflows/candidate-runtime-licenses.yml
     permissions:
       contents: read
@@ -453,13 +454,14 @@ jobs:
 
   q12_delegated_cgroup:
     needs: validate_reused_evidence
+    if: ${{ github.event_name != 'workflow_dispatch' || inputs.export_sonar_issues != true }}
     uses: ./.github/workflows/verify-q12-final-subject.yml
     permissions:
       contents: read
 
   q13_postgres_dr:
     needs: validate_reused_evidence
-    if: ${{ github.event_name != 'workflow_dispatch' || inputs.skip_q13 != true }}
+    if: ${{ github.event_name != 'workflow_dispatch' || (inputs.skip_q13 != true && inputs.export_sonar_issues != true) }}
     runs-on: ubuntu-24.04
     services:
       postgres:
@@ -547,6 +549,7 @@ jobs:
 
   q15_clean_machine:
     needs: validate_reused_evidence
+    if: ${{ github.event_name != 'workflow_dispatch' || inputs.export_sonar_issues != true }}
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
