@@ -88,6 +88,7 @@ class Q14ProvenanceGuardTests(unittest.TestCase):
             image=IMAGE,
             release_tag="v0.165.0",
             candidate_sha=CANDIDATE,
+            allowed_root=self.root,
             slsa_status="VERIFIED",
         )
         self.assertEqual(report["image_digest"], DIGEST)
@@ -107,6 +108,7 @@ class Q14ProvenanceGuardTests(unittest.TestCase):
             image=IMAGE,
             release_tag="v0.165.0",
             candidate_sha=CANDIDATE,
+            allowed_root=self.root,
             slsa_status="NOT_PUBLISHED",
         )
         self.assertEqual(report["slsa_provenance_status"], "NOT_PUBLISHED")
@@ -123,6 +125,7 @@ class Q14ProvenanceGuardTests(unittest.TestCase):
                 image="docker.io/library/alpine:latest",
                 release_tag="v0.165.0",
                 candidate_sha=CANDIDATE,
+            allowed_root=self.root,
                 slsa_status="VERIFIED",
             )
         with self.assertRaises(MODULE.EvidenceError):
@@ -132,15 +135,24 @@ class Q14ProvenanceGuardTests(unittest.TestCase):
                 image=IMAGE,
                 release_tag="latest",
                 candidate_sha=CANDIDATE,
+            allowed_root=self.root,
                 slsa_status="VERIFIED",
             )
+
+    def test_rejects_evidence_outside_allowed_root(self) -> None:
+        self.write_documents(signature_document(), provenance_document())
+        outside = self.root.parent / (self.root.name + "-outside.json")
+        outside.write_text(json.dumps(signature_document()), encoding="utf-8")
+        self.addCleanup(outside.unlink)
+        with self.assertRaisesRegex(MODULE.EvidenceError, "inside the allowed root"):
+            MODULE.load_json(outside, allowed_root=self.root)
 
     def test_rejects_symlink_evidence(self) -> None:
         self.write_documents(signature_document(), provenance_document())
         link = self.root / "signature-link.json"
         link.symlink_to(self.signature)
         with self.assertRaises(MODULE.EvidenceError):
-            MODULE.load_json(link)
+            MODULE.load_json(link, allowed_root=self.root)
 
 
 if __name__ == "__main__":
