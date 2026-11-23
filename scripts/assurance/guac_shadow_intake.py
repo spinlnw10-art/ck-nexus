@@ -99,8 +99,14 @@ def build_manifest(candidate_sha: str, inputs: list[str]) -> dict[str, Any]:
         "gate_decision_made": False,
         "limitations": [
             "This manifest validates document shape and local file digests only.",
-            "It does not verify signatures, provenance trust, runtime artifact identity, or GUAC graph contents.",
-            "GUAC must independently ingest the original files; CK-NEXUS must independently bind evidence to the release candidate.",
+            (
+                "It does not verify signatures, provenance trust, runtime artifact identity, "
+                "or GUAC graph contents."
+            ),
+            (
+                "GUAC must independently ingest the original files; CK-NEXUS must "
+                "independently bind evidence to the release candidate."
+            ),
         ],
     }
 
