@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Validate candidate-bound evidence artifacts and project them into CK-NEXUS EvidenceGraph."""
+"""Validate fixed-path candidate evidence and project it into CK-NEXUS EvidenceGraph."""
 from __future__ import annotations
 
 import argparse
 import hashlib
 import json
+import os
 import re
 from datetime import UTC, datetime
 from pathlib import Path
@@ -22,6 +23,21 @@ SHA_RE = re.compile(r"^[0-9a-f]{40}$")
 NAME_RE = re.compile(r"^[A-Za-z0-9_.-]{1,80}$")
 MAX_MANIFEST_BYTES = 2 * 1024 * 1024
 MAX_ARTIFACTS = 50
+ARTIFACT_PATHS = {
+    "q16": {
+        "scancode_full_repo": "scancode-full-repo.json",
+        "scancode_install_report": "scancode-install-report.json",
+        "ort_analyzer": "q16/analyzer-result.json",
+        "ort_scanner": "q16/scan-result.yml",
+    },
+    "otel": {
+        "collector_image_provenance": "collector-image-provenance.json",
+        "collector_image_id": "collector-image-id.txt",
+        "collector_image_archive_digest": "collector-image-archive.sha256",
+        "collector_shadow_log": "collector-shadow.log",
+        "synthetic_telemetry_test": "otel-shadow-test-result.json",
+    },
+}
 
 
 class EvidenceIntakeError(ValueError):
@@ -45,20 +61,24 @@ def _sha256(path: Path) -> str:
     return hasher.hexdigest()
 
 
-def _resolve_within(path: Path, root: Path) -> Path:
+def _fixed_artifact(root: Path, relative_path: str) -> Path:
+    path = root / relative_path
     if path.is_symlink():
         raise EvidenceIntakeError("evidence paths must not be symlinks")
-    try:
-        resolved = path.resolve(strict=True)
-        resolved.relative_to(root)
-    except (OSError, ValueError) as exc:
-        raise EvidenceIntakeError("evidence path must resolve within allowed root") from exc
+    resolved = path.resolve(strict=True)
+    resolved.relative_to(root)
     if not resolved.is_file():
         raise EvidenceIntakeError("evidence artifact must be a regular file")
     return resolved
 
 
-def build_graph_document(manifest: dict[str, Any], allowed_root: Path) -> dict[str, Any]:
+def build_graph_document(
+    manifest: dict[str, Any],
+    allowed_root: Path,
+    profile: str,
+) -> dict[str, Any]:
+    if profile not in ARTIFACT_PATHS:
+        raise EvidenceIntakeError("unsupported evidence profile")
     if not isinstance(manifest, dict):
         raise EvidenceIntakeError("manifest root must be an object")
     candidate_sha = manifest.get("candidate_commit_sha")
@@ -68,8 +88,9 @@ def build_graph_document(manifest: dict[str, Any], allowed_root: Path) -> dict[s
         raise EvidenceIntakeError("candidate commit SHA is invalid")
     if not isinstance(evidence_type, str) or not NAME_RE.fullmatch(evidence_type):
         raise EvidenceIntakeError("evidence type is invalid")
-    if not isinstance(artifacts, dict) or not 1 <= len(artifacts) <= MAX_ARTIFACTS:
-        raise EvidenceIntakeError("manifest must contain 1 to 50 artifacts")
+    expected = ARTIFACT_PATHS[profile]
+    if not isinstance(artifacts, dict) or set(artifacts) != set(expected):
+        raise EvidenceIntakeError("manifest artifact set does not match its fixed profile")
 
     root = allowed_root.resolve(strict=True)
     observed_at = manifest.get("observed_at")
@@ -90,17 +111,13 @@ def build_graph_document(manifest: dict[str, Any], allowed_root: Path) -> dict[s
         )
     )
 
-    for name, descriptor in sorted(artifacts.items()):
-        if not isinstance(name, str) or not NAME_RE.fullmatch(name):
-            raise EvidenceIntakeError("artifact name is invalid")
-        if not isinstance(descriptor, dict):
-            raise EvidenceIntakeError("artifact descriptor must be an object")
-        raw_path = descriptor.get("path")
+    for name, relative_path in expected.items():
+        descriptor = artifacts.get(name)
+        if not isinstance(descriptor, dict) or "path" in descriptor:
+            raise EvidenceIntakeError("artifact descriptors must not contain file paths")
         declared_sha = descriptor.get("sha256")
         declared_size = descriptor.get("size_bytes")
-        if not isinstance(raw_path, str) or not isinstance(declared_sha, str):
-            raise EvidenceIntakeError("artifact path and SHA-256 are required")
-        if not re.fullmatch(r"[0-9a-f]{64}", declared_sha):
+        if not isinstance(declared_sha, str) or not re.fullmatch(r"[0-9a-f]{64}", declared_sha):
             raise EvidenceIntakeError("artifact SHA-256 is invalid")
         if (
             isinstance(declared_size, bool)
@@ -109,7 +126,7 @@ def build_graph_document(manifest: dict[str, Any], allowed_root: Path) -> dict[s
         ):
             raise EvidenceIntakeError("artifact size is invalid")
 
-        resolved = _resolve_within(Path(raw_path), root)
+        resolved = _fixed_artifact(root, relative_path)
         if resolved.stat().st_size != declared_size or _sha256(resolved) != declared_sha:
             raise EvidenceIntakeError("artifact size or SHA-256 does not match manifest")
 
@@ -145,6 +162,7 @@ def build_graph_document(manifest: dict[str, Any], allowed_root: Path) -> dict[s
 
     graph = EvidenceGraph(tuple(nodes), tuple(edges))
     lineage = graph.trace_lineage(claim_node_id)
+    report = graph.report()
     return {
         "schema_version": 1,
         "graph_type": "CK-NEXUS-EVIDENCE-GRAPH-INTAKE",
@@ -172,9 +190,9 @@ def build_graph_document(manifest: dict[str, Any], allowed_root: Path) -> dict[s
         ],
         "artifacts": artifact_records,
         "graph_report": {
-            "node_count": graph.report().node_count,
-            "edge_count": graph.report().edge_count,
-            "citation_cycles": list(graph.report().citation_cycles),
+            "node_count": report.node_count,
+            "edge_count": report.edge_count,
+            "citation_cycles": list(report.citation_cycles),
             "lineage_paths": [
                 {
                     "root_node_id": item.root_node_id,
@@ -198,24 +216,27 @@ def build_graph_document(manifest: dict[str, Any], allowed_root: Path) -> dict[s
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--manifest", type=Path, required=True)
-    parser.add_argument("--allowed-root", type=Path, required=True)
-    parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--profile", choices=tuple(ARTIFACT_PATHS), required=True)
     args = parser.parse_args()
 
+    if args.profile == "q16":
+        root = Path(os.environ["RUNNER_TEMP"]).resolve(strict=True)
+        manifest_path = root / "q16" / "q16-evidence.json"
+        output_path = root / "q16" / "q16-evidence-graph.json"
+    else:
+        root = Path.cwd().resolve(strict=True)
+        manifest_path = root / "otel-shadow-evidence-manifest.json"
+        output_path = root / "otel-shadow-evidence-graph.json"
+
     try:
-        root = args.allowed_root.resolve(strict=True)
-        manifest_path = _resolve_within(args.manifest, root)
-        if manifest_path.stat().st_size > MAX_MANIFEST_BYTES:
+        manifest_file = _fixed_artifact(root, str(manifest_path.relative_to(root)))
+        if manifest_file.stat().st_size > MAX_MANIFEST_BYTES:
             raise EvidenceIntakeError("manifest exceeds 2 MiB")
         manifest = json.loads(
-            manifest_path.read_text(encoding="utf-8"),
+            manifest_file.read_text(encoding="utf-8"),
             object_pairs_hook=_unique_object,
         )
-        document = build_graph_document(manifest, root)
-        parent = args.output.parent.resolve(strict=True)
-        parent.relative_to(root)
-        output_path = parent / args.output.name
+        document = build_graph_document(manifest, root, args.profile)
         with output_path.open("x", encoding="utf-8") as stream:
             stream.write(json.dumps(document, indent=2, sort_keys=True) + "\n")
     except (OSError, json.JSONDecodeError, ValueError) as exc:
