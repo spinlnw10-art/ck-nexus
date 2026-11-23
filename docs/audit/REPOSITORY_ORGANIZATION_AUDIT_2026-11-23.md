@@ -180,7 +180,7 @@ Use the existing architecture rather than a disruptive monorepo migration:
 
 ## Limitations and open work
 
-This document is a verified phase-1 snapshot of the full current main tree and the complete branch/PR name inventory. A full per-branch content/unique-blob scan for all 402 branches and exhaustive external consumer search remains pending. Therefore this is not a final deletion manifest and authorizes no destructive operation.
+This document is a verified phase-1 snapshot of the full current main tree and the complete branch/PR name inventory. The all-branch Git object and path-level comparison is now complete for the 402 live remote refs. External deployment/workflow history, release/tag use, local worktree ownership and recovery intent remain incomplete. This is not a final deletion manifest and authorizes no destructive operation.
 
 
 ## Addendum — local Git head/tree inventory (2026-11-23)
@@ -209,6 +209,85 @@ Important interpretation:
 - Same HEAD/tree is evidence of identical snapshots only; it does not prove the branch has no PR, tags, deployment, backup or recovery purpose.
 - A branch tip being merged into main does not alone authorize deletion; branch protection, PR references, tags/releases, GitHub Actions, deployments, and recovery policies must still be checked.
 - The five stale local tracking refs are not current remote branches. They were left untouched; their local presence may still be useful for forensic comparison.
-- This head/tree inventory does not yet compute per-branch unique blob sets, complete ahead/behind commit counts, or external workflow/deployment references. Those remain mandatory before any archival recommendation.
+- The head/tree snapshot is now supplemented by full per-branch ahead/behind, unique commit/blob, and path-level tree comparisons (see the evidence files below). External deployment/workflow history and owner/recovery intent still require review before any archival recommendation.
 
 PR inventory was refreshed after opening this audit PR: **355 total**, **220 open**, **135 closed** (**88 merged**, **47 closed-unmerged**). These counts are a point-in-time snapshot and will change as PR activity continues.
+
+
+## Addendum — full all-branch object and path-level comparison (2026-11-23)
+
+The local Git scan used the 402 live remote branch names from the branch inventory (not the five stale local-only tracking refs) and compared each branch tip against `origin/main` at `944d7cb70a5d59d53c8fb379752bbee2085f7c8c`.
+
+### Per-branch Git object reachability
+
+- Branches scanned: **402 / 402**
+- Scan errors: **0**
+- Branches ahead of main (one or more unique commits): **372**
+- Branches behind main: **387**
+- Branches with unique commits: **372**
+- Branches with unique blob objects: **368**
+- Branches with zero unique commits and zero unique blobs: **30**
+- Branches with unique commit(s) but no unique blob: **4**
+  - `backup/pre-consolidation-20261031` — 1 unique commit, 0 unique blobs
+  - `backup/termux-20261029` — 1 unique commit, 0 unique blobs
+  - `code-coverage-agent/fix-341440761-1333067619-504675e3-5573-4c55-8a40-02cfbfbc651f` — 1 unique commit, 0 unique blobs; closed-unmerged PR #296
+  - `r33-closure-hardening-v02` — 1 unique commit, 0 unique blobs
+- Per-branch unique-object counts are not additive repository-wide; the same blob/commit can be counted for multiple branches.
+
+Full per-branch ahead/behind, unique commit/blob/tree/object counts and head dates: [branch-unique-object-inventory-2026-11-23.json](evidence/branch-unique-object-inventory-2026-11-23.json).
+
+### Per-branch file-path and duplicate-content comparison
+
+- Branch trees scanned: **402 / 402**
+- Scan errors: **0**
+- Main tracked files: **870**
+- Total branch-tree file entries across all snapshots: **222,770**
+- Branches with a path/blob difference from main: **401**
+- Branches with exactly the same path/blob tree as main: **1** (`main`)
+- Aggregate branch-tree comparison instances: **41,685 changed-path instances**, **11,977 branch-only path instances**, and **138,947 main-path-missing instances**. These are summed across branch snapshots, not unique repository files.
+- Across all branch snapshots, the scanner recorded **1,606 duplicate-blob groups** and **4,083 duplicate extra-path instances**. These are per-tree group occurrences, not 1,606 distinct repository-wide duplicate files.
+- Current main still has exactly the two duplicate-content groups documented above: 8 empty package markers (KEEP) and 3 identical PostgreSQL migration copies (REVIEW).
+
+Full per-branch file counts, changed paths, branch-only paths, main paths missing and duplicate-group counts: [branch-path-diff-summary-2026-11-23.json](evidence/branch-path-diff-summary-2026-11-23.json).
+
+### Branch protection, PRs, tags and low-delta review candidates
+
+GitHub branch API and PR inventory:
+- 402 remote branches.
+- Only `main` is marked protected by the branch API.
+- 355 PRs: 220 open, 135 closed (88 merged, 47 closed-unmerged).
+- 219 branch names map to at least one open PR head; 102 branch names have no PR head association.
+- One Git tag exists: `v0.2.0-buyer`.
+
+Full branch protection flags and branch-to-PR head associations: [branch-protection-pr-associations-2026-11-23.json](evidence/branch-protection-pr-associations-2026-11-23.json).
+
+The following **13 branches** have zero unique commits and zero unique blobs versus main, no associated PR head in the captured PR inventory, and no exact textual reference in the current main tracked files. They are **ARCHIVE_CANDIDATE_PENDING**, not deletion candidates:
+
+- `feat/facebook-meta-connector`
+- `fix/q05-bandit`
+- `fix/q15-launcher-mode`
+- `noop`
+- `ops/canonical-export-20260904-run`
+- `ops/canonical-export-20260904-trigger`
+- `post-p0/standards-integration-v1`
+- `q10/aikido-frozen-39f5c1ad`
+- `q10/aikido-frozen-39f5c1ad-20260829`
+- `q10/frozen-39f5c1ad-aikido`
+- `revert/pr-348`
+- `tmp-do-not-use`
+- `verify/q04-q05-converged-v3`
+
+One nearby low-delta branch is explicitly **KEEP** pending workflow migration: `release/q04-q08-clean` has zero unique commits/blobs but is referenced in `.github/workflows/ci.yml` (branch filter and job condition).
+
+Do not confuse the 30 branches with zero unique commits/blobs with deletable branches. Some still have PR relationships (including open PRs), and others may have local worktrees, external deployment references, release/evidence associations or recovery value. The four branches with unique commits but no unique blob must retain their commit objects until the commit purpose is reviewed. Backup branches remain KEEP_RETAIN_HISTORY.
+
+### Final gates before any branch archival/deletion
+
+1. Match the single tag `v0.2.0-buyer` to its exact target and check release assets and deployment provenance.
+2. Inspect repository rulesets, branch protection policy, GitHub Actions run history, environments, deployments and workflow filters; the branch API `protected` flag alone is not sufficient.
+3. Search all open/closed PR head/base refs and verify supersession, especially closed-unmerged PR heads.
+4. Check the 25 local Git worktrees and owners; do not remove local branches/worktrees as part of this PR.
+5. Confirm external consumers, operator runbooks and recovery intent with the owner.
+6. For any approved archive, create and verify a recoverable immutable ref/backup first, then request a separate explicit approval before deletion.
+
+No branch archival, deletion, or merge is performed in this audit PR.
