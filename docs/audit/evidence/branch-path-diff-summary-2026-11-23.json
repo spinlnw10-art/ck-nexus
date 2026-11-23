@@ -1,18 +1,18 @@
 {
   "main": "944d7cb70a5d59d53c8fb379752bbee2085f7c8c",
-  "branches_expected": 401,
-  "branches_scanned": 401,
+  "branches_expected": 402,
+  "branches_scanned": 402,
   "errors": [],
   "main_files": 870,
-  "total_branch_tree_file_entries": 221897,
+  "total_branch_tree_file_entries": 222776,
   "summary": {
-    "branches_with_path_differences": 400,
+    "branches_with_path_differences": 401,
     "branches_identical_path_blob_tree_to_main": 1,
-    "total_changed_path_instances": 41684,
-    "total_branch_only_path_instances": 11974,
+    "total_changed_path_instances": 41685,
+    "total_branch_only_path_instances": 11983,
     "total_main_path_missing_instances": 138947,
-    "aggregate_duplicate_blob_groups_across_branch_trees": 1604,
-    "aggregate_duplicate_extra_paths_across_branch_trees": 4074
+    "aggregate_duplicate_blob_groups_across_branch_trees": 1606,
+    "aggregate_duplicate_extra_paths_across_branch_trees": 4083
   },
   "top_path_delta_branches": [
     {
@@ -486,6 +486,16 @@
       "main_paths_missing": 294,
       "duplicate_blob_groups": 4,
       "duplicate_extra_paths": 11
+    },
+    {
+      "branch": "audit/repository-organization-20261123",
+      "files": 879,
+      "same_path_same_blob": 869,
+      "changed_paths": 1,
+      "branch_only_paths": 9,
+      "main_paths_missing": 0,
+      "duplicate_blob_groups": 2,
+      "duplicate_extra_paths": 9
     },
     {
       "branch": "automation/capability-registry-weekly-2026-11-09",
@@ -4327,6 +4337,5 @@
       "duplicate_blob_groups": 4,
       "duplicate_extra_paths": 8
     }
-  ],
-  "scope_note": "Baseline covers the 401 pre-existing live remote branches at audit start. The audit branch audit/repository-organization-20261123 is excluded from its own evidence to avoid self-referential HEAD/tree snapshots; it is tracked separately by Draft PR #393."
+  ]
 }
