@@ -1,0 +1,18 @@
+ort:
+  analyzer:
+    allowDynamicVersions: true
+    enabledPackageManagers: [NPM, PIP]
+    skipExcluded: true
+  scanner:
+    scanners:
+      ScanCode:
+        options:
+          commandLine: "--copyright,--license,--info,--strip-root,--timeout,300"
+          commandLineNonConfig: "--processes,1"
+          preferFileLicense: false
+          minVersion: "32.5.0"
+          maxVersion: "32.5.1"
+          readFromStorage: false
+          writeToStorage: false
+    storageReaders: []
+    storageWriters: []
