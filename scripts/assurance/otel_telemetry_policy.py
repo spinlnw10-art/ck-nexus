@@ -123,14 +123,23 @@ def validate_document(payload: Any) -> dict[str, Any]:
     }
 
 
-def load_document(path: Path) -> Any:
-    if path.is_symlink() or not path.is_file():
+def load_document(path: Path, allowed_root: Path | None = None) -> Any:
+    """Read a regular input file confined to an explicit local directory."""
+    root = (allowed_root or Path.cwd()).resolve(strict=True)
+    if path.is_symlink():
         raise TelemetryPolicyError("input must be a regular non-symlink file")
-    if path.stat().st_size > MAX_INPUT_BYTES:
+    try:
+        resolved = path.resolve(strict=True)
+        resolved.relative_to(root)
+    except (OSError, ValueError) as exc:
+        raise TelemetryPolicyError("input path must resolve within the allowed directory") from exc
+    if not resolved.is_file():
+        raise TelemetryPolicyError("input must be a regular non-symlink file")
+    if resolved.stat().st_size > MAX_INPUT_BYTES:
         raise TelemetryPolicyError("input exceeds the 1 MiB limit")
     try:
         return json.loads(
-            path.read_text(encoding="utf-8"),
+            resolved.read_text(encoding="utf-8"),
             object_pairs_hook=_unique_object,
             parse_constant=lambda _value: (_ for _ in ()).throw(
                 TelemetryPolicyError("non-finite JSON number is not permitted")
@@ -145,7 +154,7 @@ def main() -> int:
     parser.add_argument("input", type=Path, help="JSON file containing synthetic events")
     args = parser.parse_args()
     try:
-        result = validate_document(load_document(args.input))
+        result = validate_document(load_document(args.input, Path.cwd()))
     except TelemetryPolicyError as exc:
         # Deliberately report policy reason only; never echo input values.
         print(json.dumps({"status": "REJECTED", "reason": str(exc)}))
