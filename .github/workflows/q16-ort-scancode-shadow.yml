@@ -66,7 +66,8 @@ jobs:
           WHEEL="$(find "$RUNNER_TEMP/scancode-wheel" -maxdepth 1 -type f -name 'scancode_toolkit-32.5.0-cp312-none-any.whl' -print -quit)"
           test -n "$WHEEL"
           echo "$SCANCODE_SHA256  $WHEEL" | sha256sum --check
-          python -m pip install --no-deps "$WHEEL"
+          python -m pip install --report "$RUNNER_TEMP/scancode-install-report.json" "$WHEEL"
+          echo "SCANCODE_INSTALL_REPORT=$RUNNER_TEMP/scancode-install-report.json" >> "$GITHUB_ENV"
           scancode --version
 
       - name: Scan complete CK-NEXUS source tree with ScanCode
@@ -92,7 +93,7 @@ jobs:
 
       - name: Create candidate-bound Q16 evidence manifest
         run: |
-          python scripts/assurance/q16_evidence_manifest.py --candidate-sha "$GITHUB_SHA" --scancode-report "$RUNNER_TEMP/scancode-full-repo.json" --ort-analyzer-result "$ORT_ANALYZER_RESULT" --ort-scan-result "$ORT_SCAN_RESULT" --output "$RUNNER_TEMP/q16/q16-evidence.json"
+          python scripts/assurance/q16_evidence_manifest.py --candidate-sha "$GITHUB_SHA" --scancode-report "$RUNNER_TEMP/scancode-full-repo.json" --scancode-install-report "$SCANCODE_INSTALL_REPORT" --ort-analyzer-result "$ORT_ANALYZER_RESULT" --ort-scan-result "$ORT_SCAN_RESULT" --output "$RUNNER_TEMP/q16/q16-evidence.json"
           cat "$RUNNER_TEMP/q16/q16-evidence.json"
 
       - name: Run evidence manifest unit tests
