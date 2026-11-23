@@ -21,7 +21,7 @@ Status: PHASE 1 INVENTORY / READ-ONLY / NO FILE OR BRANCH DELETION AUTHORIZED
 - Closed but unmerged PRs: 47
 - Branch names with no PR head association in the enumerated PR set: 102
 
-This phase inventories the complete current main tree and has now completed a read-only Git object and path/blob comparison for all 402 live remote branches. It also enumerates the point-in-time branch and PR references. External deployment/workflow history, tag/release use, local worktree ownership and recovery intent remain open gates before any archival decision. The older PR #225 retention audit inspected 274 branches at its 2026-09-04 baseline and remains historical evidence only.
+This phase inventories the complete current main tree and has now completed a read-only Git object and path/blob comparison for all 401 pre-existing live remote branches. It also enumerates the point-in-time branch and PR references. External deployment/workflow history, tag/release use, local worktree ownership and recovery intent remain open gates before any archival decision. The older PR #225 retention audit inspected 274 branches at its 2026-09-04 baseline and remains historical evidence only.
 
 ## Main tree composition
 
@@ -150,9 +150,9 @@ No DELETE_CANDIDATE is approved by this phase.
 ## Completed all-branch scan and remaining retention gates (401 pre-existing branches)
 
 Completed read-only gates:
-1. Frozen 402 live branch names, head/tree SHAs, local tracking-ref comparison and protection metadata in evidence manifests.
+1. Frozen 401 pre-existing live branch names, head/tree SHAs, local tracking-ref comparison and protection metadata in evidence manifests.
 2. Captured 355 PRs (220 open, 135 closed) and branch-to-PR head associations; preserved all refs.
-3. Computed ahead/behind, unique commit/blob/tree/object counts and path/blob differences for 402/402 branch tips; zero scan errors.
+3. Computed ahead/behind, unique commit/blob/tree/object counts and path/blob differences for 401/401 pre-existing branch tips; zero scan errors.
 4. Identified same-HEAD and same-tree groups without treating equality as deletion authorization.
 5. Checked exact textual branch/path references in current main for the 13 archive candidates; one nearby zero-delta branch is retained because workflow CI references it.
 6. Produced machine-readable JSON/TSV evidence manifests.
@@ -193,7 +193,7 @@ This document is a verified read-only inventory of the full current main tree pl
 
 A read-only inventory was run against the Termux clone's fetched remote-tracking refs and cross-checked against `git ls-remote --heads origin`.
 
-- Live remote branch refs: **402**
+- Live remote branch refs at snapshot time: **402** (401 pre-existing branches plus the audit branch); baseline scan excludes the audit branch
 - Local remote-tracking refs present: 407
 - Local-only stale tracking refs (not present in current live remote listing): 5
   - `docs/clarify-release-evidence-baseline-20261119`
@@ -201,15 +201,15 @@ A read-only inventory was run against the Termux clone's fetched remote-tracking
   - `feature/public-beta-feedback-20261119`
   - `pr-387`
   - `pr-392-audit`
-- Distinct branch head commits: **381**
-- Distinct root tree SHAs: **373**
+- Distinct branch head commits: **380**
+- Distinct root tree SHAs: **372**
 - Branch refs whose tips are merged into main according to `git branch -r --merged origin/main`: **30** (includes `main`)
-- Branch refs not merged into main: **372**
+- Branch refs not merged into main: **371**
 - Only `main` has the same root tree SHA as current `main`.
 - Same-HEAD groups: **18** groups (including backup pairs and parallel feature/fix/post-p0/verify/Q10 branches).
-- Same-tree groups: **22** groups (some branches have different commits but identical root trees).
+- Same-tree groups: **23** groups (some branches have different commits but identical root trees).
 
-The exact per-branch name, head SHA, tree SHA, merged-into-main boolean, and local SHA comparison are preserved in [branch-head-tree-inventory-2026-11-23.json](evidence/branch-head-tree-inventory-2026-11-23.json).
+The exact per-branch name, head SHA, tree SHA, merged-into-main boolean, and local SHA comparison for the 401 pre-existing branches are preserved in [branch-head-tree-inventory-2026-11-23.json](evidence/branch-head-tree-inventory-2026-11-23.json).
 
 Important interpretation:
 - Same HEAD/tree is evidence of identical snapshots only; it does not prove the branch has no PR, tags, deployment, backup or recovery purpose.
@@ -244,7 +244,7 @@ Full per-branch ahead/behind, unique commit/blob/tree/object counts and head dat
 
 ### Per-branch file-path and duplicate-content comparison
 
-- Branch trees scanned: **402 / 402**
+- Branch trees scanned: **401 / 401**
 - Scan errors: **0**
 - Main tracked files: **870**
 - Total branch-tree file entries across all snapshots: **221,897**
@@ -299,13 +299,13 @@ Do not confuse the 30 branches with zero unique commits/blobs with deletable bra
 No branch archival, deletion, or merge is performed in this audit PR.
 
 
-## Addendum — exact duplicate blob groups across all 402 branch trees
+## Addendum — exact duplicate blob groups across all 401 pre-existing branch trees
 
 A second pass grouped every repeated blob SHA by its exact set of repository paths in each live branch tree.
 
-- Branch trees scanned: **402 / 402**
+- Branch trees scanned: **401 / 401**
 - Scan errors: **0**
-- Duplicate group occurrences across branch snapshots: **1,606**
+- Duplicate group occurrences across branch snapshots: **1,604**
 - Distinct duplicate SHA + path-set signatures: **28**
 
 The complete list records each blob SHA, exact paths and every branch containing that exact duplicate group: [duplicate-blob-groups-all-branches-2026-11-23.json](evidence/duplicate-blob-groups-all-branches-2026-11-23.json).
@@ -314,14 +314,14 @@ High-frequency findings:
 
 | Exact duplicate group | Branch occurrences | Decision |
 |---|---:|---|
-| PostgreSQL email migration copies at the three paths listed in D2 | 402 | REVIEW; runtime explicitly names `migrations/postgresql/001_email_gateway.sql`; do not remove copies before package/deploy/checksum analysis |
+| PostgreSQL email migration copies at the three paths listed in D2 | 401 | REVIEW; runtime explicitly names `migrations/postgresql/001_email_gateway.sql`; do not remove copies before package/deploy/checksum analysis |
 | `config/orchestration_patterns.json` and `orchestration/patterns.json` | 363 | Historical/branch-only finding; not a duplicate group in current main; preserve until active consumer mapping |
 | `migrations/sqlite/001_email_gateway.sql` and `services/email_gateway/migrations/sqlite.sql` | 363 | Historical/branch-only finding; not a duplicate group in current main; verify runtime/package consumers before any consolidation |
 | Empty Python `__init__.py` package-marker sets (multiple historical variants) | 268, 109, 21, 2, 1, 1 | KEEP; do not remove package markers based on identical empty content |
 | Three n8n systemd alert drop-in configs | 4 | REVIEW; identical content at different unit paths may be intentional; check service-specific semantics |
 | Mirrored `.agents/skills/**` and `.claude/skills/**` skill files | 4 per signature | KEEP pending owner decision; these may intentionally support different agent runtimes |
 
-The 1,606 figure is the number of duplicate-group occurrences across 402 separate branch snapshots, not 1,606 distinct files to delete. Many are the same historical duplicate repeated across many branches. The 28 signatures are the distinct path-set/blob combinations. Do not sum branch occurrences as unique file count.
+The 1,604 figure is the number of duplicate-group occurrences across 401 pre-existing branch snapshots, not 1,606 distinct files to delete. Many are the same historical duplicate repeated across many branches. The 28 signatures are the distinct path-set/blob combinations. Do not sum branch occurrences as unique file count.
 
 ## Consolidation / move / delete decision matrix
 
@@ -342,3 +342,4 @@ This audit proposes no source-file move, source-file deletion, branch archival o
 ### Snapshot boundary clarification
 
 The repository had 401 pre-existing live branches when the audit branch was created. The audit branch itself is excluded from its own baseline evidence to avoid a self-referential record: adding or updating the evidence files changes that branch's own HEAD and tree. The audit branch is tracked separately by Draft PR #393; the PR head SHA is checked live in the final verification. Thus, the retention baseline covers every pre-existing branch, and the newly created audit branch is separately visible and preserved.
+
