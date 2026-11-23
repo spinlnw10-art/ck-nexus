@@ -1,12 +1,18 @@
 # Current candidate update — 2026-11-23 (PR #392)
 
-**Decision: NO-GO FOR PRODUCTION.** This is the latest verified repository snapshot; it is not a production approval.
+**Decision: NO-GO FOR PRODUCTION.** This snapshot distinguishes the application code subject from the documentation-only PR head.
 
 - PR: https://github.com/spinlnw10-art/ck-nexus/pull/392
-- PR state: OPEN; merge state BLOCKED; review decision REVIEW_REQUIRED; base `main`.
-- Exact PR head: `efbb2ee157fcfdedfde054508fafaf21cbaf88fa`.
-- Remote branches `ops/provider-free-go-clean` and `fix/q10-attachment-hardening-20261123` both resolve to `efbb2ee157fcfdedfde054508fafaf21cbaf88fa`.
-- Work was performed in the isolated Termux worktree `~/cknexus-pr392-audit`; the primary worktree was not modified.
+- PR state: OPEN; merge state BLOCKED; review decision REVIEW_REQUIRED; base main.
+- Latest PR head / documentation commit: 0944ffd179e3789838185412dbcf2944caafb7e2.
+- Application code candidate SHA scanned by Q10: efbb2ee157fcfdedfde054508fafaf21cbaf88fa.
+- Commits after the code candidate through the current PR head change documentation only; do not mislabel the Q10 report as if it were scanned against the documentation head.
+- Both remote task branches ops/provider-free-go-clean and fix/q10-attachment-hardening-20261123 were verified at 0944ffd179e3789838185412dbcf2944caafb7e2.
+- main remains at 944d7cb70a5d59d53c8fb379752bbee2085f7c8c; PR #392 has not been merged.
+- Work was performed in the isolated Termux worktree ~/cknexus-pr392-audit; the primary worktree was not modified.
+- No merge or deployment has occurred.
+
+**AI handoff:** Read [docs/ops/AI_HANDOFF_CURRENT_TRUTH.md](docs/ops/AI_HANDOFF_CURRENT_TRUTH.md) first, then [docs/ops/CKNEXUS_WORK_LEDGER.md](docs/ops/CKNEXUS_WORK_LEDGER.md). These identify canonical files, historical files, exact SHAs, completed work, and no-repeat rules.
 
 ## Exact-SHA checks already completed — do not rerun without a material change
 
