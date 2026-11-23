@@ -105,7 +105,7 @@ jobs:
           LC_ALL: en_US.UTF-8
         run: |
           set -euo pipefail
-          mkdir -p "$ORT_DATA_DIR" "$ORT_CONFIG_DIR" "$RUNNER_TEMP/q16/analyzer" "$RUNNER_TEMP/q16/scanner"
+          mkdir -p "$ORT_DATA_DIR" "$ORT_CONFIG_DIR" "$RUNNER_TEMP/q16"
           cp scripts/assurance/ort-q16-config.yml "$ORT_CONFIG_DIR/config.yml"
           "$ORT_BIN" --info analyze -f JSON -i tests/fixtures/q16-license -o "$RUNNER_TEMP/q16/analyzer"
           ANALYZER_RESULT="$RUNNER_TEMP/q16/analyzer/analyzer-result.json"
@@ -115,6 +115,39 @@ jobs:
           SCAN_RESULT="$RUNNER_TEMP/q16/scanner/scan-result.yml"
           test -f "$SCAN_RESULT"
           cp "$SCAN_RESULT" evidence/assurance/shadow/q16/scan-result.yml
+
+      - name: Analyze and scan full CK-NEXUS dependency graph with ORT
+        env:
+          ORT_DATA_DIR: \${{ runner.temp }}/ort-data
+          ORT_CONFIG_DIR: \${{ runner.temp }}/ort-config
+          LC_ALL: en_US.UTF-8
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/ort-source"
+          rsync -a \
+            --exclude='.git' \
+            --exclude='.venv' \
+            --exclude='node_modules' \
+            --exclude='**/node_modules/**' \
+            --exclude='**/__pycache__/**' \
+            --exclude='**/.pytest_cache/**' \
+            --exclude='**/dist/**' \
+            --exclude='**/build/**' \
+            --exclude='evidence/assurance/shadow/**' \
+            --exclude='**/.env*' \
+            ./ "$RUNNER_TEMP/ort-source/"
+          "$ORT_BIN" --info analyze -f JSON \
+            -i "$RUNNER_TEMP/ort-source" \
+            -o "$RUNNER_TEMP/q16/repo-analyzer"
+          REPO_ANALYZER_RESULT="$RUNNER_TEMP/q16/repo-analyzer/analyzer-result.json"
+          test -f "$REPO_ANALYZER_RESULT"
+          "$ORT_BIN" scan \
+            -i "$REPO_ANALYZER_RESULT" \
+            -o "$RUNNER_TEMP/q16/repo-scanner"
+          REPO_SCAN_RESULT="$RUNNER_TEMP/q16/repo-scanner/scan-result.yml"
+          test -f "$REPO_SCAN_RESULT"
+          cp "$REPO_ANALYZER_RESULT" evidence/assurance/shadow/q16/ort-full-repo-analyzer-result.json
+          cp "$REPO_SCAN_RESULT" evidence/assurance/shadow/q16/ort-full-repo-scan-result.yml
 
       - name: Create candidate-bound Q16 evidence manifest
         run: |
