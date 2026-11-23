@@ -41,14 +41,14 @@
 - Consumes: GitHub branch and PR inventory, main commit/tree SHA, prior PR #225 retention audit.
 - Produces: branch-level KEEP / KEEP_RETAIN_HISTORY / REVIEW / ARCHIVE_CANDIDATE classification, exact commit/tree/blob identities, unique branch-only object list.
 
-- [ ] Freeze branch names, head SHAs, commit dates, protection flags and PR relationships.
-- [ ] For all 401 branches, calculate merge-base/ahead/behind against main and inspect tree/file/blob identities.
-- [ ] Identify same-head, same-tree and same-content groups without treating equality as deletion authorization.
-- [ ] Search workflow files, scripts, docs, tags, releases and deployments for branch/path references.
-- [ ] Compare with PR #225 historical baseline and record changed/new branches.
-- [ ] Verify report counts against GitHub API and local Git results.
+- [x] Freeze 402 live branch names, head SHAs, tree SHAs, commit dates, protection flags and PR relationships in machine-readable evidence.
+- [x] For all 402 live branches, calculate ahead/behind and inspect tree/file/blob identities; zero scan errors.
+- [x] Identify same-head, same-tree and same-content groups without treating equality as deletion authorization.
+- [ ] Complete reconciliation of GitHub Actions run history, environments, deployments, rulesets, release assets and external runbooks (candidate-specific current-main text/workflow checks are recorded; external evidence remains open).
+- [ ] Complete a branch-by-branch delta reconciliation against PR #225's historical baseline (the older audit remains preserved as context).
+- [x] Verify live branch counts and per-branch Git object/path counts against GitHub API and local Git results.
 
-Expected: every branch has an evidence-backed retention class; open PR heads and branches with unique unreconciled objects are retained.
+Expected: 402/402 branch tips have machine-readable Git identity and object/path comparison evidence. Final retention classes remain pending external-use, deployment, release and recovery review; no branch deletion is authorized.
 
 ### Task 2: Build canonical documentation navigation
 
@@ -64,11 +64,11 @@ Expected: every branch has an evidence-backed retention class; open PR heads and
 - [ ] Inventory all Markdown files and classify by purpose, owner and freshness.
 - [ ] Detect duplicate titles/near-duplicate documents and stale status claims.
 - [ ] Identify inbound Markdown links and workflow/package references before proposing moves.
-- [ ] Draft index with links to existing paths; avoid moving files in this task.
-- [ ] Check all relative links and verify README release status remains NO-GO.
-- [ ] Run Markdown/link validation available in the repository.
+- [x] Draft index with links to existing paths; avoid moving files in this task.
+- [x] Check all 107 relative links in the docs navigation index (0 broken); verify README release status remains NO-GO.
+- [x] Run the available relative-link validation for the docs navigation index; full-repository Markdown lint remains open.
 
-Expected: users can find canonical documentation from README and docs index without breaking existing paths.
+Expected: users can find the new navigation hub from README; the checked index has no broken relative links. Full docs classification remains pending.
 
 ### Task 3: Validate and consolidate PostgreSQL migration copies
 
