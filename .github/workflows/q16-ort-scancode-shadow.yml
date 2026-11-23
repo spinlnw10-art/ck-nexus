@@ -5,6 +5,7 @@ on:
     paths:
       - "tests/fixtures/q16-license/**"
       - "scripts/assurance/q16_evidence_manifest.py"
+      - "scripts/assurance/ort-q16-config.yml"
       - "tests/assurance/test_q16_evidence_manifest.py"
       - ".github/workflows/q16-ort-scancode-shadow.yml"
   workflow_dispatch:
@@ -78,10 +79,12 @@ jobs:
       - name: Run ORT analyzer and ScanCode-backed scanner on synthetic fixture
         env:
           ORT_DATA_DIR: ${{ runner.temp }}/ort-data
+          ORT_CONFIG_DIR: ${{ runner.temp }}/ort-config
           LC_ALL: en_US.UTF-8
         run: |
           set -euo pipefail
-          mkdir -p "$ORT_DATA_DIR" "$RUNNER_TEMP/q16/analyzer" "$RUNNER_TEMP/q16/scanner"
+          mkdir -p "$ORT_DATA_DIR" "$ORT_CONFIG_DIR" "$RUNNER_TEMP/q16/analyzer" "$RUNNER_TEMP/q16/scanner"
+          cp scripts/assurance/ort-q16-config.yml "$ORT_CONFIG_DIR/config.yml"
           "$ORT_BIN" --info analyze -f JSON -i tests/fixtures/q16-license -o "$RUNNER_TEMP/q16/analyzer"
           ANALYZER_RESULT="$(find "$RUNNER_TEMP/q16/analyzer" -maxdepth 1 -type f \( -name 'analyzer-result.json' -o -name 'analyzer-result.yml' \) -print -quit)"
           test -n "$ANALYZER_RESULT"
