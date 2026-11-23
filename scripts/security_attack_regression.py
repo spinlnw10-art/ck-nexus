@@ -3,7 +3,9 @@ from __future__ import annotations
 import json
 import os
 import sys
+import tempfile
 import time
+import zipfile
 from pathlib import Path
 from urllib.error import HTTPError
 from urllib.parse import urlsplit
@@ -14,19 +16,18 @@ from creator_app.connector_fabric.security import (
     EndpointSecurityError,
     validate_endpoint,
 )
+from creator_app.connector_fabric.transport import _validate_connected_peer
 from creator_app.credential_broker import (
     CredentialAccessDenied,
     CredentialBroker,
     CredentialId,
 )
-from creator_app.gmail_governance.attachments import evaluate_attachment
 from creator_app.gmail_oauth import GmailOAuthError, OAuthStateStore
+from services.email_gateway.attachments import scan_attachment
 
 BASE_URL = os.getenv("CKNEXUS_SECURITY_BASE_URL", "http://127.0.0.1:8000").rstrip("/")
 ACCESS_TOKEN = os.getenv("CKNEXUS_SECURITY_ACCESS_TOKEN", "test-access-value")
-EVIDENCE_PATH = Path(
-    os.getenv("CKNEXUS_SECURITY_EVIDENCE", "security-attack-regression.json")
-)
+EVIDENCE_PATH = Path(os.getenv("CKNEXUS_SECURITY_EVIDENCE", "security-attack-regression.json"))
 _LOOPBACK_HOSTS = frozenset({"127.0.0.1", "localhost", "::1"})
 
 
@@ -92,17 +93,12 @@ def main() -> int:
 
     status, headers, body = request("/api/integrations/gmail/status", auth=True)
     decoded = body.decode("utf-8", errors="replace")
-    results.append(
-        check("protected_route_accepts_valid_bearer", status == 200, f"status={status}")
-    )
+    results.append(check("protected_route_accepts_valid_bearer", status == 200, f"status={status}"))
     lowered = decoded.lower()
     results.append(
         check(
             "gmail_status_does_not_expose_secret_fields",
-            all(
-                term not in lowered
-                for term in ("access_token", "refresh_token", "client_secret")
-            ),
+            all(term not in lowered for term in ("access_token", "refresh_token", "client_secret")),
         )
     )
     normalized_headers = {key.lower(): value for key, value in headers.items()}
@@ -131,7 +127,7 @@ def main() -> int:
         )
     )
 
-    oversized = b"{\"x\":\"" + (b"A" * 70_000) + b"\"}"
+    oversized = b'{"x":"' + (b"A" * 70_000) + b'"}'
     status, _, _ = request("/api/run", method="POST", body=oversized, auth=True)
     results.append(check("oversized_request_blocked", status == 413, f"status={status}"))
 
@@ -179,9 +175,7 @@ def main() -> int:
         source="test",
     )
     lease = broker.acquire(CredentialId.GMAIL_ACCESS_TOKEN, consumer="gmail.api")
-    results.append(
-        check("secret_lease_repr_redacted", test_credential not in repr(lease))
-    )
+    results.append(check("secret_lease_repr_redacted", test_credential not in repr(lease)))
     try:
         lease.reveal(consumer="gmail.oauth")
     except CredentialAccessDenied:
@@ -190,42 +184,92 @@ def main() -> int:
         wrong_consumer_blocked = False
     results.append(check("secret_lease_consumer_binding", wrong_consumer_blocked))
 
-    executable = evaluate_attachment("invoice.exe", size_bytes=128)
-    traversal = evaluate_attachment("../invoice.pdf", size_bytes=128)
-    normal_pdf = evaluate_attachment("invoice.pdf", size_bytes=128)
+    try:
+        _validate_connected_peer(
+            "1.1.1.1",
+            allowed_addresses=("8.8.8.8",),
+            policy=EndpointPolicy(),
+        )
+    except EndpointSecurityError:
+        peer_mismatch_blocked = True
+    else:
+        peer_mismatch_blocked = False
+    results.append(check("ssrf_connected_peer_mismatch_blocked", peer_mismatch_blocked))
+
+    with tempfile.TemporaryDirectory(prefix="cknexus-attachment-regression-") as directory:
+        root = Path(directory)
+        executable_path = root / "invoice.exe"
+        executable_path.write_bytes(b"MZ" + (b"x" * 128))
+        executable = scan_attachment(executable_path)
+
+        safe_pdf_path = root / "invoice.pdf"
+        safe_pdf_path.write_bytes(b"%PDF-1.7\\nCK-NEXUS test fixture")
+        safe_pdf = scan_attachment(safe_pdf_path, declared_mime="application/pdf")
+        mime_mismatch = scan_attachment(safe_pdf_path, declared_mime="text/plain")
+
+        office_bomb_path = root / "office-bomb.docx"
+        with zipfile.ZipFile(office_bomb_path, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+            archive.writestr("[Content_Types].xml", "<Types/>")
+            archive.writestr("word/document.xml", "A" * 2_000_000)
+        office_bomb = scan_attachment(
+            office_bomb_path,
+            declared_mime=(
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            ),
+        )
+
+        office_traversal_path = root / "office-traversal.xlsx"
+        with zipfile.ZipFile(office_traversal_path, "w", compression=zipfile.ZIP_STORED) as archive:
+            archive.writestr("[Content_Types].xml", "<Types/>")
+            archive.writestr("xl/workbook.xml", "<workbook/>")
+            archive.writestr("..\\..\\outside.txt", "not safe")
+        office_traversal = scan_attachment(
+            office_traversal_path,
+            declared_mime=("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"),
+        )
+
     results.append(
         check(
             "attachment_executable_blocked",
-            not executable.allowed_for_parser_sandbox,
+            not executable.safe and executable.status == "QUARANTINE",
+            executable.reason,
         )
     )
     results.append(
         check(
-            "attachment_traversal_blocked",
-            not traversal.allowed_for_parser_sandbox,
+            "attachment_declared_mime_mismatch_blocked",
+            not mime_mismatch.safe and mime_mismatch.reason == "declared_mime_mismatch",
+            mime_mismatch.reason,
         )
     )
     results.append(
         check(
-            "attachment_allowed_file_still_quarantined",
-            normal_pdf.allowed_for_parser_sandbox
-            and normal_pdf.quarantine_required
-            and not normal_pdf.execute_on_host,
+            "attachment_office_zip_bomb_blocked",
+            not office_bomb.safe
+            and office_bomb.reason in {"zip_uncompressed_limit", "zip_compression_ratio"},
+            office_bomb.reason,
+        )
+    )
+    results.append(
+        check(
+            "attachment_office_zip_traversal_blocked",
+            not office_traversal.safe and office_traversal.reason == "zip_path_traversal",
+            office_traversal.reason,
+        )
+    )
+    results.append(
+        check(
+            "attachment_allowed_pdf_is_hashed_and_clean",
+            safe_pdf.safe and safe_pdf.status == "CLEAN" and len(safe_pdf.sha256) == 64,
+            safe_pdf.reason,
         )
     )
 
-    known_open_findings = [
-        {
-            "issue": 65,
-            "title": "DNS-rebinding/TOCTOU SSRF peer binding",
-            "status": "OPEN_REMEDIATION_REQUIRED",
-        },
-        {
-            "issue": 66,
-            "title": "Attachment content/magic validation",
-            "status": "OPEN_HARDENING_REQUIRED",
-        },
-    ]
+    finding_registry_note = (
+        "This offline regression does not query GitHub issue lifecycle state. "
+        "Issue open/closed status must be read from GitHub; this report records only "
+        "executable security checks and must not embed stale issue states."
+    )
 
     passed = sum(1 for item in results if item["passed"])
     failed = len(results) - passed
@@ -237,7 +281,7 @@ def main() -> int:
         "tests_passed": passed,
         "tests_failed": failed,
         "results": results,
-        "known_open_findings": known_open_findings,
+        "finding_registry_note": finding_registry_note,
         "release_evidence": False,
         "production_promotion": False,
     }

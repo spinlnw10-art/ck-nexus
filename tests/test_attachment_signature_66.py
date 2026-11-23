@@ -12,19 +12,28 @@ def _scan(tmp_path, name, data):
     return scan_attachment(f)
 
 
-def _zip_bytes():
+def _zip_bytes(entries=None):
     buf = io.BytesIO()
     with zipfile.ZipFile(buf, "w") as z:
-        z.writestr("a.txt", "hi")
+        for name, content in (entries or {"a.txt": "hi"}).items():
+            z.writestr(name, content)
     return buf.getvalue()
+
+
+def _docx_bytes():
+    return _zip_bytes({"[Content_Types].xml": "<Types/>", "word/document.xml": "<document/>"})
+
+
+def _xlsx_bytes():
+    return _zip_bytes({"[Content_Types].xml": "<Types/>", "xl/workbook.xml": "<workbook/>"})
 
 
 @pytest.mark.parametrize(
     "name,data",
     [
         ("a.pdf", b"%PDF-1.7\n"),
-        ("a.docx", b"PK\x03\x04rest"),
-        ("a.xlsx", b"PK\x03\x04rest"),
+        ("a.docx", _docx_bytes()),
+        ("a.xlsx", _xlsx_bytes()),
         ("a.zip", _zip_bytes()),
         ("a.png", b"\x89PNG\r\n\x1a\nxx"),
         ("a.jpg", b"\xff\xd8\xff\xe0xx"),
