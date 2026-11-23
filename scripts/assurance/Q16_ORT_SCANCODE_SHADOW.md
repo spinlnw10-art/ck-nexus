@@ -35,6 +35,10 @@ thoroughly tested integration.
 4. Emit evidence only. The manifest explicitly records that no gate decision, legal conclusion
    or license approval was made.
 
+## Coverage boundary
+
+ScanCode covers the checked-out repository source tree. ORT Analyzer/Scanner currently exercises the isolated synthetic fixture only; it does **not** yet resolve and scan all CK-NEXUS dependency trees or every OS/native/frontend package manager. Full dependency inventory requires a separately reviewed, isolated analyzer policy and dependency-source download boundary. This PR must not be described as complete system-wide dependency license clearance.
+
 ## Safety
 
 - No production data, secrets, credentials, external package downloads requested by the fixture,
