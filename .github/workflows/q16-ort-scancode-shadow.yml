@@ -103,7 +103,7 @@ jobs:
       - name: Create candidate-bound Q16 evidence manifest
         run: |
           python scripts/assurance/q16_evidence_manifest.py
-          cat "$RUNNER_TEMP/q16/q16-evidence.json"
+          cat evidence/assurance/shadow/q16/q16-evidence.json
 
       - name: Validate Q16 evidence through CK-NEXUS EvidenceGraph
         run: |
