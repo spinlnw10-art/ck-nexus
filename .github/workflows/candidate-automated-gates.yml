@@ -136,18 +136,18 @@ jobs:
               ),
           }
           Path("SKIPPED_GATES_STATUS.json").write_text(
-              json.dumps(summary, indent=2, sort_keys=True) + "\\n",
+              json.dumps(summary, indent=2, sort_keys=True) + "\n",
               encoding="utf-8",
           )
           print(json.dumps(summary, indent=2, sort_keys=True))
           with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as out:
-              out.write("## Skipped gate evidence status\\n")
+              out.write("## Skipped gate evidence status\n")
               if not statuses:
-                  out.write("- No gates were skipped.\\n")
+                  out.write("- No gates were skipped.\n")
               for gate, row in statuses.items():
-                  out.write(f"- **{gate}: {row['status']}**\\n")
+                  out.write(f"- **{gate}: {row['status']}**\n")
                   for reason in row["reasons"]:
-                      out.write(f"  - {reason}\\n")
+                      out.write(f"  - {reason}\n")
           if statuses and not summary["all_skipped_gates_reused"]:
               raise SystemExit(
                   "Skipped gates are blocked: artifact payload retrieval and SHA-256 "
