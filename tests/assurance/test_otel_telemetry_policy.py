@@ -78,10 +78,21 @@ class OTelTelemetryPolicyTests(unittest.TestCase):
                     validate_document([{**BASE_EVENT, key: value}])
 
     def test_rejects_boolean_nan_and_out_of_range_duration(self) -> None:
-        for duration in (True, float("nan"), float("inf"), -1, 600_001):
-            with self.subTest(duration=duration):
+        for duration in (True, float("nan"), float("inf"), -1, 600_001, 10**10000):
+            with self.subTest(duration_type=type(duration).__name__):
                 with self.assertRaises(TelemetryPolicyError):
                     validate_document([{**BASE_EVENT, "ck_nexus.duration_ms": duration}])
+
+    def test_rejects_non_string_dimensions_without_crashing(self) -> None:
+        for key in (
+            "ck_nexus.component",
+            "ck_nexus.operation",
+            "ck_nexus.outcome",
+            "deployment.environment.name",
+        ):
+            with self.subTest(key=key):
+                with self.assertRaises(TelemetryPolicyError):
+                    validate_document([{**BASE_EVENT, key: ["unexpected"]}])
 
     def test_rejects_duplicate_json_keys(self) -> None:
         path = self.write_json(
