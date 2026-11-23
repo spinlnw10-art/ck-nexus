@@ -51,13 +51,36 @@ jobs:
           curl --fail --location --retry 3 "$base/ort-99.1.0.tgz.asc" -o ort.tgz.asc
           echo "$ORT_SHA256  ort.tgz" | sha256sum --check
           echo "$ORT_SIGNATURE_SHA256  ort.tgz.asc" | sha256sum --check
-          mkdir -p "$RUNNER_TEMP/ort-dist"
-          tar -xzf ort.tgz -C "$RUNNER_TEMP/ort-dist"
-          ORT_BIN="$(find "$RUNNER_TEMP/ort-dist" -path '*/bin/ort' -print -quit)"
-          test -n "$ORT_BIN"
-          chmod +x "$ORT_BIN"
-          echo "ORT_BIN=$ORT_BIN" >> "$GITHUB_ENV"
-          "$ORT_BIN" --version
+          python - <<'PY'
+          import os
+          import shutil
+          import tarfile
+          from pathlib import Path, PurePosixPath
+
+          archive_path = Path("ort.tgz")
+          members = []
+          with tarfile.open(archive_path, "r:gz") as archive:
+              for member in archive.getmembers():
+                  member_path = PurePosixPath(member.name)
+                  if (
+                      member.name.endswith("/bin/ort")
+                      and member.isfile()
+                      and not member_path.is_absolute()
+                      and ".." not in member_path.parts
+                  ):
+                      members.append(member)
+              if len(members) != 1:
+                  raise SystemExit("ORT archive must contain exactly one safe bin/ort file")
+              source = archive.extractfile(members[0])
+              if source is None:
+                  raise SystemExit("ORT executable could not be read from archive")
+              target = Path(os.environ["RUNNER_TEMP"]) / "ort-bin"
+              with target.open("xb") as destination:
+                  shutil.copyfileobj(source, destination)
+          PY
+          chmod 700 "$RUNNER_TEMP/ort-bin"
+          echo "ORT_BIN=$RUNNER_TEMP/ort-bin" >> "$GITHUB_ENV"
+          "$RUNNER_TEMP/ort-bin" --version
 
       - name: Download and verify ScanCode Toolkit v32.5.0 PyPI wheel
         env:
@@ -66,8 +89,8 @@ jobs:
           set -euo pipefail
           mkdir -p "$RUNNER_TEMP/scancode-wheel"
           python -m pip download --no-deps --only-binary=:all: --python-version 3.12 --dest "$RUNNER_TEMP/scancode-wheel" "scancode-toolkit==32.5.0"
-          WHEEL="$(find "$RUNNER_TEMP/scancode-wheel" -maxdepth 1 -type f -name 'scancode_toolkit-32.5.0-cp312-none-any.whl' -print -quit)"
-          test -n "$WHEEL"
+          WHEEL="$RUNNER_TEMP/scancode-wheel/scancode_toolkit-32.5.0-cp312-none-any.whl"
+          test -f "$WHEEL"
           echo "$SCANCODE_SHA256  $WHEEL" | sha256sum --check
           printf "pluggy==1.6.0\\n" > "$RUNNER_TEMP/scancode-constraints.txt"
           python -m pip install --constraint "$RUNNER_TEMP/scancode-constraints.txt" --report "$RUNNER_TEMP/scancode-install-report.json" "$WHEEL"
