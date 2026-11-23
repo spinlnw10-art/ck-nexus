@@ -1,0 +1,102 @@
+name: OTel Collector Disposable Shadow
+
+on:
+  pull_request:
+    paths:
+      - "config/otel/collector-shadow.yaml"
+      - "Dockerfile.otelcol-shadow"
+      - "tests/assurance/otel_collector_shadow_smoke.py"
+      - ".github/workflows/otel-collector-disposable-shadow.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+  attestations: write
+
+concurrency:
+  group: otel-collector-disposable-shadow-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  disposable-collector:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout exact pull request candidate
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+
+      - name: Set up Go for pinned Cosign
+        uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16
+        with:
+          go-version: "1.25.5"
+
+      - name: Install pinned Cosign verifier
+        run: |
+          GOBIN="$RUNNER_TEMP/bin" go install github.com/sigstore/cosign/v2/cmd/cosign@v2.5.3
+          echo "$RUNNER_TEMP/bin" >> "$GITHUB_PATH"
+
+      - name: Download and verify official Collector release asset
+        env:
+          ASSET_SHA256: 78570dd4bd6570bc41eb327869ef913bbf91b87dd8170ebebbf43bec71f6370d
+          BUNDLE_SHA256: 57b0d726808d75cfc35e3f4c3e9cf7f836157e5b0375086dde33cbd05959c8b6
+        run: |
+          set -euo pipefail
+          base="https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.165.0"
+          curl --fail --location --retry 3 "$base/otelcol_0.165.0_linux_amd64.tar.gz" -o otelcol.tar.gz
+          curl --fail --location --retry 3 "$base/otelcol_0.165.0_linux_amd64.tar.gz.sigstore.json" -o otelcol.tar.gz.sigstore.json
+          echo "$ASSET_SHA256  otelcol.tar.gz" | sha256sum --check
+          echo "$BUNDLE_SHA256  otelcol.tar.gz.sigstore.json" | sha256sum --check
+          cosign verify-blob otelcol.tar.gz             --bundle otelcol.tar.gz.sigstore.json             --certificate-identity-regexp '^https://github.com/open-telemetry/opentelemetry-collector-releases/.github/workflows/.+@refs/tags/v0\.165\.0$'             --certificate-oidc-issuer 'https://token.actions.githubusercontent.com'
+          tar -xzf otelcol.tar.gz otelcol
+          test -x otelcol
+          ./otelcol --version
+
+      - name: Build disposable local image and record immutable image ID
+        run: |
+          set -euo pipefail
+          docker build --pull=false --file Dockerfile.otelcol-shadow --tag ck-nexus/otelcol-shadow:0.165.0 .
+          docker image inspect ck-nexus/otelcol-shadow:0.165.0 --format '{{.Id}}' | tee collector-image-id.txt
+          grep -Eq '^sha256:[0-9a-f]{64}$' collector-image-id.txt
+          docker save ck-nexus/otelcol-shadow:0.165.0 -o otelcol-shadow-image.tar
+          sha256sum otelcol-shadow-image.tar | tee collector-image-archive.sha256
+
+      - name: Start isolated collector with no external egress
+        run: |
+          set -euo pipefail
+          docker network create --internal ck-nexus-otel-shadow
+          docker run --detach --name ck-nexus-otel-shadow             --network ck-nexus-otel-shadow             --publish 127.0.0.1:4318:4318             --read-only --cap-drop=ALL --security-opt=no-new-privileges             --pids-limit=64 --memory=256m --cpus=1             --tmpfs /tmp:rw,noexec,nosuid,size=16m             ck-nexus/otelcol-shadow:0.165.0
+
+      - name: Send synthetic traces and metrics
+        run: python tests/assurance/otel_collector_shadow_smoke.py
+
+      - name: Assert trace propagation, metrics, and secret removal
+        run: |
+          set -euo pipefail
+          sleep 2
+          docker logs ck-nexus-otel-shadow > collector-shadow.log 2>&1
+          grep -q '5b8aa5a2d2c872e8321cf37308d69df2' collector-shadow.log
+          grep -q '051581bf3cb55c13' collector-shadow.log
+          grep -q '93564f51e1abe1c2' collector-shadow.log
+          grep -q 'ck_nexus_shadow_requests' collector-shadow.log
+          grep -q 'synthetic-parent' collector-shadow.log
+          grep -q 'synthetic-child' collector-shadow.log
+          if grep -E 'SYNTHETIC_SECRET_DO_NOT_LOG_407|synthetic-user@example.invalid|SYNTHETIC_TENANT_407|SYNTHETIC_TOOL_ARGUMENT_407' collector-shadow.log; then
+            echo "Sensitive synthetic marker leaked into Collector output" >&2
+            exit 1
+          fi
+          echo "PASS: trace IDs and parent-child linkage observed; metric observed; secret markers absent."
+
+      - name: Attest locally built image archive
+        uses: actions/attest-build-provenance@977bb373ede98d70efdf65b84cb5f73e068dcc2a
+        with:
+          subject-path: otelcol-shadow-image.tar
+          subject-name: ck-nexus-otelcol-shadow-0.165.0
+
+      - name: Stop and remove disposable resources
+        if: always()
+        run: |
+          docker rm --force ck-nexus-otel-shadow 2>/dev/null || true
+          docker network rm ck-nexus-otel-shadow 2>/dev/null || true
