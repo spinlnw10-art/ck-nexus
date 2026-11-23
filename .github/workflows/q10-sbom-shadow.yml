@@ -101,7 +101,8 @@ jobs:
             --source-version "$TARGET_SHA" \
             --base-path "$TARGET_DIR" \
             -o "json=$RUNNER_TEMP/q10-evidence/syft-source.json" \
-            -o "cyclonedx-json=$RUNNER_TEMP/q10-evidence/sbom-source.cdx.json"
+            -o "cyclonedx-json=$RUNNER_TEMP/q10-evidence/sbom-source.cdx.json" \
+            -o "spdx-json=$RUNNER_TEMP/q10-evidence/sbom-source.spdx.json"
 
       - name: Scan CycloneDX SBOM with Grype
         id: grype
@@ -131,7 +132,12 @@ jobs:
 
           root = Path(os.environ["RUNNER_TEMP"]) / "q10-evidence"
           files = {}
-          for name in ("syft-source.json", "sbom-source.cdx.json", "grype-source.json"):
+          for name in (
+              "syft-source.json",
+              "sbom-source.cdx.json",
+              "sbom-source.spdx.json",
+              "grype-source.json",
+          ):
               path = root / name
               if path.is_file():
                   files[name] = {
