@@ -144,14 +144,14 @@ All work is isolated in the audit branch. Revert the specific consolidation comm
 ## Execution record — 2026-11-23
 
 - Work was isolated on `audit/repository-organization-20261123`; the user's existing Termux checkout was not switched or modified. Its active Q10 worktree remains clean and one commit ahead of its remote; 25 worktrees were detected and left untouched.
-- Task 1 evidence files now include:
+- Task 1 evidence files now include (401 pre-existing branch baseline; audit branch excluded):
   - `branch-head-tree-inventory-2026-11-23.json`
   - `branch-unique-object-inventory-2026-11-23.json`
   - `branch-path-diff-summary-2026-11-23.json`
   - `branch-protection-pr-associations-2026-11-23.json`
   - `duplicate-blob-groups-all-branches-2026-11-23.json`
   - `branch-unique-objects-vs-main-2026-11-23.tsv`
-- The full scan covered 402 live branch refs, with zero scan errors. It found 372 branches with commits not in main, 368 branches with unique blobs, and 28 distinct exact duplicate blob/path-set signatures across branch snapshots.
+- The baseline scan covered all 401 pre-existing live branch refs, with zero scan errors. It found 371 branches with commits not in main, 367 branches with unique blobs, and 28 distinct exact duplicate blob/path-set signatures across branch snapshots. The audit branch itself is excluded from its own baseline to avoid self-reference.
 - Task 2 navigation hub was created, README linked to it, and 135 relative links across changed Markdown files were checked with zero broken links.
 - Tasks 3–5 remain gated: no migration package behavior was changed; no source files or evidence were moved/deleted; no branch was archived/deleted. Consumer, deployment, release, local-worktree and recovery reviews remain required.
 - Verification: `git diff --check origin/main...origin/audit/repository-organization-20261123` exited 0; GitHub compare shows the audit branch ahead of main and not behind. No application test suite was run because the PR contains documentation and generated Git inventory evidence only.
