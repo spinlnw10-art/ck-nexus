@@ -106,10 +106,13 @@ jobs:
           echo "PASS: trace IDs and parent-child linkage observed; metric observed; secret markers absent."
 
       - name: Record candidate-bound local image provenance evidence
+        env:
+          CANDIDATE_SHA: ${{ github.sha }}
         run: |
           set -euo pipefail
           python - <<'PY'
           import json
+          import os
           from pathlib import Path
 
           image_id = Path("collector-image-id.txt").read_text(encoding="utf-8").strip()
