@@ -24,7 +24,9 @@ ARTIFACT_PATHS = {
     "q16": {
         "scancode_full_repo": "evidence/assurance/shadow/q16/scancode-full-repo.json",
         "scancode_install_report": "evidence/assurance/shadow/q16/scancode-install-report.json",
-        "ort_full_repo_analyzer": "evidence/assurance/shadow/q16/ort-full-repo-analyzer-result.json",
+        "ort_full_repo_analyzer": (
+            "evidence/assurance/shadow/q16/ort-full-repo-analyzer-result.json"
+        ),
         "ort_full_repo_scanner": "evidence/assurance/shadow/q16/ort-full-repo-scan-result.yml",
         "ort_synthetic_analyzer": "evidence/assurance/shadow/q16/analyzer-result.json",
         "ort_synthetic_scanner": "evidence/assurance/shadow/q16/scan-result.yml",
