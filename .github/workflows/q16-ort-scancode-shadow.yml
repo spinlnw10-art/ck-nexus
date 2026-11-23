@@ -79,7 +79,6 @@ jobs:
                   shutil.copyfileobj(source, destination)
           PY
           chmod 700 "$RUNNER_TEMP/ort-bin"
-          echo "ORT_BIN=$RUNNER_TEMP/ort-bin" >> "$GITHUB_ENV"
           "$RUNNER_TEMP/ort-bin" --version
 
       - name: Download and verify ScanCode Toolkit v32.5.0 PyPI wheel
@@ -94,7 +93,6 @@ jobs:
           echo "$SCANCODE_SHA256  $WHEEL" | sha256sum --check
           printf "pluggy==1.6.0\\n" > "$RUNNER_TEMP/scancode-constraints.txt"
           python -m pip install --constraint "$RUNNER_TEMP/scancode-constraints.txt" --report "$RUNNER_TEMP/scancode-install-report.json" "$WHEEL"
-          echo "SCANCODE_INSTALL_REPORT=$RUNNER_TEMP/scancode-install-report.json" >> "$GITHUB_ENV"
           scancode --version
 
       - name: Scan complete CK-NEXUS source tree with ScanCode
@@ -103,7 +101,7 @@ jobs:
           scancode --license --copyright --package --info --json-pp "$RUNNER_TEMP/scancode-full-repo.json" . --ignore ".git/**" --ignore ".venv/**" --ignore "node_modules/**" --ignore "**/__pycache__/**" --ignore "**/.pytest_cache/**" --ignore "**/dist/**" --ignore "**/build/**"
           mkdir -p evidence/assurance/shadow/q16
           cp "$RUNNER_TEMP/scancode-full-repo.json" evidence/assurance/shadow/q16/scancode-full-repo.json
-          cp "$SCANCODE_INSTALL_REPORT" evidence/assurance/shadow/q16/scancode-install-report.json
+          cp "$RUNNER_TEMP/scancode-install-report.json" evidence/assurance/shadow/q16/scancode-install-report.json
 
       - name: Run ORT analyzer and ScanCode-backed scanner on synthetic fixture
         env:
@@ -114,11 +112,11 @@ jobs:
           set -euo pipefail
           mkdir -p "$ORT_DATA_DIR" "$ORT_CONFIG_DIR" "$RUNNER_TEMP/q16/analyzer" "$RUNNER_TEMP/q16/scanner"
           cp scripts/assurance/ort-q16-config.yml "$ORT_CONFIG_DIR/config.yml"
-          "$ORT_BIN" --info analyze -f JSON -i tests/fixtures/q16-license -o "$RUNNER_TEMP/q16/analyzer"
+          "$RUNNER_TEMP/ort-bin" --info analyze -f JSON -i tests/fixtures/q16-license -o "$RUNNER_TEMP/q16/analyzer"
           ANALYZER_RESULT="$RUNNER_TEMP/q16/analyzer/analyzer-result.json"
           test -f "$ANALYZER_RESULT"
           cp "$ANALYZER_RESULT" evidence/assurance/shadow/q16/analyzer-result.json
-          "$ORT_BIN" scan -i "$ANALYZER_RESULT" -o "$RUNNER_TEMP/q16/scanner"
+          "$RUNNER_TEMP/ort-bin" scan -i "$ANALYZER_RESULT" -o "$RUNNER_TEMP/q16/scanner"
           SCAN_RESULT="$RUNNER_TEMP/q16/scanner/scan-result.yml"
           test -f "$SCAN_RESULT"
           cp "$SCAN_RESULT" evidence/assurance/shadow/q16/scan-result.yml
