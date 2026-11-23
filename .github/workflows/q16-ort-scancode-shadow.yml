@@ -78,6 +78,9 @@ jobs:
         run: |
           set -euo pipefail
           scancode --license --copyright --package --info --json-pp "$RUNNER_TEMP/scancode-full-repo.json" . --ignore ".git/**" --ignore ".venv/**" --ignore "node_modules/**" --ignore "**/__pycache__/**" --ignore "**/.pytest_cache/**" --ignore "**/dist/**" --ignore "**/build/**"
+          mkdir -p evidence/assurance/shadow/q16
+          cp "$RUNNER_TEMP/scancode-full-repo.json" evidence/assurance/shadow/q16/scancode-full-repo.json
+          cp "$SCANCODE_INSTALL_REPORT" evidence/assurance/shadow/q16/scancode-install-report.json
 
       - name: Run ORT analyzer and ScanCode-backed scanner on synthetic fixture
         env:
@@ -91,11 +94,11 @@ jobs:
           "$ORT_BIN" --info analyze -f JSON -i tests/fixtures/q16-license -o "$RUNNER_TEMP/q16/analyzer"
           ANALYZER_RESULT="$(find "$RUNNER_TEMP/q16/analyzer" -maxdepth 1 -type f \( -name 'analyzer-result.json' -o -name 'analyzer-result.yml' \) -print -quit)"
           test -n "$ANALYZER_RESULT"
-          cp "$ANALYZER_RESULT" "$RUNNER_TEMP/q16/analyzer-result.json"
+          cp "$ANALYZER_RESULT" evidence/assurance/shadow/q16/analyzer-result.json
           "$ORT_BIN" scan -i "$ANALYZER_RESULT" -o "$RUNNER_TEMP/q16/scanner"
           SCAN_RESULT="$(find "$RUNNER_TEMP/q16/scanner" -maxdepth 1 -type f \( -name 'scan-result.yml' -o -name 'scan-result.json' \) -print -quit)"
           test -n "$SCAN_RESULT"
-          cp "$SCAN_RESULT" "$RUNNER_TEMP/q16/scan-result.yml"
+          cp "$SCAN_RESULT" evidence/assurance/shadow/q16/scan-result.yml
 
       - name: Create candidate-bound Q16 evidence manifest
         run: |
@@ -104,7 +107,7 @@ jobs:
 
       - name: Validate Q16 evidence through CK-NEXUS EvidenceGraph
         run: |
-          python scripts/assurance/evidence_graph_intake.py --profile q16
+          python scripts/assurance/evidence_graph_intake.py
 
       - name: Run evidence and graph intake unit tests
         run: |
@@ -116,8 +119,6 @@ jobs:
         with:
           name: q16-license-evidence-${{ github.sha }}
           path: |
-            ${{ runner.temp }}/scancode-full-repo.json
-            ${{ runner.temp }}/scancode-install-report.json
-            ${{ runner.temp }}/q16/**
+            evidence/assurance/shadow/q16/**
           if-no-files-found: error
           retention-days: 30
