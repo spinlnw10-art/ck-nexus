@@ -66,7 +66,8 @@ Expected: 402/402 branch tips have machine-readable Git identity and object/path
 - [ ] Identify inbound Markdown links and workflow/package references before proposing moves.
 - [x] Draft index with links to existing paths; avoid moving files in this task.
 - [x] Check all 107 relative links in the docs navigation index (0 broken); verify README release status remains NO-GO.
-- [x] Run the available relative-link validation for the docs navigation index; full-repository Markdown lint remains open.
+- [x] Check 23 relative links in README and 5 relative links in the audit report (0 broken); 135 checked relative links across changed Markdown files, 0 broken.
+- [x] Run the available relative-link validation for changed Markdown files; full-repository Markdown lint and full docs classification remain open.
 
 Expected: users can find the new navigation hub from README; the checked index has no broken relative links. Full docs classification remains pending.
 
@@ -138,3 +139,19 @@ Expected: a reviewer can trace the reason for retaining every branch proposed fo
 ## Rollback
 
 All work is isolated in the audit branch. Revert the specific consolidation commit to restore previous paths; preserve original blobs and branches until explicit approval. Do not use force push or history rewriting.
+
+
+## Execution record — 2026-11-23
+
+- Work was isolated on `audit/repository-organization-20261123`; the user's existing Termux checkout was not switched or modified. Its active Q10 worktree remains clean and one commit ahead of its remote; 25 worktrees were detected and left untouched.
+- Task 1 evidence files now include:
+  - `branch-head-tree-inventory-2026-11-23.json`
+  - `branch-unique-object-inventory-2026-11-23.json`
+  - `branch-path-diff-summary-2026-11-23.json`
+  - `branch-protection-pr-associations-2026-11-23.json`
+  - `duplicate-blob-groups-all-branches-2026-11-23.json`
+  - `branch-unique-objects-vs-main-2026-11-23.tsv`
+- The full scan covered 402 live branch refs, with zero scan errors. It found 372 branches with commits not in main, 368 branches with unique blobs, and 28 distinct exact duplicate blob/path-set signatures across branch snapshots.
+- Task 2 navigation hub was created, README linked to it, and 135 relative links across changed Markdown files were checked with zero broken links.
+- Tasks 3–5 remain gated: no migration package behavior was changed; no source files or evidence were moved/deleted; no branch was archived/deleted. Consumer, deployment, release, local-worktree and recovery reviews remain required.
+- Verification: `git diff --check origin/main...origin/audit/repository-organization-20261123` exited 0; GitHub compare shows the audit branch ahead of main and not behind. No application test suite was run because the PR contains documentation and generated Git inventory evidence only.
