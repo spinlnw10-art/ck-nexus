@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
-"""Validate fixed-path candidate evidence and project it into CK-NEXUS EvidenceGraph."""
+"""Validate fixed-workspace candidate evidence and project it into CK-NEXUS EvidenceGraph."""
 from __future__ import annotations
 
-import argparse
 import hashlib
 import json
-import os
 import re
 from datetime import UTC, datetime
 from pathlib import Path
@@ -22,13 +20,12 @@ from creator_app.global_knowledge import (
 SHA_RE = re.compile(r"^[0-9a-f]{40}$")
 NAME_RE = re.compile(r"^[A-Za-z0-9_.-]{1,80}$")
 MAX_MANIFEST_BYTES = 2 * 1024 * 1024
-MAX_ARTIFACTS = 50
 ARTIFACT_PATHS = {
     "q16": {
-        "scancode_full_repo": "scancode-full-repo.json",
-        "scancode_install_report": "scancode-install-report.json",
-        "ort_analyzer": "q16/analyzer-result.json",
-        "ort_scanner": "q16/scan-result.yml",
+        "scancode_full_repo": "evidence/assurance/shadow/q16/scancode-full-repo.json",
+        "scancode_install_report": "evidence/assurance/shadow/q16/scancode-install-report.json",
+        "ort_analyzer": "evidence/assurance/shadow/q16/analyzer-result.json",
+        "ort_scanner": "evidence/assurance/shadow/q16/scan-result.yml",
     },
     "otel": {
         "collector_image_provenance": "collector-image-provenance.json",
@@ -215,16 +212,14 @@ def build_graph_document(
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--profile", choices=tuple(ARTIFACT_PATHS), required=True)
-    args = parser.parse_args()
-
-    if args.profile == "q16":
-        root = Path(os.environ["RUNNER_TEMP"]).resolve(strict=True)
-        manifest_path = root / "q16" / "q16-evidence.json"
-        output_path = root / "q16" / "q16-evidence-graph.json"
+    root = Path.cwd().resolve(strict=True)
+    q16_manifest = root / "evidence/assurance/shadow/q16/q16-evidence.json"
+    if q16_manifest.is_file():
+        profile = "q16"
+        manifest_path = q16_manifest
+        output_path = root / "evidence/assurance/shadow/q16/q16-evidence-graph.json"
     else:
-        root = Path.cwd().resolve(strict=True)
+        profile = "otel"
         manifest_path = root / "otel-shadow-evidence-manifest.json"
         output_path = root / "otel-shadow-evidence-graph.json"
 
@@ -236,11 +231,11 @@ def main() -> int:
             manifest_file.read_text(encoding="utf-8"),
             object_pairs_hook=_unique_object,
         )
-        document = build_graph_document(manifest, root, args.profile)
+        document = build_graph_document(manifest, root, profile)
         with output_path.open("x", encoding="utf-8") as stream:
             stream.write(json.dumps(document, indent=2, sort_keys=True) + "\n")
     except (OSError, json.JSONDecodeError, ValueError) as exc:
-        parser.error(str(exc))
+        raise SystemExit(f"EvidenceGraph intake rejected: {exc}") from exc
 
     print(
         json.dumps(
