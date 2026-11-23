@@ -15,6 +15,16 @@ on:
         type: boolean
         required: false
         default: false
+      skip_q13:
+        description: "Reuse valid Q13 backup/restore evidence for the same manifest"
+        type: boolean
+        required: false
+        default: false
+      skip_q16:
+        description: "Reuse valid Q16 image and runtime-license evidence for the same manifest"
+        type: boolean
+        required: false
+        default: false
       export_sonar_issues:
         description: "Export authenticated SonarCloud issues for PR 392"
         type: boolean
@@ -48,9 +58,9 @@ jobs:
           python-version: '3.12'
       - name: Frozen candidate environment
         run: |
-          python -m pip install --only-binary :all: --no-deps "uv==0.12.4"
+          python -m pip install --only-binary=:all: --no-deps "uv==0.12.4"
           uv lock --check
-          uv sync --all-extras --dev --frozen --no-install-project --only-binary :all:
+          uv sync --all-extras --dev --locked --no-install-project --no-build
       - name: Exact frozen dependency audit
         shell: bash
         run: |
@@ -191,7 +201,7 @@ jobs:
               'subject_manifest_sha256': manifest,
               'release_subject_manifest_sha256': manifest,
               'github_run_id': int(run_id),
-              'dependency_install': 'uv sync --all-extras --dev --frozen --no-install-project --only-binary :all:',
+              'dependency_install': 'uv sync --all-extras --dev --locked --no-install-project --no-build',
               'auditor': 'pip-audit',
               'vulnerabilities_found': vulns,
               'pip_audit_exit_code': audit_rc,
@@ -240,11 +250,13 @@ jobs:
       contents: read
 
   q16_production_image:
+    if: ${{ github.event_name != 'workflow_dispatch' || inputs.skip_q16 != true }}
     uses: ./.github/workflows/candidate-production-image.yml
     permissions:
       contents: read
 
   q16_runtime_licenses:
+    if: ${{ github.event_name != 'workflow_dispatch' || inputs.skip_q16 != true }}
     uses: ./.github/workflows/candidate-runtime-licenses.yml
     permissions:
       contents: read
@@ -317,7 +329,7 @@ jobs:
         image: postgres:16
         env:
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
+          POSTGRES_PASSWORD: ${{ github.run_id }}-${{ github.run_attempt }}
           POSTGRES_DB: cknexus
         ports: ["5432:5432"]
         options: >-
@@ -409,9 +421,9 @@ jobs:
         shell: bash
         run: |
           start=$(date +%s)
-          python -m pip install --only-binary :all: --no-deps "uv==0.12.4"
+          python -m pip install --only-binary=:all: --no-deps "uv==0.12.4"
           uv lock --check
-          uv sync --all-extras --dev --frozen --no-install-project --only-binary :all:
+          uv sync --all-extras --dev --locked --no-install-project --no-build
           .venv/bin/python -m compileall -q main.py creator_app services scripts
           .venv/bin/ruff check main.py creator_app services tests scripts
           .venv/bin/pytest -q --ignore=tests/test_agnes_execution_kernel_phase2.py --ignore=tests/test_agnes_execution_kernel_phase3.py
@@ -467,7 +479,7 @@ jobs:
               'runner_name':os.getenv('RUNNER_NAME'),
               'image_os':os.getenv('ImageOS'),
               'image_version':os.getenv('ImageVersion'),
-              'install':'uv sync --all-extras --dev --frozen --no-install-project --only-binary :all:',
+              'install':'uv sync --all-extras --dev --locked --no-install-project --no-build',
               'portable_regression':'PASS',
               'unified_health_smoke':'PASS',
               'unified_control_smoke':'PASS',

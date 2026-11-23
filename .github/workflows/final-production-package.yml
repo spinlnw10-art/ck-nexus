@@ -154,9 +154,9 @@ jobs:
           python-version: '3.12'
       - name: Re-run frozen release checks
         run: |
-          python -m pip install "uv==0.12.4"
+          python -m pip install --only-binary=:all: --no-deps "uv==0.12.4"
           uv lock --check
-          uv sync --all-extras --dev --frozen
+          uv sync --all-extras --dev --locked --no-install-project --no-build
           .venv/bin/python -m compileall -q main.py creator_app services gateway orchestration idea_engine scripts
           .venv/bin/ruff check main.py creator_app services gateway orchestration idea_engine tests scripts
           .venv/bin/python scripts/secret_scan.py

@@ -64,10 +64,10 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python -m pip install --only-binary :all: --no-deps "uv==0.12.4"
+          python -m pip install --only-binary=:all: --no-deps "uv==0.12.4"
           cd q10-target
           uv lock --check
-          uv sync --all-extras --dev --frozen --no-install-project --only-binary :all:
+          uv sync --all-extras --dev --locked --no-install-project --no-build
 
       - name: Run frozen dependency vulnerability audit
         id: dependencies

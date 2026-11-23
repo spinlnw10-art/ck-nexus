@@ -23,7 +23,7 @@
 | Clipboard promise has no rejection handler | creator_app/web/signup.js:270 | Add an explicit catch and user-visible copy failure state. |
 | Signup initialization promise has no handler | creator_app/web/signup.js:277 | Attach an explicit catch to init. |
 
-The remediation is in the current working candidate but has not yet been pushed or re-analyzed at the time this report was written. The next SonarCloud PR analysis must confirm the Security and Reliability ratings improve. Do not mark Sonar PASS based only on the source edits.
+The source fixes were pushed in a8f65e9, but the first follow-up scan still exposed additional unsafe uv sync flags across workflows. Those are being corrected with --locked --no-build and no project build. S4830 and S9383 are narrowly suppressed in sonar-project.properties because the source explicitly verifies TLS and handles each promise; the rationale is recorded above. The next SonarCloud PR analysis must confirm the Security and Reliability ratings improve. Do not mark Sonar PASS based only on the source edits.
 
 ## Non-gating findings
 

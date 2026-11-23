@@ -38,7 +38,6 @@ jobs:
             --property="User=$(id -un)" \
             --property="Group=$(id -gn)" \
             --property="Delegate=yes" \
-            --property="DelegateControllers=cpu memory pids" \
             --property="WorkingDirectory=$GITHUB_WORKSPACE" \
             --setenv="GITHUB_WORKSPACE=$GITHUB_WORKSPACE" \
             --setenv="CKNEXUS_ENVIRONMENT=staging" \

@@ -30,6 +30,16 @@ Purpose: prevent duplicate scans, duplicate fixes, and conflicting status report
 
 > **Ledger precedence:** The newest dated section at the top is the current truth. Older dated entries below are historical snapshots and may contain statuses that were true at that time but have since changed. If any older entry conflicts with the latest section or AI_HANDOFF_CURRENT_TRUTH.md, do not repeat its task or status.
 
+## Second gate batch findings — run 45094986250
+
+- Q13: PASS_CANDIDATE, source a8f65e9, canonical manifest 370f8a8f...; artifact retained for reuse.
+- Q16 production image: PASS_CANDIDATE, non-root image/import/health checks passed; runtime licenses: PASS_CANDIDATE; both use manifest 370f8a8f... and are retained for reuse.
+- Q14: PASS in run 45094986250, but rerun once with hardened locked/no-build installer so the execution method matches the corrected workflow policy.
+- Q10 and Q15 failed before scans/tests because uv 0.12.4 does not support --only-binary on uv sync. Correct syntax is --locked --no-build --no-install-project. This is a workflow-only fix; runtime manifest stays 370f8a8f....
+- Q12 failed before starting because systemd-run rejected the unsupported DelegateControllers property. Retain Delegate=yes only; rerun.
+- Q11 remains skipped until the repository OPENAI_API_KEY secret is replaced with a valid project key.
+- Next rerun inputs: skip_q10=false, skip_q11=true, skip_q13=true, skip_q16=true, export_sonar_issues=true. Q12/Q14/Q15 run; Q13/Q16 are reused, not repeated.
+
 ## Sonar remediation and canonical Q10–Q16 manifest — 2026-11-23
 
 - New candidate canonical manifest (includes scripts/): 370f8a8f405e9b960e8b41722d0f61a4269237d137b94c014a1c2598e75e08de. Source SHA is the live PR #392 head after the remediation push; read it from GitHub rather than copying an older SHA.

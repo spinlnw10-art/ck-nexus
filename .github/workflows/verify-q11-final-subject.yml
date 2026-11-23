@@ -42,9 +42,9 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python -m pip install "uv==0.12.4"
+          python -m pip install --only-binary=:all: --no-deps "uv==0.12.4"
           uv lock --check
-          uv sync --all-extras --dev --frozen
+          uv sync --all-extras --dev --locked --no-install-project --no-build
 
       - name: Run one bounded Responses API smoke request
         id: smoke
