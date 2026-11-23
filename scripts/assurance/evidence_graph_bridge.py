@@ -261,11 +261,12 @@ def main() -> None:
         for output in (args.output_graph, args.output_statement):
             if output.is_symlink():
                 raise EvidenceGraphError("output must not be a symlink")
-            parent = output.parent.resolve(strict=True)
+            parent = output.parent.resolve(strict=False)
             try:
                 parent.relative_to(allowed_root)
             except ValueError as exc:
                 raise EvidenceGraphError("output must remain inside the allowed root") from exc
+            parent.mkdir(parents=True, exist_ok=True)
             outputs.append(parent / output.name)
         outputs[0].write_text(
             json.dumps(graph, indent=2, sort_keys=True) + "\\n", encoding="utf-8"
