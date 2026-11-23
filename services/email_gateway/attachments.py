@@ -92,8 +92,7 @@ def _file_is_utf8_text(path: Path) -> bool:
             except UnicodeDecodeError:
                 return False
             if any(
-                ord(ch) not in _TEXT_CONTROLS and unicodedata.category(ch) == "Cc"
-                for ch in text
+                ord(ch) not in _TEXT_CONTROLS and unicodedata.category(ch) == "Cc" for ch in text
             ):
                 return False
     try:
@@ -118,6 +117,30 @@ def _content_matches_extension(extension: str, head: bytes) -> bool:
     return False
 
 
+_DECLARED_MIME_BY_EXTENSION = {
+    ".pdf": {"application/pdf"},
+    ".docx": {
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        "application/zip",
+    },
+    ".xlsx": {
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "application/zip",
+    },
+    ".zip": {"application/zip", "application/x-zip-compressed"},
+    ".csv": {"text/csv", "application/csv", "text/plain"},
+    ".txt": {"text/plain"},
+    ".png": {"image/png"},
+    ".jpg": {"image/jpeg", "image/pjpeg"},
+    ".jpeg": {"image/jpeg", "image/pjpeg"},
+}
+
+
+def _declared_mime_matches(extension: str, declared_mime: str) -> bool:
+    normalized = declared_mime.partition(";")[0].strip().casefold()
+    return normalized in _DECLARED_MIME_BY_EXTENSION.get(extension, set())
+
+
 @dataclass(frozen=True, slots=True)
 class AttachmentScanResult:
     safe: bool
@@ -138,25 +161,38 @@ def _sha256(path: Path) -> str:
 
 
 def _zip_policy(
-    path: Path, *, max_entries: int, max_uncompressed_bytes: int, max_ratio: float
+    path: Path,
+    *,
+    max_entries: int,
+    max_uncompressed_bytes: int,
+    max_ratio: float,
+    required_entries: set[str] | None = None,
 ) -> tuple[bool, str]:
     try:
         with zipfile.ZipFile(path) as archive:
             infos = archive.infolist()
             if len(infos) > max_entries:
                 return False, "zip_too_many_entries"
+            names = {info.filename for info in infos}
             total_compressed = 0
             total_uncompressed = 0
             for info in infos:
-                name = Path(info.filename)
-                if name.is_absolute() or ".." in name.parts:
+                normalized_name = info.filename.replace(chr(92), "/")
+                parts = normalized_name.split("/")
+                if normalized_name.startswith("/") or ".." in parts:
                     return False, "zip_path_traversal"
+                if info.flag_bits & 0x1:
+                    return False, "encrypted_zip_entry"
                 total_compressed += max(1, info.compress_size)
                 total_uncompressed += info.file_size
                 if total_uncompressed > max_uncompressed_bytes:
                     return False, "zip_uncompressed_limit"
             if total_uncompressed / max(1, total_compressed) > max_ratio:
                 return False, "zip_compression_ratio"
+            if required_entries and not required_entries.issubset(names):
+                return False, "invalid_office_package"
+            if any(name.casefold().endswith("vbaproject.bin") for name in names):
+                return False, "office_macro_payload"
     except zipfile.BadZipFile:
         return False, "invalid_zip"
     return True, "zip_safe"
@@ -165,6 +201,7 @@ def _zip_policy(
 def scan_attachment(
     path: Path,
     *,
+    declared_mime: str | None = None,
     max_size_bytes: int = 25 * 1024 * 1024,
     max_zip_entries: int = 250,
     max_zip_uncompressed_bytes: int = 100 * 1024 * 1024,
@@ -201,15 +238,28 @@ def scan_attachment(
         return AttachmentScanResult(
             False, "QUARANTINE", "content_signature_mismatch", digest, size, extension, detected
         )
-    if extension == ".zip":
+    if declared_mime is not None and not _declared_mime_matches(extension, declared_mime):
+        return AttachmentScanResult(
+            False, "QUARANTINE", "declared_mime_mismatch", digest, size, extension, detected
+        )
+    if extension in _ZIP_BASED:
+        required_entries = {
+            ".docx": {"[Content_Types].xml", "word/document.xml"},
+            ".xlsx": {"[Content_Types].xml", "xl/workbook.xml"},
+        }.get(extension)
         safe, reason = _zip_policy(
             path,
             max_entries=max_zip_entries,
             max_uncompressed_bytes=max_zip_uncompressed_bytes,
             max_ratio=max_zip_ratio,
+            required_entries=required_entries,
         )
         if not safe:
             return AttachmentScanResult(
                 False, "QUARANTINE", reason, digest, size, extension, detected
             )
+    if _sha256(path) != digest or path.stat().st_size != size:
+        return AttachmentScanResult(
+            False, "QUARANTINE", "file_changed_during_scan", digest, size, extension, detected
+        )
     return AttachmentScanResult(True, "CLEAN", "allowlisted", digest, size, extension, detected)

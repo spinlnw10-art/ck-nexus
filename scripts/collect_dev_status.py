@@ -2,22 +2,24 @@
 """Read-only CK-NEXUS development status collector. Python stdlib only."""
 from __future__ import annotations
 
+import http.client
 import json
 import os
 import re
+import ssl
 import subprocess
 import tempfile
 import time
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
-from urllib.error import HTTPError, URLError
-from urllib.parse import urlparse
-from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = Path(os.getenv("CKNEXUS_DEV_STATUS_FILE", ROOT / "data/dev_status.json"))
 TIMEOUT = 20
+DASHSCOPE_BASE_URL = "https://dashscope-intl.aliyuncs.com/compatible-mode/v1"
+DASHSCOPE_HOST = "dashscope-intl.aliyuncs.com"
+DASHSCOPE_REQUEST_PATH = "/compatible-mode/v1/chat/completions"
 SECRET_PATTERNS = (
     re.compile(r"(?i)(bearer\s+)[A-Za-z0-9._~+/-]+=*"),
     re.compile(r"(?i)(api[_-]?key|token|secret|password)(\s*[=:]\s*)[^\s,;]+"),
@@ -231,34 +233,19 @@ def probe_qwen_daily() -> dict[str, Any]:
                 "status": "error",
             }
         key = os.getenv("DASHSCOPE_API_KEY", "").strip()
-        base = os.getenv(
-            "DASHSCOPE_BASE_URL",
-            "https://dashscope-intl.aliyuncs.com/compatible-mode/v1",
-        ).rstrip("/")
+        configured_base = os.getenv("DASHSCOPE_BASE_URL", "").strip().rstrip("/")
         model = os.getenv("QWEN_MODEL", "").strip()
         if not key or not model:
             return failed(
                 "authenticated Qwen daily probe",
                 RuntimeError("credentials or model not configured; no result cached"),
             )
-        parsed = urlparse(base)
-        allowed_host = (
-            parsed.hostname in {"dashscope-intl.aliyuncs.com", "dashscope.aliyuncs.com"}
-            or bool(parsed.hostname and parsed.hostname.endswith(".maas.aliyuncs.com"))
-        )
-        if (
-            parsed.scheme != "https"
-            or not allowed_host
-            or parsed.port not in (None, 443)
-            or parsed.username
-            or parsed.password
-            or parsed.path != "/compatible-mode/v1"
-            or parsed.query
-            or parsed.fragment
-        ):
+        # Keep the network destination entirely server-controlled. A custom
+        # endpoint is rejected rather than passed into the HTTP client.
+        if configured_base and configured_base != DASHSCOPE_BASE_URL:
             return failed(
                 "authenticated Qwen daily probe",
-                RuntimeError("DASHSCOPE_BASE_URL is not an approved HTTPS DashScope endpoint"),
+                RuntimeError("DASHSCOPE_BASE_URL must match the pinned HTTPS endpoint"),
             )
         body = json.dumps(
             {
@@ -267,21 +254,44 @@ def probe_qwen_daily() -> dict[str, Any]:
                 "max_tokens": 8,
             }
         ).encode()
-        req = Request(base + "/chat/completions", data=body, headers={
-            "Authorization": "Bearer " + key, "Content-Type": "application/json"})
+        tls_context = ssl.create_default_context(ssl.Purpose.SERVER_AUTH)
+        tls_context.verify_mode = ssl.CERT_REQUIRED
+        tls_context.check_hostname = True
+        connection = http.client.HTTPSConnection(
+            DASHSCOPE_HOST,
+            port=443,
+            timeout=15,
+            context=tls_context,
+        )
         started = time.monotonic()
         try:
-            with urlopen(req, timeout=15) as response:
-                payload = json.loads(response.read(65536))
-                success = response.status == 200 and bool(payload.get("choices"))
-                result = {"last_success": now() if success else None,
-                          "last_failure": None if success else now(),
-                          "http_status": response.status,
-                          "latency_seconds": round(time.monotonic() - started, 2),
-                          "model": model}
-        except (HTTPError, URLError, TimeoutError, OSError) as exc:
-            result = {"last_success": None, "last_failure": now(),
-                      "detail": type(exc).__name__}
+            connection.request(
+                "POST",
+                DASHSCOPE_REQUEST_PATH,
+                body=body,
+                headers={
+                    "Authorization": "Bearer " + key,
+                    "Content-Type": "application/json",
+                },
+            )
+            response = connection.getresponse()
+            payload = json.loads(response.read(65536))
+            success = response.status == 200 and bool(payload.get("choices"))
+            result = {
+                "last_success": now() if success else None,
+                "last_failure": None if success else now(),
+                "http_status": response.status,
+                "latency_seconds": round(time.monotonic() - started, 2),
+                "model": model,
+            }
+        except (http.client.HTTPException, TimeoutError, OSError) as exc:
+            result = {
+                "last_success": None,
+                "last_failure": now(),
+                "detail": type(exc).__name__,
+            }
+        finally:
+            connection.close()
         state_file.parent.mkdir(parents=True, exist_ok=True)
         tmp = state_file.with_suffix(".tmp")
         tmp.write_text(

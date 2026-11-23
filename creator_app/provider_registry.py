@@ -20,6 +20,7 @@ class ProviderSpec:
     env_key: str
     tier: ProviderTier
     header_format: str = "Bearer {key}"
+    header_key: str = "Authorization"
     key_validation_endpoint: str = ""
     key_validation_method: str = "GET"
     models_endpoint: str = ""
@@ -36,17 +37,12 @@ PROVIDER_REGISTRY: list[ProviderSpec] = [
         slug="groq",
         base_url="https://api.groq.com/openai/v1",
         env_key="GROQ_API_KEY",
-        tier=ProviderTier.FREE,
+        tier=ProviderTier.FREEMIUM,
         key_validation_endpoint="https://api.groq.com/openai/v1/models",
-        free_models=(
-            "llama-3.3-70b-versatile",
-            "llama-3.1-8b-instant",
-            "gemma2-9b-it",
-            "mixtral-8x7b-32768",
-        ),
+        free_models=("openai/gpt-oss-20b", "openai/gpt-oss-120b"),
         signup_url="https://console.groq.com/keys",
         docs_url="https://console.groq.com/docs",
-        description="Fast inference, generous free tier",
+        description="Free-tier access may be available; account pricing and quota vary",
         icon="⚡",
     ),
     ProviderSpec(
@@ -89,8 +85,10 @@ PROVIDER_REGISTRY: list[ProviderSpec] = [
         slug="gemini",
         base_url="https://generativelanguage.googleapis.com/v1beta",
         env_key="GEMINI_API_KEY",
-        tier=ProviderTier.FREE,
-        key_validation_endpoint="https://generativelanguage.googleapis.com/v1beta/models?key={key}",
+        tier=ProviderTier.FREEMIUM,
+        header_key="x-goog-api-key",
+        header_format="{key}",
+        key_validation_endpoint="https://generativelanguage.googleapis.com/v1beta/models",
         free_models=(
             "gemini-2.5-flash",
             "gemini-2.0-flash",
@@ -99,7 +97,7 @@ PROVIDER_REGISTRY: list[ProviderSpec] = [
         ),
         signup_url="https://aistudio.google.com/apikey",
         docs_url="https://ai.google.dev/docs",
-        description="Google's latest models, free tier",
+        description="Free-tier access may be available; project billing and quota vary",
         icon="💎",
     ),
     ProviderSpec(

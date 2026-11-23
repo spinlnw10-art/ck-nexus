@@ -21,11 +21,11 @@ jobs:
           python-version: '3.12'
           cache: pip
       - name: Install uv
-        run: python -m pip install --upgrade pip uv
+        run: 'python -m pip install --only-binary=:all: --no-deps "uv==0.12.4"'
       - name: Q04 frozen sync
         run: |
           uv lock --check
-          uv sync --all-extras --dev --frozen
+          uv sync --all-extras --dev --locked --no-install-project --no-build
           .venv/bin/python -c "import aiosqlite,asyncpg,psycopg,redis; print('Q04 PASS')"
       - name: Compile and Ruff
         run: |
@@ -62,6 +62,8 @@ jobs:
       - name: Secret scan
         run: .venv/bin/python scripts/secret_scan.py
       - name: Portable regression
+        env:
+          PYTHONPATH: ${{ github.workspace }}
         run: .venv/bin/pytest -q --ignore=tests/test_agnes_execution_kernel_phase2.py --ignore=tests/test_agnes_execution_kernel_phase3.py
       - name: Post-P0 development evidence boundary
         if: >-
@@ -81,7 +83,7 @@ jobs:
           (github.event_name == 'pull_request' && startsWith(github.base_ref, 'release/'))
         shell: bash
         run: |
-          m=$(git ls-tree -r HEAD -- creator_app services tests scripts main.py pyproject.toml uv.lock | sha256sum | awk '{print $1}')
+          m=$(python3 scripts/release_subject_manifest.py)
           .venv/bin/python - "$m" <<'PY'
           import json,sys
           m=sys.argv[1]

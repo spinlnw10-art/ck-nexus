@@ -68,7 +68,13 @@ def main() -> int:
         emit({"status": "PASS" if passed else "FAIL", "health": health, "observed": observed})
         return 0 if passed else 1
     except Exception as exc:
-        emit({"status": "FAIL", "reason": type(exc).__name__, "health": health})
+        emit({
+            "status": "FAIL",
+            "reason": type(exc).__name__,
+            "error": str(exc)[:1000],
+            "cgroup_path": str(cgroup) if cgroup is not None else None,
+            "health": health,
+        })
         return 1
     finally:
         child.terminate()

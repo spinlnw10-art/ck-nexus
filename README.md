@@ -6,6 +6,8 @@ CK-NEXUS is one platform with one canonical application runtime. **Agnes** is it
 
 > **Release decision: NO-GO for Production.** Do not treat a passing test subset, CI run, implemented feature, or running service as Production approval. The current release decision and gate evidence are maintained in [Release Status](RELEASE_STATUS.md) and the [Q10–Q16 Closure Contract](docs/Q10_Q16_CLOSURE_CONTRACT.md).
 
+> **Current repository status (evidence checked 2026-11-23):** Production is **NO-GO**. PR #392 remains OPEN / BLOCKED / REVIEW_REQUIRED. The latest candidate commit inspected in the current work ledger is `bdf224b66e2798920f9fc3b3ae872086bb737ee5`; read the live PR ref before any action. An earlier CI batch on that candidate had the main `test` workflow fail during import/collection. After the import-path correction, all four workflows triggered by documentation-only commit `bb49f89c5389c8782b11f5bf526f81986e6a9658` passed: CK-NEXUS CI, preflight, attack-regression, and universal-system. The application/runtime candidate was unchanged by that documentation commit; these CI results do not close Q10–Q16. Provider-focused tests passed 32/32, which is only a subset. Q10 remains NOT_VERIFIED and must not be rerun before 2026-11-24 07:50 ICT; Q11 is BLOCKED by an invalid OpenAI credential; Q12 is NOT_VERIFIED; Q13 and Q16 have candidate-only evidence; Q14 requires a rerun under the corrected installer policy; Q15 remains NOT_VERIFIED. Do not combine evidence from different source subjects or manifests. Current canonical Q10–Q16 manifest recorded in the work ledger: `370f8a8f405e9b960e8b41722d0f61a4269237d137b94c014a1c2598e75e08de`. Read the [AI Handoff / Current Truth](docs/ops/AI_HANDOFF_CURRENT_TRUTH.md), [Work Ledger](docs/ops/CKNEXUS_WORK_LEDGER.md), [Release Status](RELEASE_STATUS.md), and [Buyer Technical Due-Diligence Brief](docs/BUYER_TECHNICAL_DUE_DILIGENCE.md) before making release or buyer-facing claims.
+
 ## Start here
 
 | Need | Open |
@@ -17,6 +19,7 @@ CK-NEXUS is one platform with one canonical application runtime. **Agnes** is it
 | Configure integrations | [Integration Hub](docs/INTEGRATION_HUB.md) |
 | Review security and tests | [Security Audit](docs/SECURITY_AUDIT.md) · [Test Report](docs/TEST_REPORT.md) |
 | Prepare a release | [Release Status](RELEASE_STATUS.md) · [Release Checklist](docs/RELEASE_CHECKLIST.md) · [Q10–Q16 Contract](docs/Q10_Q16_CLOSURE_CONTRACT.md) |
+| Evaluate a purchase / review evidence | [Buyer Technical Due-Diligence Brief](docs/BUYER_TECHNICAL_DUE_DILIGENCE.md) · [Seller Checklist](docs/SELLER_CHECKLIST.md) |
 | Prepare customer delivery | [Seller Checklist](docs/SELLER_CHECKLIST.md) |
 
 ## What CK-NEXUS provides
@@ -84,6 +87,21 @@ python3 -m creator_app.unified
 ~~~
 
 Legacy launchers may remain for compatibility, but new setup instructions and deployment definitions must use the canonical entry point and the [Canonical Runtime Contract](docs/CK_NEXUS_UNIFIED_OPERATIONS_CONTRACT_V1.md).
+
+## Hosted provider routing (candidate)
+
+The provider-router candidate disables all hosted providers by default because an API key does not prove free quota. Gemini, Groq, and OpenAI are enabled only when both `CKNEXUS_PROVIDER_ALLOW_PAID=true` and `CKNEXUS_PROVIDER_ALLOW_CLOUD=true`; Claude and Mistral are not automatic fallbacks. No hosted API call is made by default, so a configured key alone cannot trigger usage charges.
+
+On Termux, store provider keys outside the repository in `~/.config/ck-nexus/provider-keys.env`. The file must be owned by the current user, be a regular file (not a symlink), and have permissions `0600` or stricter. Example setup (edit the file locally; do not paste keys into shell commands or commit them):
+
+~~~bash
+mkdir -p "$HOME/.config/ck-nexus"
+chmod 700 "$HOME/.config/ck-nexus"
+install -m 600 /dev/null "$HOME/.config/ck-nexus/provider-keys.env"
+# Add provider keys only if needed. Hosted calls remain disabled unless you explicitly set both CKNEXUS_PROVIDER_ALLOW_PAID=true and CKNEXUS_PROVIDER_ALLOW_CLOUD=true.
+~~~
+
+Provider free-tier limits and billing depend on the provider account and can change. A key check or model-list response does not prove free generation quota. Do not enable live generation until the account's billing state and quota are confirmed. No zero-cost guarantee is implied.
 
 ## Runtime and developer interfaces
 

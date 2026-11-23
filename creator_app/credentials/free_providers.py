@@ -24,7 +24,7 @@ class FreeProvider:
 # precedence for full control (multiple keys per provider, custom models).
 AUTO_DISCOVER_PROVIDERS: tuple[FreeProvider, ...] = (
     FreeProvider(
-        "groq", "GROQ_API_KEY", "https://api.groq.com/openai/v1", "llama-3.3-70b-versatile"
+        "groq", "GROQ_API_KEY", "https://api.groq.com/openai/v1", "openai/gpt-oss-20b"
     ),
     FreeProvider("mistral", "MISTRAL_API_KEY", "https://api.mistral.ai/v1", "mistral-small-latest"),
     FreeProvider("cerebras", "CEREBRAS_API_KEY", "https://api.cerebras.ai/v1", "llama-3.3-70b"),

@@ -1,3 +1,164 @@
+# Current verified snapshot — 2026-11-23 13:56 ICT
+
+**This section supersedes the older “current candidate” snapshots below.** Older dated entries are retained as history.
+
+**Decision: NO-GO FOR PRODUCTION.**
+
+## Repository and CI identity
+
+- Repository: `spinlnw10-art/ck-nexus`; review path: [PR #392](https://github.com/spinlnw10-art/ck-nexus/pull/392), base `main`, head branch `ops/provider-free-go-clean`.
+- Latest candidate commit inspected in the current work ledger: `bdf224b66e2798920f9fc3b3ae872086bb737ee5`.
+- Latest documentation commit in this update: `256c461aaa7d5dd5a2002af9bf957ae575c6e4f8`.
+- `main` remains `944d7cb70a5d59d53c8fb379752bbee2085f7c8c`; no merge or deployment has occurred.
+- Earlier workflow batch for candidate commit `bdf224b6`: preflight, attack-regression, and universal-system passed; the main `test` workflow failed during import/collection. After the import-path correction recorded in the work ledger, all four workflows triggered by documentation-only commit `bb49f89c5389c8782b11f5bf526f81986e6a9658` completed successfully: CK-NEXUS CI run `45127681507`, preflight `45127681466`, attack-regression `45127681501`, and universal-system `45127681406`. The application/runtime candidate was unchanged by that documentation commit. These CI results do not close Q10–Q16.
+- The README documentation update triggered CK-NEXUS CI run `45127564198`, observed as QUEUED. Do not infer a result until GitHub reports completion.
+- Provider-focused regression subset: 32/32 passed. This is not the complete required test suite.
+- Canonical Q10–Q16 manifest recorded by the current work ledger: `370f8a8f405e9b960e8b41722d0f61a4269237d137b94c014a1c2598e75e08de`.
+
+## Gate status
+
+| Gate | Current status |
+|---|---|
+| Q10 | NOT_VERIFIED; no-repeat lock until 2026-11-24 07:50 ICT |
+| Q11 | BLOCKED; previous OpenAI Responses API probe returned 401 invalid_api_key |
+| Q12 | NOT_VERIFIED; revised systemd delegated-cgroup method awaits successful evidence |
+| Q13 | PASS_CANDIDATE only |
+| Q14 | Rerun required under corrected installer policy |
+| Q15 | NOT_VERIFIED; prior attempt failed before test execution |
+| Q16 image and licenses | PASS_CANDIDATE only |
+
+Evidence from a different source subject or manifest must not be combined. A scanner result, candidate result, CI subset, or AI-assisted finding review is not whole-gate closure or independent sign-off.
+
+## Buyer and seller documentation
+
+- Added [Buyer Technical Due-Diligence Brief](docs/BUYER_TECHNICAL_DUE_DILIGENCE.md) to distinguish documented capabilities from verified live behavior and identify buyer acceptance requirements.
+- Replaced stale seller checklist claims bound to old runtime subject `96dcd0f0...` and old 55-distribution inventory with current candidate gate statuses.
+- Updated README status text and linked the buyer brief.
+- These are documentation corrections only; they do not change runtime code or close any release gate.
+
+**Release decision remains NO-GO.** No merge, production tag, package publication, or deployment has been performed.
+
+---
+
+# Live status update — 2026-11-23 (PR #392 current branch head)
+
+**Decision: NO-GO FOR PRODUCTION.**
+
+## Current repository identity
+
+- PR #392: OPEN; base `main`; head branch `ops/provider-free-go-clean`; no merge or deployment.
+- Latest PR head: `c62cba53e4049adbd46a0984de3480361bbe233c`.
+- Latest Git tree: `1ae74f485c37b4c10dbe81191da25f4c9bbc68fc`.
+- Canonical Q10–Q16 runtime manifest: `d3fb76bb9d576e88f9873eda1ff9eff23edeae41030439e3bea619ae1dbdc56c`.
+- The latest commits changed release workflows and status documentation; the runtime manifest remains the same. Earlier Q12–Q16 artifacts were produced at source SHA `c656ad5991464d7e9457adc2a33507b0d0daa623`, not the latest full commit SHA. They remain candidate evidence and are not promoted.
+
+## Latest verified repository checks
+
+- The previous head `37b117716744bb9c9fe7dea7c2b8d49bf72ac118` had test, preflight, attack-regression, universal-system, CodeQL and language analysis checks pass.
+- Latest workflow changes at `c62cba53e4049adbd46a0984de3480361bbe233c` have triggered a new CI cycle. Current check results must be read live; no success is claimed yet.
+- SonarCloud Quality Gate passed on the prior head, but 35 new issues remain recorded and 0.0% new-code coverage was reported. Passing the gate is not issue triage.
+
+## Gate evidence and restrictions
+
+| Gate | Current release status | Notes |
+|---|---|---|
+| Q10 | NOT_VERIFIED | No-repeat lock ends 2026-11-24 07:50 ICT; current-source scan and independent security review remain required. |
+| Q11 | BLOCKED / NOT_VERIFIED | Previous live probe returned 401 invalid_api_key. No paid generation request was made. |
+| Q12 | PASS_CANDIDATE only for prior source SHA | Prior artifact is not bound to the latest full commit SHA; provenance branch rules remain mandatory. |
+| Q13 | PASS_CANDIDATE only for prior source SHA | Staging backup/restore passed; independent release promotion is not established. |
+| Q14 | PASS_CANDIDATE only for prior source SHA | Workflow now pins Prometheus and Alertmanager by official multi-platform image index digests and records digest verification. Promotion is explicitly false until independent review. |
+| Q15 | PASS_CANDIDATE only for prior source SHA | Fresh Ubuntu 24.04 host smoke passed on the prior candidate. |
+| Q16 image | PASS_CANDIDATE only for prior source SHA | Image smoke and non-root checks passed on the prior candidate. |
+| Q16 licenses | PASS for prior source SHA | 56 runtime distributions; unresolved license evidence: 0. |
+
+The release provenance verifier's branch allowlist has not been weakened. Candidate results are not relabeled as production PASS. The candidate automated-gates workflow now rejects skipped gates unless repository evidence matches the exact current source SHA and runtime manifest and includes run/artifact identity plus a valid gate result.
+
+## Corrections made on this PR branch
+
+- Updated the final production package's three stale manifest pins to the canonical runtime manifest.
+- Updated the runtime inventory assertion from 55 to 56.
+- Pinned Q14 Prometheus and Alertmanager images to official immutable multi-platform index digests; Q14 now requires the exact digests to be present in the pulled image metadata.
+- Changed Q14 evidence so a staging candidate cannot claim production promotion is allowed.
+- Added exact-source evidence validation before a gate can be skipped in the candidate automated-gates workflow.
+- Existing provider routing already requires explicit paid opt-in for Gemini, Groq and OpenAI; Gemini key is sent in an HTTP header; the Groq default is `openai/gpt-oss-20b`; configured provider-attempt limits are preserved.
+
+## Remaining blockers
+
+1. Q10: wait until the no-repeat lock expires at **2026-11-24 07:50 ICT**, then run the required current-source scan and obtain independent human security review and finding dispositions.
+2. Q11: a valid owner-authorized OpenAI credential and approved no-cost live test path are still required. Do not paste secrets into chat or use paid generation without authorization.
+3. Q12–Q16: obtain current-source evidence on their provenance-approved branches and complete independent review. Do not weaken branch allowlists or convert staging candidates to production PASS.
+4. Resolve the CodeQL SSRF alert with its full data-flow details and verify its affected branch; the currently available PR comment alone is insufficient to claim it fixed.
+5. Obtain required independent human review and complete the final production package only after every mandatory gate passes.
+6. Q01–Q09 are not re-certified by this PR update; historical evidence must be checked separately.
+
+**Release decision remains NO-GO.** No merge, production tag, package publication, or deployment has been performed.
+
+---
+
+# Current candidate update — 2026-11-23 (PR #392)
+
+**Decision: NO-GO FOR PRODUCTION.**
+
+- Current canonical Q10–Q16 manifest: 370f8a8f405e9b960e8b41722d0f61a4269237d137b94c014a1c2598e75e08de (computed from the staged remediation tree). This snapshot distinguishes the application code subject from the documentation-only PR head.
+
+- PR: https://github.com/spinlnw10-art/ck-nexus/pull/392
+- PR state: OPEN; merge state BLOCKED; review decision REVIEW_REQUIRED; base main.
+- Latest PR head is a moving Git ref; read it live with GitHub CLI before acting. The previously observed head 0944ffd... was advanced by the AI handoff documentation update.
+- Application code candidate SHA scanned by Q10: efbb2ee157fcfdedfde054508fafaf21cbaf88fa.
+- Commits after the code candidate through the current PR head change documentation only; do not mislabel the Q10 report as if it were scanned against the documentation head.
+- Both remote task branches were verified equal after the handoff update; query live refs for their current SHA.
+- main remains at 944d7cb70a5d59d53c8fb379752bbee2085f7c8c; PR #392 has not been merged.
+- Work was performed in the isolated Termux worktree ~/cknexus-pr392-audit; the primary worktree was not modified.
+- The documentation push triggered a new CI cycle; its checks must be read live and not inferred from the previous head.\n- No merge or deployment has occurred.
+
+**AI handoff:** Read [docs/ops/AI_HANDOFF_CURRENT_TRUTH.md](docs/ops/AI_HANDOFF_CURRENT_TRUTH.md) first, then [docs/ops/CKNEXUS_WORK_LEDGER.md](docs/ops/CKNEXUS_WORK_LEDGER.md). These identify canonical files, historical files, exact SHAs, completed work, and no-repeat rules.
+
+## Exact-SHA checks already completed — do not rerun without a material change
+
+- Latest observed GitHub checks on `efbb2ee157fcfdedfde054508fafaf21cbaf88fa`: `test` PASS, `preflight` PASS, `attack-regression` PASS, `universal-system` PASS, CodeQL PASS, Analyze Python PASS, Analyze JavaScript/TypeScript PASS, Analyze Actions PASS.
+- Attack regression: 22/22 passed.
+- SonarCloud Code Analysis: FAIL. Actionable issue-level details have not yet been triaged; this failure is not proof that every quality finding is a release blocker.
+- Q10 workflow run: `45088376317`.
+- Q10 report source SHA: `efbb2ee157fcfdedfde054508fafaf21cbaf88fa`; report SHA-256: `71dab5d573b4f2bf1bf0e31cf794c13b0be17c08e8f317b580b9f8bb4626b192`.
+- Q10 scanner result: PASS; dependency vulnerabilities 0; Bandit High 0 / Medium 0 / Low 541; Secret Scan PASS (872 tracked files); attack regression exit 0.
+- Q10 whole-gate status: **REVIEW REQUIRED**. The report explicitly records `security_review_status=REQUIRED` and `production_promotion_allowed=false`. Scanner PASS is not Q10 closure and is not Production GO.
+
+## Bandit 541 — existing artifact triage, no rescan
+
+Detailed source-context dispositions for the 107 non-test findings are recorded in docs/security/Q10_BANDIT_REVIEW_efbb2ee.md. This is AI-assisted triage, not independent human sign-off; Q10 remains REVIEW_REQUIRED.
+
+All 541 findings are LOW. Grouped from the saved JSON artifact:
+
+| Rule | Count | Initial handling |
+|---|---:|---|
+| B101 assert_used | 422 | Mostly test-path findings; classify, do not mass-suppress |
+| B603 subprocess without shell=True | 42 | Review production call sites and argument handling |
+| B105 hardcoded password string | 26 | Review whether values are real secrets, examples, or test fixtures |
+| B404 subprocess import | 25 | Context review; import alone is not proof of exploitability |
+| B607 partial executable path | 24 | Review executable resolution and trust boundary |
+| B112 try/except continue | 1 | Review error handling |
+| B110 try/except pass | 1 | Review swallowed exception |
+
+434 findings are under test paths and 107 are outside test paths. This is a triage split, not a declaration that all test-path findings are harmless or all non-test findings are exploitable. Review the existing JSON; do not rerun Bandit on the unchanged SHA.
+
+## Remaining release blockers / scope
+
+1. Q10 independent security review and finding dispositions remain REQUIRED.
+2. Issue #66 is CLOSED as of 2026-10-31 via ad2fac7aa0752117dde065c7ad9b0b8d41136aa2. Regression coverage exists in tests/test_attachment_magic_66.py, tests/test_attachment_signature_66.py, and tests/test_attachment_hardening_q10.py for signature mismatch, MIME, Office ZIP bombs, traversal, expected Office parts, and macro payloads. This development issue closure does not close Q10.
+3. Existing Q11–Q16 evidence files are stale for this code candidate: Q11/Q13/Q14/Q15/Q16 bind to source 4cf17cd3... and manifest 96dcd0f0...; Q12 binds to source 512837c8... and the same old manifest. Current code manifest is be62b62b.... Current-subject workflow orchestration has been prepared but not yet executed.
+4. PR #392 requires review; no merge or deploy has occurred.
+5. SonarCloud failed on PR #392 (Security Rating D / Reliability Rating C). Authenticated Sonar issue export (run 45093845262) retrieved 43 issues: 1 CRITICAL + 3 MAJOR vulnerabilities, 4 MAJOR bugs, 35 code smells, 0 hotspots. The blocking TLS, workflow-install, and signup Promise findings have been remediated in the new candidate; fresh Sonar analysis is pending.
+
+## Work deduplication record
+
+The durable work ledger is [docs/ops/CKNEXUS_WORK_LEDGER.md](docs/ops/CKNEXUS_WORK_LEDGER.md). For the unchanged SHA `efbb2ee157fcfdedfde054508fafaf21cbaf88fa`, reuse the existing Q10, Bandit, Secret Scan, Attack Regression, Ruff, compile, targeted 43-test, and listed GitHub CI evidence. Do not repeat those checks within the 24-hour lock window unless a relevant source/workflow change invalidates the evidence. Record the exact reason before any rerun.
+
+## Release decision
+
+**NO-GO FOR PRODUCTION.** This candidate is not merged or deployed. The repository homepage and status page must not imply Production readiness. Historical sections below are retained as historical records and do not override this current exact-SHA snapshot.
+
+---
+
 # Release evidence snapshot — 2026-11-19 (PR #380 code baseline)
 
 **Code-bearing baseline after PR #380:** `0d7b0d1c0efee01d6307b418c848cd0c84411ea0`

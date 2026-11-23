@@ -238,7 +238,7 @@ class GeminiAdapter:
 
         url = (
             f"https://generativelanguage.googleapis.com/v1beta/"
-            f"models/{self.model}:generateContent?key={key}"
+            f"models/{self.model}:generateContent"
         )
         _require_safe_provider_url(url)
         payload = json.dumps(
@@ -254,6 +254,7 @@ class GeminiAdapter:
             method="POST",
             headers={
                 "Content-Type": "application/json",
+                "x-goog-api-key": key,
             },
         )
 
@@ -311,8 +312,8 @@ def build_free_adapters(
                 name="groq",
                 base_url="https://api.groq.com/openai/v1",
                 env_key="GROQ_API_KEY",
-                model="llama-3.3-70b-versatile",
-                models=("llama-3.3-70b-versatile", "llama-3.1-8b-instant", "mixtral-8x7b-32768"),
+                model="openai/gpt-oss-20b",
+                models=("openai/gpt-oss-20b", "openai/gpt-oss-120b"),
                 features=frozenset({"text", "fast"}),
                 timeout_seconds=15,
                 quota_tracker=qt,

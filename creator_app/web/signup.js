@@ -10,15 +10,15 @@ async function init() {
   }
   renderProviders();
   populateSelect();
-  autoScan();
+  await autoScan();
 }
 
 function getDefaultProviders() {
   return [
-    { name: "Groq", slug: "groq", icon: "⚡", tier: "free", env_key: "GROQ_API_KEY", description: "Fast inference, generous free tier", free_models: ["llama-3.3-70b-versatile", "gemma2-9b-it"], signup_url: "https://console.groq.com/keys" },
+    { name: "Groq", slug: "groq", icon: "⚡", tier: "freemium", env_key: "GROQ_API_KEY", description: "Free-tier access may be available; account pricing and quota vary", free_models: ["openai/gpt-oss-20b", "openai/gpt-oss-120b"], signup_url: "https://console.groq.com/keys" },
     { name: "Cerebras", slug: "cerebras", icon: "🧠", tier: "free", env_key: "CEREBRAS_API_KEY", description: "Ultra-fast inference speeds", free_models: ["llama-3.3-70b", "llama-3.1-8b"], signup_url: "https://cloud.cerebras.ai/" },
     { name: "OpenRouter", slug: "openrouter", icon: "🔀", tier: "free", env_key: "OPENROUTER_API_KEY", description: "Gateway to 100+ models, many free", free_models: ["meta-llama/llama-3.3-70b-instruct:free", "qwen/qwen-2.5-72b-instruct:free"], signup_url: "https://openrouter.ai/keys" },
-    { name: "Google Gemini", slug: "gemini", icon: "💎", tier: "free", env_key: "GEMINI_API_KEY", description: "Google's latest models, free tier", free_models: ["gemini-2.0-flash", "gemini-1.5-flash"], signup_url: "https://aistudio.google.com/apikey" },
+    { name: "Google Gemini", slug: "gemini", icon: "💎", tier: "freemium", env_key: "GEMINI_API_KEY", description: "Free-tier access may be available; project billing and quota vary", free_models: ["gemini-2.0-flash", "gemini-1.5-flash"], signup_url: "https://aistudio.google.com/apikey" },
     { name: "DeepSeek", slug: "deepseek", icon: "🔍", tier: "free", env_key: "DEEPSEEK_API_KEY", description: "Strong reasoning, free credits", free_models: ["deepseek-chat", "deepseek-reasoner"], signup_url: "https://platform.deepseek.com/" },
     { name: "Together AI", slug: "together", icon: "🤝", tier: "free", env_key: "TOGETHER_API_KEY", description: "Open-source model hosting", free_models: ["meta-llama/Llama-3-70b-chat-hf"], signup_url: "https://api.together.xyz/settings/api-keys" },
     { name: "Mistral AI", slug: "mistral", icon: "🌊", tier: "free", env_key: "MISTRAL_API_KEY", description: "European AI, free tier", free_models: ["mistral-small-latest"], signup_url: "https://console.mistral.ai/api-keys/" },
@@ -189,7 +189,7 @@ async function addKey() {
     if (data.success) {
       result.innerHTML = `<span style="color:#22c55e">✅ Key added for ${slug}</span>`;
       document.getElementById('apiKeyInput').value = '';
-      scanProviders();
+      await scanProviders();
     } else {
       result.innerHTML = `<span style="color:#ef4444">❌ ${data.error}</span>`;
     }
@@ -267,11 +267,20 @@ function generateEnv() {
 
 function copyEnv() {
   const content = document.getElementById('envContent').textContent;
-  navigator.clipboard.writeText(content).then(() => {
-    const btn = event.target;
-    btn.textContent = '✅ Copied!';
-    setTimeout(() => btn.textContent = '📋 Copy', 2000);
-  });
+  const btn = document.activeElement;
+  navigator.clipboard.writeText(content)
+    .then(() => {
+      if (btn instanceof HTMLElement) {
+        btn.textContent = '✅ Copied!';
+        setTimeout(() => { btn.textContent = '📋 Copy'; }, 2000);
+      }
+    })
+    .catch((error) => {
+      if (btn instanceof HTMLElement) btn.textContent = '❌ Copy failed';
+      console.error('Unable to copy environment configuration', error);
+    });
 }
 
-init();
+void init().catch((error) => {
+  console.error('Signup initialization failed', error);
+});

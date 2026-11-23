@@ -22,7 +22,7 @@ permissions:
   contents: read
 
 env:
-  EXPECTED_RELEASE_SUBJECT: 96dcd0f0f93b1aaa69e88da30fedcce1b786b51b83f36b72baf7ac910d02b04f
+  EXPECTED_RELEASE_SUBJECT: d3fb76bb9d576e88f9873eda1ff9eff23edeae41030439e3bea619ae1dbdc56c
 
 jobs:
   preflight:
@@ -46,7 +46,7 @@ jobs:
         id: gate
         shell: bash
         run: |
-          subject=$(git ls-tree -r HEAD -- app creator_app services gateway orchestration idea_engine migrations deploy observability Dockerfile docker-compose.prod.yml main.py pyproject.toml uv.lock | sha256sum | awk '{print $1}')
+          subject=$(python3 scripts/release_subject_manifest.py)
           python - "$subject" "$EXPECTED_RELEASE_SUBJECT" "$GITHUB_OUTPUT" <<'PY'
           import json,sys
           from pathlib import Path
@@ -134,7 +134,7 @@ jobs:
           python - <<'PY'
           import json
           from pathlib import Path
-          subject='96dcd0f0f93b1aaa69e88da30fedcce1b786b51b83f36b72baf7ac910d02b04f'
+          subject='d3fb76bb9d576e88f9873eda1ff9eff23edeae41030439e3bea619ae1dbdc56c'
           names=['Q10_DEPENDENCY_AUDIT.json','Q11_OPENAI_LIVE.json','Q12_CGROUP_V2.json','Q13_POSTGRES_DR.json','Q14_OBSERVABILITY_ALERT.json','Q15_CLEAN_MACHINE.json','Q16_PRODUCTION_IMAGE.json','Q16_RUNTIME_LICENSE_SUMMARY.json']
           rows={name:json.loads(Path('evidence',name).read_text(encoding='utf-8')) for name in names}
           assert all(row.get('release_subject_manifest_sha256')==subject for row in rows.values())
@@ -154,9 +154,9 @@ jobs:
           python-version: '3.12'
       - name: Re-run frozen release checks
         run: |
-          python -m pip install "uv==0.12.4"
+          python -m pip install --only-binary=:all: --no-deps "uv==0.12.4"
           uv lock --check
-          uv sync --all-extras --dev --frozen
+          uv sync --all-extras --dev --locked --no-install-project --no-build
           .venv/bin/python -m compileall -q main.py creator_app services gateway orchestration idea_engine scripts
           .venv/bin/ruff check main.py creator_app services gateway orchestration idea_engine tests scripts
           .venv/bin/python scripts/secret_scan.py
@@ -197,7 +197,7 @@ jobs:
                   files.append({'path':str(rel),'exported':str(dst.relative_to(out)),'sha256':hashlib.sha256(data).hexdigest()})
               inventory.append({'name':name,'version':dist.version,'license_expression':dist.metadata.get('License-Expression'),'license':dist.metadata.get('License'),'license_classifiers':[x for x in dist.metadata.get_all('Classifier',[]) if x.startswith('License ::')],'license_files':files})
           inventory.sort(key=lambda x:x['name'].lower())
-          assert len(inventory)==55
+          assert len(inventory)==56
           assert all(x['license_expression'] or x['license'] or x['license_classifiers'] or x['license_files'] for x in inventory)
           (out/'RUNTIME_LICENSE_INVENTORY.json').write_text(json.dumps(inventory,indent=2,sort_keys=True)+'\n',encoding='utf-8')
           PY
@@ -213,7 +213,7 @@ jobs:
           python - "$sha" "$archive_sha" <<'PY'
           import json,sys
           sha,archive_sha=sys.argv[1:]
-          manifest={'schema_version':1,'release_commit':sha,'runtime_subject_sha256':'96dcd0f0f93b1aaa69e88da30fedcce1b786b51b83f36b72baf7ac910d02b04f','archive_sha256':archive_sha,'production_gate':'PASS','third_party_runtime_inventory_included':True,'third_party_license_files_included':True,'release_evidence_provenance':'PASS'}
+          manifest={'schema_version':1,'release_commit':sha,'runtime_subject_sha256':'d3fb76bb9d576e88f9873eda1ff9eff23edeae41030439e3bea619ae1dbdc56c','archive_sha256':archive_sha,'production_gate':'PASS','third_party_runtime_inventory_included':True,'third_party_license_files_included':True,'release_evidence_provenance':'PASS'}
           with open('dist/RELEASE_MANIFEST.json','w',encoding='utf-8') as f:
               json.dump(manifest,f,indent=2,sort_keys=True); f.write('\n')
           PY

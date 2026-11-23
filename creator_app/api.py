@@ -521,7 +521,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
                             detail={"error": "ATTACHMENT_TOO_LARGE"},
                         )
                     handle.write(chunk)
-            result = scan_attachment(temp_path)
+            result = scan_attachment(temp_path, declared_mime=file.content_type or "")
             return {
                 "safe": result.safe,
                 "status": result.status,
