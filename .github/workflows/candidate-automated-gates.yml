@@ -365,7 +365,7 @@ jobs:
           CREATE TABLE email_outbox (id integer primary key, payload text);
           INSERT INTO creator_runs VALUES (1, 'q13-sentinel');
           SQL
-          psql "postgresql://postgres:postgres@127.0.0.1:5432/postgres" -v ON_ERROR_STOP=1 \
+          psql "postgresql://postgres@127.0.0.1:5432/postgres" -v ON_ERROR_STOP=1 \
             -c 'CREATE DATABASE cknexus_restore_dr;'
       - name: Run destructive isolated DR gate
         run: |
