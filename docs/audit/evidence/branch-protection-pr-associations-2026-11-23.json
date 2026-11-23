@@ -3,7 +3,7 @@
   "repository": "spinlnw10-art/ck-nexus",
   "branch_api_count": 401,
   "protected_branch_count": 1,
-  "branches_with_open_pr": 0,
+  "branches_with_open_pr": 218,
   "branches_without_any_pr": 102,
   "pr_inventory": {
     "total": 355,
@@ -5436,5 +5436,6 @@
       "protected": false,
       "prs": []
     }
-  ]
+  ],
+  "audit_branch_excluded_from_baseline": "audit/repository-organization-20261123"
 }
