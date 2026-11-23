@@ -3166,5 +3166,6 @@
       "merged_into_main": false,
       "stale_local_sha_mismatch": false
     }
-  ]
+  ],
+  "scope_note": "Baseline covers the 401 pre-existing live remote branches at audit start. The audit branch audit/repository-organization-20261123 is excluded from its own evidence to avoid self-referential HEAD/tree snapshots; it is tracked separately by Draft PR #393."
 }
