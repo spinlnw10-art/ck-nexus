@@ -19,20 +19,32 @@ def digest(path: Path) -> str:
     return hasher.hexdigest()
 
 
-def build_manifest(candidate_sha: str, inputs: dict[str, Path]) -> dict:
+def build_manifest(
+    candidate_sha: str,
+    inputs: dict[str, Path],
+    allowed_root: Path | None = None,
+) -> dict:
     if not SHA_RE.fullmatch(candidate_sha):
         raise ValueError("candidate SHA must be a 40-character lowercase Git commit SHA")
     if not inputs:
         raise ValueError("at least one evidence artifact is required")
 
+    root = (allowed_root or Path.cwd()).resolve(strict=True)
     artifacts = {}
     for name, path in sorted(inputs.items()):
-        if path.is_symlink() or not path.is_file():
-            raise ValueError(f"{name} must be a regular non-symlink file")
+        if path.is_symlink():
+            raise ValueError(f"{name} must not be a symlink")
+        try:
+            resolved = path.resolve(strict=True)
+            resolved.relative_to(root)
+        except (OSError, ValueError) as exc:
+            raise ValueError(f"{name} must resolve within the allowed directory") from exc
+        if not resolved.is_file():
+            raise ValueError(f"{name} must be a regular file")
         artifacts[name] = {
-            "path": str(path),
-            "size_bytes": path.stat().st_size,
-            "sha256": digest(path),
+            "path": str(resolved),
+            "size_bytes": resolved.stat().st_size,
+            "sha256": digest(resolved),
         }
 
     return {
@@ -58,6 +70,7 @@ def build_manifest(candidate_sha: str, inputs: dict[str, Path]) -> dict:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--candidate-sha", required=True)
+    parser.add_argument("--allowed-root", type=Path, required=True)
     parser.add_argument("--scancode-report", type=Path, required=True)
     parser.add_argument("--scancode-install-report", type=Path, required=True)
     parser.add_argument("--ort-analyzer-result", type=Path, required=True)
@@ -66,6 +79,7 @@ def main() -> int:
     args = parser.parse_args()
 
     try:
+        root = args.allowed_root.resolve(strict=True)
         evidence = build_manifest(
             args.candidate_sha,
             {
@@ -74,14 +88,13 @@ def main() -> int:
                 "ort_analyzer": args.ort_analyzer_result,
                 "ort_scanner": args.ort_scan_result,
             },
+            root,
         )
-        if args.output.is_symlink():
-            raise ValueError("output must not be a symlink")
-        args.output.parent.mkdir(parents=True, exist_ok=True)
-        args.output.write_text(
-            json.dumps(evidence, indent=2, sort_keys=True) + "\n",
-            encoding="utf-8",
-        )
+        parent = args.output.parent.resolve(strict=True)
+        parent.relative_to(root)
+        output_path = parent / args.output.name
+        with output_path.open("x", encoding="utf-8") as stream:
+            stream.write(json.dumps(evidence, indent=2, sort_keys=True) + "\\n")
     except (OSError, ValueError) as exc:
         parser.error(str(exc))
     print(json.dumps({"status": "EVIDENCE_MANIFEST_CREATED", "artifacts": 4}))
