@@ -1,0 +1,188 @@
+name: Q10 SBOM Shadow Scan
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - "**"
+      - ".github/workflows/q10-sbom-shadow.yml"
+  workflow_dispatch:
+    inputs:
+      target_sha:
+        description: Exact repository commit SHA to scan (defaults to this workflow commit)
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: q10-sbom-shadow-${{ github.event.pull_request.head.sha || inputs.target_sha || github.sha }}
+  cancel-in-progress: true
+
+jobs:
+  source-sbom-shadow:
+    name: Source SBOM and vulnerability shadow report
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout workflow repository
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
+
+      - name: Resolve immutable source subject
+        id: subject
+        shell: bash
+        env:
+          REQUESTED_TARGET_SHA: ${{ inputs.target_sha }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          target_sha="${REQUESTED_TARGET_SHA:-${PR_HEAD_SHA:-$GITHUB_SHA}}"
+          [[ "$target_sha" =~ ^[0-9a-f]{40}$ ]]
+          if ! git cat-file -e "$target_sha^{commit}" 2>/dev/null; then
+            git fetch --no-tags origin "$target_sha"
+          fi
+          actual_sha=$(git rev-parse "$target_sha^{commit}")
+          actual_tree=$(git rev-parse "$actual_sha^{tree}")
+          target_dir="$RUNNER_TEMP/q10-source-subject"
+          git worktree add --detach "$target_dir" "$actual_sha"
+          echo "target_sha=$actual_sha" >> "$GITHUB_OUTPUT"
+          echo "target_tree=$actual_tree" >> "$GITHUB_OUTPUT"
+          echo "target_dir=$target_dir" >> "$GITHUB_OUTPUT"
+          echo "Q10 shadow source SHA: $actual_sha"
+          echo "Q10 shadow Git tree: $actual_tree"
+
+      - name: Download and verify pinned Syft
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/q10-tools"
+          cd "$RUNNER_TEMP/q10-tools"
+          curl --fail --silent --show-error --location \
+            https://github.com/anchore/syft/releases/download/v1.57.2/syft_1.57.2_linux_amd64.tar.gz \
+            --output syft.tar.gz
+          echo "ad92bd3ec1b94a3df01d4d0aec199afa9c42b72e86da436ff5f837914d32706b  syft.tar.gz" \
+            | sha256sum --check --strict
+          mkdir syft
+          tar -xzf syft.tar.gz -C syft syft
+          install -m 0755 syft/syft "$RUNNER_TEMP/q10-tools/syft-bin"
+          "$RUNNER_TEMP/q10-tools/syft-bin" version
+
+      - name: Download and verify pinned Grype
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP/q10-tools"
+          curl --fail --silent --show-error --location \
+            https://github.com/anchore/grype/releases/download/v0.122.1/grype_0.122.1_linux_amd64.tar.gz \
+            --output grype.tar.gz
+          echo "f1ba7e2917ee1395618de20a98da0aa7c0fb1788927797651047c50502a37538  grype.tar.gz" \
+            | sha256sum --check --strict
+          mkdir grype
+          tar -xzf grype.tar.gz -C grype grype
+          install -m 0755 grype/grype "$RUNNER_TEMP/q10-tools/grype-bin"
+          "$RUNNER_TEMP/q10-tools/grype-bin" version
+
+      - name: Generate source SBOMs
+        id: syft
+        shell: bash
+        env:
+          TARGET_DIR: ${{ steps.subject.outputs.target_dir }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/q10-evidence"
+          "$RUNNER_TEMP/q10-tools/syft-bin" "dir:$TARGET_DIR" \
+            -o "json=$RUNNER_TEMP/q10-evidence/syft-source.json" \
+            -o "cyclonedx-json=$RUNNER_TEMP/q10-evidence/sbom-source.cdx.json"
+
+      - name: Scan CycloneDX SBOM with Grype
+        id: grype
+        shell: bash
+        run: |
+          set -euo pipefail
+          "$RUNNER_TEMP/q10-tools/grype-bin" \
+            "sbom:$RUNNER_TEMP/q10-evidence/sbom-source.cdx.json" \
+            -o json > "$RUNNER_TEMP/q10-evidence/grype-source.json"
+
+      - name: Write shadow provenance manifest
+        if: always()
+        shell: bash
+        env:
+          TARGET_SHA: ${{ steps.subject.outputs.target_sha }}
+          TARGET_TREE: ${{ steps.subject.outputs.target_tree }}
+          SYFT_OUTCOME: ${{ steps.syft.outcome }}
+          GRYPE_OUTCOME: ${{ steps.grype.outcome }}
+          RUN_ID: ${{ github.run_id }}
+          RUN_ATTEMPT: ${{ github.run_attempt }}
+        run: |
+          python - <<'PY'
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+
+          root = Path(os.environ["RUNNER_TEMP"]) / "q10-evidence"
+          files = {}
+          for name in ("syft-source.json", "sbom-source.cdx.json", "grype-source.json"):
+              path = root / name
+              if path.is_file():
+                  files[name] = {
+                      "size_bytes": path.stat().st_size,
+                      "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+                  }
+          manifest = {
+              "schema_version": 1,
+              "gate": "Q10",
+              "mode": "SHADOW_ONLY",
+              "decision": "NO_GATE_DECISION",
+              "source_sha": os.environ.get("TARGET_SHA", ""),
+              "source_tree": os.environ.get("TARGET_TREE", ""),
+              "workflow_run_id": os.environ["RUN_ID"],
+              "workflow_run_attempt": os.environ["RUN_ATTEMPT"],
+              "tools": {
+                  "syft": "1.57.2",
+                  "grype": "0.122.1",
+                  "syft_outcome": os.environ["SYFT_OUTCOME"],
+                  "grype_outcome": os.environ["GRYPE_OUTCOME"],
+              },
+              "scope": "repository source tree only; not the production runtime image",
+              "scope_complete": False,
+              "completeness_note": (
+                  "Tool success covers the declared source-tree scan only; "
+                  "it is not a claim that every dependency or runtime component was discovered."
+              ),
+              "gate_state_changed": False,
+              "gate_pass_claimed": False,
+              "artifacts": files,
+          }
+          root.mkdir(parents=True, exist_ok=True)
+          (root / "q10-shadow-manifest.json").write_text(
+              json.dumps(manifest, indent=2, sort_keys=True) + "\n",
+              encoding="utf-8",
+          )
+          print(json.dumps(manifest, indent=2, sort_keys=True))
+          PY
+
+      - name: Upload Q10 shadow evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: q10-sbom-shadow-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/q10-evidence/
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Summarize shadow-only boundary
+        if: always()
+        run: |
+          {
+            echo "## Q10 SBOM Shadow Scan"
+            echo "- Source-only scan; production image is not built or scanned."
+            echo "- No secrets, credentials, Dependency-Track upload, or gate mutation."
+            echo "- Tool findings are observations only; this workflow cannot set Q10 PASS."
+            echo "- Review the uploaded artifact and exact subject metadata."
+          } >> "$GITHUB_STEP_SUMMARY"
