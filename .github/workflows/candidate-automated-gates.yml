@@ -35,7 +35,92 @@ permissions:
   contents: read
 
 jobs:
+  validate_reused_evidence:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+      - name: Require exact-subject evidence for every skipped gate
+        env:
+          SKIP_Q10: ${{ inputs.skip_q10 }}
+          SKIP_Q11: ${{ inputs.skip_q11 }}
+          SKIP_Q13: ${{ inputs.skip_q13 }}
+          SKIP_Q16: ${{ inputs.skip_q16 }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          source_sha=$(git rev-parse HEAD)
+          manifest=$(python3 scripts/release_subject_manifest.py)
+          python - "$source_sha" "$manifest" <<'PY'
+          import json, os, sys
+          from pathlib import Path
+
+          source_sha, manifest = sys.argv[1:]
+          skipped = {
+              "Q10": os.getenv("SKIP_Q10", "").lower() == "true",
+              "Q11": os.getenv("SKIP_Q11", "").lower() == "true",
+              "Q13": os.getenv("SKIP_Q13", "").lower() == "true",
+              "Q16": os.getenv("SKIP_Q16", "").lower() == "true",
+          }
+          specs = {
+              "Q10": [
+                  ("Q10_DEPENDENCY_AUDIT.json",
+                   lambda x: x.get("gate_result") == "PASS"
+                   and x.get("open_source_security_scan") == "PASS"),
+              ],
+              "Q11": [
+                  ("Q11_OPENAI_LIVE.json",
+                   lambda x: x.get("result") == "PASS"
+                   and x.get("production_promotion_allowed") is True),
+              ],
+              "Q13": [
+                  ("Q13_POSTGRES_DR.json",
+                   lambda x: x.get("status") == "PASS"
+                   and x.get("sentinel_round_trip") == "PASS"),
+              ],
+              "Q16": [
+                  ("Q16_PRODUCTION_IMAGE.json",
+                   lambda x: x.get("result") == "PASS_CANDIDATE"
+                   and x.get("production_promotion_allowed") is True),
+                  ("Q16_RUNTIME_LICENSE_SUMMARY.json",
+                   lambda x: x.get("result") == "PASS"
+                   and not x.get("unresolved_license_evidence")),
+              ],
+          }
+          failures = []
+          for gate, enabled in skipped.items():
+              if not enabled:
+                  continue
+              for filename, accepted in specs[gate]:
+                  path = Path("evidence") / filename
+                  try:
+                      evidence = json.loads(path.read_text(encoding="utf-8"))
+                  except Exception as exc:
+                      failures.append(f"{gate}: {filename} unavailable ({type(exc).__name__})")
+                      continue
+                  if evidence.get("source_sha") != source_sha:
+                      failures.append(f"{gate}: {filename} source SHA is not this workflow head")
+                  if evidence.get("release_subject_manifest_sha256") != manifest:
+                      failures.append(f"{gate}: {filename} release subject is stale")
+                  if not isinstance(evidence.get("github_run_id"), int):
+                      failures.append(f"{gate}: {filename} missing workflow run identity")
+                  if not isinstance(evidence.get("artifact_id"), int):
+                      failures.append(f"{gate}: {filename} missing artifact identity")
+                  digest = evidence.get("artifact_digest")
+                  if not isinstance(digest, str) or not digest.startswith("sha256:"):
+                      failures.append(f"{gate}: {filename} missing artifact digest")
+                  if not accepted(evidence):
+                      failures.append(f"{gate}: {filename} does not satisfy its reuse contract")
+          if failures:
+              print("\n".join(f"BLOCKED: {item}" for item in failures))
+              raise SystemExit("Skipped gate evidence was not reusable for this exact source.")
+          print("All skipped gates have exact-source evidence and artifact identity.")
+          PY
+
   q10_dependency_component:
+    needs: validate_reused_evidence
     if: ${{ github.event_name != 'workflow_dispatch' || inputs.skip_q10 != true }}
     runs-on: ubuntu-24.04
     timeout-minutes: 25
@@ -238,6 +323,7 @@ jobs:
           if-no-files-found: warn
 
   q11_live_provider:
+    needs: validate_reused_evidence
     if: ${{ github.event_name != 'workflow_dispatch' || inputs.skip_q11 != true }}
     uses: ./.github/workflows/verify-q11-final-subject.yml
     permissions:
@@ -245,23 +331,27 @@ jobs:
     secrets: inherit
 
   q14_observability:
+    needs: validate_reused_evidence
     uses: ./.github/workflows/q14-observability-alert.yml
     permissions:
       contents: read
 
   q16_production_image:
+    needs: validate_reused_evidence
     if: ${{ github.event_name != 'workflow_dispatch' || inputs.skip_q16 != true }}
     uses: ./.github/workflows/candidate-production-image.yml
     permissions:
       contents: read
 
   q16_runtime_licenses:
+    needs: validate_reused_evidence
     if: ${{ github.event_name != 'workflow_dispatch' || inputs.skip_q16 != true }}
     uses: ./.github/workflows/candidate-runtime-licenses.yml
     permissions:
       contents: read
 
   sonar_issue_export:
+    needs: validate_reused_evidence
     if: ${{ github.event_name == 'workflow_dispatch' && inputs.export_sonar_issues == true }}
     runs-on: ubuntu-24.04
     steps:
@@ -318,11 +408,13 @@ jobs:
           retention-days: 90
 
   q12_delegated_cgroup:
+    needs: validate_reused_evidence
     uses: ./.github/workflows/verify-q12-final-subject.yml
     permissions:
       contents: read
 
   q13_postgres_dr:
+    needs: validate_reused_evidence
     if: ${{ github.event_name != 'workflow_dispatch' || inputs.skip_q13 != true }}
     runs-on: ubuntu-24.04
     services:
@@ -410,6 +502,7 @@ jobs:
           if-no-files-found: error
 
   q15_clean_machine:
+    needs: validate_reused_evidence
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
