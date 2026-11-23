@@ -167,3 +167,8 @@ The current-main migration consumers were verified:
 - A source-archive wheel build was attempted in Termux but the environment lacks `setuptools.build_meta`; wheel contents remain unverified.
 
 Ruling: keep the two active deployment/package copies; classify `migrations/001_email_journal.sql` as REVIEW / possible archive candidate only. External consumers, wheel/CI verification, checksum regeneration and migration behavior tests remain required before any removal.
+
+
+### Supplemental branch accounting
+
+The 401 pre-existing branches remain the baseline. A later live check found 403 current remote refs: the 401 baseline branches, this audit branch, and `integration/autonomous-engineering-foundation` under separate Draft PR #394. That post-snapshot branch was checked separately at HEAD `723e9828579678d3ca041241999f110da72d95ae`: four commits ahead of main, four Markdown files added, no existing paths changed or removed. It was not modified by this plan.
