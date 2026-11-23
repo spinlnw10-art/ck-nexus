@@ -67,10 +67,31 @@ jobs:
         run: |
           set -euo pipefail
           docker network create --internal ck-nexus-otel-shadow
-          docker run --detach --name ck-nexus-otel-shadow             --network ck-nexus-otel-shadow             --publish 127.0.0.1:4318:4318             --read-only --cap-drop=ALL --security-opt=no-new-privileges             --pids-limit=64 --memory=256m --cpus=1             --tmpfs /tmp:rw,noexec,nosuid,size=16m             ck-nexus/otelcol-shadow:0.165.0
+          docker run --detach --name ck-nexus-otel-shadow \
+            --network ck-nexus-otel-shadow \
+            --read-only --cap-drop=ALL --security-opt=no-new-privileges \
+            --pids-limit=64 --memory=256m --cpus=1 \
+            --tmpfs /tmp:rw,noexec,nosuid,size=16m \
+            ck-nexus/otelcol-shadow:0.165.0
+          for attempt in $(seq 1 20); do
+            if [ "$(docker inspect --format '{{.State.Running}}' ck-nexus-otel-shadow)" != "true" ]; then
+              break
+            fi
+            COLLECTOR_IP="$(docker inspect --format '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ck-nexus-otel-shadow)"
+            if [ -n "$COLLECTOR_IP" ] && curl --silent --output /dev/null --connect-timeout 1 "http://$COLLECTOR_IP:4318/v1/traces"; then
+              echo "OTEL_SHADOW_ENDPOINT=http://$COLLECTOR_IP:4318" >> "$GITHUB_ENV"
+              exit 0
+            fi
+            sleep 1
+          done
+          docker ps --all
+          docker logs ck-nexus-otel-shadow
+          exit 1
 
       - name: Send synthetic traces and metrics
-        run: python tests/assurance/otel_collector_shadow_smoke.py
+        env:
+          OTEL_SHADOW_ENDPOINT: ${{ env.OTEL_SHADOW_ENDPOINT }}
+        run: python tests/assurance/otel_collector_shadow_smoke.py "$OTEL_SHADOW_ENDPOINT"
 
       - name: Assert trace propagation, metrics, and secret removal
         run: |
