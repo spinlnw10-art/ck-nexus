@@ -1,0 +1,58 @@
+name: Q11 Promptfoo Synthetic Shadow
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/q11-promptfoo-shadow.yml"
+      - "scripts/assurance/q11_synthetic_provider.py"
+      - "scripts/assurance/Q11_PROMPTFOO_SHADOW.md"
+      - "tests/assurance/q11_promptfoo/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  synthetic-fixture:
+    name: Promptfoo synthetic boundary fixtures
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: "24"
+      - name: Run deterministic Promptfoo fixture suite
+        run: |
+          npx --yes promptfoo@0.126.0 eval \
+            -c tests/assurance/q11_promptfoo/promptfooconfig.yaml \
+            --no-progress-bar \
+            --output q11-promptfoo-results.json
+      - name: Verify fixture report shape
+        run: |
+          node - <<'NODE'
+          const fs = require("node:fs");
+          const report = JSON.parse(fs.readFileSync("q11-promptfoo-results.json", "utf8"));
+          const stats = report.stats || {};
+          const passed = Number(stats.successes ?? stats.passes ?? 0);
+          const failed = Number(stats.failures ?? stats.failures ?? 0);
+          if (passed !== 6 || failed !== 0) {
+            console.error(JSON.stringify({ stats }, null, 2));
+            process.exit(1);
+          }
+          console.log(JSON.stringify({
+            mode: "SYNTHETIC_SHADOW_ONLY",
+            cases_passed: passed,
+            cases_failed: failed,
+            q11_gate_decision: "NO_GATE_DECISION"
+          }, null, 2));
+          NODE
+      - name: Upload synthetic report
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: q11-promptfoo-synthetic-shadow
+          path: q11-promptfoo-results.json
+          if-no-files-found: error
+          retention-days: 14
