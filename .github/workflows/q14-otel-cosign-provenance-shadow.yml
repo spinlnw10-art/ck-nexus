@@ -171,17 +171,16 @@ jobs:
           SLSA_STATUS: ${{ steps.provenance.outputs.slsa_status || 'VERIFICATION_ERROR' }}
         run: |
           {
-            echo "## Q14 OTel image verification"
-            echo
-            echo "- Release: `$RELEASE_TAG`"
-            echo "- Image: `$IMAGE`"
-            echo "- Digest: `$DIGEST`"
-            echo "- Cosign signature: verified against exact release workflow identity"
-            echo "- SLSA provenance: `$SLSA_STATUS`"
-            echo "- Image layers pulled: no"
-            echo "- Container started: no"
-            echo "- Production promotion eligible: no"
-            echo "- CK-NEXUS gate decision: not made"
+            printf '%s\n' '## Q14 OTel image verification' ''
+            printf '%s\n' "- Release: $RELEASE_TAG"
+            printf '%s\n' "- Image: $IMAGE"
+            printf '%s\n' "- Digest: $DIGEST"
+            printf '%s\n' '- Cosign signature: verified against exact release workflow identity'
+            printf '%s\n' "- SLSA provenance: $SLSA_STATUS"
+            printf '%s\n' '- Image layers pulled: no'
+            printf '%s\n' '- Container started: no'
+            printf '%s\n' '- Production promotion eligible: no'
+            printf '%s\n' '- CK-NEXUS gate decision: not made'
           } >> "$GITHUB_STEP_SUMMARY"
       - name: Enforce SLSA provenance requirement
         if: always() && steps.signature.outcome == 'success' && steps.provenance.outputs.slsa_status != 'VERIFIED'
