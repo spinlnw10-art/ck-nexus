@@ -15,7 +15,7 @@ This prototype validates metadata binding for a supplied JSON report. It is inte
 ## Local synthetic-only test
 
 ```bash
-python -m unittest tests.assurance.test_evidence_adapter -v
+python -m unittest discover -s tests/assurance -p 'test_*.py' -v
 ```
 
 No real gate evidence should be fed into this prototype until the schema and provenance contracts are reviewed. It is not wired into GitHub Actions or production.
