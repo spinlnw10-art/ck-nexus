@@ -84,7 +84,7 @@ Expected: users can find the new navigation hub from README; the checked index h
 
 - [x] Inspect `pyproject.toml`, setuptools package-data configuration and the runtime migration loader; wheel/sdist contents remain unverified because Termux lacks `setuptools.build_meta`.
 - [x] Search source, tests, scripts, workflows, Docker/deployment assets and docs for all three paths and generic migration globs; Docker Compose and installed-package runtime consumers are identified.
-- [ ] Verify any installer or external deployment consumer before proposing a move.
+- [ ] Verify external installers, deployment scripts and operator runbooks before proposing any removal of the root-level copy.
 - [ ] Add/adjust tests first for the canonical runtime/package contract; observe failure before implementation if behavior changes.
 - [ ] If safe, change consumers/package data and regenerate `SHA256SUMS` in the same PR.
 - [ ] Test source checkout and built package migration discovery; run relevant email gateway tests and full required suite.
@@ -155,3 +155,15 @@ All work is isolated in the audit branch. Revert the specific consolidation comm
 - Task 2 navigation hub was created, README linked to it, and 135 relative links across changed Markdown files were checked with zero broken links.
 - Tasks 3–5 remain gated: no migration package behavior was changed; no source files or evidence were moved/deleted; no branch was archived/deleted. Consumer, deployment, release, local-worktree and recovery reviews remain required.
 - Verification: `git diff --check origin/main...origin/audit/repository-organization-20261123` exited 0; GitHub compare shows the audit branch ahead of main and not behind. No application test suite was run because the PR contains documentation and generated Git inventory evidence only.
+
+
+### Task 3 consumer-mapping update
+
+The current-main migration consumers were verified:
+- `docker-compose.p0.yml` mounts `./migrations/postgresql` and executes `/migrations/001_email_gateway.sql`.
+- `services/email_gateway/postgres_repository.py` loads the package-local `migrations/postgresql.sql`.
+- `pyproject.toml` includes `services.email_gateway` package data matching `migrations/*.sql`.
+- `SHA256SUMS` contains all three identical copies.
+- A source-archive wheel build was attempted in Termux but the environment lacks `setuptools.build_meta`; wheel contents remain unverified.
+
+Ruling: keep the two active deployment/package copies; classify `migrations/001_email_journal.sql` as REVIEW / possible archive candidate only. External consumers, wheel/CI verification, checksum regeneration and migration behavior tests remain required before any removal.
