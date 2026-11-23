@@ -12,7 +12,8 @@ Status: PHASE 1 INVENTORY / READ-ONLY / NO FILE OR BRANCH DELETION AUTHORIZED
 - Tracked files: 870
 - Directories: 115
 - Tracked content size reported by Git tree: 4,541,646 bytes
-- Remote branches: 402 (including this audit branch)
+- Live remote branches at snapshot time: 402 total (401 pre-existing branches plus this audit branch)
+- Pre-existing branches included in retention evidence: 401 (the audit branch is excluded from its own baseline scan to avoid self-referential/stale SHA records)
 - Pull requests returned across all states: 355
 - Open PRs: 220
 - Closed PRs: 135
@@ -82,7 +83,7 @@ Decision: REVIEW / CONSOLIDATION CANDIDATE ONLY. Keep `migrations/postgresql/001
 
 ## Branch and pull-request inventory
 
-Branch prefix counts (402 live remote branches; includes this audit branch):
+Branch prefix counts (401 pre-existing branches; audit branch excluded):
 
 | Prefix | Count |
 |---|---:|
@@ -146,7 +147,7 @@ The old audit also identified exact duplicate JSON/SQLite migration pairs that a
 
 No DELETE_CANDIDATE is approved by this phase.
 
-## Completed all-branch scan and remaining retention gates
+## Completed all-branch scan and remaining retention gates (401 pre-existing branches)
 
 Completed read-only gates:
 1. Frozen 402 live branch names, head/tree SHAs, local tracking-ref comparison and protection metadata in evidence manifests.
@@ -185,7 +186,7 @@ Use the existing architecture rather than a disruptive monorepo migration:
 
 ## Limitations and open work
 
-This document is a verified read-only inventory of the full current main tree plus all 402 live remote branch tips, PR associations and Git object/path comparisons. External deployment/workflow history, release/tag use, local worktree ownership and recovery intent remain incomplete. This is not a final deletion manifest and authorizes no destructive operation.
+This document is a verified read-only inventory of the full current main tree plus all 401 pre-existing live remote branch tips, PR associations and Git object/path comparisons. External deployment/workflow history, release/tag use, local worktree ownership and recovery intent remain incomplete. This is not a final deletion manifest and authorizes no destructive operation.
 
 
 ## Addendum — local Git head/tree inventory (2026-11-23)
@@ -221,16 +222,16 @@ PR inventory was refreshed after opening this audit PR: **355 total**, **220 ope
 
 ## Addendum — full all-branch object and path-level comparison (2026-11-23)
 
-The local Git scan used the 402 live remote branch names from the branch inventory (not the five stale local-only tracking refs) and compared each branch tip against `origin/main` at `944d7cb70a5d59d53c8fb379752bbee2085f7c8c`.
+The local Git scan used the 401 pre-existing live remote branch names from the branch inventory (not the five stale local-only tracking refs) and compared each branch tip against `origin/main` at `944d7cb70a5d59d53c8fb379752bbee2085f7c8c`.
 
 ### Per-branch Git object reachability
 
-- Branches scanned: **402 / 402**
+- Branches scanned: **401 / 401**
 - Scan errors: **0**
-- Branches ahead of main (one or more unique commits): **372**
+- Branches ahead of main (one or more unique commits): **371**
 - Branches behind main: **387**
-- Branches with unique commits: **372**
-- Branches with unique blob objects: **368**
+- Branches with unique commits: **371**
+- Branches with unique blob objects: **367**
 - Branches with zero unique commits and zero unique blobs: **30**
 - Branches with unique commit(s) but no unique blob: **4**
   - `backup/pre-consolidation-20261031` — 1 unique commit, 0 unique blobs
@@ -246,11 +247,11 @@ Full per-branch ahead/behind, unique commit/blob/tree/object counts and head dat
 - Branch trees scanned: **402 / 402**
 - Scan errors: **0**
 - Main tracked files: **870**
-- Total branch-tree file entries across all snapshots: **222,770**
-- Branches with a path/blob difference from main: **401**
+- Total branch-tree file entries across all snapshots: **221,897**
+- Branches with a path/blob difference from main: **400**
 - Branches with exactly the same path/blob tree as main: **1** (`main`)
-- Aggregate branch-tree comparison instances: **41,685 changed-path instances**, **11,977 branch-only path instances**, and **138,947 main-path-missing instances**. These are summed across branch snapshots, not unique repository files.
-- Across all branch snapshots, the scanner recorded **1,606 duplicate-blob groups** and **4,083 duplicate extra-path instances**. These are per-tree group occurrences, not 1,606 distinct repository-wide duplicate files.
+- Aggregate branch-tree comparison instances: **41,684 changed-path instances**, **11,974 branch-only path instances**, and **138,947 main-path-missing instances**. These are summed across branch snapshots, not unique repository files.
+- Across all branch snapshots, the scanner recorded **1,604 duplicate-blob group occurrences** across **28 distinct blob/path signatures**, and **4,074 duplicate extra-path instances**. These are per-tree group occurrences, not 1,606 distinct repository-wide duplicate files.
 - Current main still has exactly the two duplicate-content groups documented above: 8 empty package markers (KEEP) and 3 identical PostgreSQL migration copies (REVIEW).
 
 Full per-branch file counts, changed paths, branch-only paths, main paths missing and duplicate-group counts: [branch-path-diff-summary-2026-11-23.json](evidence/branch-path-diff-summary-2026-11-23.json).
@@ -258,10 +259,10 @@ Full per-branch file counts, changed paths, branch-only paths, main paths missin
 ### Branch protection, PRs, tags and low-delta review candidates
 
 GitHub branch API and PR inventory:
-- 402 remote branches.
+- 401 pre-existing remote branches (audit branch excluded from baseline).
 - Only `main` is marked protected by the branch API.
 - 355 PRs: 220 open, 135 closed (88 merged, 47 closed-unmerged).
-- 219 branch names map to at least one open PR head; 102 branch names have no PR head association.
+- 218 pre-existing branch names map to at least one open PR head; 102 branch names have no PR association.
 - One Git tag exists: `v0.2.0-buyer`.
 
 Full branch protection flags and branch-to-PR head associations: [branch-protection-pr-associations-2026-11-23.json](evidence/branch-protection-pr-associations-2026-11-23.json).
@@ -336,3 +337,8 @@ The 1,606 figure is the number of duplicate-group occurrences across 402 separat
 | Historical branches | Backup refs or refs with unique commits / unmerged PRs | KEEP / KEEP_RETAIN_HISTORY | Preserve recovery, provenance and unreconciled commit objects |
 
 This audit proposes no source-file move, source-file deletion, branch archival or branch deletion. The next implementation PR must be separately scoped after the remaining consumer and recovery gates pass.
+
+
+### Snapshot boundary clarification
+
+The repository had 401 pre-existing live branches when the audit branch was created. The audit branch itself is excluded from its own baseline evidence to avoid a self-referential record: adding or updating the evidence files changes that branch's own HEAD and tree. The audit branch is tracked separately by Draft PR #393; the PR head SHA is checked live in the final verification. Thus, the retention baseline covers every pre-existing branch, and the newly created audit branch is separately visible and preserved.
