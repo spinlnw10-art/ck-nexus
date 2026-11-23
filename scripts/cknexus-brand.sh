@@ -19,12 +19,21 @@ cknexus_run_quiet() {
   label=$1
   shift
   log_file=${CKNEXUS_INSTALL_LOG:-"$PWD/.cknexus-install.log"}
-  "$@" >"$log_file" 2>&1 &
+  status_file="${log_file}.status.$$"
+
+  (
+    if "$@" >"$log_file" 2>&1; then
+      result=0
+    else
+      result=$?
+    fi
+    printf '%s\n' "$result" >"$status_file"
+  ) &
   command_pid=$!
   frame=0
 
   printf '\033[?25l'
-  while kill -0 "$command_pid" 2>/dev/null; do
+  while [ ! -f "$status_file" ]; do
     case $frame in
       0) glyph='◐' ;;
       1) glyph='◓' ;;
@@ -36,8 +45,9 @@ cknexus_run_quiet() {
     sleep 0.15
   done
 
-  wait "$command_pid"
-  result=$?
+  wait "$command_pid" 2>/dev/null || :
+  result=$(cat "$status_file")
+  rm -f "$status_file"
   printf '\r\033[K'
   printf '\033[?25h'
   if [ "$result" -eq 0 ]; then
