@@ -6,22 +6,22 @@ on:
   workflow_dispatch:
     inputs:
       skip_q10:
-        description: "Reuse existing valid Q10 evidence; do not repeat the locked scan"
+        description: "BLOCKED: skip request fails closed until prior artifact bytes are downloaded and verified; do not use during the Q10 lock"
         type: boolean
         required: false
         default: false
       skip_q11:
-        description: "Skip the live OpenAI request until OPENAI_API_KEY is valid"
+        description: "BLOCKED: skip request fails closed until exact-source Q11 artifact bytes are downloaded and verified; no paid request is made"
         type: boolean
         required: false
         default: false
       skip_q13:
-        description: "Reuse valid Q13 backup/restore evidence for the same manifest"
+        description: "BLOCKED: skip request fails closed until exact-source Q13 artifact bytes are downloaded and verified"
         type: boolean
         required: false
         default: false
       skip_q16:
-        description: "Reuse valid Q16 image and runtime-license evidence for the same manifest"
+        description: "BLOCKED: skip request fails closed until exact-source Q16 artifact bytes are downloaded and verified"
         type: boolean
         required: false
         default: false
