@@ -106,3 +106,16 @@ def test_frontmatter_validates_multiline_tool_allowlist(tmp_path):
         pass
     else:
         raise AssertionError("unsupported multiline tool was accepted")
+
+
+
+def test_operating_model_keeps_cknexus_primary_and_agents_subordinate() -> None:
+    operating_model = ROOT / "docs" / "CK_NEXUS_AGENT_OPERATING_MODEL.md"
+    content = operating_model.read_text(encoding="utf-8")
+    assert "0 — Authority | CK-NEXUS Core/L3" in content
+    assert "1 — Primary runtime" in content
+    assert "2 — Specialist assistants" in content
+    assert "3 — External coding workers" in content
+    assert "4 — Domain tools" in content
+    assert "No external assistant receives Core/L3 authority" in content
+    assert "VERIFIED" in content and "CANDIDATE" in content and "BLOCKED" in content

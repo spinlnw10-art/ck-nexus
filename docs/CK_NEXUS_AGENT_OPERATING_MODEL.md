@@ -26,6 +26,30 @@ These are distinct layers:
 - cknexus_auto_dispatch may invoke the in-process team; use it only for bounded
   development planning/work and retain the existing approval and evidence gates.
 
+## Primary system and subordinate-assistant hierarchy
+
+Use an evidence-first hierarchy. Do not replace a working CK-NEXUS control plane with an external agent framework merely because the external project has more features.
+
+| Tier | System | Assigned responsibility | Promotion rule |
+| --- | --- | --- | --- |
+| 0 — Authority | CK-NEXUS Core/L3 | Canonical state, permissions, policy, credentials, approvals, execution authority, and evidence | Never delegated |
+| 1 — Primary runtime | Existing ControlPlaneOrchestrator + TeamDirector/internal team, with AGNES execution controls, ProviderRouter, ConnectorFabric, and append-only evidence | Plan and coordinate work, route model inference, call approved tools, verify results, and record evidence | Remains the primary path; improve in place rather than adding a competing orchestrator |
+| 2 — Specialist assistants | The seven .github/agents profiles in this repository | Planning, implementation, security review, test verification, evidence stewardship, recovery, and coordination | Advisory/delegated only; active only when the host supports the profile and delegation |
+| 3 — External coding workers | OpenCode, Aider, OpenHands, Gemini CLI, Claude Code, Cline, Goose, mini-swe-agent through DevAssistantFabric | Optional bounded research/edit/test workers in disposable worktrees or sandboxes | Candidate until exact executable, version, license, provider, isolation, and end-to-end task evidence are verified |
+| 4 — Domain tools | Syft/Grype, ORT/ScanCode, Promptfoo, OTel Collector, GUAC, and similar tools | Narrow scans, evaluations, telemetry, and machine-readable evidence | Never agents or policy authorities; outputs require source/subject binding and CK-NEXUS verification |
+
+### Evidence-based selection criteria
+
+Rank candidate systems by, in order: (1) demonstrated end-to-end task success on the exact commit and target platform; (2) reproducible tests and CI; (3) security/isolation and least-privilege behavior; (4) provenance, license, and maintenance; (5) integration cost and resource fit; and (6) model/provider cost and offline capability. Feature count, popularity, or documentation claims alone do not qualify a system for the primary tier.
+
+Use explicit lifecycle labels:
+- VERIFIED: exact version/commit and target-platform smoke/tests passed with retained evidence.
+- CANDIDATE: source and contract reviewed, but target-platform or end-to-end execution remains unverified.
+- REFERENCE_ONLY: useful design/code reference, not activated for work.
+- BLOCKED: a required dependency, credential, signature, platform capability, or policy check is unavailable.
+
+Current adoption decision: keep the existing CK-NEXUS runtime as the sole primary system. The seven specialist profiles are the first subordinate layer. External CLIs remain candidates until individually installed and exercised through a real bounded task. In particular, a failed Termux package-source/signature preflight is BLOCKED, not an installation success. No external assistant receives Core/L3 authority or raw credentials.
+
 ## Specialist roles
 
 | Role profile | Default tool scope | Responsibility |
