@@ -18,6 +18,8 @@ from creator_app.n8n_intelligence.learning import AgentLearningMemory
 
 from .journal import BrainJournal
 
+STATE_DIRECTORY = ".state"
+
 
 class BrainRuntime:
     """Single facade over existing capabilities; no independent authority plane."""
@@ -39,11 +41,12 @@ class BrainRuntime:
         self.root = Path(root)
         self.catalog_path = self.root / "config" / "capability_catalog.json"
         self.journal_path = Path(
-            journal_path or os.getenv("CKNEXUS_BRAIN_DB", self.root / ".state" / "brain.sqlite3")
+            journal_path
+            or os.getenv("CKNEXUS_BRAIN_DB", self.root / STATE_DIRECTORY / "brain.sqlite3")
         )
         self.task_db_path = Path(
             task_db_path
-            or os.getenv("CKNEXUS_TASK_DB", self.root / ".state" / "control-plane.sqlite3")
+            or os.getenv("CKNEXUS_TASK_DB", self.root / STATE_DIRECTORY / "control-plane.sqlite3")
         )
         self.knowledge_db_path = Path(
             knowledge_db_path
@@ -54,7 +57,7 @@ class BrainRuntime:
         self.expert_router = expert_router or ExpertRouter()
         self.dev_assistant_fabric = dev_assistant_fabric or DevAssistantFabric()
         self.fabric_ledger_path = Path(
-            fabric_ledger_path or self.root / ".state" / "agnes-fabric-ledger.jsonl"
+            fabric_ledger_path or self.root / STATE_DIRECTORY / "agnes-fabric-ledger.jsonl"
         )
         self.fabric_ledger = AppendOnlyLedger(self.fabric_ledger_path)
         self.experiential_memory = ExperientialMemory(

@@ -114,6 +114,61 @@ def _evidence_ref(value: str) -> str:
     return ref
 
 
+def _validate_source_url(source_url: str) -> None:
+    parsed = urlparse(source_url)
+    if parsed.scheme != "https" or not parsed.hostname or parsed.username or parsed.password:
+        raise ValueError("source_url must be an HTTPS URL without embedded credentials")
+    if parsed.query or parsed.fragment:
+        raise ValueError("source_url query/fragment is not accepted for a canonical source")
+    try:
+        port = parsed.port
+    except ValueError as exc:
+        raise ValueError("source_url port is invalid") from exc
+    if port not in (None, 443):
+        raise ValueError("source_url must use the standard HTTPS port")
+
+
+def _normalize_checksum(value: str) -> tuple[str, bool]:
+    checksum = value.strip().lower() if isinstance(value, str) else ""
+    return checksum, bool(_SHA256_RE.fullmatch(checksum))
+
+
+def _normalize_license(value: str) -> str:
+    license_id = _safe_text(value, "license_id", 128) if value else ""
+    if license_id and not re.fullmatch(r"[A-Za-z0-9.+() -]{1,128}", license_id):
+        raise ValueError("license_id format is invalid")
+    return license_id
+
+
+def _discovery_reasons(
+    review_reasons: tuple[str, ...] | list[str], checksum_valid: bool, license_id: str
+) -> list[str]:
+    reasons = list(review_reasons)
+    if not checksum_valid:
+        reasons.append("SHA-256 checksum is missing or malformed")
+    if not license_id:
+        reasons.append("license identifier is missing")
+    return reasons
+
+
+def _discovery_readiness(
+    checksum_valid: bool,
+    license_known: bool,
+    reasons: list[str],
+    has_executable_scripts: bool,
+    requests_credentials: bool,
+    requests_network: bool,
+) -> float:
+    score = 0.1
+    score += 0.2 if checksum_valid else 0.0
+    score += 0.15 if license_known else 0.0
+    score += 0.2 if not reasons else 0.0
+    score += 0.1 if not has_executable_scripts else 0.0
+    score += 0.1 if not requests_credentials else 0.0
+    score += 0.1 if not requests_network else 0.0
+    return round(min(score, 1.0), 3)
+
+
 class SkillFoundry:
     """Fail-closed skill admission; REGISTERABLE never means installed or active."""
 
@@ -265,22 +320,9 @@ class SkillFoundry:
             raise ValueError("skill_id format is invalid")
         clean_version = _safe_text(version, "version", 64)
         clean_url = _safe_text(source_url, "source_url", 2048)
-        parsed = urlparse(clean_url)
-        if parsed.scheme != "https" or not parsed.hostname or parsed.username or parsed.password:
-            raise ValueError("source_url must be an HTTPS URL without embedded credentials")
-        if parsed.query or parsed.fragment:
-            raise ValueError("source_url query/fragment is not accepted for a canonical source")
-        try:
-            port = parsed.port
-        except ValueError as exc:
-            raise ValueError("source_url port is invalid") from exc
-        if port not in (None, 443):
-            raise ValueError("source_url must use the standard HTTPS port")
-        clean_checksum = checksum_sha256.strip().lower() if isinstance(checksum_sha256, str) else ""
-        checksum_valid = bool(_SHA256_RE.fullmatch(clean_checksum))
-        clean_license = _safe_text(license_id, "license_id", 128) if license_id else ""
-        if clean_license and not re.fullmatch(r"[A-Za-z0-9.+() -]{1,128}", clean_license):
-            raise ValueError("license_id format is invalid")
+        _validate_source_url(clean_url)
+        clean_checksum, checksum_valid = _normalize_checksum(checksum_sha256)
+        clean_license = _normalize_license(license_id)
         review = self.discovery.review_candidate(
             source_url=clean_url,
             checksum_present=checksum_valid,
@@ -289,20 +331,17 @@ class SkillFoundry:
             requests_credentials=requests_credentials,
             requests_network=requests_network,
         )
-        reasons = list(review.reasons)
-        if not checksum_valid:
-            reasons.append("SHA-256 checksum is missing or malformed")
-        if not clean_license:
-            reasons.append("license identifier is missing")
+        reasons = _discovery_reasons(review.reasons, checksum_valid, clean_license)
         candidate_id = f"skill_candidate_{uuid4().hex}"
         state = FoundryState.QUARANTINED if reasons else FoundryState.DISCOVERED
-        readiness = 0.1
-        readiness += 0.2 if checksum_valid else 0.0
-        readiness += 0.15 if clean_license else 0.0
-        readiness += 0.2 if not reasons else 0.0
-        readiness += 0.1 if not has_executable_scripts else 0.0
-        readiness += 0.1 if not requests_credentials else 0.0
-        readiness += 0.1 if not requests_network else 0.0
+        readiness = _discovery_readiness(
+            checksum_valid,
+            bool(clean_license),
+            reasons,
+            has_executable_scripts,
+            requests_credentials,
+            requests_network,
+        )
         payload = {
             "candidate_id": candidate_id,
             "skill_id": clean_id,
@@ -313,7 +352,7 @@ class SkillFoundry:
             "has_executable_scripts": bool(has_executable_scripts),
             "requests_credentials": bool(requests_credentials),
             "requests_network": bool(requests_network),
-            "readiness_score": round(min(readiness, 1.0), 3),
+            "readiness_score": readiness,
             "state": state.value,
             "reasons": reasons,
             "auto_install": False,

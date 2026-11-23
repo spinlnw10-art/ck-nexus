@@ -114,11 +114,10 @@ def plan(path: Path = CATALOG) -> list[AdmissionDecision]:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Read-only CK-NEXUS capability admission planner")
-    parser.add_argument("--catalog", type=Path, default=CATALOG)
     parser.add_argument("--skill")
     parser.add_argument("--auto-safe", action="store_true")
     args = parser.parse_args()
-    decisions = plan(args.catalog)
+    decisions = plan()
     if args.skill:
         decisions = [item for item in decisions if item.skill_id == args.skill]
         if not decisions:

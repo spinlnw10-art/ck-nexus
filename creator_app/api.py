@@ -96,6 +96,7 @@ from services.email_gateway.schemas import (
     RoutingResult,
 )
 
+BEARER_PREFIX = "Bearer "
 WEB_DIR = FilePath(__file__).resolve().parent / "web"
 SESSION_ID_PATTERN = r"^[A-Za-z0-9_:-]+$"
 
@@ -265,8 +266,8 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         if not expected:
             return
         supplied = ""
-        if authorization and authorization.startswith("Bearer "):
-            supplied = authorization.removeprefix("Bearer ").strip()
+        if authorization and authorization.startswith(BEARER_PREFIX):
+            supplied = authorization.removeprefix(BEARER_PREFIX).strip()
         if not supplied or not hmac.compare_digest(supplied, expected):
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
@@ -628,8 +629,8 @@ def create_app(settings: Settings | None = None) -> FastAPI:
                 },
             )
         supplied = ""
-        if authorization and authorization.startswith("Bearer "):
-            supplied = authorization.removeprefix("Bearer ").strip()
+        if authorization and authorization.startswith(BEARER_PREFIX):
+            supplied = authorization.removeprefix(BEARER_PREFIX).strip()
         if not supplied or not hmac.compare_digest(supplied, expected):
             raise HTTPException(status_code=401, detail={"error": "UNAUTHORIZED"})
 

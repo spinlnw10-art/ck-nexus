@@ -2,7 +2,7 @@ import json
 
 import pytest
 
-from scripts.system_skill_admission import CATALOG, load_catalog, plan
+from scripts.system_skill_admission import CATALOG, load_catalog, main, plan
 
 
 def test_catalog_is_valid_and_unique():
@@ -78,3 +78,12 @@ def test_catalog_rejects_duplicate_ids_and_unsafe_policy_override(tmp_path):
     unsafe_path.write_text(json.dumps(raw))
     with pytest.raises(ValueError, match="auto_install=false"):
         load_catalog(unsafe_path)
+
+
+def test_cli_does_not_accept_caller_selected_catalog_path(monkeypatch):
+    import sys
+
+    monkeypatch.setattr(sys, "argv", ["system_skill_admission", "--catalog", "/tmp/untrusted.json"])
+    with pytest.raises(SystemExit) as error:
+        main()
+    assert error.value.code == 2
