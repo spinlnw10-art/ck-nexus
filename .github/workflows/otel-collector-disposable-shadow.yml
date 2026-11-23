@@ -221,7 +221,7 @@ jobs:
 
       - name: Validate telemetry evidence through CK-NEXUS EvidenceGraph
         run: |
-          python scripts/assurance/evidence_graph_intake.py --profile otel
+          python scripts/assurance/evidence_graph_intake.py
 
       - name: Run EvidenceGraph intake unit tests
         run: python -m unittest tests.assurance.test_evidence_graph_intake -v
