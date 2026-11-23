@@ -1,5 +1,5 @@
 {
-  "live_remote_branches": 402,
+  "live_remote_branches": 401,
   "local_remote_tracking_refs": 407,
   "stale_local_only_refs": [
     "docs/clarify-release-evidence-baseline-20261119",
@@ -9,12 +9,12 @@
     "pr-392-audit"
   ],
   "missing_local_refs": [],
-  "distinct_heads": 381,
-  "distinct_trees": 373,
+  "distinct_heads": 380,
+  "distinct_trees": 372,
   "prefix_counts": {
     "agent": 2,
     "arch": 12,
-    "audit": 4,
+    "audit": 3,
     "automation": 1,
     "backup": 4,
     "brand": 1,
@@ -54,7 +54,7 @@
     "verify": 20
   },
   "merged_into_main": 30,
-  "not_merged_into_main": 372,
+  "not_merged_into_main": 371,
   "same_tree_as_main": [
     "main"
   ],
@@ -475,13 +475,6 @@
       "branch": "audit/canonical-evidence-ledger-20261001",
       "head": "a7d2588c885a2d29fe09faa9369be008da79081a",
       "tree": "ad67fdde45aa6f81bcb1d2dc5bfb51fa39c814c0",
-      "merged_into_main": false,
-      "stale_local_sha_mismatch": false
-    },
-    {
-      "branch": "audit/repository-organization-20261123",
-      "head": "2cb5f64b1eb345d75d7f990a797cc33c3b676f07",
-      "tree": "1d155c2245dd51c7c3e1675633fde08267dd5774",
       "merged_into_main": false,
       "stale_local_sha_mismatch": false
     },
