@@ -6,6 +6,8 @@ on:
       - "config/otel/collector-shadow.yaml"
       - "Dockerfile.otelcol-shadow"
       - "tests/assurance/otel_collector_shadow_smoke.py"
+      - "scripts/assurance/evidence_graph_intake.py"
+      - "tests/assurance/test_evidence_graph_intake.py"
       - ".github/workflows/otel-collector-disposable-shadow.yml"
   workflow_dispatch:
 
@@ -105,6 +107,33 @@ jobs:
           fi
           echo "PASS: trace IDs and parent-child linkage observed; metric observed; secret markers absent."
 
+      - name: Record synthetic telemetry test evidence
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          result = {
+              "schema_version": 1,
+              "status": "PASS",
+              "synthetic_only": True,
+              "trace_id": "5b8aa5a2d2c872e8321cf37308d69df2",
+              "parent_span_id": "051581bf3cb55c13",
+              "child_span_id": "93564f51e1abe1c2",
+              "parent_child_propagation": "PASS",
+              "metric": "ck_nexus_shadow_requests",
+              "metric_observed": True,
+              "secret_marker_count_in_collector_output": 0,
+              "external_exporter_configured": False,
+              "gate_decision_made": False,
+          }
+          Path("otel-shadow-test-result.json").write_text(
+              json.dumps(result, indent=2, sort_keys=True) + "\n",
+              encoding="utf-8",
+          )
+          PY
+
       - name: Record candidate-bound local image provenance evidence
         env:
           CANDIDATE_SHA: ${{ github.sha }}
@@ -148,6 +177,74 @@ jobs:
           print(json.dumps({"status": "LOCAL_PROVENANCE_EVIDENCE_RECORDED", "image_digest": image_id}))
           PY
           sha256sum collector-image-provenance.json | tee collector-image-provenance.sha256
+
+      - name: Build candidate-bound telemetry evidence manifest
+        env:
+          CANDIDATE_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+
+          names = {
+              "collector_image_provenance": Path("collector-image-provenance.json"),
+              "collector_image_id": Path("collector-image-id.txt"),
+              "collector_image_archive_digest": Path("collector-image-archive.sha256"),
+              "collector_shadow_log": Path("collector-shadow.log"),
+              "synthetic_telemetry_test": Path("otel-shadow-test-result.json"),
+          }
+          artifacts = {}
+          for name, path in names.items():
+              data = path.read_bytes()
+              artifacts[name] = {
+                  "path": str(path.resolve(strict=True)),
+                  "size_bytes": len(data),
+                  "sha256": hashlib.sha256(data).hexdigest(),
+              }
+          manifest = {
+              "schema_version": 1,
+              "evidence_type": "CK-NEXUS-OTEL-SHADOW",
+              "candidate_commit_sha": os.environ["CANDIDATE_SHA"],
+              "artifacts": artifacts,
+              "authority": {
+                  "gate_decision_made": False,
+                  "external_tool_authority": "evidence only",
+              },
+          }
+          Path("otel-shadow-evidence-manifest.json").write_text(
+              json.dumps(manifest, indent=2, sort_keys=True) + "\n",
+              encoding="utf-8",
+          )
+          PY
+
+      - name: Validate telemetry evidence through CK-NEXUS EvidenceGraph
+        run: |
+          python scripts/assurance/evidence_graph_intake.py \
+            --manifest otel-shadow-evidence-manifest.json \
+            --allowed-root "$GITHUB_WORKSPACE" \
+            --output otel-shadow-evidence-graph.json
+
+      - name: Run EvidenceGraph intake unit tests
+        run: python -m unittest tests.assurance.test_evidence_graph_intake -v
+
+      - name: Retain candidate-bound OTel shadow evidence bundle
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: otel-shadow-evidence-${{ github.sha }}
+          path: |
+            collector-image-provenance.json
+            collector-image-provenance.sha256
+            collector-image-id.txt
+            collector-image-archive.sha256
+            collector-shadow.log
+            otel-shadow-test-result.json
+            otel-shadow-evidence-manifest.json
+            otel-shadow-evidence-graph.json
+          if-no-files-found: error
+          retention-days: 30
 
       - name: Stop and remove disposable resources
         if: always()
