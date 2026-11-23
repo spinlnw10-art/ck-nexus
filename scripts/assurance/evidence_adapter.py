@@ -60,7 +60,11 @@ def validate(report: dict[str, Any], expected: dict[str, str], raw_digest: str) 
             mismatches.append(f"invalid_{key}")
         elif expected.get(key) and value != expected[key]:
             mismatches.append(f"{key}_mismatch")
-    if not isinstance(report.get("workflow_run_id"), (str, int)) or str(report.get("workflow_run_id", "")).strip() == "":
+    workflow_run_id = report.get("workflow_run_id")
+    if (
+        not isinstance(workflow_run_id, (str, int))
+        or str(workflow_run_id).strip() == ""
+    ):
         mismatches.append("invalid_workflow_run_id")
     if report.get("scope_complete") is not True:
         mismatches.append("scope_not_complete")
