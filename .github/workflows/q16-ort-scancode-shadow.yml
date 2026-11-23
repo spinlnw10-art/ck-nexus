@@ -56,28 +56,29 @@ jobs:
           import shutil
           import tarfile
           from pathlib import Path, PurePosixPath
+          python - <<'PY'
+          import tarfile
+          from pathlib import Path, PurePosixPath
 
-          archive_path = Path("ort.tgz")
-          members = []
-          with tarfile.open(archive_path, "r:gz") as archive:
-              for member in archive.getmembers():
+          target_root = Path(__import__("os").environ["RUNNER_TEMP"]) / "ort-dist"
+          target_root.mkdir()
+          with tarfile.open("ort.tgz", "r:gz") as archive:
+              members = archive.getmembers()
+              for member in members:
                   member_path = PurePosixPath(member.name)
-                  if (
-                      member.name.endswith("/bin/ort")
-                      and member.isfile()
-                      and not member_path.is_absolute()
-                      and ".." not in member_path.parts
-                  ):
-                      members.append(member)
-              if len(members) != 1:
-                  raise SystemExit("ORT archive must contain exactly one safe bin/ort file")
-              source = archive.extractfile(members[0])
-              if source is None:
-                  raise SystemExit("ORT executable could not be read from archive")
-              target = Path(os.environ["RUNNER_TEMP"]) / "ort-bin"
-              with target.open("xb") as destination:
-                  shutil.copyfileobj(source, destination)
+                  if member_path.is_absolute() or ".." in member_path.parts:
+                      raise SystemExit("ORT archive contains an unsafe path")
+                  if not (member.isdir() or member.isfile() or member.issym()):
+                      raise SystemExit("ORT archive contains an unsupported file type")
+              # Python 3.12 data filter blocks escaping symlinks and unsafe extraction targets.
+              archive.extractall(path=target_root, members=members, filter="data")
           PY
+          ORT_BIN="$(find "$RUNNER_TEMP/ort-dist" -type f -path '*/bin/ort' -print -quit)"
+          test -n "$ORT_BIN"
+          test -f "$ORT_BIN" && test ! -L "$ORT_BIN"
+          chmod 700 "$ORT_BIN"
+          echo "ORT_BIN=$ORT_BIN" >> "$GITHUB_ENV"
+          "$ORT_BIN" --version
           chmod 700 "$RUNNER_TEMP/ort-bin"
           "$RUNNER_TEMP/ort-bin" --version
 
