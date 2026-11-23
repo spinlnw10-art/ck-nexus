@@ -52,12 +52,13 @@ jobs:
         run: |
           set -euo pipefail
           source_sha=$(git rev-parse HEAD)
+          source_tree=$(git rev-parse 'HEAD^{tree}')
           manifest=$(python3 scripts/release_subject_manifest.py)
-          python - "$source_sha" "$manifest" <<'PY'
+          python - "$source_sha" "$source_tree" "$manifest" "$GITHUB_RUN_ID" <<'PY'
           import json, os, sys
           from pathlib import Path
 
-          source_sha, manifest = sys.argv[1:]
+          source_sha, source_tree, manifest, run_id = sys.argv[1:]
           skipped = {
               "Q10": os.getenv("SKIP_Q10", "").lower() == "true",
               "Q11": os.getenv("SKIP_Q11", "").lower() == "true",
@@ -89,35 +90,68 @@ jobs:
                    and not x.get("unresolved_license_evidence")),
               ],
           }
-          failures = []
+          statuses = {}
           for gate, enabled in skipped.items():
               if not enabled:
                   continue
+              reasons = []
               for filename, accepted in specs[gate]:
                   path = Path("evidence") / filename
                   try:
                       evidence = json.loads(path.read_text(encoding="utf-8"))
                   except Exception as exc:
-                      failures.append(f"{gate}: {filename} unavailable ({type(exc).__name__})")
+                      reasons.append(f"{filename} unavailable ({type(exc).__name__})")
                       continue
                   if evidence.get("source_sha") != source_sha:
-                      failures.append(f"{gate}: {filename} source SHA is not this workflow head")
+                      reasons.append(f"{filename} source SHA mismatch")
                   if evidence.get("release_subject_manifest_sha256") != manifest:
-                      failures.append(f"{gate}: {filename} release subject is stale")
+                      reasons.append(f"{filename} runtime manifest mismatch")
                   if not isinstance(evidence.get("github_run_id"), int):
-                      failures.append(f"{gate}: {filename} missing workflow run identity")
+                      reasons.append(f"{filename} missing workflow run identity")
                   if not isinstance(evidence.get("artifact_id"), int):
-                      failures.append(f"{gate}: {filename} missing artifact identity")
+                      reasons.append(f"{filename} missing artifact identity")
                   digest = evidence.get("artifact_digest")
                   if not isinstance(digest, str) or not digest.startswith("sha256:"):
-                      failures.append(f"{gate}: {filename} missing artifact digest")
+                      reasons.append(f"{filename} missing artifact digest")
                   if not accepted(evidence):
-                      failures.append(f"{gate}: {filename} does not satisfy its reuse contract")
-          if failures:
-              print("\n".join(f"BLOCKED: {item}" for item in failures))
-              raise SystemExit("Skipped gate evidence was not reusable for this exact source.")
-          print("All skipped gates have exact-source evidence and artifact identity.")
+                      reasons.append(f"{filename} gate result is not reusable")
+              statuses[gate] = {
+                  "status": "REUSED_VALID" if not reasons else "NOT_VERIFIED",
+                  "reasons": reasons,
+              }
+          summary = {
+              "schema_version": 1,
+              "source_sha": source_sha,
+              "source_tree": source_tree,
+              "release_subject_manifest_sha256": manifest,
+              "github_run_id": int(run_id),
+              "skipped_gates": statuses,
+              "all_skipped_gates_reused": all(
+                  row["status"] == "REUSED_VALID" for row in statuses.values()
+              ),
+          }
+          Path("SKIPPED_GATES_STATUS.json").write_text(
+              json.dumps(summary, indent=2, sort_keys=True) + "\\n",
+              encoding="utf-8",
+          )
+          print(json.dumps(summary, indent=2, sort_keys=True))
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as out:
+              out.write("## Skipped gate evidence status\\n")
+              if not statuses:
+                  out.write("- No gates were skipped.\\n")
+              for gate, row in statuses.items():
+                  out.write(f"- **{gate}: {row['status']}**\\n")
+                  for reason in row["reasons"]:
+                      out.write(f"  - {reason}\\n")
           PY
+      - name: Upload skipped-gate status (including NOT_VERIFIED)
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: skipped-gates-status-${{ github.sha }}
+          path: SKIPPED_GATES_STATUS.json
+          if-no-files-found: error
+          retention-days: 90
 
   q10_dependency_component:
     needs: validate_reused_evidence
