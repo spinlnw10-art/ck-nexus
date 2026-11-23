@@ -2,13 +2,12 @@
 from __future__ import annotations
 
 import json
-import sys
 import time
 import urllib.error
 import urllib.request
 
 
-ENDPOINT = sys.argv[1] if len(sys.argv) > 1 else "http://127.0.0.1:4318"
+ENDPOINT = "http://127.0.0.1:4318"
 TRACE_ID = "5b8aa5a2d2c872e8321cf37308d69df2"
 PARENT_SPAN_ID = "051581bf3cb55c13"
 CHILD_SPAN_ID = "93564f51e1abe1c2"
