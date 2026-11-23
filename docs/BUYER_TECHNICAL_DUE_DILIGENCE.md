@@ -54,7 +54,7 @@ Limits:
 - The repository does not provide evidence in this review of a recorded end-to-end demonstration on the exact delivery commit.
 - The live OpenAI Responses API test remains blocked by an invalid credential (HTTP 401 in the work ledger); no successful live generation is established.
 - The historical `docs/TEST_REPORT.md` is for v0.2.0 dated 2026-08-05 and reports 26 tests. It is not the current candidate's full test result.
-- The latest observed CI run for commit `bdf224b66e2798920f9fc3b3ae872086bb737ee5` had the `test` workflow fail during import/collection; other observed workflows in that batch passed. A correction was recorded in the work ledger, but a passing rerun is required before claiming the failure is resolved.
+- An earlier CI batch on commit `bdf224b66e2798920f9fc3b3ae872086bb737ee5` had the `test` workflow fail during import/collection. After the import-path correction recorded in the work ledger, all four workflows triggered by documentation-only commit `bb49f89c5389c8782b11f5bf526f81986e6a9658` passed: CK-NEXUS CI, preflight, attack-regression, and universal-system. The application/runtime candidate was unchanged by that documentation commit. This is a successful CI result, not Q10–Q16 closure or Production approval.
 
 A buyer should require a live demonstration against the exact proposed delivery commit and independently perform the installation on a clean supported machine.
 
