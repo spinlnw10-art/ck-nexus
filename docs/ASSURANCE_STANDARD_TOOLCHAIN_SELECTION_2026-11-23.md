@@ -40,6 +40,20 @@ GitHub-hosted runners are already ephemeral by service design and are the lowest
 ### Q16 — license and provenance
 ORT provides dependency analysis, policy evaluation, license/copyright scanning integration and CycloneDX/SPDX outputs. ScanCode is a mature license/copyright scanner and can produce JSON and SPDX formats. Cosign can sign and verify artifacts and in-toto attestations; use GitHub OIDC/keyless identity with tightly scoped verification policy where supported. A successful metadata scan is not legal approval, and a signature is not proof that the build process was trustworthy unless provenance claims are also verified.
 
+## Release observations (2026-11-23)
+
+These are upstream release observations, not approved production pins. Re-check advisories, checksums, signatures, runtime compatibility and licensing before locking any workflow:
+
+| Tool | Upstream release observed | Evidence |
+|---|---:|---|
+| Syft | 1.57.1 | Official release page lists checksum and Sigstore bundle assets |
+| Grype | 0.121.3 | Official release page lists checksums and Sigstore bundle assets |
+| Promptfoo | 0.126.0 | Official release page; Node.js 24+ is required for its full-repository code scans |
+| PyRIT | 1.1.0 | Official release page; Python support listed as >=3.10 and <3.15 |
+| OpenTelemetry Collector | 0.165.0 in official Docker installation example | Use an explicit version and verify the selected distribution/components |
+
+No version is inferred for pgBackRest, Barman, gVisor, Kata, ORT, ScanCode, Cosign or Dependency-Track in this proposal. Pin those only after host/runtime compatibility and the exact release artifacts are reviewed. Do not blindly use the latest version: a release number is not a compatibility or security approval.
+
 ## Non-goals
 
 - No production installation, host package installation, runtime switch, database restore, secret creation, or cloud resource provisioning in this proposal.
