@@ -97,6 +97,7 @@ def _validate_manifest(
 def _build_artifact_node(
     root: Path,
     claim_node_id: str,
+    candidate_sha: str,
     name: str,
     relative_path: str,
     descriptor: Any,
@@ -119,7 +120,7 @@ def _build_artifact_node(
     if resolved.stat().st_size != declared_size or _sha256(resolved) != declared_sha:
         raise EvidenceIntakeError("artifact size or SHA-256 does not match manifest")
 
-    node_id = f"source:{claim_node_id.split(':')[1]}:{name}"
+    node_id = f"source:{candidate_sha}:{name}"
     source_id = f"sha256:{declared_sha}"
     node = EvidenceGraphNode(
         node_id=node_id,
@@ -174,6 +175,7 @@ def build_graph_document(
         node, edge, record = _build_artifact_node(
             root,
             claim_node_id,
+            candidate_sha,
             name,
             relative_path,
             artifacts.get(name),
