@@ -35,11 +35,17 @@ jobs:
           node - <<'NODE'
           const fs = require("node:fs");
           const report = JSON.parse(fs.readFileSync("q11-promptfoo-results.json", "utf8"));
-          const stats = report.stats || {};
-          const passed = Number(stats.successes ?? stats.passes ?? 0);
-          const failed = Number(stats.failures ?? stats.failures ?? 0);
-          if (passed !== 6 || failed !== 0) {
-            console.error(JSON.stringify({ stats }, null, 2));
+          const rows = Array.isArray(report.results) ? report.results : [];
+          const passed = rows.filter((row) => row && row.success === true).length;
+          const failed = rows.length - passed;
+          if (rows.length !== 6 || passed !== 6 || failed !== 0) {
+            console.error(JSON.stringify({
+              top_level_keys: Object.keys(report),
+              result_count: rows.length,
+              passed,
+              failed,
+              sample_result: rows[0] ?? null
+            }, null, 2));
             process.exit(1);
           }
           console.log(JSON.stringify({
