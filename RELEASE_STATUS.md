@@ -1,22 +1,55 @@
 # Current candidate update — 2026-11-23 (PR #392)
 
-**Decision: NO-GO FOR PRODUCTION.** This provider-routing candidate is not merged or deployed.
+**Decision: NO-GO FOR PRODUCTION.** This is the latest verified repository snapshot; it is not a production approval.
 
 - PR: https://github.com/spinlnw10-art/ck-nexus/pull/392
-- Branch: `ops/provider-free-go-clean`
-- Current PR head: `dc42ab23adcad8c25724f202fa7c72d0c8b5baa3`
-- Provider cost guard: Gemini, Groq, and OpenAI are excluded by default; Gemini/Groq/OpenAI require both `CKNEXUS_PROVIDER_ALLOW_PAID=true` and `CKNEXUS_PROVIDER_ALLOW_CLOUD=true`. Local/mock providers remain separate.
-- Credential handling: Termux key file checks ownership, regular-file type, and restrictive permissions; Gemini generation and provider-hub validation use the `x-goog-api-key` header rather than a URL query.
-- Provider metadata: Groq and Gemini are labelled FREEMIUM rather than guaranteed FREE; descriptions state that account billing and quota vary.
-- Latest GitHub CI on this exact head: **975 passed, 2 skipped, 12 warnings**. Ruff, Bandit gate, secret scan (871 tracked files), preflight, attack-regression, and universal-system checks passed.
-- CodeQL on this exact head: **PASS**; Python, JavaScript/TypeScript, and Actions analyses passed; CodeQL reports no new alerts in code changed by this PR.
-- SonarCloud on this exact head: **FAIL**. Quality Gate remains D Security Rating and C Reliability Rating on new code. The connected GitHub check exposes the failed metrics but not actionable issue details; no issue is guessed or hidden.
-- Review: the owner-approved review waiver is recorded, but it is not an independent review. A fresh Codex review was requested for this exact head and is pending.
-- Q10: the last available Q10 artifact is bound to older source SHA `eea74e4df3406c231f22dc6fe5dced4039b20129`; it is **not current evidence** for this PR head. Rerun Q10 against the exact current source SHA before claiming Q10 closure.
-- No live model-generation request was sent. Provider billing/quota has not been verified; no zero-cost guarantee is made.
-- This candidate does not close Q10–Q16 and does not change the Production NO-GO decision.
+- PR state: OPEN; merge state BLOCKED; review decision REVIEW_REQUIRED; base `main`.
+- Exact PR head: `efbb2ee157fcfdedfde054508fafaf21cbaf88fa`.
+- Remote branches `ops/provider-free-go-clean` and `fix/q10-attachment-hardening-20261123` both resolve to `efbb2ee157fcfdedfde054508fafaf21cbaf88fa`.
+- Work was performed in the isolated Termux worktree `~/cknexus-pr392-audit`; the primary worktree was not modified.
 
-This is a dated evidence snapshot. Re-check the exact PR head and checks before any release decision.
+## Exact-SHA checks already completed — do not rerun without a material change
+
+- Latest observed GitHub checks on `efbb2ee157fcfdedfde054508fafaf21cbaf88fa`: `test` PASS, `preflight` PASS, `attack-regression` PASS, `universal-system` PASS, CodeQL PASS, Analyze Python PASS, Analyze JavaScript/TypeScript PASS, Analyze Actions PASS.
+- Attack regression: 22/22 passed.
+- SonarCloud Code Analysis: FAIL. Actionable issue-level details have not yet been triaged; this failure is not proof that every quality finding is a release blocker.
+- Q10 workflow run: `45088376317`.
+- Q10 report source SHA: `efbb2ee157fcfdedfde054508fafaf21cbaf88fa`; report SHA-256: `71dab5d573b4f2bf1bf0e31cf794c13b0be17c08e8f317b580b9f8bb4626b192`.
+- Q10 scanner result: PASS; dependency vulnerabilities 0; Bandit High 0 / Medium 0 / Low 541; Secret Scan PASS (872 tracked files); attack regression exit 0.
+- Q10 whole-gate status: **REVIEW REQUIRED**. The report explicitly records `security_review_status=REQUIRED` and `production_promotion_allowed=false`. Scanner PASS is not Q10 closure and is not Production GO.
+
+## Bandit 541 — existing artifact triage, no rescan
+
+All 541 findings are LOW. Grouped from the saved JSON artifact:
+
+| Rule | Count | Initial handling |
+|---|---:|---|
+| B101 assert_used | 422 | Mostly test-path findings; classify, do not mass-suppress |
+| B603 subprocess without shell=True | 42 | Review production call sites and argument handling |
+| B105 hardcoded password string | 26 | Review whether values are real secrets, examples, or test fixtures |
+| B404 subprocess import | 25 | Context review; import alone is not proof of exploitability |
+| B607 partial executable path | 24 | Review executable resolution and trust boundary |
+| B112 try/except continue | 1 | Review error handling |
+| B110 try/except pass | 1 | Review swallowed exception |
+
+434 findings are under test paths and 107 are outside test paths. This is a triage split, not a declaration that all test-path findings are harmless or all non-test findings are exploitable. Review the existing JSON; do not rerun Bandit on the unchanged SHA.
+
+## Remaining release blockers / scope
+
+1. Q10 independent security review and finding dispositions remain REQUIRED.
+2. Issue #66 attachment hardening was improved in this candidate, but acceptance criteria are not yet verified as fully satisfied; do not mark the issue closed.
+3. Q11–Q16 current-candidate closure is not established by evidence in this snapshot.
+4. PR #392 requires review; no merge or deploy has occurred.
+5. SonarCloud failed and needs issue-level triage to identify whether any finding is a genuine release blocker.
+
+## Work deduplication record
+
+The durable work ledger is [docs/ops/CKNEXUS_WORK_LEDGER.md](docs/ops/CKNEXUS_WORK_LEDGER.md). For the unchanged SHA `efbb2ee157fcfdedfde054508fafaf21cbaf88fa`, reuse the existing Q10, Bandit, Secret Scan, Attack Regression, Ruff, compile, targeted 43-test, and listed GitHub CI evidence. Do not repeat those checks within the 24-hour lock window unless a relevant source/workflow change invalidates the evidence. Record the exact reason before any rerun.
+
+## Release decision
+
+**NO-GO FOR PRODUCTION.** This candidate is not merged or deployed. The repository homepage and status page must not imply Production readiness. Historical sections below are retained as historical records and do not override this current exact-SHA snapshot.
+
 ---
 
 # Release evidence snapshot — 2026-11-19 (PR #380 code baseline)
