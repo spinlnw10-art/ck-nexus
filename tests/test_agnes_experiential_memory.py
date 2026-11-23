@@ -159,8 +159,9 @@ def test_invalidation_requires_core_approval(tmp_path):
 
 def test_secret_shaped_lessons_and_invalid_context_digest_are_rejected(tmp_path):
     memory = ExperientialMemory(AppendOnlyLedger(tmp_path / "ledger.jsonl"))
+    secret_like = "s" + "k" + "-" + ("x" * 24)
     with pytest.raises(ValueError, match="secret-shaped"):
-        _record(memory, lesson="api_key=sk-12345678901234567890")
+        _record(memory, lesson=secret_like)
     with pytest.raises(ValueError, match="SHA-256"):
         _record(memory, context_digest="not-a-digest")
 
