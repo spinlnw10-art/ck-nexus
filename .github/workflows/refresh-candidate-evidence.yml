@@ -78,7 +78,7 @@ jobs:
           .venv/bin/pytest -q tests/test_council_capability_authority.py tests/test_r28_connector_fabric.py
       - name: Q06 Q07 application binding
         env:
-          DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/cknexus
+          DATABASE_URL: postgresql://postgres:${{ github.run_id }}-${{ github.run_attempt }}@127.0.0.1:5432/cknexus
           REDIS_URL: redis://127.0.0.1:6379/0
           DB_CONNECT_TIMEOUT: '5'
           DB_COMMAND_TIMEOUT: '5'
@@ -89,7 +89,7 @@ jobs:
         run: .venv/bin/python creator_app/runtime_binding.py --verify
       - name: Q08 live idempotency
         env:
-          DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/cknexus
+          DATABASE_URL: postgresql://postgres:${{ github.run_id }}-${{ github.run_attempt }}@127.0.0.1:5432/cknexus
           REDIS_URL: redis://127.0.0.1:6379/0
         run: |
           .venv/bin/pytest -q tests/test_r17_distributed_idempotency_runtime.py

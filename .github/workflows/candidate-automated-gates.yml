@@ -336,9 +336,9 @@ jobs:
           --health-cmd "pg_isready -U postgres -d cknexus"
           --health-interval 5s --health-timeout 5s --health-retries 10
     env:
-      PGPASSWORD: postgres
-      CKNEXUS_DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/cknexus
-      CKNEXUS_RESTORE_DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/cknexus_restore_dr
+      PGPASSWORD: ${{ github.run_id }}-${{ github.run_attempt }}
+      CKNEXUS_DATABASE_URL: postgresql://postgres:${{ github.run_id }}-${{ github.run_attempt }}@127.0.0.1:5432/cknexus
+      CKNEXUS_RESTORE_DATABASE_URL: postgresql://postgres:${{ github.run_id }}-${{ github.run_attempt }}@127.0.0.1:5432/cknexus_restore_dr
       CKNEXUS_ENVIRONMENT: staging
       CKNEXUS_RESTORE_TARGET_CLASS: isolated-dr
       CKNEXUS_ALLOW_DESTRUCTIVE_RESTORE: YES
