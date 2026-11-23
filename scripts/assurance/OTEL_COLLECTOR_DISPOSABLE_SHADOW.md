@@ -36,6 +36,7 @@ mint OIDC-backed attestations. The locally built image is not pushed to a regist
 - CI asserts the trace and parent/child span IDs plus metric name appear in Collector debug
   output, and that synthetic secret markers do not appear.
 - A candidate-bound manifest hashes the image provenance, immutable image ID/archive digest, Collector log and synthetic test result. The existing CK-NEXUS `EvidenceGraph` intake validates each path/size/hash and emits `CLAIM` / `SOURCE` nodes with `DERIVED_FROM` edges; no edge claims independent validation.
+- The current graph model is in-memory; this output is a candidate-bound graph snapshot CI artifact, not a write to a durable production graph store. Durable persistence requires a separate Core-owned review.
 - The graph and supporting synthetic evidence are retained as a 30-day CI artifact. A cleanup step stops the container and removes the internal Docker network.
 
 ## Limits
