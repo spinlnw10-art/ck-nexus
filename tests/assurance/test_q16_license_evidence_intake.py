@@ -1,0 +1,70 @@
+from __future__ import annotations
+
+import importlib.util
+import json
+import tempfile
+import unittest
+from pathlib import Path
+
+MODULE_PATH = Path(__file__).resolve().parents[2] / "scripts/assurance/q16_license_evidence_intake.py"
+SPEC = importlib.util.spec_from_file_location("q16_license_evidence_intake", MODULE_PATH)
+assert SPEC and SPEC.loader
+MODULE = importlib.util.module_from_spec(SPEC)
+SPEC.loader.exec_module(MODULE)
+
+CANDIDATE = "a" * 40
+
+
+class Q16IntakeTests(unittest.TestCase):
+    def setUp(self) -> None:
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.path = Path(self.temp.name) / "result.json"
+        self.path.write_text(json.dumps({"synthetic": True}), encoding="utf-8")
+
+    def test_accepts_ort_evidence_without_claiming_license_approval(self) -> None:
+        result = MODULE.intake(
+            self.path, tool="ort", version="synthetic-1",
+            candidate_sha=CANDIDATE,
+        )
+        self.assertEqual(result["intake_status"], "INTEGRITY_VERIFIED_ONLY")
+        self.assertFalse(result["license_assessment_performed"])
+        self.assertFalse(result["legal_approval_granted"])
+        self.assertFalse(result["gate_decision_made"])
+
+    def test_accepts_scancode_evidence(self) -> None:
+        result = MODULE.intake(
+            self.path, tool="scancode", version="synthetic-1",
+            candidate_sha=CANDIDATE,
+        )
+        self.assertEqual(result["tool"], "scancode")
+        self.assertEqual(len(result["evidence_sha256"]), 64)
+
+    def test_rejects_unknown_tool_and_invalid_candidate(self) -> None:
+        with self.assertRaises(MODULE.IntakeError):
+            MODULE.intake(self.path, tool="other", version="1", candidate_sha=CANDIDATE)
+        with self.assertRaises(MODULE.IntakeError):
+            MODULE.intake(self.path, tool="ort", version="1", candidate_sha="bad")
+
+    def test_rejects_duplicate_keys_and_non_object_json(self) -> None:
+        self.path.write_text('{"a":1,"a":2}', encoding="utf-8")
+        with self.assertRaises(MODULE.IntakeError):
+            MODULE.intake(self.path, tool="ort", version="1", candidate_sha=CANDIDATE)
+        self.path.write_text("[]", encoding="utf-8")
+        with self.assertRaises(MODULE.IntakeError):
+            MODULE.intake(self.path, tool="ort", version="1", candidate_sha=CANDIDATE)
+
+    def test_rejects_symlink_and_empty_file(self) -> None:
+        target = Path(self.temp.name) / "target.json"
+        target.write_text("{}", encoding="utf-8")
+        link = Path(self.temp.name) / "link.json"
+        link.symlink_to(target)
+        with self.assertRaises(MODULE.IntakeError):
+            MODULE.intake(link, tool="ort", version="1", candidate_sha=CANDIDATE)
+        self.path.write_bytes(b"")
+        with self.assertRaises(MODULE.IntakeError):
+            MODULE.intake(self.path, tool="ort", version="1", candidate_sha=CANDIDATE)
+
+
+if __name__ == "__main__":
+    unittest.main()
