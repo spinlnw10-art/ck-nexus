@@ -20,7 +20,7 @@ Adopt external tools as replaceable evidence producers behind CK-NEXUS adapters.
 ## Why these choices
 
 ### Q10 — software supply chain
-Syft catalogs packages from source directories, filesystems, archives and container images and emits native JSON, SPDX and CycloneDX. Grype scans images, filesystems and SBOM inputs, including Syft, SPDX and CycloneDX formats. This provides a direct producer-consumer chain without replacing pip-audit or Bandit. Dependency-Track is useful as a persistent portfolio service, but introduces a database, service operations, authentication, retention and API lifecycle; defer it until CK-NEXUS needs cross-build inventory and continuous monitoring rather than a one-off CI report.
+Syft catalogs packages from source directories, filesystems, archives and container images and emits native JSON, SPDX and CycloneDX. Grype scans images, filesystems and SBOM inputs, including Syft, SPDX and CycloneDX formats. This provides a direct producer-consumer chain without replacing pip-audit or Bandit. Dependency-Track is useful as a persistent portfolio service: its API accepts CycloneDX BOM uploads and returns a processing token that must be polled before treating analysis as complete. Upload requires a narrowly scoped BOM_UPLOAD permission (and project-creation permissions only when auto-creating projects). It introduces a database, service operations, authentication, retention and API lifecycle; defer it until CK-NEXUS needs cross-build inventory and continuous monitoring rather than a one-off CI report.
 
 ### Q11 — AI/LLM security
 Promptfoo is the first integration because it supports HTTP/API targets, adversarial red-team tests and CI workflows. PyRIT adds extensible multi-turn attack strategies and human-led campaigns; Garak adds specialized probes. These tools overlap in places, so do not run every probe suite on every commit. Use a tiered test profile: deterministic smoke tests on PRs, bounded adversarial suite on scheduled/staging runs, and approved human-led campaigns for release assurance. Every test must target a dedicated non-production CK-NEXUS endpoint and synthetic data.
@@ -57,14 +57,14 @@ For each selected tool, pin a reviewed release version and immutable container i
 - Syft SBOM generation: https://oss.anchore.com/docs/guides/sbom/
 - Syft output formats: https://oss.anchore.com/docs/guides/sbom/formats/
 - Grype scan targets: https://oss.anchore.com/docs/guides/vulnerability/scan-targets/
-- Dependency-Track: https://docs.dependencytrack.org/
+- Dependency-Track: https://docs.dependencytrack.org/integrations/rest-api/
 - Promptfoo red-team quickstart: https://www.promptfoo.dev/docs/red-team/quickstart/
 - PyRIT: https://microsoft.github.io/PyRIT/
-- Garak: https://garak.ai/
+- Garak: https://reference.garak.ai/en/latest/
 - gVisor: https://gvisor.dev/docs/
 - Kata installation: https://github.com/kata-containers/kata-containers/blob/main/docs/installation.md
 - pgBackRest: https://pgbackrest.org/user-guide.html
-- Barman: https://docs.pgbarman.org/
+- Barman: https://docs.pgbarman.org/release/3.19.0/user_guide/
 - OpenTelemetry Collector architecture: https://opentelemetry.io/docs/collector/architecture/
 - GitHub ephemeral runners: https://docs.github.com/en/actions/reference/runners/self-hosted-runners
 - ARC: https://docs.github.com/en/actions/concepts/runners/actions-runner-controller
