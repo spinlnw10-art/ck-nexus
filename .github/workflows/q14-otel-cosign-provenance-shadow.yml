@@ -61,6 +61,8 @@ jobs:
           cosign-release: v3.0.2
       - name: Validate official release metadata and construct immutable image reference
         id: image
+        env:
+          GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
           set -euo pipefail
@@ -71,6 +73,8 @@ jobs:
           version="${RELEASE_TAG#v}"
           curl --fail --silent --show-error --location --retry 2 \
             -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
             "https://api.github.com/repos/open-telemetry/opentelemetry-collector-releases/releases/tags/$RELEASE_TAG" \
             -o release.json
           jq -e --arg tag "$RELEASE_TAG" \
