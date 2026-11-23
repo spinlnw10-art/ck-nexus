@@ -109,7 +109,10 @@ def verify_slsa_subject(document: Any, expected_digest: str) -> dict[str, Any]:
             if not isinstance(subject, dict):
                 continue
             digests = subject.get("digest")
-            if isinstance(digests, dict) and digests.get("sha256") == expected_digest.removeprefix("sha256:"):
+            if (
+                isinstance(digests, dict)
+                and digests.get("sha256") == expected_digest.removeprefix("sha256:")
+            ):
                 matched.append({
                     "predicate_type": predicate_type,
                     "subject_name": subject.get("name", ""),
@@ -205,7 +208,8 @@ def main() -> int:
             candidate_sha=args.candidate_sha,
             slsa_status=args.slsa_status,
         )
-        args.output.write_text(json.dumps(report, sort_keys=True, indent=2) + "\n", encoding="utf-8")
+        rendered = json.dumps(report, sort_keys=True, indent=2) + "\n"
+        args.output.write_text(rendered, encoding="utf-8")
     except (EvidenceError, OSError) as exc:
         parser.error(str(exc))
     print("Q14_IMAGE_PROVENANCE_EVIDENCE_RECORDED")
