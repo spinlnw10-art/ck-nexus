@@ -72,11 +72,11 @@ def main() -> int:
     workspace = root / WORKSPACE
     if workspace.is_symlink() or not workspace.is_dir():
         raise ValueError("fixed Q16 workspace is missing or unsafe")
-    evidence = build_manifest(os.environ["GITHUB_SHA"], workspace)
+    evidence = build_manifest(os.environ["CANDIDATE_SHA"], workspace)
     output = workspace / "q16-evidence.json"
     with output.open("x", encoding="utf-8") as stream:
         stream.write(json.dumps(evidence, indent=2, sort_keys=True) + "\n")
-    print(json.dumps({"status": "EVIDENCE_MANIFEST_CREATED", "artifacts": 4}))
+    print(json.dumps({"status": "EVIDENCE_MANIFEST_CREATED", "artifacts": len(evidence["artifacts"])}))
     return 0
 
 
