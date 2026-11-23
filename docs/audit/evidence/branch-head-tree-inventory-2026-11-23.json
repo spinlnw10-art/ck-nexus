@@ -2,7 +2,7 @@
   "snapshot_date": "2026-11-23",
   "main_sha": "944d7cb70a5d59d53c8fb379752bbee2085f7c8c",
   "main_tree": "55bc545e5afd6379c46a464608601efeef213a6a",
-  "live_remote_branches": 402,
+  "live_remote_branches": 401,
   "local_remote_tracking_refs": 407,
   "stale_local_only_refs": [
     "docs/clarify-release-evidence-baseline-20261119",
@@ -14,12 +14,12 @@
   "missing_local_refs": [],
   "branches_scanned": 402,
   "errors": [],
-  "distinct_heads": 381,
-  "distinct_trees": 373,
+  "distinct_heads": 380,
+  "distinct_trees": 372,
   "prefix_counts": {
     "agent": 2,
     "arch": 12,
-    "audit": 4,
+    "audit": 3,
     "automation": 1,
     "backup": 4,
     "brand": 1,
@@ -497,14 +497,6 @@
       "head": "a7d2588c885a2d29fe09faa9369be008da79081a",
       "tree": "ad67fdde45aa6f81bcb1d2dc5bfb51fa39c814c0",
       "head_date": "2026-10-01T12:01:39+07:00",
-      "merged_into_main": false,
-      "stale_local_sha_mismatch": false
-    },
-    {
-      "branch": "audit/repository-organization-20261123",
-      "head": "416efc625d4d3aecd2263de3d9064aa9663e9c21",
-      "tree": "e936a2137c31ee8db0b8e9fc2a81ca11ab9d8593",
-      "head_date": "2026-11-23T04:31:22-05:00",
       "merged_into_main": false,
       "stale_local_sha_mismatch": false
     },
@@ -3580,5 +3572,11 @@
       "merged_into_main": false,
       "stale_local_sha_mismatch": false
     }
-  ]
+  ],
+  "merged_into_main": 30,
+  "not_merged_into_main": 371,
+  "same_tree_as_main": [
+    "main"
+  ],
+  "scope_note": "Baseline covers 401 pre-existing live remote branches at audit start. The audit branch audit/repository-organization-20261123 is excluded from its own evidence to avoid self-referential HEAD/tree snapshots; it is tracked separately by Draft PR #393."
 }
