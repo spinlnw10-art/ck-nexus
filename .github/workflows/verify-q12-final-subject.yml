@@ -77,7 +77,7 @@ jobs:
               if [ -n "$ops" ]; then printf "%s\n" "$ops" > "$root/cgroup.subtree_control"; fi
               enabled=$(cat "$root/cgroup.subtree_control")
               for controller in cpu memory pids; do grep -qw "$controller" <<< "$enabled"; done
-              python3 - <<PYTHON
+              python3 - > "$GITHUB_WORKSPACE/Q12_CGROUP_RAW.json" 2> "$GITHUB_WORKSPACE/q12-gate-error.txt" <<PYTHON
           import json, os, pwd, runpy, subprocess, sys
           worker = pwd.getpwnam(os.environ["CKNEXUS_Q12_WORKER_USER"])
           real_popen = subprocess.Popen
