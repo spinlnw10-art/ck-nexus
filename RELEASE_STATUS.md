@@ -3,7 +3,7 @@
 **Decision: NO-GO FOR PRODUCTION.**
 
 - PR #392 head `bdf224b66e2798920f9fc3b3ae872086bb737ee5`; OPEN / BLOCKED / REVIEW_REQUIRED; no merge/deploy.
-- Checks: `test` FAIL (pytest could not import `creator_app` because CI did not set repository-root `PYTHONPATH`); preflight, CodeQL, Analyze Actions, Analyze JavaScript/TypeScript, Analyze Python, attack-regression, universal-system, and SonarCloud PASS; CodeRabbit skipped. A narrow CI-only fix now sets `PYTHONPATH: ${{ github.workspace }}`; pending CI verification.
+- Checks: `test` FAIL (pytest could not import `creator_app` because CI did not set repository-root `PYTHONPATH`); preflight, CodeQL, Analyze Actions, Analyze JavaScript/TypeScript, Analyze Python, attack-regression, universal-system, and SonarCloud PASS; CodeRabbit skipped. CI/Q15 import-path fixes now set `PYTHONPATH: ${{ github.workspace }}`, and candidate gate dispatch now honors `skip_q13=true`; pending CI/gate verification.
 - Provider key auth via models-list GET: Gemini, Mistral, OpenRouter and local OpenAI AUTH_OK; Groq and Cerebras AUTH_FAILED. No inference call or paid usage was made.
 - Q11 remains blocked under the current OpenAI Responses API contract; alternative vendors are not equivalent Q11 evidence without reviewed contract changes.
 - Q10 no-repeat lock: until 2026-11-24 07:50 ICT.

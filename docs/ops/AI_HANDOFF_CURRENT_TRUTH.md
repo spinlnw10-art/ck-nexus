@@ -5,7 +5,7 @@
 ## Superseding live update — 2026-11-23 08:52 ICT
 
 - Current PR #392 head: `bdf224b66e2798920f9fc3b3ae872086bb737ee5`; OPEN / BLOCKED / REVIEW_REQUIRED; `main` remains `944d7cb70a5d59d53c8fb379752bbee2085f7c8c`.
-- Checks: test FAIL; preflight, CodeQL, Analyze Actions, Analyze JavaScript/TypeScript, Analyze Python, attack-regression, universal-system, and SonarCloud PASS; CodeRabbit skipped. Test failure cause: pytest did not include repository root in `PYTHONPATH`, so nested gateway tests could not import `creator_app`. `.github/workflows/ci.yml` now sets `PYTHONPATH: ${{ github.workspace }}` for Portable regression; fix awaits CI rerun.
+- Checks: test FAIL; preflight, CodeQL, Analyze Actions, Analyze JavaScript/TypeScript, Analyze Python, attack-regression, universal-system, and SonarCloud PASS; CodeRabbit skipped. Test failure cause: pytest did not include repository root in `PYTHONPATH`, so nested gateway tests could not import `creator_app`. `.github/workflows/ci.yml` now sets `PYTHONPATH: ${{ github.workspace }}` for Portable regression; the same fix is applied to Q15 fresh-host install. `candidate-automated-gates.yml` now honors `skip_q13=true`, which was previously defined but not wired to the Q13 job. Fixes await CI/gate reruns.
 - Provider key auth via models-list GET: Gemini, Mistral, OpenRouter, and local OpenAI key AUTH_OK; Groq and Cerebras AUTH_FAILED. Authentication-only, not inference/quota verification. Key values were not displayed.
 - Provider tests: 32/32 PASS.
 - Q11 remains specifically an OpenAI Responses API gate in `docs/Q10_Q16_CLOSURE_CONTRACT.md`; do not mark it passed using another vendor without a reviewed contract/workflow change.

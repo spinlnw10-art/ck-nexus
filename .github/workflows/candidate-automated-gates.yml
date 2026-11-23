@@ -323,6 +323,7 @@ jobs:
       contents: read
 
   q13_postgres_dr:
+    if: ${{ github.event_name != 'workflow_dispatch' || inputs.skip_q13 != true }}
     runs-on: ubuntu-24.04
     services:
       postgres:
@@ -419,6 +420,8 @@ jobs:
           python-version: '3.12'
       - name: Fresh-host install
         shell: bash
+        env:
+          PYTHONPATH: ${{ github.workspace }}
         run: |
           start=$(date +%s)
           python -m pip install --only-binary=:all: --no-deps "uv==0.12.4"
