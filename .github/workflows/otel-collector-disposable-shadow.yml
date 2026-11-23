@@ -7,6 +7,7 @@ on:
       - "Dockerfile.otelcol-shadow"
       - "tests/assurance/otel_collector_shadow_smoke.py"
       - "scripts/assurance/evidence_graph_intake.py"
+      - "scripts/assurance/OTEL_COLLECTOR_DISPOSABLE_SHADOW.md"
       - "tests/assurance/test_evidence_graph_intake.py"
       - ".github/workflows/otel-collector-disposable-shadow.yml"
   workflow_dispatch:
