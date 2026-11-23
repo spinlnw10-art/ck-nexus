@@ -33,11 +33,19 @@ jobs:
         shell: bash
         run: |
           set +e
+          systemd_version=$(systemd --version 2>/dev/null | awk 'NR==1 {print $2}')
+          systemd_major=${systemd_version%%.*}
+          if ! [[ "$systemd_major" =~ ^[0-9]+$ ]] || ((systemd_major < 254)); then
+            echo "systemd >=254 required for DelegateSubgroup; detected ${systemd_version:-missing}" > q12-gate-error.txt
+            echo "rc=2" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
           unit="cknexus-q12-$GITHUB_RUN_ID"
           sudo systemd-run --wait --pipe --collect --unit="$unit" \
             --property="User=$(id -un)" \
             --property="Group=$(id -gn)" \
-            --property="Delegate=yes" \
+            --property="Delegate=cpu memory pids" \
+            --property="DelegateSubgroup=q12-bootstrap" \
             --property="WorkingDirectory=$GITHUB_WORKSPACE" \
             --setenv="GITHUB_WORKSPACE=$GITHUB_WORKSPACE" \
             --setenv="CKNEXUS_ENVIRONMENT=staging" \
@@ -53,11 +61,8 @@ jobs:
               test -n "$cg"
               root="/sys/fs/cgroup$cg"
               echo "$root" > "$GITHUB_WORKSPACE/q12-delegated-root.txt"
-              # cgroup v2 requires a controller-enabled parent to have no
-              # processes. Move this service shell into a delegated child first.
-              bootstrap="$root/q12-bootstrap"
-              mkdir "$bootstrap"
-              printf '%s\n' "$$" > "$bootstrap/cgroup.procs"
+              # systemd 254+ places the service process in this delegated
+              # subgroup so the parent cgroup remains process-free.
               export CKNEXUS_AGNES_CGROUP_ROOT="$root"
               available=$(cat "$root/cgroup.controllers")
               for controller in cpu memory pids; do grep -qw "$controller" <<< "$available"; done
@@ -100,8 +105,13 @@ jobs:
           try: diagnostic=Path("q12-gate-error.txt").read_text(encoding="utf-8")
           except FileNotFoundError: diagnostic=""
           root=os.getenv("DELEGATED_ROOT","")
-          controllers=Path(root,"cgroup.controllers").read_text().split() if root and Path(root,"cgroup.controllers").exists() else []
-          passed=gate_rc==0 and isinstance(raw,dict) and raw.get("status")=="PASS"
+          health=raw.get("health",{}) if isinstance(raw,dict) else {}
+          controllers=health.get("controllers",[]) if isinstance(health,dict) else []
+          required=("cpu","memory","pids")
+          delegation_ready=health.get("ready") is True and all(item in controllers for item in required)
+          worker_user=os.getenv("USER","")
+          worker_non_root=worker_user not in ("", "root", "0")
+          passed=gate_rc==0 and isinstance(raw,dict) and raw.get("status")=="PASS" and delegation_ready and worker_non_root
           evidence={
             "schema_version":7,"gate":"Q12",
             "source_sha":os.getenv("SOURCE_SHA"),"source_tree":os.getenv("SOURCE_TREE"),
@@ -111,8 +121,9 @@ jobs:
             "runner_name":os.getenv("RUNNER_NAME_VALUE"),"runner_os":os.getenv("RUNNER_OS_VALUE"),
             "runner_arch":os.getenv("RUNNER_ARCH_VALUE"),"runner_user":os.getenv("USER"),
             "required_identity":"non-root CK-NEXUS service identity",
+            "worker_identity":{"user":worker_user,"is_non_root":worker_non_root},
             "delegated_root":root,"controllers":controllers,
-            "delegation_ready":bool(root),"gate_exit_code":gate_rc,"raw":raw,
+            "delegation_ready":delegation_ready,"gate_exit_code":gate_rc,"raw":raw,
             "actual_kernel_enforcement":passed,
             "result":"PASS" if passed else ("BLOCKED" if gate_rc==2 else "FAIL"),
             "production_promotion_allowed":passed,"diagnostic":diagnostic[:2000],
