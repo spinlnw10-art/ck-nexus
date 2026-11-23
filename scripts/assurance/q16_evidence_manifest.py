@@ -19,6 +19,40 @@ def digest(path: Path) -> str:
     return hasher.hexdigest()
 
 
+def build_manifest(candidate_sha: str, inputs: dict[str, Path]) -> dict:
+    if not SHA_RE.fullmatch(candidate_sha):
+        raise ValueError("candidate SHA must be a 40-character lowercase Git commit SHA")
+    if not inputs:
+        raise ValueError("at least one evidence artifact is required")
+
+    artifacts = {}
+    for name, path in sorted(inputs.items()):
+        if path.is_symlink() or not path.is_file():
+            raise ValueError(f"{name} must be a regular non-symlink file")
+        artifacts[name] = {
+            "path": str(path),
+            "size_bytes": path.stat().st_size,
+            "sha256": digest(path),
+        }
+
+    return {
+        "schema_version": 1,
+        "evidence_type": "CK-NEXUS-Q16-LICENSE-SCAN",
+        "candidate_commit_sha": candidate_sha,
+        "scope": {
+            "repository_source_scan": "full checked-out source tree; generated and VCS directories excluded",
+            "ort_pipeline": "synthetic fixture only; no dependency download requested",
+        },
+        "artifacts": artifacts,
+        "authority": {
+            "gate_decision_made": False,
+            "license_approval_made": False,
+            "legal_conclusion_made": False,
+            "external_tool_authority": "advisory evidence only",
+        },
+    }
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--candidate-sha", required=True)
@@ -28,44 +62,25 @@ def main() -> int:
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
 
-    if not SHA_RE.fullmatch(args.candidate_sha):
-        parser.error("candidate SHA must be a 40-character lowercase Git commit SHA")
-
-    inputs = {
-        "scancode_full_repo": args.scancode_report,
-        "ort_analyzer": args.ort_analyzer_result,
-        "ort_scanner": args.ort_scan_result,
-    }
-    for name, path in inputs.items():
-        if path.is_symlink() or not path.is_file():
-            parser.error(f"{name} must be a regular non-symlink file")
-
-    evidence = {
-        "schema_version": 1,
-        "evidence_type": "CK-NEXUS-Q16-LICENSE-SCAN",
-        "candidate_commit_sha": args.candidate_sha,
-        "scope": {
-            "repository_source_scan": "full checked-out source tree; generated and VCS directories excluded",
-            "ort_pipeline": "synthetic fixture only; no dependency download requested",
-        },
-        "artifacts": {
-            name: {
-                "path": str(path),
-                "size_bytes": path.stat().st_size,
-                "sha256": digest(path),
-            }
-            for name, path in inputs.items()
-        },
-        "authority": {
-            "gate_decision_made": False,
-            "license_approval_made": False,
-            "legal_conclusion_made": False,
-            "external_tool_authority": "advisory evidence only",
-        },
-    }
-    args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(json.dumps(evidence, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(json.dumps({"status": "EVIDENCE_MANIFEST_CREATED", "artifacts": len(inputs)}))
+    try:
+        evidence = build_manifest(
+            args.candidate_sha,
+            {
+                "scancode_full_repo": args.scancode_report,
+                "ort_analyzer": args.ort_analyzer_result,
+                "ort_scanner": args.ort_scan_result,
+            },
+        )
+        if args.output.is_symlink():
+            raise ValueError("output must not be a symlink")
+        args.output.parent.mkdir(parents=True, exist_ok=True)
+        args.output.write_text(
+            json.dumps(evidence, indent=2, sort_keys=True) + "\\n",
+            encoding="utf-8",
+        )
+    except (OSError, ValueError) as exc:
+        parser.error(str(exc))
+    print(json.dumps({"status": "EVIDENCE_MANIFEST_CREATED", "artifacts": 3}))
     return 0
 
 
