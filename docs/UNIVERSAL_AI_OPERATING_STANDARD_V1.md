@@ -67,5 +67,20 @@ External standards/frameworks are reference/crosswalk inputs unless independentl
 ## 12. Audit question
 For every completed task, the system must answer: who did what, to what, using which capability and authorization, under which policy and risk decision, by which path, what failed, which alternative was used, how it was verified, and where the evidence is stored.
 
-## 13. Promotion
+## 13. Completion, publication, and duplicate-work lock
+
+For every authorized repository task, the agent MUST perform a prior-work lookup before acting: inspect the work ledger, current branch/commit, remote refs, existing CI results, and saved evidence. A new chat or session is not a reason to repeat completed work.
+
+When a task is complete and its evidence is verified, the agent MUST, in the same work session:
+1. Update the canonical work ledger with task ID/fingerprint, scope, exact source SHA, result, evidence paths and hashes, and timestamp.
+2. Commit the completed change on its designated task branch.
+3. Push that commit to the authorized GitHub remote immediately.
+4. Read back the remote branch SHA and verify it exactly matches the local commit.
+5. Mark the task `PUBLISHED` only after that remote-SHA check succeeds. If commit or push fails, record `BLOCKED` with the exact error; never claim publication.
+
+A task with current, valid completion evidence is `REUSE — DO NOT REPEAT`. Do not rerun its scans, tests, edits, or documentation updates merely because the session changed. Reopen it only when a source/workflow/requirement change affects the result, evidence expires or is proven defective, or a new concrete failure is observed. Any justified rerun must state the changed input, why prior evidence is invalid, and the smallest affected check; link the new result to the original task instead of creating a duplicate.
+
+This rule does not authorize merge, deployment, force-push, destructive changes, or permission changes. Those remain separate actions requiring their own authorization.
+
+## 14. Promotion
 DONE is derived from evidence, not asserted. Production remains prohibited unless production-specific gates are satisfied.

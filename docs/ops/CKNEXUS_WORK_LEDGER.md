@@ -18,15 +18,14 @@ Purpose: prevent duplicate scans, duplicate fixes, and conflicting status report
 - Device: Termux localhost (Desktop Commander device ID 9e94297b-f265-496a-9cb6-10f78f8d0022)
 - Worktree: $HOME/cknexus-pr392-audit
 - Branch: fix/q10-attachment-hardening-20261123
-- HEAD: efbb2ee157fcfdedfde054508fafaf21cbaf88fa
+- Latest documentation HEAD before this policy commit: 787ef3729caa9bf2bb876c2dc097c51fa0821361 (documentation-only; application code candidate remains efbb2ee157fcfdedfde054508fafaf21cbaf88fa).
 - Worktree status at ledger creation: clean
 - Primary worktree: not touched
 - Git remote: https://github.com/spinlnw10-art/ck-nexus.git
 
 ## Live GitHub state checked 2026-11-23
-- Remote branch fix/q10-attachment-hardening-20261123 -> efbb2ee157fcfdedfde054508fafaf21cbaf88fa
-- Remote branch ops/provider-free-go-clean -> efbb2ee157fcfdedfde054508fafaf21cbaf88fa
-- PR #392: OPEN; head SHA efbb2ee157fcfdedfde054508fafaf21cbaf88fa; base main; merge state BLOCKED; review decision REVIEW_REQUIRED.
+- Latest remote refs verified before this policy commit: both `fix/q10-attachment-hardening-20261123` and `ops/provider-free-go-clean` -> `787ef3729caa9bf2bb876c2dc097c51fa0821361`.
+- PR #392 was last observed OPEN / BLOCKED / REVIEW_REQUIRED before the final documentation-only push; recheck the exact PR head and checks before making a current-state claim.
 - No merge or deploy performed.
 
 ## Exact-subject Q10 artifact already exists — DO NOT RERUN
@@ -73,11 +72,8 @@ Do not suppress or mass-fix. Next triage should start with the 107 non-test find
 - universal-system: PASS
 The PR is still blocked by REVIEW_REQUIRED. SonarCloud failure needs issue-level review only if it contains a release-relevant defect; it is not by itself proof that every finding must be fixed.
 
-## Known stale/conflicting status record — do not rely on without reconciliation
-RELEASE_STATUS.md at this worktree still states:
-- PR head dc42ab23adcad8c25724f202fa7c72d0c8b5baa3
-- Q10 latest artifact source SHA eea74e4df3406c231f22dc6fe5dced4039b20129
-These conflict with live GitHub PR head and downloaded exact-subject Q10 report above. Treat those lines as STALE until RELEASE_STATUS.md is reconciled. Do not rerun Q10 to compensate for stale prose; update the status record to cite the already-existing run 45088376317 and exact report hash.
+## Historical status-record conflict — reconciled in documentation update
+The older RELEASE_STATUS.md snapshot contained stale PR/Q10 identifiers. It was updated in documentation commit `b5e542e41cb55bad9604cd487818a1faaa80e738`, then the ledger timestamp was corrected in `787ef3729caa9bf2bb876c2dc097c51fa0821361`. Do not reopen this documentation task unless new source facts make the current record inaccurate.
 
 ## Current release decision
 NO-GO FOR PRODUCTION.
@@ -89,12 +85,12 @@ Reasons currently evidenced:
 5. Issue #66 acceptance criteria are not verified as fully closed.
 
 ## Next actions — do these in order, without repeating completed checks
-1. Reconcile RELEASE_STATUS.md against the exact live PR SHA and existing Q10 artifact (no scanner rerun).
+1. Recheck PR #392 head SHA and checks after the latest documentation-only push; do not rerun application scans.
 2. Review the 107 non-test Bandit LOW findings from the saved JSON; record dispositions and only remediate real risks.
-3. Review SonarCloud's actionable issues; separate real release blockers from maintainability/quality findings.
+3. Review SonarCloud actionable issues; separate real release blockers from maintainability/quality findings.
 4. Verify Issue #66 acceptance criteria against current code/tests; do not reopen already-passed tests without a reason.
 5. Work on only the remaining current-subject Q11–Q16 evidence gaps.
-6. Request/obtain the required independent review; PR merge and deployment remain separate approval steps.
+6. Obtain required review; PR merge and deployment remain separate approval steps.
 
 ## 24-hour duplicate-work lock
 Until 2026-11-24 07:40 ICT, do not repeat the following against SHA efbb2ee157fcfdedfde054508fafaf21cbaf88fa:
@@ -105,3 +101,33 @@ Until 2026-11-24 07:40 ICT, do not repeat the following against SHA efbb2ee157fc
 - Ruff / compile / targeted 43-test suite
 - GitHub CI checks already listed above
 Re-use this ledger and artifacts. If a check must be repeated because the code or workflow changed, state exactly what changed and why the old evidence is invalid before rerunning only the affected check.
+
+## Mandatory completion and no-repeat rule (approved 2026-11-23)
+
+- Before every action, search this ledger and existing Git/evidence artifacts for the same task or fingerprint.
+- If a matching task is already complete and its evidence remains valid, reuse it and take no duplicate action.
+- When an authorized task is completed, update this ledger, commit, push to its designated task branch immediately, then verify the remote branch SHA equals the local commit SHA.
+- Status vocabulary: `DONE` = task outcome verified; `PUBLISHED` = commit pushed and remote SHA read back; `BLOCKED` = publication/verification failed. Never conflate these states.
+- Record task fingerprint, source SHA, changed files, test/check result, evidence path/hash, commit SHA, remote branch/SHA, and timestamp.
+- Reopen only for a material source/workflow/requirement change, expired or defective evidence, or a newly observed failure. Record why old evidence no longer applies and rerun only the affected check.
+- Do not merge, deploy, force-push, or make destructive/permission changes under this rule; those require separate authorization.
+
+## 24-hour history review — 2026-11-22 to 2026-11-23 (ICT)
+
+This is a bounded review of retrievable conversation summaries and current repository artifacts, not a claim that every raw message was exhaustively exported.
+
+### Confirmed completed outcomes
+- Provider work: history records commit `8eb52e86` and later commit `177b35e2160e9e8fd3559ea323db4b725471bd7f` on `ops/provider-free-go-clean`; the provider-focused test set was reported as 37/37 PASS. Treat the test result as reusable for the exact tested source SHA only. The available history does not expose enough raw detail to count every repeated edit/run between these commits.
+- Repository status documentation: `README.md`, `RELEASE_STATUS.md`, and this work ledger were updated and pushed; latest known remote branch SHA is `787ef3729caa9bf2bb876c2dc097c51fa0821361` on `fix/q10-attachment-hardening-20261123` and `ops/provider-free-go-clean`. Do not redo these documentation updates without a new factual change.
+- ChatGPT-to-Fireflies connector: account/meeting reads were verified. This is NOT proof that Fireflies is integrated with CK-NEXUS.
+
+### Not completed / must not be counted as done
+- Fireflies-to-CK-NEXUS and n8n-to-CK-NEXUS integration remained NOT VERIFIED/BLOCKED; n8n was not available on Termux at port 5678 and VPS was offline in the retrieved session summary.
+- SonarCloud remained FAIL or cancelled; no completed issue-level disposition was evidenced.
+- PR #392 remained OPEN / BLOCKED / REVIEW_REQUIRED in the latest prior check; do not claim merge.
+
+### Duplicate-work finding and correction
+- At least two provider-related commit points are recorded (`8eb52e86`, `177b35e...`) with the same reported 37/37 provider test outcome. This establishes repeated work around the same workstream, but the available summary is insufficient to assert an exact number of duplicate test executions or duplicate code edits.
+- The assistant also revisited PR/status and release planning after prior results existed, instead of consistently treating the ledger and exact-SHA evidence as authoritative.
+- Earlier wording that counted Fireflies as a completed CK-NEXUS integration was incorrect: only the ChatGPT connector read path was verified; CK-NEXUS integration was not.
+- Going forward, count one task once by stable task fingerprint; later commits are revisions of that task, not separate completed outcomes. Reuse valid 37/37 evidence for its tested SHA and do not rerun it without a documented invalidation reason.
