@@ -99,6 +99,19 @@ jobs:
           cp "$RUNNER_TEMP/scancode-full-repo.json" evidence/assurance/shadow/q16/scancode-full-repo.json
           cp "$RUNNER_TEMP/scancode-install-report.json" evidence/assurance/shadow/q16/scancode-install-report.json
 
+      - name: Install pinned ORT Python Inspector dependency
+        env:
+          PYTHON_INSPECTOR_SHA256: 8aa5b0f93fc9150377459fd08d0cf2c7a0348e93ae24c6c5f22f3052114daa7b
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/python-inspector-wheel"
+          python -m pip download --no-deps --only-binary=:all: --dest "$RUNNER_TEMP/python-inspector-wheel" "python-inspector==0.15.2"
+          WHEEL="$RUNNER_TEMP/python-inspector-wheel/python_inspector-0.15.2-py3-none-any.whl"
+          test -f "$WHEEL"
+          echo "$PYTHON_INSPECTOR_SHA256  $WHEEL" | sha256sum --check
+          python -m pip install --constraint "$RUNNER_TEMP/scancode-constraints.txt" --report "$RUNNER_TEMP/python-inspector-install-report.json" "$WHEEL"
+          python-inspector --version
+
       - name: Run ORT analyzer and ScanCode-backed scanner on synthetic fixture
         env:
           ORT_DATA_DIR: ${{ runner.temp }}/ort-data
