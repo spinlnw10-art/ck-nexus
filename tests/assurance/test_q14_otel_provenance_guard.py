@@ -136,7 +136,7 @@ class Q14ProvenanceGuardTests(unittest.TestCase):
                 image=IMAGE,
                 release_tag="latest",
                 candidate_sha=CANDIDATE,
-            allowed_root=self.root,
+                allowed_root=self.root,
                 slsa_status="VERIFIED",
             )
 
