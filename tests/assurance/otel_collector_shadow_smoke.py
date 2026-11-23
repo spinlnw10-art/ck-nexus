@@ -6,7 +6,7 @@ import json
 import time
 
 
-COLLECTOR_HOST = "127.0.0.1"
+COLLECTOR_HOST = "172.30.0.2"
 COLLECTOR_PORT = 4318
 ALLOWED_PATHS = frozenset({"/v1/traces", "/v1/metrics"})
 TRACE_ID = "5b8aa5a2d2c872e8321cf37308d69df2"
