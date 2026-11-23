@@ -1,0 +1,189 @@
+name: Q14 OTel Collector Cosign Provenance Shadow
+
+on:
+  pull_request:
+    paths:
+      - "scripts/assurance/q14_otel_provenance_guard.py"
+      - "tests/assurance/test_q14_otel_provenance_guard.py"
+      - "scripts/assurance/Q14_OTEL_COSIGN_PROVENANCE_SHADOW.md"
+      - ".github/workflows/q14-otel-cosign-provenance-shadow.yml"
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: "Official OpenTelemetry Collector release tag (stable vX.Y.Z)"
+        required: true
+        type: string
+        default: "v0.165.0"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: q14-otel-cosign-provenance-shadow-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  evidence-guard-tests:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Checkout exact candidate
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: "3.12"
+      - name: Run synthetic evidence guard tests
+        run: python -m unittest tests.assurance.test_q14_otel_provenance_guard -v
+
+  verify-official-release:
+    needs: evidence-guard-tests
+    if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    env:
+      RELEASE_TAG: ${{ inputs.release_tag || 'v0.165.0' }}
+      CANDIDATE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+      OIDC_ISSUER: https://token.actions.githubusercontent.com
+      IMAGE_REPOSITORY: ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib
+    steps:
+      - name: Checkout exact candidate
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Install pinned Cosign release
+        uses: sigstore/cosign-installer@faadad0cce49287aee09b3a48701e75088a2c6ad
+        with:
+          cosign-release: v3.0.2
+      - name: Validate official release metadata and construct immutable image reference
+        id: image
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ ! "$RELEASE_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Release tag must be a stable vX.Y.Z value" >&2
+            exit 2
+          fi
+          version="${RELEASE_TAG#v}"
+          curl --fail --silent --show-error --location --retry 2 --proto '=https' --proto-redir '=https' \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/open-telemetry/opentelemetry-collector-releases/releases/tags/$RELEASE_TAG" \
+            -o release.json
+          jq -e --arg tag "$RELEASE_TAG" \
+            '.tag_name == $tag and .draft == false and .prerelease == false' release.json >/dev/null
+          image="$IMAGE_REPOSITORY:$version"
+          echo "image=$image" >> "$GITHUB_OUTPUT"
+          echo "release_tag=$RELEASE_TAG" >> "$GITHUB_OUTPUT"
+          echo "release metadata confirmed: $RELEASE_TAG"
+          echo "image reference: $image"
+      - name: Verify official image signature and signing workflow identity
+        id: signature
+        env:
+          IMAGE: ${{ steps.image.outputs.image }}
+          RELEASE_TAG: ${{ steps.image.outputs.release_tag }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          identity="https://github.com/open-telemetry/opentelemetry-collector-releases/.github/workflows/base-release.yaml@refs/tags/$RELEASE_TAG"
+          cosign version
+          cosign verify "$IMAGE" \
+            --certificate-identity="$identity" \
+            --certificate-oidc-issuer="$OIDC_ISSUER" \
+            > signature-verification.json
+          digest="$(python scripts/assurance/q14_otel_provenance_guard.py \
+            --signature-input signature-verification.json --slsa-status VERIFICATION_ERROR --extract-digest)"
+          echo "digest=$digest" >> "$GITHUB_OUTPUT"
+          echo "identity=$identity" >> "$GITHUB_OUTPUT"
+          echo "Verified signed image digest: $digest"
+      - name: Check SLSA provenance for the exact signed digest
+        id: provenance
+        env:
+          IMAGE: ${{ steps.image.outputs.image }}
+          DIGEST: ${{ steps.signature.outputs.digest }}
+          IDENTITY: ${{ steps.signature.outputs.identity }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if cosign verify-attestation "$IMAGE@$DIGEST" \
+            --type slsaprovenance \
+            --certificate-identity="$IDENTITY" \
+            --certificate-oidc-issuer="$OIDC_ISSUER" \
+            > provenance-verification.json 2> provenance-verification.stderr; then
+            echo "slsa_status=VERIFIED" >> "$GITHUB_OUTPUT"
+          elif grep -Fq "none of the attestations matched the predicate type: slsaprovenance" provenance-verification.stderr; then
+            echo "slsa_status=NOT_PUBLISHED" >> "$GITHUB_OUTPUT"
+            echo "Upstream image registry has no SLSA provenance attestation for this digest." > provenance-status.txt
+          else
+            echo "slsa_status=VERIFICATION_ERROR" >> "$GITHUB_OUTPUT"
+            cat provenance-verification.stderr >&2
+            exit 1
+          fi
+      - name: Assemble candidate-bound evidence report
+        id: report
+        if: always() && steps.signature.outcome == 'success'
+        env:
+          IMAGE: ${{ steps.image.outputs.image }}
+          RELEASE_TAG: ${{ steps.image.outputs.release_tag }}
+          SLSA_STATUS: ${{ steps.provenance.outputs.slsa_status || 'VERIFICATION_ERROR' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          args=(
+            --signature-input signature-verification.json
+            --slsa-status "$SLSA_STATUS"
+            --image "$IMAGE"
+            --release-tag "$RELEASE_TAG"
+            --candidate-sha "$CANDIDATE_SHA"
+            --output q14-image-provenance-evidence.json
+          )
+          if [[ "$SLSA_STATUS" == "VERIFIED" ]]; then
+            args+=(--provenance-input provenance-verification.json)
+          fi
+          python scripts/assurance/q14_otel_provenance_guard.py "${args[@]}"
+      - name: Publish non-authoritative verification evidence
+        if: always() && steps.report.outcome == 'success'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: q14-otel-image-provenance-${{ github.run_id }}
+          path: |
+            q14-image-provenance-evidence.json
+            signature-verification.json
+            provenance-verification.json
+            provenance-verification.stderr
+            provenance-status.txt
+            release.json
+          if-no-files-found: ignore
+          retention-days: 14
+      - name: Write verification summary
+        if: always() && steps.report.outcome == 'success'
+        env:
+          IMAGE: ${{ steps.image.outputs.image }}
+          DIGEST: ${{ steps.signature.outputs.digest }}
+          RELEASE_TAG: ${{ steps.image.outputs.release_tag }}
+          SLSA_STATUS: ${{ steps.provenance.outputs.slsa_status || 'VERIFICATION_ERROR' }}
+        run: |
+          {
+            printf '%s\n' '## Q14 OTel image verification' ''
+            printf '%s\n' "- Release: $RELEASE_TAG"
+            printf '%s\n' "- Image: $IMAGE"
+            printf '%s\n' "- Digest: $DIGEST"
+            printf '%s\n' '- Cosign signature: verified against exact release workflow identity'
+            printf '%s\n' "- SLSA provenance: $SLSA_STATUS"
+            printf '%s\n' '- Image layers pulled: no'
+            printf '%s\n' '- Container started: no'
+            printf '%s\n' '- Production promotion eligible: no'
+            printf '%s\n' '- CK-NEXUS gate decision: not made'
+          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Enforce SLSA provenance requirement
+        if: always() && steps.signature.outcome == 'success' && steps.provenance.outputs.slsa_status != 'VERIFIED'
+        run: |
+          echo "NO-GO: image signature is valid, but SLSA provenance is absent or unverified." >&2
+          exit 1
