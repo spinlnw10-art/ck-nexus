@@ -1,44 +1,55 @@
-# Live status update — 2026-11-23 (PR #392 current candidate)
+# Live status update — 2026-11-23 (PR #392 current branch head)
 
 **Decision: NO-GO FOR PRODUCTION.**
 
-## Current exact candidate
+## Current repository identity
 
 - PR #392: OPEN; base `main`; head branch `ops/provider-free-go-clean`; no merge or deployment.
-- Candidate source SHA: `c656ad5991464d7e9457adc2a33507b0d0daa623`.
-- Candidate source tree: `ea290bb80de030a020c6b94582fe436c25dccbd6`.
+- Latest PR head: `c62cba53e4049adbd46a0984de3480361bbe233c`.
+- Latest Git tree: `1ae74f485c37b4c10dbe81191da25f4c9bbc68fc`.
 - Canonical Q10–Q16 runtime manifest: `d3fb76bb9d576e88f9873eda1ff9eff23edeae41030439e3bea619ae1dbdc56c`.
-- Candidate automated-gates run: `45117449244`; Q10 and Q11 were skipped.
+- The latest commits changed release workflows and status documentation; the runtime manifest remains the same. Earlier Q12–Q16 artifacts were produced at source SHA `c656ad5991464d7e9457adc2a33507b0d0daa623`, not the latest full commit SHA. They remain candidate evidence and are not promoted.
 
-## Latest candidate evidence (run 45117449244)
+## Latest verified repository checks
 
-| Gate | Result | Meaning |
+- The previous head `37b117716744bb9c9fe7dea7c2b8d49bf72ac118` had test, preflight, attack-regression, universal-system, CodeQL and language analysis checks pass.
+- Latest workflow changes at `c62cba53e4049adbd46a0984de3480361bbe233c` have triggered a new CI cycle. Current check results must be read live; no success is claimed yet.
+- SonarCloud Quality Gate passed on the prior head, but 35 new issues remain recorded and 0.0% new-code coverage was reported. Passing the gate is not issue triage.
+
+## Gate evidence and restrictions
+
+| Gate | Current release status | Notes |
 |---|---|---|
-| Q10 | NOT_VERIFIED | Skipped; independent security review and current-subject scan remain open. |
-| Q11 | BLOCKED / NOT_VERIFIED | Skipped; valid OpenAI credential and authorized live test are still required. |
-| Q12 | PASS | Delegated cgroup v2 enforcement and non-root worker were observed. |
-| Q13 | PASS_CANDIDATE | Isolated staging backup/restore and sentinel round-trip passed. |
-| Q14 | PASS_CANDIDATE | Staging alert delivery and health/metrics checks passed. |
-| Q15 | PASS_CANDIDATE | Fresh Ubuntu 24.04 host smoke and portable regression passed. |
-| Q16 image | PASS_CANDIDATE | Candidate image checks passed, including non-root runtime. |
-| Q16 licenses | PASS | 56 runtime distributions; unresolved license evidence: 0. |
+| Q10 | NOT_VERIFIED | No-repeat lock ends 2026-11-24 07:50 ICT; current-source scan and independent security review remain required. |
+| Q11 | BLOCKED / NOT_VERIFIED | Previous live probe returned 401 invalid_api_key. No paid generation request was made. |
+| Q12 | PASS_CANDIDATE only for prior source SHA | Prior artifact is not bound to the latest full commit SHA; provenance branch rules remain mandatory. |
+| Q13 | PASS_CANDIDATE only for prior source SHA | Staging backup/restore passed; independent release promotion is not established. |
+| Q14 | PASS_CANDIDATE only for prior source SHA | Workflow now pins Prometheus and Alertmanager by official multi-platform image index digests and records digest verification. Promotion is explicitly false until independent review. |
+| Q15 | PASS_CANDIDATE only for prior source SHA | Fresh Ubuntu 24.04 host smoke passed on the prior candidate. |
+| Q16 image | PASS_CANDIDATE only for prior source SHA | Image smoke and non-root checks passed on the prior candidate. |
+| Q16 licenses | PASS for prior source SHA | 56 runtime distributions; unresolved license evidence: 0. |
 
-The six downloaded artifact ZIPs were opened and their JSON contents inspected. Their source SHA and runtime manifest match the candidate above. However, their workflow branch is `ops/provider-free-go-clean`; the release provenance verifier currently allowlists different branches for Q12–Q16. Therefore these artifacts are **not yet accepted by the final release provenance gate**. The allowlist was not weakened.
+The release provenance verifier's branch allowlist has not been weakened. Candidate results are not relabeled as production PASS. The candidate automated-gates workflow now rejects skipped gates unless repository evidence matches the exact current source SHA and runtime manifest and includes run/artifact identity plus a valid gate result.
 
 ## Corrections made on this PR branch
 
-- Updated all three stale final-package manifest pins from `370f8a8...` to the canonical candidate manifest `d3fb76b...`.
-- Updated the final package's runtime inventory assertion from 55 to 56, matching the latest candidate license artifact.
-- The final package remains fail-closed: Q10/Q11 are unresolved and Q14 is still candidate-only. No package release, merge, or deployment is authorized.
+- Updated the final production package's three stale manifest pins to the canonical runtime manifest.
+- Updated the runtime inventory assertion from 55 to 56.
+- Pinned Q14 Prometheus and Alertmanager images to official immutable multi-platform index digests; Q14 now requires the exact digests to be present in the pulled image metadata.
+- Changed Q14 evidence so a staging candidate cannot claim production promotion is allowed.
+- Added exact-source evidence validation before a gate can be skipped in the candidate automated-gates workflow.
+- Existing provider routing already requires explicit paid opt-in for Gemini, Groq and OpenAI; Gemini key is sent in an HTTP header; the Groq default is `openai/gpt-oss-20b`; configured provider-attempt limits are preserved.
 
 ## Remaining blockers
 
-1. Q10: wait for the no-repeat lock to expire at **2026-11-24 07:50 ICT**, then perform the required current-candidate scan and independent human security review.
-2. Q11: obtain an owner-authorized valid OpenAI API credential and an approved live test path. No paid generation request has been made.
-3. Q12–Q16: regenerate/verify evidence through the provenance-approved branch paths; do not bypass branch restrictions or relabel candidate results as production PASS.
-4. Obtain required independent review and complete the final production package only after every mandatory gate passes.
+1. Q10: wait until the no-repeat lock expires at **2026-11-24 07:50 ICT**, then run the required current-source scan and obtain independent human security review and finding dispositions.
+2. Q11: a valid owner-authorized OpenAI credential and approved no-cost live test path are still required. Do not paste secrets into chat or use paid generation without authorization.
+3. Q12–Q16: obtain current-source evidence on their provenance-approved branches and complete independent review. Do not weaken branch allowlists or convert staging candidates to production PASS.
+4. Resolve the CodeQL SSRF alert with its full data-flow details and verify its affected branch; the currently available PR comment alone is insufficient to claim it fixed.
+5. Obtain required independent human review and complete the final production package only after every mandatory gate passes.
+6. Q01–Q09 are not re-certified by this PR update; historical evidence must be checked separately.
 
-**Release decision remains NO-GO.** Q01–Q09 are not re-certified by this PR update; historical evidence must be checked separately.
+**Release decision remains NO-GO.** No merge, production tag, package publication, or deployment has been performed.
 
 ---
 
