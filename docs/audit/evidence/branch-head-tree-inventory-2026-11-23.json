@@ -59,7 +59,7 @@
     "verify": 20
   },
   "branches_merged_into_main": 30,
-  "branches_not_merged_into_main": 372,
+  "branches_not_merged_into_main": 371,
   "branches_same_tree_as_main": [
     "main"
   ],
