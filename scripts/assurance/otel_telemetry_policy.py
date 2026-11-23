@@ -71,15 +71,19 @@ def validate_event(event: Any) -> dict[str, Any]:
     operation = event["ck_nexus.operation"]
     outcome = event["ck_nexus.outcome"]
     duration = event["ck_nexus.duration_ms"]
-    if component not in COMPONENTS:
+    if not isinstance(component, str) or component not in COMPONENTS:
         raise TelemetryPolicyError("component is not allowlisted")
-    if operation not in OPERATIONS:
+    if not isinstance(operation, str) or operation not in OPERATIONS:
         raise TelemetryPolicyError("operation is not allowlisted")
-    if outcome not in OUTCOMES:
+    if not isinstance(outcome, str) or outcome not in OUTCOMES:
         raise TelemetryPolicyError("outcome is not allowlisted")
     if isinstance(duration, bool) or not isinstance(duration, (int, float)):
         raise TelemetryPolicyError("duration_ms must be numeric")
-    if not math.isfinite(duration) or not 0 <= duration <= 600_000:
+    try:
+        finite_duration = math.isfinite(duration)
+    except OverflowError:
+        finite_duration = False
+    if not finite_duration or not 0 <= duration <= 600_000:
         raise TelemetryPolicyError("duration_ms is outside the permitted range")
 
     normalized: dict[str, Any] = {
@@ -96,7 +100,7 @@ def validate_event(event: Any) -> dict[str, Any]:
         normalized["service.version"] = version
     if "deployment.environment.name" in event:
         environment = event["deployment.environment.name"]
-        if environment not in ENVIRONMENTS:
+        if not isinstance(environment, str) or environment not in ENVIRONMENTS:
             raise TelemetryPolicyError("environment is not allowlisted")
         normalized["deployment.environment.name"] = environment
     return normalized
