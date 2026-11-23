@@ -66,7 +66,7 @@ def main() -> int:
     output = root / "q16" / "q16-evidence.json"
     evidence = build_manifest(candidate_sha, root)
     with output.open("x", encoding="utf-8") as stream:
-        stream.write(json.dumps(evidence, indent=2, sort_keys=True) + "\\n")
+        stream.write(json.dumps(evidence, indent=2, sort_keys=True) + "\n")
     print(json.dumps({"status": "EVIDENCE_MANIFEST_CREATED", "artifacts": 4}))
     return 0
 
