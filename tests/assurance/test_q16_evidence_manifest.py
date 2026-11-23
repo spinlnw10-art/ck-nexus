@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import importlib.util
-import json
 import tempfile
 import unittest
 from pathlib import Path
@@ -25,8 +24,28 @@ class Q16EvidenceManifestTests(unittest.TestCase):
             path.write_text('{"synthetic":true}', encoding="utf-8")
             self.assertEqual(
                 MODULE.digest(path),
-                "5f22e9b44a2c4b8270ac2f0e3f8e39b7d3c53a0f1b8d6c0b5a7f2e8d8c7e5f5f",
+                "a8198524f58e72b56283ab71ebddada22840f108b46ef7165bb3fca9919c5558",
             )
+
+    def test_manifest_binds_candidate_and_artifact_hashes(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "evidence.json"
+            path.write_text('{"synthetic":true}', encoding="utf-8")
+            manifest = MODULE.build_manifest(
+                "a" * 40,
+                {"synthetic": path},
+            )
+            self.assertEqual(manifest["candidate_commit_sha"], "a" * 40)
+            self.assertEqual(
+                manifest["artifacts"]["synthetic"]["sha256"],
+                MODULE.digest(path),
+            )
+            self.assertFalse(manifest["authority"]["gate_decision_made"])
+            self.assertFalse(manifest["authority"]["legal_conclusion_made"])
+
+    def test_rejects_invalid_candidate_sha(self) -> None:
+        with self.assertRaisesRegex(ValueError, "candidate SHA"):
+            MODULE.build_manifest("not-a-sha", {})
 
     def test_rejects_symlink_artifact(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -35,7 +54,8 @@ class Q16EvidenceManifestTests(unittest.TestCase):
             target.write_text("{}", encoding="utf-8")
             link = root / "link.json"
             link.symlink_to(target)
-            self.assertTrue(link.is_symlink())
+            with self.assertRaisesRegex(ValueError, "non-symlink"):
+                MODULE.build_manifest("b" * 40, {"linked": link})
 
 
 if __name__ == "__main__":
