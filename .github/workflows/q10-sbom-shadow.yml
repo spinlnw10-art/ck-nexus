@@ -101,6 +101,9 @@ jobs:
           set -euo pipefail
           mkdir -p "$RUNNER_TEMP/q10-evidence"
           "$RUNNER_TEMP/q10-tools/syft-bin" "dir:$TARGET_DIR" \
+            --source-name ck-nexus \
+            --source-version "$TARGET_SHA" \
+            --base-path "$TARGET_DIR" \
             -o "json=$RUNNER_TEMP/q10-evidence/syft-source.json" \
             -o "cyclonedx-json=$RUNNER_TEMP/q10-evidence/sbom-source.cdx.json"
 
