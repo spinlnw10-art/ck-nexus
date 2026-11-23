@@ -1,0 +1,4036 @@
+{
+  "main": "944d7cb70a5d59d53c8fb379752bbee2085f7c8c",
+  "live_remote_branches": 402,
+  "branches_scanned": 402,
+  "errors": [],
+  "summary": {
+    "ahead_nonzero": 372,
+    "behind_nonzero": 387,
+    "unique_commits_nonzero": 372,
+    "unique_blobs_nonzero": 368,
+    "total_unique_blobs_across_branch_scans": 10283,
+    "total_unique_commits_across_branch_scans": 6984
+  },
+  "branches": [
+    {
+      "branch": "agent/closure-diagnostics-2026-10-02",
+      "ahead": 1,
+      "behind": 87,
+      "unique_commits_vs_main": 1,
+      "unique_blobs_vs_main": 1,
+      "unique_trees_vs_main": 3,
+      "unique_objects_vs_main": 5,
+      "head_date": "2026-10-02T08:16:29+07:00"
+    },
+    {
+      "branch": "agent/unified-control-package",
+      "ahead": 0,
+      "behind": 268,
+      "unique_commits_vs_main": 0,
+      "unique_blobs_vs_main": 0,
+      "unique_trees_vs_main": 0,
+      "unique_objects_vs_main": 0,
+      "head_date": "2026-09-07T08:58:03+07:00"
+    },
+    {
+      "branch": "arch/autonomous-platform-fabric-gen3-v01",
+      "ahead": 14,
+      "behind": 395,
+      "unique_commits_vs_main": 14,
+      "unique_blobs_vs_main": 14,
+      "unique_trees_vs_main": 42,
+      "unique_objects_vs_main": 70,
+      "head_date": "2026-08-15T05:13:55+07:00"
+    },
+    {
+      "branch": "arch/autonomous-platform-fabric-v01",
+      "ahead": 11,
+      "behind": 395,
+      "unique_commits_vs_main": 11,
+      "unique_blobs_vs_main": 11,
+      "unique_trees_vs_main": 33,
+      "unique_objects_vs_main": 55,
+      "head_date": "2026-08-14T23:28:06+07:00"
+    },
+    {
+      "branch": "arch/base44-cknexus-federation-v01",
+      "ahead": 19,
+      "behind": 395,
+      "unique_commits_vs_main": 19,
+      "unique_blobs_vs_main": 19,
+      "unique_trees_vs_main": 57,
+      "unique_objects_vs_main": 95,
+      "head_date": "2026-08-15T05:24:00+07:00"
+    },
+    {
+      "branch": "arch/cognitive-governor-contracts-v01",
+      "ahead": 32,
+      "behind": 395,
+      "unique_commits_vs_main": 32,
+      "unique_blobs_vs_main": 86,
+      "unique_trees_vs_main": 128,
+      "unique_objects_vs_main": 246,
+      "head_date": "2026-08-15T05:58:18+07:00"
+    },
+    {
+      "branch": "arch/control-plane-contracts-v01",
+      "ahead": 25,
+      "behind": 395,
+      "unique_commits_vs_main": 25,
+      "unique_blobs_vs_main": 45,
+      "unique_trees_vs_main": 84,
+      "unique_objects_vs_main": 154,
+      "head_date": "2026-08-15T05:49:28+07:00"
+    },
+    {
+      "branch": "arch/fabric-hardening-v02",
+      "ahead": 22,
+      "behind": 395,
+      "unique_commits_vs_main": 22,
+      "unique_blobs_vs_main": 33,
+      "unique_trees_vs_main": 70,
+      "unique_objects_vs_main": 125,
+      "head_date": "2026-08-15T05:48:48+07:00"
+    },
+    {
+      "branch": "arch/knowledge-memory-ingestion-v01",
+      "ahead": 29,
+      "behind": 395,
+      "unique_commits_vs_main": 29,
+      "unique_blobs_vs_main": 58,
+      "unique_trees_vs_main": 103,
+      "unique_objects_vs_main": 190,
+      "head_date": "2026-08-15T05:50:44+07:00"
+    },
+    {
+      "branch": "arch/monorepo-layered-v01",
+      "ahead": 2,
+      "behind": 395,
+      "unique_commits_vs_main": 2,
+      "unique_blobs_vs_main": 2,
+      "unique_trees_vs_main": 6,
+      "unique_objects_vs_main": 10,
+      "head_date": "2026-08-14T23:20:04+07:00"
+    },
+    {
+      "branch": "arch/monorepo-layered-v1",
+      "ahead": 1,
+      "behind": 395,
+      "unique_commits_vs_main": 1,
+      "unique_blobs_vs_main": 1,
+      "unique_trees_vs_main": 3,
+      "unique_objects_vs_main": 5,
+      "head_date": "2026-08-14T23:18:47+07:00"
+    },
+    {
+      "branch": "arch/observability-evidence-contracts-v01",
+      "ahead": 30,
+      "behind": 395,
+      "unique_commits_vs_main": 30,
+      "unique_blobs_vs_main": 68,
+      "unique_trees_vs_main": 112,
+      "unique_objects_vs_main": 210,
+      "head_date": "2026-08-15T05:54:06+07:00"
+    },
+    {
+      "branch": "arch/recovery-q14-contracts-v01",
+      "ahead": 31,
+      "behind": 395,
+      "unique_commits_vs_main": 31,
+      "unique_blobs_vs_main": 76,
+      "unique_trees_vs_main": 120,
+      "unique_objects_vs_main": 227,
+      "head_date": "2026-08-15T05:56:26+07:00"
+    },
+    {
+      "branch": "arch/unified-architecture-package-v01",
+      "ahead": 33,
+      "behind": 395,
+      "unique_commits_vs_main": 33,
+      "unique_blobs_vs_main": 93,
+      "unique_trees_vs_main": 133,
+      "unique_objects_vs_main": 259,
+      "head_date": "2026-08-15T06:00:15+07:00"
+    },
+    {
+      "branch": "audit/20261014-readonly-baseline",
+      "ahead": 11,
+      "behind": 47,
+      "unique_commits_vs_main": 11,
+      "unique_blobs_vs_main": 11,
+      "unique_trees_vs_main": 33,
+      "unique_objects_vs_main": 55,
+      "head_date": "2026-10-14T21:38:55Z"
+    },
+    {
+      "branch": "audit/bootstrap-v5.2.3",
+      "ahead": 3,
+      "behind": 46,
+      "unique_commits_vs_main": 3,
+      "unique_blobs_vs_main": 8,
+      "unique_trees_vs_main": 10,
+      "unique_objects_vs_main": 21,
+      "head_date": "2026-10-17T16:43:12Z"
+    },
+    {
+      "branch": "audit/canonical-evidence-ledger-20261001",
+      "ahead": 1,
+      "behind": 87,
+      "unique_commits_vs_main": 1,
+      "unique_blobs_vs_main": 1,
+      "unique_trees_vs_main": 2,
+      "unique_objects_vs_main": 4,
+      "head_date": "2026-10-01T12:01:39+07:00"
+    },
+    {
+      "branch": "audit/repository-organization-20261123",
+      "ahead": 4,
+      "behind": 0,
+      "unique_commits_vs_main": 4,
+      "unique_blobs_vs_main": 4,
+      "unique_trees_vs_main": 10,
+      "unique_objects_vs_main": 18,
+      "head_date": "2026-11-23T04:10:34-05:00"
+    },
+    {
+      "branch": "automation/capability-registry-weekly-2026-11-09",
+      "ahead": 22,
+      "behind": 3,
+      "unique_commits_vs_main": 22,
+      "unique_blobs_vs_main": 30,
+      "unique_trees_vs_main": 62,
+      "unique_objects_vs_main": 114,
+      "head_date": "2026-11-09T04:13:43Z"
+    },
+    {
+      "branch": "backup/ck-nexus-snapshot-2026-08-21",
+      "ahead": 110,
+      "behind": 277,
+      "unique_commits_vs_main": 110,
+      "unique_blobs_vs_main": 112,
+      "unique_trees_vs_main": 303,
+      "unique_objects_vs_main": 525,
+      "head_date": "2026-08-21T11:29:23Z"
+    },
+    {
+      "branch": "backup/pre-consolidation-20261031",
+      "ahead": 1,
+      "behind": 31,
+      "unique_commits_vs_main": 1,
+      "unique_blobs_vs_main": 0,
+      "unique_trees_vs_main": 1,
+      "unique_objects_vs_main": 2,
+      "head_date": "2026-10-26T11:24:07+07:00"
+    },
+    {
+      "branch": "backup/reinstall-2026-08-25",
+      "ahead": 1,
+      "behind": 269,
+      "unique_commits_vs_main": 1,
+      "unique_blobs_vs_main": 1,
+      "unique_trees_vs_main": 4,
+      "unique_objects_vs_main": 6,
+      "head_date": "2026-08-25T21:55:42+07:00"
+    },
+    {
+      "branch": "backup/termux-20261029",
+      "ahead": 1,
+      "behind": 31,
+      "unique_commits_vs_main": 1,
+      "unique_blobs_vs_main": 0,
+      "unique_trees_vs_main": 1,
+      "unique_objects_vs_main": 2,
+      "head_date": "2026-10-26T11:24:07+07:00"
+    },
+    {
+      "branch": "brand/github-presentation-20261008",
+      "ahead": 5,
+      "behind": 49,
+      "unique_commits_vs_main": 5,
+      "unique_blobs_vs_main": 5,
+      "unique_trees_vs_main": 12,
+      "unique_objects_vs_main": 22,
+      "head_date": "2026-10-08T16:22:31+07:00"
+    },
+    {
+      "branch": "c2-only",
+      "ahead": 7,
+      "behind": 46,
+      "unique_commits_vs_main": 7,
+      "unique_blobs_vs_main": 33,
+      "unique_trees_vs_main": 37,
+      "unique_objects_vs_main": 77,
+      "head_date": "2026-10-19T08:52:13Z"
+    },
+    {
+      "branch": "chore/auto-update-badge-system",
+      "ahead": 10,
+      "behind": 3,
+      "unique_commits_vs_main": 10,
+      "unique_blobs_vs_main": 40,
+      "unique_trees_vs_main": 42,
+      "unique_objects_vs_main": 92,
+      "head_date": "2026-11-10T21:15:41+07:00"
+    },
+    {
+      "branch": "chore/q10-rebaseline",
+      "ahead": 2,
+      "behind": 26,
+      "unique_commits_vs_main": 2,
+      "unique_blobs_vs_main": 8,
+      "unique_trees_vs_main": 11,
+      "unique_objects_vs_main": 21,
+      "head_date": "2026-10-31T16:18:22Z"
+    },
+    {
+      "branch": "ci/development-infra-evidence-boundary-v1",
+      "ahead": 2,
+      "behind": 277,
+      "unique_commits_vs_main": 2,
+      "unique_blobs_vs_main": 2,
+      "unique_trees_vs_main": 6,
+      "unique_objects_vs_main": 10,
+      "head_date": "2026-08-22T19:25:46+07:00"
+    },
+    {
+      "branch": "cknexus/auto-dev/11c25d2fc2eb5bdb",
+      "ahead": 2,
+      "behind": 31,
+      "unique_commits_vs_main": 2,
+      "unique_blobs_vs_main": 10,
+      "unique_trees_vs_main": 12,
+      "unique_objects_vs_main": 24,
+      "head_date": "2026-10-27T00:25:02Z"
+    },
+    {
+      "branch": "cknexus/auto-dev/20261026-final-gate",
+      "ahead": 4,
+      "behind": 31,
+      "unique_commits_vs_main": 4,
+      "unique_blobs_vs_main": 13,
+      "unique_trees_vs_main": 19,
+      "unique_objects_vs_main": 36,
+      "head_date": "2026-10-26T12:48:05Z"
+    },
+    {
+      "branch": "cknexus/auto-dev/371efa6adc491a8a",
+      "ahead": 3,
+      "behind": 31,
+      "unique_commits_vs_main": 3,
+      "unique_blobs_vs_main": 139,
+      "unique_trees_vs_main": 48,
+      "unique_objects_vs_main": 190,
+      "head_date": "2026-10-30T04:25:01Z"
+    },
+    {
+      "branch": "cknexus/auto-dev/857789e8232d1642",
+      "ahead": 3,
+      "behind": 31,
+      "unique_commits_vs_main": 3,
+      "unique_blobs_vs_main": 139,
+      "unique_trees_vs_main": 48,
+      "unique_objects_vs_main": 190,
+      "head_date": "2026-10-29T04:25:26Z"
+    },
+    {
+      "branch": "cknexus/auto-dev/9c71df302c5d1f68-bff3ef06b6e2",
+      "ahead": 1,
+      "behind": 31,
+      "unique_commits_vs_main": 1,
+      "unique_blobs_vs_main": 2,
+      "unique_trees_vs_main": 4,
+      "unique_objects_vs_main": 7,
+      "head_date": "2026-10-26T18:55:22Z"
+    },
+    {
+      "branch": "cknexus/auto-dev/a240f6777fbce37b",
+      "ahead": 2,
+      "behind": 31,
+      "unique_commits_vs_main": 2,
+      "unique_blobs_vs_main": 10,
+      "unique_trees_vs_main": 12,
+      "unique_objects_vs_main": 24,
+      "head_date": "2026-10-27T04:25:26Z"
+    },
+    {
+      "branch": "cknexus/auto-dev/cc836a629922ca99",
+      "ahead": 2,
+      "behind": 31,
+      "unique_commits_vs_main": 2,
+      "unique_blobs_vs_main": 10,
+      "unique_trees_vs_main": 12,
+      "unique_objects_vs_main": 24,
+      "head_date": "2026-10-28T04:25:26Z"
+    },
+    {
+      "branch": "cknexus/auto-dev/dc18b325364a804a",
+      "ahead": 1,
+      "behind": 31,
+      "unique_commits_vs_main": 1,
+      "unique_blobs_vs_main": 2,
+      "unique_trees_vs_main": 4,
+      "unique_objects_vs_main": 7,
+      "head_date": "2026-10-25T21:35:04Z"
+    },
+    {
+      "branch": "cknexus/auto-dev/e42fc04424360811",
+      "ahead": 3,
+      "behind": 31,
+      "unique_commits_vs_main": 3,
+      "unique_blobs_vs_main": 139,
+      "unique_trees_vs_main": 48,
+      "unique_objects_vs_main": 190,
+      "head_date": "2026-10-31T04:25:10Z"
+    },
+    {
+      "branch": "closure/no-go-20261001",
+      "ahead": 3,
+      "behind": 87,
+      "unique_commits_vs_main": 3,
+      "unique_blobs_vs_main": 7,
+      "unique_trees_vs_main": 8,
+      "unique_objects_vs_main": 18,
+      "head_date": "2026-10-01T12:38:55+07:00"
+    },
+    {
+      "branch": "closure/one-shot-evidence-closure-20261002",
+      "ahead": 16,
+      "behind": 87,
+      "unique_commits_vs_main": 16,
+      "unique_blobs_vs_main": 17,
+      "unique_trees_vs_main": 37,
+      "unique_objects_vs_main": 70,
+      "head_date": "2026-10-02T08:53:18+07:00"
+    },
+    {
+      "branch": "closure/q10-q16-unification-20261105",
+      "ahead": 40,
+      "behind": 3,
+      "unique_commits_vs_main": 40,
+      "unique_blobs_vs_main": 190,
+      "unique_trees_vs_main": 191,
+      "unique_objects_vs_main": 421,
+      "head_date": "2026-11-10T08:16:08Z"
+    },
+    {
+      "branch": "code-coverage-agent/fix-341440761-1333067619-504675e3-5573-4c55-8a40-02cfbfbc651f",
+      "ahead": 1,
+      "behind": 47,
+      "unique_commits_vs_main": 1,
+      "unique_blobs_vs_main": 0,
+      "unique_trees_vs_main": 0,
+      "unique_objects_vs_main": 1,
+      "head_date": "2026-10-15T14:01:07Z"
+    },
+    {
+      "branch": "codex/q11-capability-gates",
+      "ahead": 2,
+      "behind": 345,
+      "unique_commits_vs_main": 2,
+      "unique_blobs_vs_main": 5,
+      "unique_trees_vs_main": 7,
+      "unique_objects_vs_main": 14,
+      "head_date": "2026-10-08T10:15:19+07:00"
+    },
+    {
+      "branch": "codex/q11-p02-error-classification",
+      "ahead": 9,
+      "behind": 345,
+      "unique_commits_vs_main": 9,
+      "unique_blobs_vs_main": 14,
+      "unique_trees_vs_main": 21,
+      "unique_objects_vs_main": 44,
+      "head_date": "2026-10-08T11:21:05+07:00"
+    },
+    {
+      "branch": "design/contextual-automation-workspace",
+      "ahead": 4,
+      "behind": 3,
+      "unique_commits_vs_main": 4,
+      "unique_blobs_vs_main": 19,
+      "unique_trees_vs_main": 19,
+      "unique_objects_vs_main": 42,
+      "head_date": "2026-11-11T21:36:29Z"
+    },
+    {
+      "branch": "dev/agnes-cognitive-fabric-v1",
+      "ahead": 59,
+      "behind": 273,
+      "unique_commits_vs_main": 59,
+      "unique_blobs_vs_main": 57,
+      "unique_trees_vs_main": 143,
+      "unique_objects_vs_main": 259,
+      "head_date": "2026-08-23T11:40:33+07:00"
+    },
+    {
+      "branch": "dev/agnes-design-intelligence-v1",
+      "ahead": 14,
+      "behind": 269,
+      "unique_commits_vs_main": 14,
+      "unique_blobs_vs_main": 14,
+      "unique_trees_vs_main": 34,
+      "unique_objects_vs_main": 62,
+      "head_date": "2026-08-23T10:13:45+07:00"
+    },
+    {
+      "branch": "dev/freemium-intelligence-mesh-v1",
+      "ahead": 59,
+      "behind": 273,
+      "unique_commits_vs_main": 59,
+      "unique_blobs_vs_main": 57,
+      "unique_trees_vs_main": 143,
+      "unique_objects_vs_main": 259,
+      "head_date": "2026-08-23T07:46:43+07:00"
+    },
+    {
+      "branch": "dev/state-projector-v1",
+      "ahead": 32,
+      "behind": 277,
+      "unique_commits_vs_main": 32,
+      "unique_blobs_vs_main": 35,
+      "unique_trees_vs_main": 107,
+      "unique_objects_vs_main": 174,
+      "head_date": "2026-08-23T08:58:32+07:00"
+    },
+    {
+      "branch": "dev/system-skills-harvest-v1",
+      "ahead": 8,
+      "behind": 269,
+      "unique_commits_vs_main": 8,
+      "unique_blobs_vs_main": 8,
+      "unique_trees_vs_main": 16,
+      "unique_objects_vs_main": 32,
+      "head_date": "2026-09-03T19:29:44+07:00"
+    },
+    {
+      "branch": "diag/pr181-ruff-import-v1",
+      "ahead": 10,
+      "behind": 269,
+      "unique_commits_vs_main": 10,
+      "unique_blobs_vs_main": 15,
+      "unique_trees_vs_main": 32,
+      "unique_objects_vs_main": 57,
+      "head_date": "2026-08-27T16:41:12+07:00"
+    },
+    {
+      "branch": "docs/automation-intake-gateway",
+      "ahead": 1,
+      "behind": 48,
+      "unique_commits_vs_main": 1,
+      "unique_blobs_vs_main": 1,
+      "unique_trees_vs_main": 3,
+      "unique_objects_vs_main": 5,
+      "head_date": "2026-10-12T03:54:50+07:00"
+    },
+    {
+      "branch": "docs/autonomous-platform-knowledge-base-2026-10-31",
+      "ahead": 6,
+      "behind": 30,
+      "unique_commits_vs_main": 6,
+      "unique_blobs_vs_main": 42,
+      "unique_trees_vs_main": 30,
+      "unique_objects_vs_main": 78,
+      "head_date": "2026-10-31T07:56:35Z"
+    },
+    {
+      "branch": "docs/control-state-foundation-2026-10-12",
+      "ahead": 9,
+      "behind": 47,
+      "unique_commits_vs_main": 9,
+      "unique_blobs_vs_main": 9,
+      "unique_trees_vs_main": 19,
+      "unique_objects_vs_main": 37,
+      "head_date": "2026-10-12T06:42:09+07:00"
+    },
+    {
+      "branch": "docs/dgx-spark-ai-server-launch-20260904",
+      "ahead": 1,
+      "behind": 269,
+      "unique_commits_vs_main": 1,
+      "unique_blobs_vs_main": 1,
+      "unique_trees_vs_main": 2,
+      "unique_objects_vs_main": 4,
+      "head_date": "2026-08-31T18:10:39+07:00"
+    },
+    {
+      "branch": "docs/evidence-closure-system-2026-10-12",
+      "ahead": 7,
+      "behind": 47,
+      "unique_commits_vs_main": 7,
+      "unique_blobs_vs_main": 7,
+      "unique_trees_vs_main": 21,
+      "unique_objects_vs_main": 35,
+      "head_date": "2026-10-12T10:15:53+07:00"
+    },
+    {
+      "branch": "docs/gen7-capability-gap-matrix-v1",
+      "ahead": 1,
+      "behind": 335,
+      "unique_commits_vs_main": 1,
+      "unique_blobs_vs_main": 2,
+      "unique_trees_vs_main": 3,
+      "unique_objects_vs_main": 6,
+      "head_date": "2026-08-22T01:32:04+07:00"
+    },
+    {
+      "branch": "docs/knowledge-source-learning-blueprints-20260904",
+      "ahead": 14,
+      "behind": 269,
+      "unique_commits_vs_main": 14,
+      "unique_blobs_vs_main": 14,
+      "unique_trees_vs_main": 35,
+      "unique_objects_vs_main": 63,
+      "head_date": "2026-09-04T00:12:41+07:00"
+    },
+    {
+      "branch": "docs/master-recovery-ledger-2026-10-12",
+      "ahead": 1,
+      "behind": 47,
+      "unique_commits_vs_main": 1,
+      "unique_blobs_vs_main": 1,
+      "unique_trees_vs_main": 2,
+      "unique_objects_vs_main": 4,
+      "head_date": "2026-10-12T06:35:23+07:00"
+    },
+    {
+      "branch": "docs/q10-q12-runbook-subject89",
+      "ahead": 2,
+      "behind": 316,
+      "unique_commits_vs_main": 2,
+      "unique_blobs_vs_main": 2,
+      "unique_trees_vs_main": 5,
+      "unique_objects_vs_main": 9,
+      "head_date": "2026-08-16T21:01:54+07:00"
+    },
+    {
+      "branch": "docs/q10-q16-current-state-20261120",
+      "ahead": 44,
+      "behind": 0,
+      "unique_commits_vs_main": 44,
+      "unique_blobs_vs_main": 119,
+      "unique_trees_vs_main": 151,
+      "unique_objects_vs_main": 314,
+      "head_date": "2026-11-20T02:27:44+07:00"
+    },
+    {
+      "branch": "docs/readme-operational-status-20261117",
+      "ahead": 2,
+      "behind": 3,
+      "unique_commits_vs_main": 2,
+      "unique_blobs_vs_main": 2,
+      "unique_trees_vs_main": 2,
+      "unique_objects_vs_main": 6,
+      "head_date": "2026-11-16T20:44:19Z"
+    },
+    {
+      "branch": "docs/readme-rc-disclosure-agnes-5d-20261112",
+      "ahead": 1,
+      "behind": 3,
+      "unique_commits_vs_main": 1,
+      "unique_blobs_vs_main": 1,
+      "unique_trees_vs_main": 1,
+      "unique_objects_vs_main": 3,
+      "head_date": "2026-11-12T03:41:17Z"
+    },
+    {
+      "branch": "docs/release-status-candidates-20261101",
+      "ahead": 1,
+      "behind": 15,
+      "unique_commits_vs_main": 1,
+      "unique_blobs_vs_main": 1,
+      "unique_trees_vs_main": 1,
+      "unique_objects_vs_main": 3,
+      "head_date": "2026-10-31T20:36:10Z"
+    },
+    {
+      "branch": "docs/repository-consolidation-20261104",
+      "ahead": 5,
+      "behind": 8,
+      "unique_commits_vs_main": 5,
+      "unique_blobs_vs_main": 6,
+      "unique_trees_vs_main": 12,
+      "unique_objects_vs_main": 23,
+      "head_date": "2026-11-04T21:26:42+07:00"
+    },
+    {
+      "branch": "feat/adaptive-cognitive-chat-ui",
+      "ahead": 6,
+      "behind": 277,
+      "unique_commits_vs_main": 6,
+      "unique_blobs_vs_main": 10,
+      "unique_trees_vs_main": 17,
+      "unique_objects_vs_main": 33,
+      "head_date": "2026-08-22T01:08:28+07:00"
+    },
+    {
+      "branch": "feat/adk-graph-execution-adapter",
+      "ahead": 1,
+      "behind": 87,
+      "unique_commits_vs_main": 1,
+      "unique_blobs_vs_main": 3,
+      "unique_trees_vs_main": 3,
+      "unique_objects_vs_main": 7,
+      "head_date": "2026-10-04T05:17:39+07:00"
+    },
+    {
+      "branch": "feat/agnes-cognitive-foundation-v1",
+      "ahead": 24,
+      "behind": 277,
+      "unique_commits_vs_main": 24,
+      "unique_blobs_vs_main": 23,
+      "unique_trees_vs_main": 83,
+      "unique_objects_vs_main": 130,
+      "head_date": "2026-08-22T03:13:56+07:00"
+    },
+    {
+      "branch": "feat/agnes-experiential-memory-v1",
+      "ahead": 1,
+      "behind": 335,
+      "unique_commits_vs_main": 1,
+      "unique_blobs_vs_main": 3,
+      "unique_trees_vs_main": 3,
+      "unique_objects_vs_main": 7,
+      "head_date": "2026-08-22T01:55:53+07:00"
+    },
+    {
+      "branch": "feat/agnes-expert-fabric-v1",
+      "ahead": 10,
+      "behind": 269,
+      "unique_commits_vs_main": 10,
+      "unique_blobs_vs_main": 15,
+      "unique_trees_vs_main": 32,
+      "unique_objects_vs_main": 57,
+      "head_date": "2026-08-27T16:42:19+07:00"
+    },
+    {
+      "branch": "feat/agnes-idea-experimenter-v1",
+      "ahead": 4,
+      "behind": 335,
+      "unique_commits_vs_main": 4,
+      "unique_blobs_vs_main": 7,
+      "unique_trees_vs_main": 10,
+      "unique_objects_vs_main": 21,
+      "head_date": "2026-08-22T02:05:32+07:00"
+    },
+    {
+      "branch": "feat/agnes-persistent-ops-memory-20261110",
+      "ahead": 14,
+      "behind": 3,
+      "unique_commits_vs_main": 14,
+      "unique_blobs_vs_main": 63,
+      "unique_trees_vs_main": 61,
+      "unique_objects_vs_main": 138,
+      "head_date": "2026-11-11T01:49:22+07:00"
+    },
+    {
+      "branch": "feat/agnes-sentinel-evidence-auditor-20261105",
+      "ahead": 10,
+      "behind": 3,
+      "unique_commits_vs_main": 10,
+      "unique_blobs_vs_main": 35,
+      "unique_trees_vs_main": 43,
+      "unique_objects_vs_main": 88,
+      "head_date": "2026-11-10T07:47:16Z"
+    },
+    {
+      "branch": "feat/agnes-skill-foundry-v1",
+      "ahead": 2,
+      "behind": 335,
+      "unique_commits_vs_main": 2,
+      "unique_blobs_vs_main": 5,
+      "unique_trees_vs_main": 6,
+      "unique_objects_vs_main": 13,
+      "head_date": "2026-08-22T01:59:47+07:00"
+    },
+    {
+      "branch": "feat/ai-product-evolution-factory-20261006",
+      "ahead": 41,
+      "behind": 54,
+      "unique_commits_vs_main": 41,
+      "unique_blobs_vs_main": 38,
+      "unique_trees_vs_main": 91,
+      "unique_objects_vs_main": 170,
+      "head_date": "2026-10-06T04:58:21+07:00"
+    },
+    {
+      "branch": "feat/apidog-capability-gateway-20261008",
+      "ahead": 3,
+      "behind": 49,
+      "unique_commits_vs_main": 3,
+      "unique_blobs_vs_main": 3,
+      "unique_trees_vs_main": 9,
+      "unique_objects_vs_main": 15,
+      "head_date": "2026-10-08T16:36:22+07:00"
+    },
+    {
+      "branch": "feat/approval-durability-verifier-v1",
+      "ahead": 28,
+      "behind": 335,
+      "unique_commits_vs_main": 28,
+      "unique_blobs_vs_main": 97,
+      "unique_trees_vs_main": 85,
+      "unique_objects_vs_main": 210,
+      "head_date": "2026-08-22T18:59:19+07:00"
+    },
+    {
+      "branch": "feat/assurance-profile-20260903",
+      "ahead": 5,
+      "behind": 269,
+      "unique_commits_vs_main": 5,
+      "unique_blobs_vs_main": 5,
+      "unique_trees_vs_main": 12,
+      "unique_objects_vs_main": 22,
+      "head_date": "2026-09-03T19:27:37+07:00"
+    },
+    {
+      "branch": "feat/canonical-release-subject-forensics-20261110",
+      "ahead": 3,
+      "behind": 3,
+      "unique_commits_vs_main": 3,
+      "unique_blobs_vs_main": 14,
+      "unique_trees_vs_main": 11,
+      "unique_objects_vs_main": 28,
+      "head_date": "2026-11-10T19:18:11+07:00"
+    },
+    {
+      "branch": "feat/ck-nexus-platform-scaffold",
+      "ahead": 11,
+      "behind": 395,
+      "unique_commits_vs_main": 11,
+      "unique_blobs_vs_main": 11,
+      "unique_trees_vs_main": 31,
+      "unique_objects_vs_main": 53,
+      "head_date": "2026-08-14T22:20:49+07:00"
+    },
+    {
+      "branch": "feat/ck-nexus-test-portal",
+      "ahead": 15,
+      "behind": 3,
+      "unique_commits_vs_main": 15,
+      "unique_blobs_vs_main": 64,
+      "unique_trees_vs_main": 56,
+      "unique_objects_vs_main": 135,
+      "head_date": "2026-11-16T17:41:55Z"
+    },
+    {
+      "branch": "feat/cknexus-agent-operating-model-main-20261105",
+      "ahead": 6,
+      "behind": 3,
+      "unique_commits_vs_main": 6,
+      "unique_blobs_vs_main": 29,
+      "unique_trees_vs_main": 38,
+      "unique_objects_vs_main": 73,
+      "head_date": "2026-11-05T08:21:39Z"
+    },
+    {
+      "branch": "feat/cknexus-certification-portal-v1",
+      "ahead": 7,
+      "behind": 3,
+      "unique_commits_vs_main": 7,
+      "unique_blobs_vs_main": 43,
+      "unique_trees_vs_main": 49,
+      "unique_objects_vs_main": 99,
+      "head_date": "2026-11-16T22:35:13Z"
+    },
+    {
+      "branch": "feat/cloud-worker-bridge-20261101",
+      "ahead": 1,
+      "behind": 11,
+      "unique_commits_vs_main": 1,
+      "unique_blobs_vs_main": 20,
+      "unique_trees_vs_main": 22,
+      "unique_objects_vs_main": 43,
+      "head_date": "2026-11-01T06:08:33Z"
+    },
+    {
+      "branch": "feat/cognitive-control-universe-v1",
+      "ahead": 12,
+      "behind": 395,
+      "unique_commits_vs_main": 12,
+      "unique_blobs_vs_main": 12,
+      "unique_trees_vs_main": 28,
+      "unique_objects_vs_main": 52,
+      "head_date": "2026-08-18T11:08:10+07:00"
+    },
+    {
+      "branch": "feat/credential-scope-termux-sandbox-v1",
+      "ahead": 7,
+      "behind": 335,
+      "unique_commits_vs_main": 7,
+      "unique_blobs_vs_main": 16,
+      "unique_trees_vs_main": 22,
+      "unique_objects_vs_main": 45,
+      "head_date": "2026-08-22T02:31:03+07:00"
+    },
+    {
+      "branch": "feat/didit-kyb-react-native",
+      "ahead": 3,
+      "behind": 267,
+      "unique_commits_vs_main": 3,
+      "unique_blobs_vs_main": 33,
+      "unique_trees_vs_main": 17,
+      "unique_objects_vs_main": 53,
+      "head_date": "2026-09-07T06:55:00Z"
+    },
+    {
+      "branch": "feat/facebook-meta-connector",
+      "ahead": 0,
+      "behind": 414,
+      "unique_commits_vs_main": 0,
+      "unique_blobs_vs_main": 0,
+      "unique_trees_vs_main": 0,
+      "unique_objects_vs_main": 0,
+      "head_date": "2026-08-13T22:52:10+07:00"
+    },
+    {
+      "branch": "feat/free-fallback-85",
+      "ahead": 5,
+      "behind": 273,
+      "unique_commits_vs_main": 5,
+      "unique_blobs_vs_main": 5,
+      "unique_trees_vs_main": 12,
+      "unique_objects_vs_main": 22,
+      "head_date": "2026-08-23T07:59:00+07:00"
+    },
+    {
+      "branch": "feat/gemini-provider-20261119",
+      "ahead": 12,
+      "behind": 0,
+      "unique_commits_vs_main": 12,
+      "unique_blobs_vs_main": 26,
+      "unique_trees_vs_main": 41,
+      "unique_objects_vs_main": 79,
+      "head_date": "2026-11-19T18:21:18Z"
+    },
+    {
+      "branch": "feat/live-development-status-20261101",
+      "ahead": 11,
+      "behind": 17,
+      "unique_commits_vs_main": 11,
+      "unique_blobs_vs_main": 42,
+      "unique_trees_vs_main": 40,
+      "unique_objects_vs_main": 93,
+      "head_date": "2026-10-31T19:31:50Z"
+    },
+    {
+      "branch": "feat/llm-keypool",
+      "ahead": 6,
+      "behind": 408,
+      "unique_commits_vs_main": 6,
+      "unique_blobs_vs_main": 22,
+      "unique_trees_vs_main": 20,
+      "unique_objects_vs_main": 48,
+      "head_date": "2026-08-17T22:45:50+07:00"
+    },
+    {
+      "branch": "feat/n8n-runtime-registration-guard-v1",
+      "ahead": 45,
+      "behind": 273,
+      "unique_commits_vs_main": 45,
+      "unique_blobs_vs_main": 47,
+      "unique_trees_vs_main": 127,
+      "unique_objects_vs_main": 219,
+      "head_date": "2026-08-23T10:31:56+07:00"
+    },
+    {
+      "branch": "feat/omni-runtime-binding-20261006",
+      "ahead": 24,
+      "behind": 54,
+      "unique_commits_vs_main": 24,
+      "unique_blobs_vs_main": 22,
+      "unique_trees_vs_main": 57,
+      "unique_objects_vs_main": 103,
+      "head_date": "2026-10-06T04:48:44+07:00"
+    },
+    {
+      "branch": "feat/phase0-governed-contracts",
+      "ahead": 31,
+      "behind": 331,
+      "unique_commits_vs_main": 31,
+      "unique_blobs_vs_main": 30,
+      "unique_trees_vs_main": 89,
+      "unique_objects_vs_main": 150,
+      "head_date": "2026-08-19T04:32:09+07:00"
+    },
+    {
+      "branch": "feat/provider-council-omni-fabric-v1",
+      "ahead": 5,
+      "behind": 335,
+      "unique_commits_vs_main": 5,
+      "unique_blobs_vs_main": 9,
+      "unique_trees_vs_main": 13,
+      "unique_objects_vs_main": 27,
+      "head_date": "2026-08-22T02:11:45+07:00"
+    },
+    {
+      "branch": "feat/real-provider-adapters-v1",
+      "ahead": 8,
+      "behind": 335,
+      "unique_commits_vs_main": 8,
+      "unique_blobs_vs_main": 22,
+      "unique_trees_vs_main": 25,
+      "unique_objects_vs_main": 55,
+      "head_date": "2026-08-22T02:36:55+07:00"
+    },
+    {
+      "branch": "feat/research-control-profiles-20261006",
+      "ahead": 7,
+      "behind": 54,
+      "unique_commits_vs_main": 7,
+      "unique_blobs_vs_main": 6,
+      "unique_trees_vs_main": 12,
+      "unique_objects_vs_main": 25,
+      "head_date": "2026-10-06T06:17:16+07:00"
+    },
+    {
+      "branch": "feat/search-control-registry-20261101",
+      "ahead": 1,
+      "behind": 10,
+      "unique_commits_vs_main": 1,
+      "unique_blobs_vs_main": 6,
+      "unique_trees_vs_main": 9,
+      "unique_objects_vs_main": 16,
+      "head_date": "2026-11-01T06:47:57Z"
+    },
+    {
+      "branch": "feat/signed-approval-authority-v1",
+      "ahead": 14,
+      "behind": 335,
+      "unique_commits_vs_main": 14,
+      "unique_blobs_vs_main": 71,
+      "unique_trees_vs_main": 48,
+      "unique_objects_vs_main": 133,
+      "head_date": "2026-08-22T04:33:51+07:00"
+    },
+    {
+      "branch": "feat/telegram-alerting-control-universe-v1",
+      "ahead": 12,
+      "behind": 395,
+      "unique_commits_vs_main": 12,
+      "unique_blobs_vs_main": 12,
+      "unique_trees_vs_main": 28,
+      "unique_objects_vs_main": 52,
+      "head_date": "2026-08-18T11:08:10+07:00"
+    },
+    {
+      "branch": "feat/telegram-control-v1",
+      "ahead": 35,
+      "behind": 335,
+      "unique_commits_vs_main": 35,
+      "unique_blobs_vs_main": 104,
+      "unique_trees_vs_main": 105,
+      "unique_objects_vs_main": 244,
+      "head_date": "2026-08-22T20:40:44+07:00"
+    },
+    {
+      "branch": "feat/universal-ai-standard-20261006",
+      "ahead": 35,
+      "behind": 54,
+      "unique_commits_vs_main": 35,
+      "unique_blobs_vs_main": 31,
+      "unique_trees_vs_main": 76,
+      "unique_objects_vs_main": 142,
+      "head_date": "2026-10-06T05:01:26+07:00"
+    },
+    {
+      "branch": "feat/universal-omni-mainline-20261006",
+      "ahead": 22,
+      "behind": 52,
+      "unique_commits_vs_main": 22,
+      "unique_blobs_vs_main": 22,
+      "unique_trees_vs_main": 49,
+      "unique_objects_vs_main": 93,
+      "head_date": "2026-10-06T07:02:25+07:00"
+    },
+    {
+      "branch": "feat/universal-provider-onboarding-v1",
+      "ahead": 6,
+      "behind": 335,
+      "unique_commits_vs_main": 6,
+      "unique_blobs_vs_main": 11,
+      "unique_trees_vs_main": 16,
+      "unique_objects_vs_main": 33,
+      "head_date": "2026-08-22T02:16:00+07:00"
+    },
+    {
+      "branch": "feature/autonomous-brain-foundation",
+      "ahead": 3,
+      "behind": 31,
+      "unique_commits_vs_main": 3,
+      "unique_blobs_vs_main": 156,
+      "unique_trees_vs_main": 57,
+      "unique_objects_vs_main": 216,
+      "head_date": "2026-11-01T05:24:45Z"
+    },
+    {
+      "branch": "feature/ck-codex-account-switcher",
+      "ahead": 23,
+      "behind": 87,
+      "unique_commits_vs_main": 23,
+      "unique_blobs_vs_main": 22,
+      "unique_trees_vs_main": 54,
+      "unique_objects_vs_main": 99,
+      "head_date": "2026-09-29T04:03:51+07:00"
+    },
+    {
+      "branch": "feature/cknexus-agent-operating-model-20261031",
+      "ahead": 10,
+      "behind": 31,
+      "unique_commits_vs_main": 10,
+      "unique_blobs_vs_main": 35,
+      "unique_trees_vs_main": 46,
+      "unique_objects_vs_main": 91,
+      "head_date": "2026-10-30T20:34:09Z"
+    },
+    {
+      "branch": "feature/claude-provider-bridge-release-20261117",
+      "ahead": 15,
+      "behind": 3,
+      "unique_commits_vs_main": 15,
+      "unique_blobs_vs_main": 62,
+      "unique_trees_vs_main": 55,
+      "unique_objects_vs_main": 132,
+      "head_date": "2026-11-17T06:55:19Z"
+    },
+    {
+      "branch": "feature/claude-provider-pr-20261117",
+      "ahead": 19,
+      "behind": 3,
+      "unique_commits_vs_main": 19,
+      "unique_blobs_vs_main": 69,
+      "unique_trees_vs_main": 64,
+      "unique_objects_vs_main": 152,
+      "head_date": "2026-11-17T07:29:47Z"
+    },
+    {
+      "branch": "feature/github-identity-portal",
+      "ahead": 1,
+      "behind": 31,
+      "unique_commits_vs_main": 1,
+      "unique_blobs_vs_main": 9,
+      "unique_trees_vs_main": 5,
+      "unique_objects_vs_main": 15,
+      "head_date": "2026-10-30T17:58:54Z"
+    },
+    {
+      "branch": "feature/global-knowledge-discovery-20260907",
+      "ahead": 0,
+      "behind": 261,
+      "unique_commits_vs_main": 0,
+      "unique_blobs_vs_main": 0,
+      "unique_trees_vs_main": 0,
+      "unique_objects_vs_main": 0,
+      "head_date": "2026-09-07T03:26:05+07:00"
+    },
+    {
+      "branch": "feature/merge-history-package",
+      "ahead": 12,
+      "behind": 269,
+      "unique_commits_vs_main": 12,
+      "unique_blobs_vs_main": 13,
+      "unique_trees_vs_main": 22,
+      "unique_objects_vs_main": 47,
+      "head_date": "2026-09-04T18:00:14+07:00"
+    },
+    {
+      "branch": "fix/agnes-omni-context-injection-20261011",
+      "ahead": 16,
+      "behind": 47,
+      "unique_commits_vs_main": 16,
+      "unique_blobs_vs_main": 41,
+      "unique_trees_vs_main": 50,
+      "unique_objects_vs_main": 107,
+      "head_date": "2026-10-12T03:29:23Z"
+    },
+    {
+      "branch": "fix/agnes-triad-attestation-test-fixtures-v1",
+      "ahead": 50,
+      "behind": 277,
+      "unique_commits_vs_main": 50,
+      "unique_blobs_vs_main": 55,
+      "unique_trees_vs_main": 156,
+      "unique_objects_vs_main": 261,
+      "head_date": "2026-08-23T23:55:38+07:00"
+    },
+    {
+      "branch": "fix/agnes-triad-dashboard-authority-tamper-v1",
+      "ahead": 61,
+      "behind": 277,
+      "unique_commits_vs_main": 61,
+      "unique_blobs_vs_main": 66,
+      "unique_trees_vs_main": 184,
+      "unique_objects_vs_main": 311,
+      "head_date": "2026-08-24T00:03:11+07:00"
+    },
+    {
+      "branch": "fix/agnes-triad-evidence-attestation-ruff-v1",
+      "ahead": 49,
+      "behind": 277,
+      "unique_commits_vs_main": 49,
+      "unique_blobs_vs_main": 54,
+      "unique_trees_vs_main": 154,
+      "unique_objects_vs_main": 257,
+      "head_date": "2026-08-23T22:36:55+07:00"
+    },
+    {
+      "branch": "fix/agnes-triad-evidence-publisher-attestation-v1",
+      "ahead": 48,
+      "behind": 277,
+      "unique_commits_vs_main": 48,
+      "unique_blobs_vs_main": 53,
+      "unique_trees_vs_main": 151,
+      "unique_objects_vs_main": 252,
+      "head_date": "2026-08-23T21:37:15+07:00"
+    },
+    {
+      "branch": "fix/agnes-triad-evidence-test-attestation-v1",
+      "ahead": 50,
+      "behind": 277,
+      "unique_commits_vs_main": 50,
+      "unique_blobs_vs_main": 55,
+      "unique_trees_vs_main": 156,
+      "unique_objects_vs_main": 261,
+      "head_date": "2026-08-23T23:46:51+07:00"
+    },
+    {
+      "branch": "fix/agnes-triad-revision-lineage-v1",
+      "ahead": 39,
+      "behind": 277,
+      "unique_commits_vs_main": 39,
+      "unique_blobs_vs_main": 44,
+      "unique_trees_vs_main": 126,
+      "unique_objects_vs_main": 209,
+      "head_date": "2026-08-23T18:33:36+07:00"
+    },
+    {
+      "branch": "fix/ai-harvester-safe-error-classification",
+      "ahead": 9,
+      "behind": 48,
+      "unique_commits_vs_main": 9,
+      "unique_blobs_vs_main": 9,
+      "unique_trees_vs_main": 19,
+      "unique_objects_vs_main": 37,
+      "head_date": "2026-10-13T12:17:23Z"
+    },
+    {
+      "branch": "fix/aikido-security-findings-20260828",
+      "ahead": 6,
+      "behind": 269,
+      "unique_commits_vs_main": 6,
+      "unique_blobs_vs_main": 6,
+      "unique_trees_vs_main": 18,
+      "unique_objects_vs_main": 30,
+      "head_date": "2026-08-28T00:42:16+07:00"
+    },
+    {
+      "branch": "fix/allowlist-checkout-tag",
+      "ahead": 1,
+      "behind": 9,
+      "unique_commits_vs_main": 1,
+      "unique_blobs_vs_main": 1,
+      "unique_trees_vs_main": 3,
+      "unique_objects_vs_main": 5,
+      "head_date": "2026-11-04T12:36:49+07:00"
+    },
+    {
+      "branch": "fix/ci-release-evidence-boundary-20261006",
+      "ahead": 1,
+      "behind": 51,
+      "unique_commits_vs_main": 1,
+      "unique_blobs_vs_main": 1,
+      "unique_trees_vs_main": 3,
+      "unique_objects_vs_main": 5,
+      "head_date": "2026-10-06T09:06:09+07:00"
+    },
+    {
+      "branch": "fix/claim-registry-global-ci-v1",
+      "ahead": 12,
+      "behind": 269,
+      "unique_commits_vs_main": 12,
+      "unique_blobs_vs_main": 12,
+      "unique_trees_vs_main": 29,
+      "unique_objects_vs_main": 53,
+      "head_date": "2026-08-23T13:27:26+07:00"
+    },
+    {
+      "branch": "fix/claim-registry-ruff-v1",
+      "ahead": 12,
+      "behind": 269,
+      "unique_commits_vs_main": 12,
+      "unique_blobs_vs_main": 12,
+      "unique_trees_vs_main": 29,
+      "unique_objects_vs_main": 53,
+      "head_date": "2026-08-23T13:33:15+07:00"
+    },
+    {
+      "branch": "fix/connector-snapshot-serialization",
+      "ahead": 2,
+      "behind": 345,
+      "unique_commits_vs_main": 2,
+      "unique_blobs_vs_main": 2,
+      "unique_trees_vs_main": 5,
+      "unique_objects_vs_main": 9,
+      "head_date": "2026-08-16T18:48:29+07:00"
+    },
+    {
+      "branch": "fix/connector-snapshot-serialization-v2",
+      "ahead": 0,
+      "behind": 336,
+      "unique_commits_vs_main": 0,
+      "unique_blobs_vs_main": 0,
+      "unique_trees_vs_main": 0,
+      "unique_objects_vs_main": 0,
+      "head_date": "2026-08-16T20:39:26+07:00"
+    },
+    {
+      "branch": "fix/evidence-source-tree-binding-20261012",
+      "ahead": 9,
+      "behind": 47,
+      "unique_commits_vs_main": 9,
+      "unique_blobs_vs_main": 11,
+      "unique_trees_vs_main": 31,
+      "unique_objects_vs_main": 51,
+      "head_date": "2026-10-12T12:15:31+07:00"
+    },
+    {
+      "branch": "fix/failure-memory-event-schema-v1",
+      "ahead": 127,
+      "behind": 277,
+      "unique_commits_vs_main": 127,
+      "unique_blobs_vs_main": 128,
+      "unique_trees_vs_main": 359,
+      "unique_objects_vs_main": 614,
+      "head_date": "2026-08-23T13:12:52+07:00"
+    },
+    {
+      "branch": "fix/failure-memory-fingerprint-replay-v1",
+      "ahead": 128,
+      "behind": 277,
+      "unique_commits_vs_main": 128,
+      "unique_blobs_vs_main": 130,
+      "unique_trees_vs_main": 363,
+      "unique_objects_vs_main": 621,
+      "head_date": "2026-08-23T13:29:55+07:00"
+    },
+    {
+      "branch": "fix/final-package-provenance-binding",
+      "ahead": 0,
+      "behind": 346,
+      "unique_commits_vs_main": 0,
+      "unique_blobs_vs_main": 0,
+      "unique_trees_vs_main": 0,
+      "unique_objects_vs_main": 0,
+      "head_date": "2026-08-15T01:32:15+07:00"
+    },
+    {
+      "branch": "fix/issue-65-peer-bound-connector-transport",
+      "ahead": 6,
+      "behind": 287,
+      "unique_commits_vs_main": 6,
+      "unique_blobs_vs_main": 6,
+      "unique_trees_vs_main": 16,
+      "unique_objects_vs_main": 28,
+      "head_date": "2026-08-20T06:23:13+07:00"
+    },
+    {
+      "branch": "fix/n8n-webhook-registration-v1",
+      "ahead": 39,
+      "behind": 273,
+      "unique_commits_vs_main": 39,
+      "unique_blobs_vs_main": 40,
+      "unique_trees_vs_main": 109,
+      "unique_objects_vs_main": 188,
+      "head_date": "2026-08-23T09:23:48+07:00"
+    },
+    {
+      "branch": "fix/omega-bounded-timeout-20261018",
+      "ahead": 4,
+      "behind": 46,
+      "unique_commits_vs_main": 4,
+      "unique_blobs_vs_main": 11,
+      "unique_trees_vs_main": 13,
+      "unique_objects_vs_main": 28,
+      "head_date": "2026-10-17T20:19:34Z"
+    },
+    {
+      "branch": "fix/omega-bounded-timeout-pipe-20261018",
+      "ahead": 5,
+      "behind": 46,
+      "unique_commits_vs_main": 5,
+      "unique_blobs_vs_main": 11,
+      "unique_trees_vs_main": 15,
+      "unique_objects_vs_main": 31,
+      "head_date": "2026-10-17T17:18:34Z"
+    },
+    {
+      "branch": "fix/p0-authorization-bypass-20261112",
+      "ahead": 6,
+      "behind": 3,
+      "unique_commits_vs_main": 6,
+      "unique_blobs_vs_main": 66,
+      "unique_trees_vs_main": 44,
+      "unique_objects_vs_main": 116,
+      "head_date": "2026-11-13T07:14:31Z"
+    },
+    {
+      "branch": "fix/p0-ruff-lint",
+      "ahead": 7,
+      "behind": 31,
+      "unique_commits_vs_main": 7,
+      "unique_blobs_vs_main": 19,
+      "unique_trees_vs_main": 27,
+      "unique_objects_vs_main": 53,
+      "head_date": "2026-10-30T20:22:07Z"
+    },
+    {
+      "branch": "fix/pr365-office-archive-hardening-20261111",
+      "ahead": 25,
+      "behind": 3,
+      "unique_commits_vs_main": 25,
+      "unique_blobs_vs_main": 82,
+      "unique_trees_vs_main": 87,
+      "unique_objects_vs_main": 194,
+      "head_date": "2026-11-11T07:21:31+07:00"
+    },
+    {
+      "branch": "fix/pr46-cknexus-ci-ruff-v1",
+      "ahead": 30,
+      "behind": 329,
+      "unique_commits_vs_main": 30,
+      "unique_blobs_vs_main": 36,
+      "unique_trees_vs_main": 80,
+      "unique_objects_vs_main": 146,
+      "head_date": "2026-08-20T00:51:37+07:00"
+    },
+    {
+      "branch": "fix/q03-dependency-closure",
+      "ahead": 0,
+      "behind": 415,
+      "unique_commits_vs_main": 0,
+      "unique_blobs_vs_main": 0,
+      "unique_trees_vs_main": 0,
+      "unique_objects_vs_main": 0,
+      "head_date": "2026-08-13T21:51:45+07:00"
+    },
+    {
+      "branch": "fix/q04-q05-ci-repro",
+      "ahead": 1,
+      "behind": 414,
+      "unique_commits_vs_main": 1,
+      "unique_blobs_vs_main": 1,
+      "unique_trees_vs_main": 3,
+      "unique_objects_vs_main": 5,
+      "head_date": "2026-08-14T03:19:33+07:00"
+    },
+    {
+      "branch": "fix/q05-bandit",
+      "ahead": 0,
+      "behind": 408,
+      "unique_commits_vs_main": 0,
+      "unique_blobs_vs_main": 0,
+      "unique_trees_vs_main": 0,
+      "unique_objects_vs_main": 0,
+      "head_date": "2026-08-14T01:02:09+07:00"
+    },
+    {
+      "branch": "fix/q05-bandit-hardening",
+      "ahead": 5,
+      "behind": 408,
+      "unique_commits_vs_main": 5,
+      "unique_blobs_vs_main": 5,
+      "unique_trees_vs_main": 19,
+      "unique_objects_vs_main": 29,
+      "head_date": "2026-08-14T04:32:31+07:00"
+    },
+    {
+      "branch": "fix/q05-e501",
+      "ahead": 0,
+      "behind": 402,
+      "unique_commits_vs_main": 0,
+      "unique_blobs_vs_main": 0,
+      "unique_trees_vs_main": 0,
+      "unique_objects_vs_main": 0,
+      "head_date": "2026-08-14T04:40:32+07:00"
+    },
+    {
+      "branch": "fix/q05-import-order-final",
+      "ahead": 7,
+      "behind": 408,
+      "unique_commits_vs_main": 7,
+      "unique_blobs_vs_main": 7,
+      "unique_trees_vs_main": 29,
+      "unique_objects_vs_main": 43,
+      "head_date": "2026-08-14T04:39:30+07:00"
+    },
+    {
+      "branch": "fix/q05-ruff-baseline",
+      "ahead": 0,
+      "behind": 411,
+      "unique_commits_vs_main": 0,
+      "unique_blobs_vs_main": 0,
+      "unique_trees_vs_main": 0,
+      "unique_objects_vs_main": 0,
+      "head_date": "2026-08-13T22:51:19+07:00"
+    },
+    {
+      "branch": "fix/q05-ruff-format",
+      "ahead": 0,
+      "behind": 409,
+      "unique_commits_vs_main": 0,
+      "unique_blobs_vs_main": 0,
+      "unique_trees_vs_main": 0,
+      "unique_objects_vs_main": 0,
+      "head_date": "2026-08-13T23:18:49+07:00"
+    },
+    {
+      "branch": "fix/q09-governance-binding",
+      "ahead": 0,
+      "behind": 396,
+      "unique_commits_vs_main": 0,
+      "unique_blobs_vs_main": 0,
+      "unique_trees_vs_main": 0,
+      "unique_objects_vs_main": 0,
+      "head_date": "2026-08-14T04:55:48+07:00"
+    },
+    {
+      "branch": "fix/q10-archive-policy-evidence-20261110",
+      "ahead": 15,
+      "behind": 3,
+      "unique_commits_vs_main": 15,
+      "unique_blobs_vs_main": 65,
+      "unique_trees_vs_main": 65,
+      "unique_objects_vs_main": 145,
+      "head_date": "2026-11-10T19:37:56Z"
+    },
+    {
+      "branch": "fix/q10-attachment-hardening-20261123",
+      "ahead": 40,
+      "behind": 0,
+      "unique_commits_vs_main": 40,
+      "unique_blobs_vs_main": 117,
+      "unique_trees_vs_main": 116,
+      "unique_objects_vs_main": 273,
+      "head_date": "2026-11-23T08:55:02+07:00"
+    },
+    {
+      "branch": "fix/q10-dependency-audit",
+      "ahead": 4,
+      "behind": 345,
+      "unique_commits_vs_main": 4,
+      "unique_blobs_vs_main": 4,
+      "unique_trees_vs_main": 7,
+      "unique_objects_vs_main": 15,
+      "head_date": "2026-10-04T08:44:13Z"
+    },
+    {
+      "branch": "fix/q10-dependency-vulnerabilities-20261119",
+      "ahead": 13,
+      "behind": 340,
+      "unique_commits_vs_main": 13,
+      "unique_blobs_vs_main": 24,
+      "unique_trees_vs_main": 36,
+      "unique_objects_vs_main": 73,
+      "head_date": "2026-11-19T23:36:40+07:00"
+    },
+    {
+      "branch": "fix/q10-gate-medium-and-report-20261119",
+      "ahead": 46,
+      "behind": 0,
+      "unique_commits_vs_main": 46,
+      "unique_blobs_vs_main": 125,
+      "unique_trees_vs_main": 159,
+      "unique_objects_vs_main": 330,
+      "head_date": "2026-11-20T02:48:21+07:00"
+    },
+    {
+      "branch": "fix/q12-current-subject-20261006",
+      "ahead": 3,
+      "behind": 51,
+      "unique_commits_vs_main": 3,
+      "unique_blobs_vs_main": 3,
+      "unique_trees_vs_main": 8,
+      "unique_objects_vs_main": 14,
+      "head_date": "2026-10-06T12:10:58+07:00"
+    },
+    {
+      "branch": "fix/q12-delegation-preflight-20260905",
+      "ahead": 1,
+      "behind": 269,
+      "unique_commits_vs_main": 1,
+      "unique_blobs_vs_main": 1,
+      "unique_trees_vs_main": 3,
+      "unique_objects_vs_main": 5,
+      "head_date": "2026-09-05T07:56:30+07:00"
+    },
+    {
+      "branch": "fix/q12-verifier-branch-preflight-20260905",
+      "ahead": 4,
+      "behind": 335,
+      "unique_commits_vs_main": 4,
+      "unique_blobs_vs_main": 4,
+      "unique_trees_vs_main": 12,
+      "unique_objects_vs_main": 20,
+      "head_date": "2026-09-05T08:09:50+07:00"
+    },
+    {
+      "branch": "fix/q15-launcher-mode",
+      "ahead": 0,
+      "behind": 376,
+      "unique_commits_vs_main": 0,
+      "unique_blobs_vs_main": 0,
+      "unique_trees_vs_main": 0,
+      "unique_objects_vs_main": 0,
+      "head_date": "2026-08-14T22:45:51+07:00"
+    },
+    {
+      "branch": "fix/q15-launcher-mode-v2",
+      "ahead": 0,
+      "behind": 375,
+      "unique_commits_vs_main": 0,
+      "unique_blobs_vs_main": 0,
+      "unique_trees_vs_main": 0,
+      "unique_objects_vs_main": 0,
+      "head_date": "2026-08-14T22:49:02+07:00"
+    },
+    {
+      "branch": "fix/q16-sandbox-chroot-path-20261011",
+      "ahead": 1,
+      "behind": 48,
+      "unique_commits_vs_main": 1,
+      "unique_blobs_vs_main": 1,
+      "unique_trees_vs_main": 5,
+      "unique_objects_vs_main": 7,
+      "head_date": "2026-10-11T15:54:19Z"
+    },
+    {
+      "branch": "fix/qwen-probe-httpsconnection",
+      "ahead": 1,
+      "behind": 15,
+      "unique_commits_vs_main": 1,
+      "unique_blobs_vs_main": 2,
+      "unique_trees_vs_main": 3,
+      "unique_objects_vs_main": 6,
+      "head_date": "2026-10-31T19:36:26Z"
+    },
+    {
+      "branch": "fix/refresh-main-candidate-evidence-20260907",
+      "ahead": 3,
+      "behind": 268,
+      "unique_commits_vs_main": 3,
+      "unique_blobs_vs_main": 3,
+      "unique_trees_vs_main": 6,
+      "unique_objects_vs_main": 12,
+      "head_date": "2026-09-07T09:38:06+07:00"
+    },
+    {
+      "branch": "fix/refresh-q05-q08-q09-a6e74b5d-20260907",
+      "ahead": 3,
+      "behind": 268,
+      "unique_commits_vs_main": 3,
+      "unique_blobs_vs_main": 3,
+      "unique_trees_vs_main": 6,
+      "unique_objects_vs_main": 12,
+      "head_date": "2026-09-07T10:08:26+07:00"
+    },
+    {
+      "branch": "fix/release-evidence-provenance",
+      "ahead": 0,
+      "behind": 348,
+      "unique_commits_vs_main": 0,
+      "unique_blobs_vs_main": 0,
+      "unique_trees_vs_main": 0,
+      "unique_objects_vs_main": 0,
+      "head_date": "2026-08-15T01:29:34+07:00"
+    },
+    {
+      "branch": "fix/release-q10-lock-20261119",
+      "ahead": 20,
+      "behind": 340,
+      "unique_commits_vs_main": 20,
+      "unique_blobs_vs_main": 25,
+      "unique_trees_vs_main": 43,
+      "unique_objects_vs_main": 88,
+      "head_date": "2026-11-20T00:44:24+07:00"
+    },
+    {
+      "branch": "fix/secret-scan-token-boundary-20261031",
+      "ahead": 2,
+      "behind": 31,
+      "unique_commits_vs_main": 2,
+      "unique_blobs_vs_main": 3,
+      "unique_trees_vs_main": 5,
+      "unique_objects_vs_main": 10,
+      "head_date": "2026-10-30T19:53:16Z"
+    },
+    {
+      "branch": "fix/security-deps-20261006",
+      "ahead": 11,
+      "behind": 54,
+      "unique_commits_vs_main": 11,
+      "unique_blobs_vs_main": 10,
+      "unique_trees_vs_main": 10,
+      "unique_objects_vs_main": 31,
+      "head_date": "2026-10-06T06:27:38+07:00"
+    },
+    {
+      "branch": "fix/security-deps-20261006-v2",
+      "ahead": 6,
+      "behind": 54,
+      "unique_commits_vs_main": 6,
+      "unique_blobs_vs_main": 5,
+      "unique_trees_vs_main": 8,
+      "unique_objects_vs_main": 19,
+      "head_date": "2026-10-06T06:31:27+07:00"
+    },
+    {
+      "branch": "fix/triad-subject-sha-validation-v1",
+      "ahead": 64,
+      "behind": 277,
+      "unique_commits_vs_main": 64,
+      "unique_blobs_vs_main": 69,
+      "unique_trees_vs_main": 192,
+      "unique_objects_vs_main": 325,
+      "head_date": "2026-08-24T02:13:02+07:00"
+    },
+    {
+      "branch": "fix/trusted-verifier-image-path",
+      "ahead": 1,
+      "behind": 9,
+      "unique_commits_vs_main": 1,
+      "unique_blobs_vs_main": 1,
+      "unique_trees_vs_main": 3,
+      "unique_objects_vs_main": 5,
+      "head_date": "2026-11-04T12:45:02+07:00"
+    },
+    {
+      "branch": "fix/windows-sandbox-platform-gate-v1",
+      "ahead": 4,
+      "behind": 273,
+      "unique_commits_vs_main": 4,
+      "unique_blobs_vs_main": 4,
+      "unique_trees_vs_main": 15,
+      "unique_objects_vs_main": 23,
+      "head_date": "2026-08-23T06:06:25+07:00"
+    },
+    {
+      "branch": "hardening/scanner-api-least-privilege-20261012",
+      "ahead": 10,
+      "behind": 47,
+      "unique_commits_vs_main": 10,
+      "unique_blobs_vs_main": 10,
+      "unique_trees_vs_main": 21,
+      "unique_objects_vs_main": 41,
+      "head_date": "2026-10-12T12:03:51+07:00"
+    },
+    {
+      "branch": "hardening/scorecard-remediation-20260905",
+      "ahead": 1,
+      "behind": 269,
+      "unique_commits_vs_main": 1,
+      "unique_blobs_vs_main": 30,
+      "unique_trees_vs_main": 8,
+      "unique_objects_vs_main": 39,
+      "head_date": "2026-09-05T03:10:06Z"
+    },
+    {
+      "branch": "infra/q12-linux-host-preflight-v1",
+      "ahead": 4,
+      "behind": 277,
+      "unique_commits_vs_main": 4,
+      "unique_blobs_vs_main": 4,
+      "unique_trees_vs_main": 12,
+      "unique_objects_vs_main": 20,
+      "head_date": "2026-08-22T19:23:15+07:00"
+    },
+    {
+      "branch": "infra/windows-vps-worker-bootstrap-v1",
+      "ahead": 8,
+      "behind": 277,
+      "unique_commits_vs_main": 8,
+      "unique_blobs_vs_main": 8,
+      "unique_trees_vs_main": 24,
+      "unique_objects_vs_main": 40,
+      "head_date": "2026-08-22T19:28:04+07:00"
+    },
+    {
+      "branch": "integration/termux-change-sync-policy-20261117",
+      "ahead": 23,
+      "behind": 3,
+      "unique_commits_vs_main": 23,
+      "unique_blobs_vs_main": 141,
+      "unique_trees_vs_main": 153,
+      "unique_objects_vs_main": 317,
+      "head_date": "2026-11-17T06:25:48Z"
+    },
+    {
+      "branch": "main",
+      "ahead": 0,
+      "behind": 0,
+      "unique_commits_vs_main": 0,
+      "unique_blobs_vs_main": 0,
+      "unique_trees_vs_main": 0,
+      "unique_objects_vs_main": 0,
+      "head_date": "2026-11-19T03:23:43Z"
+    },
+    {
+      "branch": "noop",
+      "ahead": 0,
+      "behind": 414,
+      "unique_commits_vs_main": 0,
+      "unique_blobs_vs_main": 0,
+      "unique_trees_vs_main": 0,
+      "unique_objects_vs_main": 0,
+      "head_date": "2026-08-13T22:52:10+07:00"
+    },
+    {
+      "branch": "noop-check",
+      "ahead": 111,
+      "behind": 277,
+      "unique_commits_vs_main": 111,
+      "unique_blobs_vs_main": 111,
+      "unique_trees_vs_main": 311,
+      "unique_objects_vs_main": 533,
+      "head_date": "2026-08-23T11:26:42+07:00"
+    },
+    {
+      "branch": "noop-should-not-create",
+      "ahead": 35,
+      "behind": 277,
+      "unique_commits_vs_main": 35,
+      "unique_blobs_vs_main": 35,
+      "unique_trees_vs_main": 115,
+      "unique_objects_vs_main": 185,
+      "head_date": "2026-08-22T19:32:08+07:00"
+    },
+    {
+      "branch": "ops/buyer-download-probe-20260905",
+      "ahead": 1,
+      "behind": 269,
+      "unique_commits_vs_main": 1,
+      "unique_blobs_vs_main": 1,
+      "unique_trees_vs_main": 3,
+      "unique_objects_vs_main": 5,
+      "head_date": "2026-09-05T23:21:30+07:00"
+    },
+    {
+      "branch": "ops/buyer-ready-clean-package-20260906",
+      "ahead": 5,
+      "behind": 269,
+      "unique_commits_vs_main": 5,
+      "unique_blobs_vs_main": 5,
+      "unique_trees_vs_main": 11,
+      "unique_objects_vs_main": 21,
+      "head_date": "2026-09-06T00:10:32+07:00"
+    },
+    {
+      "branch": "ops/canonical-export-20260904",
+      "ahead": 13,
+      "behind": 269,
+      "unique_commits_vs_main": 13,
+      "unique_blobs_vs_main": 13,
+      "unique_trees_vs_main": 39,
+      "unique_objects_vs_main": 65,
+      "head_date": "2026-09-04T03:47:33+07:00"
+    },
+    {
+      "branch": "ops/canonical-export-20260904-run",
+      "ahead": 0,
+      "behind": 269,
+      "unique_commits_vs_main": 0,
+      "unique_blobs_vs_main": 0,
+      "unique_trees_vs_main": 0,
+      "unique_objects_vs_main": 0,
+      "head_date": "2026-08-23T10:05:54+07:00"
+    },
+    {
+      "branch": "ops/canonical-export-20260904-trigger",
+      "ahead": 0,
+      "behind": 269,
+      "unique_commits_vs_main": 0,
+      "unique_blobs_vs_main": 0,
+      "unique_trees_vs_main": 0,
+      "unique_objects_vs_main": 0,
+      "head_date": "2026-08-23T10:05:54+07:00"
+    },
+    {
+      "branch": "ops/github-governance-hardening-v1-20260904",
+      "ahead": 4,
+      "behind": 269,
+      "unique_commits_vs_main": 4,
+      "unique_blobs_vs_main": 4,
+      "unique_trees_vs_main": 7,
+      "unique_objects_vs_main": 15,
+      "head_date": "2026-09-04T18:56:24+07:00"
+    },
+    {
+      "branch": "ops/independent-verification-source-export-v1",
+      "ahead": 3,
+      "behind": 269,
+      "unique_commits_vs_main": 3,
+      "unique_blobs_vs_main": 3,
+      "unique_trees_vs_main": 9,
+      "unique_objects_vs_main": 15,
+      "head_date": "2026-08-27T18:59:55+07:00"
+    },
+    {
+      "branch": "ops/production-evidence-manifest-v2-1",
+      "ahead": 4,
+      "behind": 273,
+      "unique_commits_vs_main": 4,
+      "unique_blobs_vs_main": 4,
+      "unique_trees_vs_main": 10,
+      "unique_objects_vs_main": 18,
+      "head_date": "2026-08-22T23:09:02+07:00"
+    },
+    {
+      "branch": "ops/project-state-20261110",
+      "ahead": 5,
+      "behind": 3,
+      "unique_commits_vs_main": 5,
+      "unique_blobs_vs_main": 5,
+      "unique_trees_vs_main": 5,
+      "unique_objects_vs_main": 15,
+      "head_date": "2026-11-10T20:57:25Z"
+    },
+    {
+      "branch": "ops/provider-free-go-clean",
+      "ahead": 71,
+      "behind": 0,
+      "unique_commits_vs_main": 71,
+      "unique_blobs_vs_main": 148,
+      "unique_trees_vs_main": 190,
+      "unique_objects_vs_main": 409,
+      "head_date": "2026-11-23T02:00:32-05:00"
+    },
+    {
+      "branch": "ops/q10-exact-subject-closure-20260829",
+      "ahead": 7,
+      "behind": 269,
+      "unique_commits_vs_main": 7,
+      "unique_blobs_vs_main": 7,
+      "unique_trees_vs_main": 18,
+      "unique_objects_vs_main": 32,
+      "head_date": "2026-08-29T13:20:50+07:00"
+    },
+    {
+      "branch": "ops/q10-host-qualification-20260904",
+      "ahead": 24,
+      "behind": 335,
+      "unique_commits_vs_main": 24,
+      "unique_blobs_vs_main": 24,
+      "unique_trees_vs_main": 69,
+      "unique_objects_vs_main": 117,
+      "head_date": "2026-09-05T02:19:37+07:00"
+    },
+    {
+      "branch": "ops/q10-linux-execution-20260829",
+      "ahead": 4,
+      "behind": 335,
+      "unique_commits_vs_main": 4,
+      "unique_blobs_vs_main": 4,
+      "unique_trees_vs_main": 10,
+      "unique_objects_vs_main": 18,
+      "head_date": "2026-08-29T06:18:55+07:00"
+    },
+    {
+      "branch": "ops/q10-q12-master-prep-v2",
+      "ahead": 33,
+      "behind": 316,
+      "unique_commits_vs_main": 33,
+      "unique_blobs_vs_main": 31,
+      "unique_trees_vs_main": 89,
+      "unique_objects_vs_main": 153,
+      "head_date": "2026-08-19T22:28:31+07:00"
+    },
+    {
+      "branch": "ops/q10-q12-production-closure",
+      "ahead": 2,
+      "behind": 340,
+      "unique_commits_vs_main": 2,
+      "unique_blobs_vs_main": 2,
+      "unique_trees_vs_main": 5,
+      "unique_objects_vs_main": 9,
+      "head_date": "2026-09-19T04:06:36Z"
+    },
+    {
+      "branch": "ops/q10-readonly-materialize-20260827",
+      "ahead": 1,
+      "behind": 316,
+      "unique_commits_vs_main": 1,
+      "unique_blobs_vs_main": 1,
+      "unique_trees_vs_main": 3,
+      "unique_objects_vs_main": 5,
+      "head_date": "2026-08-27T22:51:16+07:00"
+    },
+    {
+      "branch": "ops/q10-source-materialization-helper",
+      "ahead": 3,
+      "behind": 335,
+      "unique_commits_vs_main": 3,
+      "unique_blobs_vs_main": 3,
+      "unique_trees_vs_main": 9,
+      "unique_objects_vs_main": 15,
+      "head_date": "2026-08-27T23:22:02+07:00"
+    },
+    {
+      "branch": "ops/q11-live-provider-smoke-v1",
+      "ahead": 1,
+      "behind": 340,
+      "unique_commits_vs_main": 1,
+      "unique_blobs_vs_main": 1,
+      "unique_trees_vs_main": 3,
+      "unique_objects_vs_main": 5,
+      "head_date": "2026-08-22T17:56:20+07:00"
+    },
+    {
+      "branch": "ops/q12-github-hosted-cgroup-diagnostic",
+      "ahead": 44,
+      "behind": 0,
+      "unique_commits_vs_main": 44,
+      "unique_blobs_vs_main": 44,
+      "unique_trees_vs_main": 122,
+      "unique_objects_vs_main": 210,
+      "head_date": "2026-11-23T03:52:04+07:00"
+    },
+    {
+      "branch": "ops/security-evidence-delta-20260903",
+      "ahead": 2,
+      "behind": 269,
+      "unique_commits_vs_main": 2,
+      "unique_blobs_vs_main": 2,
+      "unique_trees_vs_main": 6,
+      "unique_objects_vs_main": 10,
+      "head_date": "2026-09-03T19:09:32+07:00"
+    },
+    {
+      "branch": "package/full-system-inventory",
+      "ahead": 2,
+      "behind": 345,
+      "unique_commits_vs_main": 2,
+      "unique_blobs_vs_main": 2,
+      "unique_trees_vs_main": 6,
+      "unique_objects_vs_main": 10,
+      "head_date": "2026-08-15T05:26:16+07:00"
+    },
+    {
+      "branch": "post-p0/a2a-agent-admission-v1",
+      "ahead": 14,
+      "behind": 269,
+      "unique_commits_vs_main": 14,
+      "unique_blobs_vs_main": 14,
+      "unique_trees_vs_main": 37,
+      "unique_objects_vs_main": 65,
+      "head_date": "2026-08-27T17:05:05+07:00"
+    },
+    {
+      "branch": "post-p0/agent-security-governance-2026-v1",
+      "ahead": 7,
+      "behind": 269,
+      "unique_commits_vs_main": 7,
+      "unique_blobs_vs_main": 7,
+      "unique_trees_vs_main": 16,
+      "unique_objects_vs_main": 30,
+      "head_date": "2026-09-03T19:44:09+07:00"
+    },
+    {
+      "branch": "post-p0/agnes-capability-fabric-v1",
+      "ahead": 49,
+      "behind": 395,
+      "unique_commits_vs_main": 49,
+      "unique_blobs_vs_main": 59,
+      "unique_trees_vs_main": 188,
+      "unique_objects_vs_main": 296,
+      "head_date": "2026-08-18T08:05:25+07:00"
+    },
+    {
+      "branch": "post-p0/agnes-capability-gap-matrix-v2026",
+      "ahead": 104,
+      "behind": 277,
+      "unique_commits_vs_main": 104,
+      "unique_blobs_vs_main": 104,
+      "unique_trees_vs_main": 287,
+      "unique_objects_vs_main": 495,
+      "head_date": "2026-08-21T18:17:33+07:00"
+    },
+    {
+      "branch": "post-p0/agnes-cognitive-foundation-v1",
+      "ahead": 22,
+      "behind": 277,
+      "unique_commits_vs_main": 22,
+      "unique_blobs_vs_main": 22,
+      "unique_trees_vs_main": 82,
+      "unique_objects_vs_main": 126,
+      "head_date": "2026-08-22T03:11:22+07:00"
+    },
+    {
+      "branch": "post-p0/agnes-connected-source-intelligence-v1",
+      "ahead": 2,
+      "behind": 286,
+      "unique_commits_vs_main": 2,
+      "unique_blobs_vs_main": 2,
+      "unique_trees_vs_main": 7,
+      "unique_objects_vs_main": 11,
+      "head_date": "2026-08-20T07:18:34+07:00"
+    },
+    {
+      "branch": "post-p0/agnes-expert-fabric-reconcile-v2",
+      "ahead": 13,
+      "behind": 269,
+      "unique_commits_vs_main": 13,
+      "unique_blobs_vs_main": 13,
+      "unique_trees_vs_main": 31,
+      "unique_objects_vs_main": 57,
+      "head_date": "2026-08-27T16:51:09+07:00"
+    },
+    {
+      "branch": "post-p0/agnes-frontier-model-governance-v1",
+      "ahead": 120,
+      "behind": 277,
+      "unique_commits_vs_main": 120,
+      "unique_blobs_vs_main": 120,
+      "unique_trees_vs_main": 340,
+      "unique_objects_vs_main": 580,
+      "head_date": "2026-08-23T11:32:28+07:00"
+    },
+    {
+      "branch": "post-p0/agnes-frontier-model-governance-v1-temp-check",
+      "ahead": 111,
+      "behind": 277,
+      "unique_commits_vs_main": 111,
+      "unique_blobs_vs_main": 111,
+      "unique_trees_vs_main": 311,
+      "unique_objects_vs_main": 533,
+      "head_date": "2026-08-23T11:26:42+07:00"
+    },
+    {
+      "branch": "post-p0/agnes-knowledge-repository-v1",
+      "ahead": 31,
+      "behind": 269,
+      "unique_commits_vs_main": 31,
+      "unique_blobs_vs_main": 30,
+      "unique_trees_vs_main": 106,
+      "unique_objects_vs_main": 167,
+      "head_date": "2026-08-23T11:38:40+07:00"
+    },
+    {
+      "branch": "post-p0/agnes-learning-consolidator-v1",
+      "ahead": 58,
+      "behind": 277,
+      "unique_commits_vs_main": 58,
+      "unique_blobs_vs_main": 63,
+      "unique_trees_vs_main": 176,
+      "unique_objects_vs_main": 297,
+      "head_date": "2026-08-23T23:59:01+07:00"
+    },
+    {
+      "branch": "post-p0/agnes-qwen38-delta-v2",
+      "ahead": 23,
+      "behind": 273,
+      "unique_commits_vs_main": 23,
+      "unique_blobs_vs_main": 23,
+      "unique_trees_vs_main": 93,
+      "unique_objects_vs_main": 139,
+      "head_date": "2026-08-23T11:25:01+07:00"
+    },
+    {
+      "branch": "post-p0/agnes-runtime-p0-delta-v1",
+      "ahead": 16,
+      "behind": 273,
+      "unique_commits_vs_main": 16,
+      "unique_blobs_vs_main": 16,
+      "unique_trees_vs_main": 64,
+      "unique_objects_vs_main": 96,
+      "head_date": "2026-08-23T11:20:48+07:00"
+    },
+    {
+      "branch": "post-p0/agnes-s-delta-v1",
+      "ahead": 54,
+      "behind": 395,
+      "unique_commits_vs_main": 54,
+      "unique_blobs_vs_main": 64,
+      "unique_trees_vs_main": 208,
+      "unique_objects_vs_main": 326,
+      "head_date": "2026-08-23T03:05:18+07:00"
+    },
+    {
+      "branch": "post-p0/agnes-triad-dashboard-projection-v1",
+      "ahead": 61,
+      "behind": 277,
+      "unique_commits_vs_main": 61,
+      "unique_blobs_vs_main": 66,
+      "unique_trees_vs_main": 184,
+      "unique_objects_vs_main": 311,
+      "head_date": "2026-08-24T00:03:11+07:00"
+    },
+    {
+      "branch": "post-p0/agnes-triad-debate-schema-v1",
+      "ahead": 39,
+      "behind": 277,
+      "unique_commits_vs_main": 39,
+      "unique_blobs_vs_main": 43,
+      "unique_trees_vs_main": 124,
+      "unique_objects_vs_main": 206,
+      "head_date": "2026-08-23T19:45:16+07:00"
+    },
+    {
+      "branch": "post-p0/agnes-triad-evidence-evaluator-v1",
+      "ahead": 47,
+      "behind": 277,
+      "unique_commits_vs_main": 47,
+      "unique_blobs_vs_main": 52,
+      "unique_trees_vs_main": 148,
+      "unique_objects_vs_main": 247,
+      "head_date": "2026-08-23T19:58:12+07:00"
+    },
+    {
+      "branch": "post-p0/agnes-triad-evidence-test-attestation-v1",
+      "ahead": 50,
+      "behind": 277,
+      "unique_commits_vs_main": 50,
+      "unique_blobs_vs_main": 55,
+      "unique_trees_vs_main": 156,
+      "unique_objects_vs_main": 261,
+      "head_date": "2026-08-23T23:46:51+07:00"
+    },
+    {
+      "branch": "post-p0/agnes-triad-memory-v1",
+      "ahead": 44,
+      "behind": 277,
+      "unique_commits_vs_main": 44,
+      "unique_blobs_vs_main": 49,
+      "unique_trees_vs_main": 140,
+      "unique_objects_vs_main": 233,
+      "head_date": "2026-08-23T19:53:36+07:00"
+    },
+    {
+      "branch": "post-p0/agnes-triad-parallel-scheduler-v1",
+      "ahead": 38,
+      "behind": 277,
+      "unique_commits_vs_main": 38,
+      "unique_blobs_vs_main": 41,
+      "unique_trees_vs_main": 122,
+      "unique_objects_vs_main": 201,
+      "head_date": "2026-08-23T13:29:54+07:00"
+    },
+    {
+      "branch": "post-p0/agnes-triad-pipeline-provenance-v1",
+      "ahead": 64,
+      "behind": 277,
+      "unique_commits_vs_main": 64,
+      "unique_blobs_vs_main": 69,
+      "unique_trees_vs_main": 192,
+      "unique_objects_vs_main": 325,
+      "head_date": "2026-08-24T02:13:02+07:00"
+    },
+    {
+      "branch": "post-p0/agnes-triad-pulse-v1",
+      "ahead": 54,
+      "behind": 277,
+      "unique_commits_vs_main": 54,
+      "unique_blobs_vs_main": 59,
+      "unique_trees_vs_main": 166,
+      "unique_objects_vs_main": 279,
+      "head_date": "2026-08-23T23:54:33+07:00"
+    },
+    {
+      "branch": "post-p0/agnes-triad-runtime-v1",
+      "ahead": 63,
+      "behind": 273,
+      "unique_commits_vs_main": 63,
+      "unique_blobs_vs_main": 63,
+      "unique_trees_vs_main": 258,
+      "unique_objects_vs_main": 384,
+      "head_date": "2026-08-23T13:31:37+07:00"
+    },
+    {
+      "branch": "post-p0/agnes-triad-strict-priority-reconcile-v1",
+      "ahead": 66,
+      "behind": 277,
+      "unique_commits_vs_main": 66,
+      "unique_blobs_vs_main": 71,
+      "unique_trees_vs_main": 197,
+      "unique_objects_vs_main": 334,
+      "head_date": "2026-08-25T05:01:38+07:00"
+    },
+    {
+      "branch": "post-p0/agnes-triad-strict-priority-v1",
+      "ahead": 39,
+      "behind": 277,
+      "unique_commits_vs_main": 39,
+      "unique_blobs_vs_main": 43,
+      "unique_trees_vs_main": 126,
+      "unique_objects_vs_main": 208,
+      "head_date": "2026-08-23T13:39:08+07:00"
+    },
+    {
+      "branch": "post-p0/agnes-voice-persona-v1",
+      "ahead": 6,
+      "behind": 273,
+      "unique_commits_vs_main": 6,
+      "unique_blobs_vs_main": 6,
+      "unique_trees_vs_main": 20,
+      "unique_objects_vs_main": 32,
+      "head_date": "2026-08-23T10:00:35+07:00"
+    },
+    {
+      "branch": "post-p0/anyclaw-cleanroom-bridge-v1",
+      "ahead": 6,
+      "behind": 286,
+      "unique_commits_vs_main": 6,
+      "unique_blobs_vs_main": 6,
+      "unique_trees_vs_main": 17,
+      "unique_objects_vs_main": 29,
+      "head_date": "2026-08-20T07:43:16+07:00"
+    },
+    {
+      "branch": "post-p0/anyclaw-cleanroom-mcp-v2",
+      "ahead": 15,
+      "behind": 285,
+      "unique_commits_vs_main": 15,
+      "unique_blobs_vs_main": 15,
+      "unique_trees_vs_main": 39,
+      "unique_objects_vs_main": 69,
+      "head_date": "2026-08-20T07:59:38+07:00"
+    },
+    {
+      "branch": "post-p0/assurance-profile-x1-20260905",
+      "ahead": 11,
+      "behind": 269,
+      "unique_commits_vs_main": 11,
+      "unique_blobs_vs_main": 11,
+      "unique_trees_vs_main": 33,
+      "unique_objects_vs_main": 55,
+      "head_date": "2026-09-05T01:30:46+07:00"
+    },
+    {
+      "branch": "post-p0/authzen-authorization-adapter-v1",
+      "ahead": 25,
+      "behind": 277,
+      "unique_commits_vs_main": 25,
+      "unique_blobs_vs_main": 25,
+      "unique_trees_vs_main": 92,
+      "unique_objects_vs_main": 142,
+      "head_date": "2026-08-27T16:46:29+07:00"
+    },
+    {
+      "branch": "post-p0/capability-ai-gateway-v1",
+      "ahead": 0,
+      "behind": 312,
+      "unique_commits_vs_main": 0,
+      "unique_blobs_vs_main": 0,
+      "unique_trees_vs_main": 0,
+      "unique_objects_vs_main": 0,
+      "head_date": "2026-08-20T05:05:07+07:00"
+    },
+    {
+      "branch": "post-p0/capability-aware-model-fabric-v1",
+      "ahead": 102,
+      "behind": 277,
+      "unique_commits_vs_main": 102,
+      "unique_blobs_vs_main": 102,
+      "unique_trees_vs_main": 283,
+      "unique_objects_vs_main": 487,
+      "head_date": "2026-08-21T18:07:03+07:00"
+    },
+    {
+      "branch": "post-p0/chat-b-digital-twin-v2",
+      "ahead": 46,
+      "behind": 277,
+      "unique_commits_vs_main": 46,
+      "unique_blobs_vs_main": 43,
+      "unique_trees_vs_main": 148,
+      "unique_objects_vs_main": 237,
+      "head_date": "2026-08-22T19:38:35+07:00"
+    },
+    {
+      "branch": "post-p0/chat-b-digital-twin-v2-check",
+      "ahead": 35,
+      "behind": 277,
+      "unique_commits_vs_main": 35,
+      "unique_blobs_vs_main": 35,
+      "unique_trees_vs_main": 115,
+      "unique_objects_vs_main": 185,
+      "head_date": "2026-08-22T19:32:08+07:00"
+    },
+    {
+      "branch": "post-p0/chat-b-renderer-adapter-v2",
+      "ahead": 34,
+      "behind": 277,
+      "unique_commits_vs_main": 34,
+      "unique_blobs_vs_main": 34,
+      "unique_trees_vs_main": 111,
+      "unique_objects_vs_main": 179,
+      "head_date": "2026-08-22T19:19:01+07:00"
+    },
+    {
+      "branch": "post-p0/chat-mcp-bridge-v1",
+      "ahead": 59,
+      "behind": 277,
+      "unique_commits_vs_main": 59,
+      "unique_blobs_vs_main": 59,
+      "unique_trees_vs_main": 167,
+      "unique_objects_vs_main": 285,
+      "head_date": "2026-08-21T17:40:55+07:00"
+    },
+    {
+      "branch": "post-p0/ci-lane-classifier-v2",
+      "ahead": 7,
+      "behind": 269,
+      "unique_commits_vs_main": 7,
+      "unique_blobs_vs_main": 7,
+      "unique_trees_vs_main": 15,
+      "unique_objects_vs_main": 29,
+      "head_date": "2026-08-27T12:08:55+07:00"
+    },
+    {
+      "branch": "post-p0/ck-v3-coordination-runtime-v1",
+      "ahead": 5,
+      "behind": 283,
+      "unique_commits_vs_main": 5,
+      "unique_blobs_vs_main": 5,
+      "unique_trees_vs_main": 13,
+      "unique_objects_vs_main": 23,
+      "head_date": "2026-08-20T08:43:16+07:00"
+    },
+    {
+      "branch": "post-p0/ck-v3-execution-planner-v1",
+      "ahead": 4,
+      "behind": 281,
+      "unique_commits_vs_main": 4,
+      "unique_blobs_vs_main": 4,
+      "unique_trees_vs_main": 10,
+      "unique_objects_vs_main": 18,
+      "head_date": "2026-08-20T08:49:53+07:00"
+    },
+    {
+      "branch": "post-p0/ck-v3-readonly-executor-v1",
+      "ahead": 7,
+      "behind": 279,
+      "unique_commits_vs_main": 7,
+      "unique_blobs_vs_main": 7,
+      "unique_trees_vs_main": 19,
+      "unique_objects_vs_main": 33,
+      "head_date": "2026-08-20T09:14:00+07:00"
+    },
+    {
+      "branch": "post-p0/claim-registry-v1",
+      "ahead": 12,
+      "behind": 269,
+      "unique_commits_vs_main": 12,
+      "unique_blobs_vs_main": 12,
+      "unique_trees_vs_main": 29,
+      "unique_objects_vs_main": 53,
+      "head_date": "2026-08-23T13:27:02+07:00"
+    },
+    {
+      "branch": "post-p0/cognitive-digital-twin-renderer-v2",
+      "ahead": 39,
+      "behind": 277,
+      "unique_commits_vs_main": 39,
+      "unique_blobs_vs_main": 39,
+      "unique_trees_vs_main": 123,
+      "unique_objects_vs_main": 201,
+      "head_date": "2026-08-22T19:38:16+07:00"
+    },
+    {
+      "branch": "post-p0/cognitive-digital-twin-v1",
+      "ahead": 29,
+      "behind": 277,
+      "unique_commits_vs_main": 29,
+      "unique_blobs_vs_main": 29,
+      "unique_trees_vs_main": 99,
+      "unique_objects_vs_main": 157,
+      "head_date": "2026-08-22T05:36:25+07:00"
+    },
+    {
+      "branch": "post-p0/cognitive-digital-twin-v2",
+      "ahead": 30,
+      "behind": 277,
+      "unique_commits_vs_main": 30,
+      "unique_blobs_vs_main": 30,
+      "unique_trees_vs_main": 102,
+      "unique_objects_vs_main": 162,
+      "head_date": "2026-08-22T19:35:49+07:00"
+    },
+    {
+      "branch": "post-p0/cognitive-governor-v1",
+      "ahead": 12,
+      "behind": 293,
+      "unique_commits_vs_main": 12,
+      "unique_blobs_vs_main": 12,
+      "unique_trees_vs_main": 35,
+      "unique_objects_vs_main": 59,
+      "head_date": "2026-08-20T05:28:00+07:00"
+    },
+    {
+      "branch": "post-p0/cognitive-knowledge-fabric-v1-20260903",
+      "ahead": 12,
+      "behind": 269,
+      "unique_commits_vs_main": 12,
+      "unique_blobs_vs_main": 12,
+      "unique_trees_vs_main": 31,
+      "unique_objects_vs_main": 55,
+      "head_date": "2026-09-03T23:44:08+07:00"
+    },
+    {
+      "branch": "post-p0/commercial-readiness-evidence-v1",
+      "ahead": 10,
+      "behind": 277,
+      "unique_commits_vs_main": 10,
+      "unique_blobs_vs_main": 10,
+      "unique_trees_vs_main": 28,
+      "unique_objects_vs_main": 48,
+      "head_date": "2026-08-21T16:36:27+07:00"
+    },
+    {
+      "branch": "post-p0/connector-observability-v1",
+      "ahead": 22,
+      "behind": 293,
+      "unique_commits_vs_main": 22,
+      "unique_blobs_vs_main": 35,
+      "unique_trees_vs_main": 72,
+      "unique_objects_vs_main": 129,
+      "head_date": "2026-08-20T05:25:51+07:00"
+    },
+    {
+      "branch": "post-p0/creator-intelligence-v1-20260904",
+      "ahead": 5,
+      "behind": 269,
+      "unique_commits_vs_main": 5,
+      "unique_blobs_vs_main": 5,
+      "unique_trees_vs_main": 14,
+      "unique_objects_vs_main": 24,
+      "head_date": "2026-09-04T06:07:19+07:00"
+    },
+    {
+      "branch": "post-p0/data-contract-lineage-v1",
+      "ahead": 4,
+      "behind": 269,
+      "unique_commits_vs_main": 4,
+      "unique_blobs_vs_main": 4,
+      "unique_trees_vs_main": 11,
+      "unique_objects_vs_main": 19,
+      "head_date": "2026-08-27T12:16:34+07:00"
+    },
+    {
+      "branch": "post-p0/dev-assistant-execution-contract-v1",
+      "ahead": 7,
+      "behind": 327,
+      "unique_commits_vs_main": 7,
+      "unique_blobs_vs_main": 7,
+      "unique_trees_vs_main": 21,
+      "unique_objects_vs_main": 35,
+      "head_date": "2026-08-20T03:02:18+07:00"
+    },
+    {
+      "branch": "post-p0/dev-assistant-fabric-v1",
+      "ahead": 33,
+      "behind": 328,
+      "unique_commits_vs_main": 33,
+      "unique_blobs_vs_main": 87,
+      "unique_trees_vs_main": 104,
+      "unique_objects_vs_main": 224,
+      "head_date": "2026-08-20T02:52:08+07:00"
+    },
+    {
+      "branch": "post-p0/device-bridge-attested-descriptor-v1",
+      "ahead": 7,
+      "behind": 284,
+      "unique_commits_vs_main": 7,
+      "unique_blobs_vs_main": 7,
+      "unique_trees_vs_main": 18,
+      "unique_objects_vs_main": 32,
+      "head_date": "2026-08-20T08:06:56+07:00"
+    },
+    {
+      "branch": "post-p0/dual-track-fabric-integration",
+      "ahead": 29,
+      "behind": 277,
+      "unique_commits_vs_main": 29,
+      "unique_blobs_vs_main": 29,
+      "unique_trees_vs_main": 84,
+      "unique_objects_vs_main": 142,
+      "head_date": "2026-08-21T16:57:37+07:00"
+    },
+    {
+      "branch": "post-p0/durable-execution-correctness-v2",
+      "ahead": 42,
+      "behind": 273,
+      "unique_commits_vs_main": 42,
+      "unique_blobs_vs_main": 42,
+      "unique_trees_vs_main": 172,
+      "unique_objects_vs_main": 256,
+      "head_date": "2026-08-23T11:45:34+07:00"
+    },
+    {
+      "branch": "post-p0/durable-execution-reconcile-v3",
+      "ahead": 10,
+      "behind": 269,
+      "unique_commits_vs_main": 10,
+      "unique_blobs_vs_main": 10,
+      "unique_trees_vs_main": 34,
+      "unique_objects_vs_main": 54,
+      "head_date": "2026-08-27T12:06:29+07:00"
+    },
+    {
+      "branch": "post-p0/dynamic-patch-verifier-v1",
+      "ahead": 6,
+      "behind": 324,
+      "unique_commits_vs_main": 6,
+      "unique_blobs_vs_main": 6,
+      "unique_trees_vs_main": 20,
+      "unique_objects_vs_main": 32,
+      "head_date": "2026-08-20T03:32:53+07:00"
+    },
+    {
+      "branch": "post-p0/event-contract-standards-v1",
+      "ahead": 34,
+      "behind": 277,
+      "unique_commits_vs_main": 34,
+      "unique_blobs_vs_main": 37,
+      "unique_trees_vs_main": 112,
+      "unique_objects_vs_main": 183,
+      "head_date": "2026-08-27T12:10:54+07:00"
+    },
+    {
+      "branch": "post-p0/evidence-signing-coc-v1-20260904",
+      "ahead": 14,
+      "behind": 269,
+      "unique_commits_vs_main": 14,
+      "unique_blobs_vs_main": 14,
+      "unique_trees_vs_main": 36,
+      "unique_objects_vs_main": 64,
+      "head_date": "2026-09-04T21:05:16+07:00"
+    },
+    {
+      "branch": "post-p0/evidence-signing-custody-v1-20260904",
+      "ahead": 9,
+      "behind": 269,
+      "unique_commits_vs_main": 9,
+      "unique_blobs_vs_main": 7,
+      "unique_trees_vs_main": 14,
+      "unique_objects_vs_main": 30,
+      "head_date": "2026-09-04T20:30:45+07:00"
+    },
+    {
+      "branch": "post-p0/execution-verifier-v2",
+      "ahead": 19,
+      "behind": 293,
+      "unique_commits_vs_main": 19,
+      "unique_blobs_vs_main": 19,
+      "unique_trees_vs_main": 55,
+      "unique_objects_vs_main": 93,
+      "head_date": "2026-08-20T05:19:30+07:00"
+    },
+    {
+      "branch": "post-p0/external-access-governance-v1",
+      "ahead": 11,
+      "behind": 269,
+      "unique_commits_vs_main": 11,
+      "unique_blobs_vs_main": 11,
+      "unique_trees_vs_main": 28,
+      "unique_objects_vs_main": 50,
+      "head_date": "2026-08-23T10:12:11+07:00"
+    },
+    {
+      "branch": "post-p0/failure-memory-fingerprint-replay-v1",
+      "ahead": 128,
+      "behind": 277,
+      "unique_commits_vs_main": 128,
+      "unique_blobs_vs_main": 130,
+      "unique_trees_vs_main": 363,
+      "unique_objects_vs_main": 621,
+      "head_date": "2026-08-23T13:29:55+07:00"
+    },
+    {
+      "branch": "post-p0/failure-memory-regression-immune-v1",
+      "ahead": 126,
+      "behind": 277,
+      "unique_commits_vs_main": 126,
+      "unique_blobs_vs_main": 126,
+      "unique_trees_vs_main": 355,
+      "unique_objects_vs_main": 607,
+      "head_date": "2026-08-23T11:52:51+07:00"
+    },
+    {
+      "branch": "post-p0/free-fallback-85",
+      "ahead": 32,
+      "behind": 273,
+      "unique_commits_vs_main": 32,
+      "unique_blobs_vs_main": 32,
+      "unique_trees_vs_main": 84,
+      "unique_objects_vs_main": 148,
+      "head_date": "2026-08-23T10:00:18+07:00"
+    },
+    {
+      "branch": "post-p0/gen4-fusion-v0.2",
+      "ahead": 21,
+      "behind": 395,
+      "unique_commits_vs_main": 21,
+      "unique_blobs_vs_main": 21,
+      "unique_trees_vs_main": 78,
+      "unique_objects_vs_main": 120,
+      "head_date": "2026-08-17T22:40:13+07:00"
+    },
+    {
+      "branch": "post-p0/gen6-2-elastic-swarm-v1",
+      "ahead": 49,
+      "behind": 277,
+      "unique_commits_vs_main": 49,
+      "unique_blobs_vs_main": 49,
+      "unique_trees_vs_main": 140,
+      "unique_objects_vs_main": 238,
+      "head_date": "2026-08-21T17:24:28+07:00"
+    },
+    {
+      "branch": "post-p0/gen6-3-cognitive-memory-v1",
+      "ahead": 57,
+      "behind": 277,
+      "unique_commits_vs_main": 57,
+      "unique_blobs_vs_main": 57,
+      "unique_trees_vs_main": 162,
+      "unique_objects_vs_main": 276,
+      "head_date": "2026-08-21T17:35:37+07:00"
+    },
+    {
+      "branch": "post-p0/gen6-3-memory-skill-v1",
+      "ahead": 60,
+      "behind": 277,
+      "unique_commits_vs_main": 60,
+      "unique_blobs_vs_main": 60,
+      "unique_trees_vs_main": 171,
+      "unique_objects_vs_main": 291,
+      "head_date": "2026-08-21T18:09:33+07:00"
+    },
+    {
+      "branch": "post-p0/gen6-4-research-formal-v1",
+      "ahead": 63,
+      "behind": 277,
+      "unique_commits_vs_main": 63,
+      "unique_blobs_vs_main": 63,
+      "unique_trees_vs_main": 180,
+      "unique_objects_vs_main": 306,
+      "head_date": "2026-08-21T17:40:14+07:00"
+    },
+    {
+      "branch": "post-p0/gen6-5-ui-multimodal-v1",
+      "ahead": 79,
+      "behind": 277,
+      "unique_commits_vs_main": 79,
+      "unique_blobs_vs_main": 77,
+      "unique_trees_vs_main": 227,
+      "unique_objects_vs_main": 383,
+      "head_date": "2026-08-21T17:53:51+07:00"
+    },
+    {
+      "branch": "post-p0/gen6-runtime-contracts-v1",
+      "ahead": 42,
+      "behind": 277,
+      "unique_commits_vs_main": 42,
+      "unique_blobs_vs_main": 42,
+      "unique_trees_vs_main": 120,
+      "unique_objects_vs_main": 204,
+      "head_date": "2026-08-21T17:16:17+07:00"
+    },
+    {
+      "branch": "post-p0/github-governance-hardening-v1-20260904",
+      "ahead": 4,
+      "behind": 269,
+      "unique_commits_vs_main": 4,
+      "unique_blobs_vs_main": 4,
+      "unique_trees_vs_main": 7,
+      "unique_objects_vs_main": 15,
+      "head_date": "2026-09-04T18:56:24+07:00"
+    },
+    {
+      "branch": "post-p0/gmail-oauth-setup-doc-v1",
+      "ahead": 2,
+      "behind": 289,
+      "unique_commits_vs_main": 2,
+      "unique_blobs_vs_main": 2,
+      "unique_trees_vs_main": 6,
+      "unique_objects_vs_main": 10,
+      "head_date": "2026-08-20T05:49:52+07:00"
+    },
+    {
+      "branch": "post-p0/image-intelligence-pipeline-v1-20260904",
+      "ahead": 15,
+      "behind": 269,
+      "unique_commits_vs_main": 15,
+      "unique_blobs_vs_main": 15,
+      "unique_trees_vs_main": 44,
+      "unique_objects_vs_main": 74,
+      "head_date": "2026-09-04T17:38:04+07:00"
+    },
+    {
+      "branch": "post-p0/independent-patch-verifier-v1",
+      "ahead": 4,
+      "behind": 325,
+      "unique_commits_vs_main": 4,
+      "unique_blobs_vs_main": 4,
+      "unique_trees_vs_main": 13,
+      "unique_objects_vs_main": 21,
+      "head_date": "2026-08-20T03:25:54+07:00"
+    },
+    {
+      "branch": "post-p0/inter-chat-communication-bus-v1",
+      "ahead": 39,
+      "behind": 277,
+      "unique_commits_vs_main": 39,
+      "unique_blobs_vs_main": 39,
+      "unique_trees_vs_main": 121,
+      "unique_objects_vs_main": 199,
+      "head_date": "2026-08-23T06:32:51+07:00"
+    },
+    {
+      "branch": "post-p0/knowledge-lexical-retrieval-v1-20260904",
+      "ahead": 51,
+      "behind": 269,
+      "unique_commits_vs_main": 51,
+      "unique_blobs_vs_main": 39,
+      "unique_trees_vs_main": 101,
+      "unique_objects_vs_main": 191,
+      "head_date": "2026-09-04T06:26:57+07:00"
+    },
+    {
+      "branch": "post-p0/knowledge-persistence-v2-20260903",
+      "ahead": 44,
+      "behind": 269,
+      "unique_commits_vs_main": 44,
+      "unique_blobs_vs_main": 32,
+      "unique_trees_vs_main": 83,
+      "unique_objects_vs_main": 159,
+      "head_date": "2026-09-04T02:53:58+07:00"
+    },
+    {
+      "branch": "post-p0/knowledge-retrieval-evaluation-v1-20260904",
+      "ahead": 55,
+      "behind": 269,
+      "unique_commits_vs_main": 55,
+      "unique_blobs_vs_main": 43,
+      "unique_trees_vs_main": 109,
+      "unique_objects_vs_main": 207,
+      "head_date": "2026-09-04T18:24:33+07:00"
+    },
+    {
+      "branch": "post-p0/master-capability-evidence-registry-v1",
+      "ahead": 16,
+      "behind": 269,
+      "unique_commits_vs_main": 16,
+      "unique_blobs_vs_main": 23,
+      "unique_trees_vs_main": 33,
+      "unique_objects_vs_main": 72,
+      "head_date": "2026-08-27T16:30:32+07:00"
+    },
+    {
+      "branch": "post-p0/master-controller-v1-20260904",
+      "ahead": 7,
+      "behind": 269,
+      "unique_commits_vs_main": 7,
+      "unique_blobs_vs_main": 6,
+      "unique_trees_vs_main": 12,
+      "unique_objects_vs_main": 25,
+      "head_date": "2026-09-04T18:34:12+07:00"
+    },
+    {
+      "branch": "post-p0/mcp-admission-otel-bridge-v1",
+      "ahead": 26,
+      "behind": 269,
+      "unique_commits_vs_main": 26,
+      "unique_blobs_vs_main": 20,
+      "unique_trees_vs_main": 63,
+      "unique_objects_vs_main": 109,
+      "head_date": "2026-08-23T11:51:13+07:00"
+    },
+    {
+      "branch": "post-p0/mobile-proof-benchmark-v1",
+      "ahead": 5,
+      "behind": 269,
+      "unique_commits_vs_main": 5,
+      "unique_blobs_vs_main": 5,
+      "unique_trees_vs_main": 10,
+      "unique_objects_vs_main": 20,
+      "head_date": "2026-08-23T11:21:31+07:00"
+    },
+    {
+      "branch": "post-p0/n8n-development-agent-fabric",
+      "ahead": 38,
+      "behind": 273,
+      "unique_commits_vs_main": 38,
+      "unique_blobs_vs_main": 38,
+      "unique_trees_vs_main": 106,
+      "unique_objects_vs_main": 182,
+      "head_date": "2026-08-23T01:00:03+07:00"
+    },
+    {
+      "branch": "post-p0/n8n-runtime-registration-guard-v1",
+      "ahead": 45,
+      "behind": 273,
+      "unique_commits_vs_main": 45,
+      "unique_blobs_vs_main": 47,
+      "unique_trees_vs_main": 127,
+      "unique_objects_vs_main": 219,
+      "head_date": "2026-08-23T10:31:56+07:00"
+    },
+    {
+      "branch": "post-p0/nexus-omni-resilience-v1",
+      "ahead": 92,
+      "behind": 277,
+      "unique_commits_vs_main": 92,
+      "unique_blobs_vs_main": 92,
+      "unique_trees_vs_main": 257,
+      "unique_objects_vs_main": 441,
+      "head_date": "2026-08-21T17:55:49+07:00"
+    },
+    {
+      "branch": "post-p0/nexus-omni-ultra-governance-v1",
+      "ahead": 97,
+      "behind": 277,
+      "unique_commits_vs_main": 97,
+      "unique_blobs_vs_main": 97,
+      "unique_trees_vs_main": 270,
+      "unique_objects_vs_main": 464,
+      "head_date": "2026-08-21T18:01:17+07:00"
+    },
+    {
+      "branch": "post-p0/opencode-control-bridge-v1",
+      "ahead": 14,
+      "behind": 329,
+      "unique_commits_vs_main": 14,
+      "unique_blobs_vs_main": 23,
+      "unique_trees_vs_main": 48,
+      "unique_objects_vs_main": 85,
+      "head_date": "2026-08-20T00:54:17+07:00"
+    },
+    {
+      "branch": "post-p0/openfeature-evaluation-bridge-v1",
+      "ahead": 13,
+      "behind": 269,
+      "unique_commits_vs_main": 13,
+      "unique_blobs_vs_main": 13,
+      "unique_trees_vs_main": 30,
+      "unique_objects_vs_main": 56,
+      "head_date": "2026-08-27T16:59:25+07:00"
+    },
+    {
+      "branch": "post-p0/personal-data-plane-v1",
+      "ahead": 0,
+      "behind": 291,
+      "unique_commits_vs_main": 0,
+      "unique_blobs_vs_main": 0,
+      "unique_trees_vs_main": 0,
+      "unique_objects_vs_main": 0,
+      "head_date": "2026-08-20T05:22:01+07:00"
+    },
+    {
+      "branch": "post-p0/personal-intelligence-v1",
+      "ahead": 10,
+      "behind": 322,
+      "unique_commits_vs_main": 10,
+      "unique_blobs_vs_main": 10,
+      "unique_trees_vs_main": 31,
+      "unique_objects_vs_main": 51,
+      "head_date": "2026-08-20T04:19:13+07:00"
+    },
+    {
+      "branch": "post-p0/polyglot-engineering-fabric-v1",
+      "ahead": 9,
+      "behind": 273,
+      "unique_commits_vs_main": 9,
+      "unique_blobs_vs_main": 9,
+      "unique_trees_vs_main": 35,
+      "unique_objects_vs_main": 53,
+      "head_date": "2026-08-23T09:55:36+07:00"
+    },
+    {
+      "branch": "post-p0/production-evidence-manifest-v2-1",
+      "ahead": 5,
+      "behind": 273,
+      "unique_commits_vs_main": 5,
+      "unique_blobs_vs_main": 5,
+      "unique_trees_vs_main": 13,
+      "unique_objects_vs_main": 23,
+      "head_date": "2026-08-22T23:12:57+07:00"
+    },
+    {
+      "branch": "post-p0/repo-file-retention-audit-v1-20260904",
+      "ahead": 11,
+      "behind": 269,
+      "unique_commits_vs_main": 11,
+      "unique_blobs_vs_main": 11,
+      "unique_trees_vs_main": 24,
+      "unique_objects_vs_main": 46,
+      "head_date": "2026-09-04T19:35:53+07:00"
+    },
+    {
+      "branch": "post-p0/research-persistence-v1-20260907",
+      "ahead": 53,
+      "behind": 269,
+      "unique_commits_vs_main": 53,
+      "unique_blobs_vs_main": 41,
+      "unique_trees_vs_main": 105,
+      "unique_objects_vs_main": 199,
+      "head_date": "2026-09-07T05:22:22+07:00"
+    },
+    {
+      "branch": "post-p0/sandbox-executor-v1",
+      "ahead": 10,
+      "behind": 326,
+      "unique_commits_vs_main": 10,
+      "unique_blobs_vs_main": 10,
+      "unique_trees_vs_main": 31,
+      "unique_objects_vs_main": 51,
+      "head_date": "2026-08-20T03:21:50+07:00"
+    },
+    {
+      "branch": "post-p0/secure-remote-mcp-contract-v1",
+      "ahead": 10,
+      "behind": 283,
+      "unique_commits_vs_main": 10,
+      "unique_blobs_vs_main": 10,
+      "unique_trees_vs_main": 26,
+      "unique_objects_vs_main": 46,
+      "head_date": "2026-08-20T08:38:43+07:00"
+    },
+    {
+      "branch": "post-p0/secure-remote-mcp-http-canary-v1",
+      "ahead": 9,
+      "behind": 282,
+      "unique_commits_vs_main": 9,
+      "unique_blobs_vs_main": 9,
+      "unique_trees_vs_main": 24,
+      "unique_objects_vs_main": 42,
+      "head_date": "2026-08-20T09:00:17+07:00"
+    },
+    {
+      "branch": "post-p0/security-attack-regression-v1",
+      "ahead": 6,
+      "behind": 288,
+      "unique_commits_vs_main": 6,
+      "unique_blobs_vs_main": 6,
+      "unique_trees_vs_main": 16,
+      "unique_objects_vs_main": 28,
+      "head_date": "2026-08-20T06:06:18+07:00"
+    },
+    {
+      "branch": "post-p0/security-issue-65-peer-binding",
+      "ahead": 9,
+      "behind": 287,
+      "unique_commits_vs_main": 9,
+      "unique_blobs_vs_main": 9,
+      "unique_trees_vs_main": 23,
+      "unique_objects_vs_main": 41,
+      "head_date": "2026-08-20T06:32:12+07:00"
+    },
+    {
+      "branch": "post-p0/security-issue-66-attachment-validation",
+      "ahead": 6,
+      "behind": 287,
+      "unique_commits_vs_main": 6,
+      "unique_blobs_vs_main": 6,
+      "unique_trees_vs_main": 15,
+      "unique_objects_vs_main": 27,
+      "head_date": "2026-08-20T06:36:22+07:00"
+    },
+    {
+      "branch": "post-p0/security-regression-evidence-reconcile-v1",
+      "ahead": 1,
+      "behind": 286,
+      "unique_commits_vs_main": 1,
+      "unique_blobs_vs_main": 1,
+      "unique_trees_vs_main": 2,
+      "unique_objects_vs_main": 4,
+      "head_date": "2026-08-20T07:13:12+07:00"
+    },
+    {
+      "branch": "post-p0/self-capability-reconcile-v1",
+      "ahead": 3,
+      "behind": 328,
+      "unique_commits_vs_main": 3,
+      "unique_blobs_vs_main": 3,
+      "unique_trees_vs_main": 7,
+      "unique_objects_vs_main": 13,
+      "head_date": "2026-08-20T01:32:20+07:00"
+    },
+    {
+      "branch": "post-p0/sonar-quality-automation-v1-20260904",
+      "ahead": 2,
+      "behind": 269,
+      "unique_commits_vs_main": 2,
+      "unique_blobs_vs_main": 9,
+      "unique_trees_vs_main": 11,
+      "unique_objects_vs_main": 22,
+      "head_date": "2026-09-04T16:07:26Z"
+    },
+    {
+      "branch": "post-p0/standards-integration-v1",
+      "ahead": 0,
+      "behind": 269,
+      "unique_commits_vs_main": 0,
+      "unique_blobs_vs_main": 0,
+      "unique_trees_vs_main": 0,
+      "unique_objects_vs_main": 0,
+      "head_date": "2026-08-23T10:05:54+07:00"
+    },
+    {
+      "branch": "post-p0/standards-refresh-2026-08-v1",
+      "ahead": 32,
+      "behind": 273,
+      "unique_commits_vs_main": 32,
+      "unique_blobs_vs_main": 32,
+      "unique_trees_vs_main": 129,
+      "unique_objects_vs_main": 193,
+      "head_date": "2026-08-23T11:36:54+07:00"
+    },
+    {
+      "branch": "post-p0/stress-lab-level2-write-activation-gate-v1",
+      "ahead": 7,
+      "behind": 278,
+      "unique_commits_vs_main": 7,
+      "unique_blobs_vs_main": 7,
+      "unique_trees_vs_main": 18,
+      "unique_objects_vs_main": 32,
+      "head_date": "2026-08-20T12:20:17+07:00"
+    },
+    {
+      "branch": "post-p0/system-skills-harvest-v1",
+      "ahead": 10,
+      "behind": 269,
+      "unique_commits_vs_main": 10,
+      "unique_blobs_vs_main": 10,
+      "unique_trees_vs_main": 20,
+      "unique_objects_vs_main": 40,
+      "head_date": "2026-09-03T19:41:10+07:00"
+    },
+    {
+      "branch": "post-p0/test-standards-enforcement-v1",
+      "ahead": 80,
+      "behind": 277,
+      "unique_commits_vs_main": 80,
+      "unique_blobs_vs_main": 80,
+      "unique_trees_vs_main": 222,
+      "unique_objects_vs_main": 382,
+      "head_date": "2026-08-21T17:52:54+07:00"
+    },
+    {
+      "branch": "post-p0/tool-vps-helper-policy-20260904",
+      "ahead": 1,
+      "behind": 269,
+      "unique_commits_vs_main": 1,
+      "unique_blobs_vs_main": 1,
+      "unique_trees_vs_main": 3,
+      "unique_objects_vs_main": 5,
+      "head_date": "2026-09-04T06:37:03+07:00"
+    },
+    {
+      "branch": "post-p0/trusted-registry-verifier-profile-v1",
+      "ahead": 1,
+      "behind": 269,
+      "unique_commits_vs_main": 1,
+      "unique_blobs_vs_main": 1,
+      "unique_trees_vs_main": 3,
+      "unique_objects_vs_main": 5,
+      "head_date": "2026-08-27T16:41:04+07:00"
+    },
+    {
+      "branch": "post-p0/trusted-verifier-allowlist-v1",
+      "ahead": 4,
+      "behind": 322,
+      "unique_commits_vs_main": 4,
+      "unique_blobs_vs_main": 4,
+      "unique_trees_vs_main": 13,
+      "unique_objects_vs_main": 21,
+      "head_date": "2026-08-20T04:18:20+07:00"
+    },
+    {
+      "branch": "post-p0/trusted-verifier-image-v1",
+      "ahead": 13,
+      "behind": 323,
+      "unique_commits_vs_main": 13,
+      "unique_blobs_vs_main": 13,
+      "unique_trees_vs_main": 39,
+      "unique_objects_vs_main": 65,
+      "head_date": "2026-08-20T04:09:49+07:00"
+    },
+    {
+      "branch": "post-p0/twin-dialogue-bridge-v1",
+      "ahead": 8,
+      "behind": 328,
+      "unique_commits_vs_main": 8,
+      "unique_blobs_vs_main": 8,
+      "unique_trees_vs_main": 27,
+      "unique_objects_vs_main": 43,
+      "head_date": "2026-08-20T03:00:36+07:00"
+    },
+    {
+      "branch": "post-p0/two-chat-coordination-v1",
+      "ahead": 31,
+      "behind": 277,
+      "unique_commits_vs_main": 31,
+      "unique_blobs_vs_main": 31,
+      "unique_trees_vs_main": 103,
+      "unique_objects_vs_main": 165,
+      "head_date": "2026-08-22T19:08:31+07:00"
+    },
+    {
+      "branch": "post-p0/universal-model-capability-fabric-v1",
+      "ahead": 22,
+      "behind": 286,
+      "unique_commits_vs_main": 22,
+      "unique_blobs_vs_main": 16,
+      "unique_trees_vs_main": 62,
+      "unique_objects_vs_main": 100,
+      "head_date": "2026-08-20T07:10:04+07:00"
+    },
+    {
+      "branch": "post-p0/universal-system-clean-v2",
+      "ahead": 23,
+      "behind": 328,
+      "unique_commits_vs_main": 23,
+      "unique_blobs_vs_main": 83,
+      "unique_trees_vs_main": 77,
+      "unique_objects_vs_main": 183,
+      "head_date": "2026-08-20T02:57:32+07:00"
+    },
+    {
+      "branch": "post-p0/universal-system-v1",
+      "ahead": 37,
+      "behind": 328,
+      "unique_commits_vs_main": 37,
+      "unique_blobs_vs_main": 149,
+      "unique_trees_vs_main": 137,
+      "unique_objects_vs_main": 323,
+      "head_date": "2026-08-20T07:32:34+07:00"
+    },
+    {
+      "branch": "post-p0/verifier-shadow-ledger-wiring-v1",
+      "ahead": 9,
+      "behind": 269,
+      "unique_commits_vs_main": 9,
+      "unique_blobs_vs_main": 9,
+      "unique_trees_vs_main": 25,
+      "unique_objects_vs_main": 43,
+      "head_date": "2026-08-27T14:44:59+07:00"
+    },
+    {
+      "branch": "post-p0/verifier-subject-gap-analysis-v1",
+      "ahead": 6,
+      "behind": 269,
+      "unique_commits_vs_main": 6,
+      "unique_blobs_vs_main": 6,
+      "unique_trees_vs_main": 17,
+      "unique_objects_vs_main": 29,
+      "head_date": "2026-08-27T14:42:59+07:00"
+    },
+    {
+      "branch": "post-p0/windows-sandbox-platform-gate-v1",
+      "ahead": 8,
+      "behind": 273,
+      "unique_commits_vs_main": 8,
+      "unique_blobs_vs_main": 9,
+      "unique_trees_vs_main": 28,
+      "unique_objects_vs_main": 45,
+      "head_date": "2026-08-23T11:57:38+07:00"
+    },
+    {
+      "branch": "prep/closure-operator-pack-v1",
+      "ahead": 17,
+      "behind": 316,
+      "unique_commits_vs_main": 17,
+      "unique_blobs_vs_main": 17,
+      "unique_trees_vs_main": 51,
+      "unique_objects_vs_main": 85,
+      "head_date": "2026-08-19T21:55:56+07:00"
+    },
+    {
+      "branch": "prep/q10-native-deep-scan-contract-v2",
+      "ahead": 11,
+      "behind": 316,
+      "unique_commits_vs_main": 11,
+      "unique_blobs_vs_main": 10,
+      "unique_trees_vs_main": 29,
+      "unique_objects_vs_main": 50,
+      "head_date": "2026-08-24T04:02:24+07:00"
+    },
+    {
+      "branch": "prep/q10-q12-closure-autopilot-v1",
+      "ahead": 1,
+      "behind": 316,
+      "unique_commits_vs_main": 1,
+      "unique_blobs_vs_main": 1,
+      "unique_trees_vs_main": 3,
+      "unique_objects_vs_main": 5,
+      "head_date": "2026-08-23T11:57:46+07:00"
+    },
+    {
+      "branch": "prep/q11-live-smoke-hardening-v2",
+      "ahead": 13,
+      "behind": 340,
+      "unique_commits_vs_main": 13,
+      "unique_blobs_vs_main": 12,
+      "unique_trees_vs_main": 35,
+      "unique_objects_vs_main": 60,
+      "head_date": "2026-08-24T10:57:34+07:00"
+    },
+    {
+      "branch": "prep/q12-verifier-hardening-v2",
+      "ahead": 18,
+      "behind": 335,
+      "unique_commits_vs_main": 18,
+      "unique_blobs_vs_main": 15,
+      "unique_trees_vs_main": 49,
+      "unique_objects_vs_main": 82,
+      "head_date": "2026-08-24T16:53:05+07:00"
+    },
+    {
+      "branch": "prepare/q11-subject-89f2925c",
+      "ahead": 1,
+      "behind": 335,
+      "unique_commits_vs_main": 1,
+      "unique_blobs_vs_main": 1,
+      "unique_trees_vs_main": 3,
+      "unique_objects_vs_main": 5,
+      "head_date": "2026-08-16T20:46:39+07:00"
+    },
+    {
+      "branch": "prepare/q12-subject-89f2925c",
+      "ahead": 1,
+      "behind": 335,
+      "unique_commits_vs_main": 1,
+      "unique_blobs_vs_main": 1,
+      "unique_trees_vs_main": 3,
+      "unique_objects_vs_main": 5,
+      "head_date": "2026-08-16T20:47:16+07:00"
+    },
+    {
+      "branch": "prepare/q14-subject-89f2925c",
+      "ahead": 1,
+      "behind": 335,
+      "unique_commits_vs_main": 1,
+      "unique_blobs_vs_main": 1,
+      "unique_trees_vs_main": 3,
+      "unique_objects_vs_main": 5,
+      "head_date": "2026-08-16T20:46:08+07:00"
+    },
+    {
+      "branch": "product/commercial-value-roadmap-20261105",
+      "ahead": 3,
+      "behind": 5,
+      "unique_commits_vs_main": 3,
+      "unique_blobs_vs_main": 2,
+      "unique_trees_vs_main": 8,
+      "unique_objects_vs_main": 13,
+      "head_date": "2026-11-05T07:39:16+07:00"
+    },
+    {
+      "branch": "q10/aikido-frozen-39f5c1ad",
+      "ahead": 0,
+      "behind": 335,
+      "unique_commits_vs_main": 0,
+      "unique_blobs_vs_main": 0,
+      "unique_trees_vs_main": 0,
+      "unique_objects_vs_main": 0,
+      "head_date": "2026-08-16T20:40:35+07:00"
+    },
+    {
+      "branch": "q10/aikido-frozen-39f5c1ad-20260829",
+      "ahead": 0,
+      "behind": 335,
+      "unique_commits_vs_main": 0,
+      "unique_blobs_vs_main": 0,
+      "unique_trees_vs_main": 0,
+      "unique_objects_vs_main": 0,
+      "head_date": "2026-08-16T20:40:35+07:00"
+    },
+    {
+      "branch": "q10/deep-security-preflight-v1",
+      "ahead": 4,
+      "behind": 395,
+      "unique_commits_vs_main": 4,
+      "unique_blobs_vs_main": 5,
+      "unique_trees_vs_main": 14,
+      "unique_objects_vs_main": 23,
+      "head_date": "2026-08-16T18:31:56+07:00"
+    },
+    {
+      "branch": "q10/deep-security-preflight-v1-copycheck",
+      "ahead": 1,
+      "behind": 395,
+      "unique_commits_vs_main": 1,
+      "unique_blobs_vs_main": 4,
+      "unique_trees_vs_main": 8,
+      "unique_objects_vs_main": 13,
+      "head_date": "2026-08-16T18:28:50+07:00"
+    },
+    {
+      "branch": "q10/frozen-39f5c1ad-aikido",
+      "ahead": 0,
+      "behind": 335,
+      "unique_commits_vs_main": 0,
+      "unique_blobs_vs_main": 0,
+      "unique_trees_vs_main": 0,
+      "unique_objects_vs_main": 0,
+      "head_date": "2026-08-16T20:40:35+07:00"
+    },
+    {
+      "branch": "r33-closure-hardening-v02",
+      "ahead": 1,
+      "behind": 409,
+      "unique_commits_vs_main": 1,
+      "unique_blobs_vs_main": 0,
+      "unique_trees_vs_main": 0,
+      "unique_objects_vs_main": 1,
+      "head_date": "2026-08-13T23:23:15+07:00"
+    },
+    {
+      "branch": "refresh/subject-89f2925c",
+      "ahead": 0,
+      "behind": 317,
+      "unique_commits_vs_main": 0,
+      "unique_blobs_vs_main": 0,
+      "unique_trees_vs_main": 0,
+      "unique_objects_vs_main": 0,
+      "head_date": "2026-08-16T20:57:45+07:00"
+    },
+    {
+      "branch": "release/q04-q08-clean",
+      "ahead": 0,
+      "behind": 402,
+      "unique_commits_vs_main": 0,
+      "unique_blobs_vs_main": 0,
+      "unique_trees_vs_main": 0,
+      "unique_objects_vs_main": 0,
+      "head_date": "2026-08-14T04:40:32+07:00"
+    },
+    {
+      "branch": "release/q04-q08-multilane",
+      "ahead": 10,
+      "behind": 406,
+      "unique_commits_vs_main": 10,
+      "unique_blobs_vs_main": 10,
+      "unique_trees_vs_main": 28,
+      "unique_objects_vs_main": 48,
+      "head_date": "2026-08-14T04:35:10+07:00"
+    },
+    {
+      "branch": "release/q10-q16-closure",
+      "ahead": 6,
+      "behind": 340,
+      "unique_commits_vs_main": 6,
+      "unique_blobs_vs_main": 6,
+      "unique_trees_vs_main": 15,
+      "unique_objects_vs_main": 27,
+      "head_date": "2026-11-19T21:26:05+07:00"
+    },
+    {
+      "branch": "research/agentic-systems-gap-map-20261117",
+      "ahead": 16,
+      "behind": 3,
+      "unique_commits_vs_main": 16,
+      "unique_blobs_vs_main": 65,
+      "unique_trees_vs_main": 58,
+      "unique_objects_vs_main": 139,
+      "head_date": "2026-11-16T17:59:11Z"
+    },
+    {
+      "branch": "research/ai-company-os-intel-20261119",
+      "ahead": 22,
+      "behind": 0,
+      "unique_commits_vs_main": 22,
+      "unique_blobs_vs_main": 47,
+      "unique_trees_vs_main": 66,
+      "unique_objects_vs_main": 135,
+      "head_date": "2026-11-19T15:59:14+07:00"
+    },
+    {
+      "branch": "research/ai-tool-registry-20261002",
+      "ahead": 6,
+      "behind": 87,
+      "unique_commits_vs_main": 6,
+      "unique_blobs_vs_main": 6,
+      "unique_trees_vs_main": 16,
+      "unique_objects_vs_main": 28,
+      "head_date": "2026-10-02T11:00:01+07:00"
+    },
+    {
+      "branch": "research/ai-tooling-2026-10-25",
+      "ahead": 7,
+      "behind": 31,
+      "unique_commits_vs_main": 7,
+      "unique_blobs_vs_main": 29,
+      "unique_trees_vs_main": 22,
+      "unique_objects_vs_main": 58,
+      "head_date": "2026-10-24T20:32:53Z"
+    },
+    {
+      "branch": "research/blocker-substitution-20260904",
+      "ahead": 3,
+      "behind": 269,
+      "unique_commits_vs_main": 3,
+      "unique_blobs_vs_main": 3,
+      "unique_trees_vs_main": 9,
+      "unique_objects_vs_main": 15,
+      "head_date": "2026-09-04T03:41:13+07:00"
+    },
+    {
+      "branch": "research/continuous-20261006-agent-controls",
+      "ahead": 2,
+      "behind": 54,
+      "unique_commits_vs_main": 2,
+      "unique_blobs_vs_main": 2,
+      "unique_trees_vs_main": 4,
+      "unique_objects_vs_main": 8,
+      "head_date": "2026-10-06T05:47:41+07:00"
+    },
+    {
+      "branch": "research/mcp-2026-07-28-cosign-baseline-v1",
+      "ahead": 1,
+      "behind": 278,
+      "unique_commits_vs_main": 1,
+      "unique_blobs_vs_main": 5,
+      "unique_trees_vs_main": 6,
+      "unique_objects_vs_main": 12,
+      "head_date": "2026-08-20T11:33:04+07:00"
+    },
+    {
+      "branch": "research/universal-ai-os-capability-map-20260827",
+      "ahead": 3,
+      "behind": 269,
+      "unique_commits_vs_main": 3,
+      "unique_blobs_vs_main": 3,
+      "unique_trees_vs_main": 7,
+      "unique_objects_vs_main": 13,
+      "head_date": "2026-08-27T00:33:34+07:00"
+    },
+    {
+      "branch": "revert/pr-348",
+      "ahead": 0,
+      "behind": 9,
+      "unique_commits_vs_main": 0,
+      "unique_blobs_vs_main": 0,
+      "unique_trees_vs_main": 0,
+      "unique_objects_vs_main": 0,
+      "head_date": "2026-11-04T12:32:54+07:00"
+    },
+    {
+      "branch": "review/q11-exact-subject-reconcile-v1",
+      "ahead": 2,
+      "behind": 340,
+      "unique_commits_vs_main": 2,
+      "unique_blobs_vs_main": 2,
+      "unique_trees_vs_main": 6,
+      "unique_objects_vs_main": 10,
+      "head_date": "2026-08-23T01:27:11+07:00"
+    },
+    {
+      "branch": "sale/creator-source-package-v1",
+      "ahead": 5,
+      "behind": 395,
+      "unique_commits_vs_main": 5,
+      "unique_blobs_vs_main": 18,
+      "unique_trees_vs_main": 16,
+      "unique_objects_vs_main": 39,
+      "head_date": "2026-08-16T16:57:55+07:00"
+    },
+    {
+      "branch": "sale/dev-preview-package-v1",
+      "ahead": 37,
+      "behind": 335,
+      "unique_commits_vs_main": 37,
+      "unique_blobs_vs_main": 106,
+      "unique_trees_vs_main": 109,
+      "unique_objects_vs_main": 252,
+      "head_date": "2026-08-22T22:12:27+07:00"
+    },
+    {
+      "branch": "sale/launch-ops-v1.2",
+      "ahead": 16,
+      "behind": 395,
+      "unique_commits_vs_main": 16,
+      "unique_blobs_vs_main": 49,
+      "unique_trees_vs_main": 48,
+      "unique_objects_vs_main": 113,
+      "head_date": "2026-08-16T17:01:17+07:00"
+    },
+    {
+      "branch": "sale/seller-sales-kit-v1.1",
+      "ahead": 12,
+      "behind": 395,
+      "unique_commits_vs_main": 12,
+      "unique_blobs_vs_main": 37,
+      "unique_trees_vs_main": 38,
+      "unique_objects_vs_main": 87,
+      "head_date": "2026-08-16T17:00:54+07:00"
+    },
+    {
+      "branch": "security/aikido-q10-hardening-v1",
+      "ahead": 25,
+      "behind": 269,
+      "unique_commits_vs_main": 25,
+      "unique_blobs_vs_main": 25,
+      "unique_trees_vs_main": 67,
+      "unique_objects_vs_main": 117,
+      "head_date": "2026-08-28T15:01:26+07:00"
+    },
+    {
+      "branch": "security/aikido-remediation-20260828",
+      "ahead": 1,
+      "behind": 269,
+      "unique_commits_vs_main": 1,
+      "unique_blobs_vs_main": 1,
+      "unique_trees_vs_main": 3,
+      "unique_objects_vs_main": 5,
+      "head_date": "2026-08-28T00:25:25+07:00"
+    },
+    {
+      "branch": "security/buyer-delivery-path-hardening-20261119",
+      "ahead": 1,
+      "behind": 3,
+      "unique_commits_vs_main": 1,
+      "unique_blobs_vs_main": 3,
+      "unique_trees_vs_main": 3,
+      "unique_objects_vs_main": 7,
+      "head_date": "2026-11-19T09:13:55+07:00"
+    },
+    {
+      "branch": "security/close-public-beta-surface-20261119",
+      "ahead": 15,
+      "behind": 0,
+      "unique_commits_vs_main": 15,
+      "unique_blobs_vs_main": 16,
+      "unique_trees_vs_main": 31,
+      "unique_objects_vs_main": 62,
+      "head_date": "2026-11-19T10:59:57+07:00"
+    },
+    {
+      "branch": "security/codeql-ssrf-hardening-20261117",
+      "ahead": 3,
+      "behind": 0,
+      "unique_commits_vs_main": 3,
+      "unique_blobs_vs_main": 22,
+      "unique_trees_vs_main": 24,
+      "unique_objects_vs_main": 49,
+      "head_date": "2026-11-19T14:06:15Z"
+    },
+    {
+      "branch": "security/collect-dev-status-path-hardening-20261119",
+      "ahead": 2,
+      "behind": 3,
+      "unique_commits_vs_main": 2,
+      "unique_blobs_vs_main": 3,
+      "unique_trees_vs_main": 5,
+      "unique_objects_vs_main": 10,
+      "head_date": "2026-11-19T09:05:04+07:00"
+    },
+    {
+      "branch": "security/command-line-hardening-20261117",
+      "ahead": 6,
+      "behind": 0,
+      "unique_commits_vs_main": 6,
+      "unique_blobs_vs_main": 28,
+      "unique_trees_vs_main": 36,
+      "unique_objects_vs_main": 70,
+      "head_date": "2026-11-19T14:06:07Z"
+    },
+    {
+      "branch": "security/ghas-codeql-remediation-20261105",
+      "ahead": 13,
+      "behind": 0,
+      "unique_commits_vs_main": 13,
+      "unique_blobs_vs_main": 34,
+      "unique_trees_vs_main": 51,
+      "unique_objects_vs_main": 98,
+      "head_date": "2026-11-23T02:46:31+07:00"
+    },
+    {
+      "branch": "security/no-file-deletions-guard-20261119",
+      "ahead": 1,
+      "behind": 0,
+      "unique_commits_vs_main": 1,
+      "unique_blobs_vs_main": 1,
+      "unique_trees_vs_main": 3,
+      "unique_objects_vs_main": 5,
+      "head_date": "2026-11-19T16:53:57+07:00"
+    },
+    {
+      "branch": "security/p0-n8n-export-guard-20261010",
+      "ahead": 6,
+      "behind": 48,
+      "unique_commits_vs_main": 6,
+      "unique_blobs_vs_main": 6,
+      "unique_trees_vs_main": 13,
+      "unique_objects_vs_main": 25,
+      "head_date": "2026-10-10T13:40:25+07:00"
+    },
+    {
+      "branch": "security/scorecard-remediation-20260905",
+      "ahead": 6,
+      "behind": 269,
+      "unique_commits_vs_main": 6,
+      "unique_blobs_vs_main": 39,
+      "unique_trees_vs_main": 17,
+      "unique_objects_vs_main": 62,
+      "head_date": "2026-09-05T10:28:26Z"
+    },
+    {
+      "branch": "security/semgrep-exact-proof-20260904",
+      "ahead": 5,
+      "behind": 269,
+      "unique_commits_vs_main": 5,
+      "unique_blobs_vs_main": 4,
+      "unique_trees_vs_main": 11,
+      "unique_objects_vs_main": 20,
+      "head_date": "2026-09-04T03:22:20+07:00"
+    },
+    {
+      "branch": "security/sqlite-hardening-20261117",
+      "ahead": 17,
+      "behind": 3,
+      "unique_commits_vs_main": 17,
+      "unique_blobs_vs_main": 51,
+      "unique_trees_vs_main": 98,
+      "unique_objects_vs_main": 166,
+      "head_date": "2026-11-19T08:42:44+07:00"
+    },
+    {
+      "branch": "temp-do-not-use",
+      "ahead": 37,
+      "behind": 277,
+      "unique_commits_vs_main": 37,
+      "unique_blobs_vs_main": 37,
+      "unique_trees_vs_main": 121,
+      "unique_objects_vs_main": 195,
+      "head_date": "2026-08-22T19:32:58+07:00"
+    },
+    {
+      "branch": "tmp-do-not-use",
+      "ahead": 0,
+      "behind": 352,
+      "unique_commits_vs_main": 0,
+      "unique_blobs_vs_main": 0,
+      "unique_trees_vs_main": 0,
+      "unique_objects_vs_main": 0,
+      "head_date": "2026-08-15T01:26:18+07:00"
+    },
+    {
+      "branch": "ui/cognitive-control-interface-v2",
+      "ahead": 2,
+      "behind": 277,
+      "unique_commits_vs_main": 2,
+      "unique_blobs_vs_main": 2,
+      "unique_trees_vs_main": 6,
+      "unique_objects_vs_main": 10,
+      "head_date": "2026-08-21T23:21:15+07:00"
+    },
+    {
+      "branch": "ui/unified-command-center-v01",
+      "ahead": 18,
+      "behind": 395,
+      "unique_commits_vs_main": 18,
+      "unique_blobs_vs_main": 18,
+      "unique_trees_vs_main": 54,
+      "unique_objects_vs_main": 90,
+      "head_date": "2026-08-15T04:59:32+07:00"
+    },
+    {
+      "branch": "upgrade/cognitive-knowledge-fabric-v1-20260903",
+      "ahead": 12,
+      "behind": 269,
+      "unique_commits_vs_main": 12,
+      "unique_blobs_vs_main": 12,
+      "unique_trees_vs_main": 31,
+      "unique_objects_vs_main": 55,
+      "head_date": "2026-09-03T23:44:08+07:00"
+    },
+    {
+      "branch": "upgrade/collaborative-development-framework-v1-20260905",
+      "ahead": 0,
+      "behind": 242,
+      "unique_commits_vs_main": 0,
+      "unique_blobs_vs_main": 0,
+      "unique_trees_vs_main": 0,
+      "unique_objects_vs_main": 0,
+      "head_date": "2026-09-05T10:14:25+07:00"
+    },
+    {
+      "branch": "upgrade/creator-intelligence-v1-20260904",
+      "ahead": 7,
+      "behind": 269,
+      "unique_commits_vs_main": 7,
+      "unique_blobs_vs_main": 7,
+      "unique_trees_vs_main": 19,
+      "unique_objects_vs_main": 33,
+      "head_date": "2026-09-05T23:02:41+07:00"
+    },
+    {
+      "branch": "upgrade/enforcement-stack-vnext-20261002",
+      "ahead": 23,
+      "behind": 87,
+      "unique_commits_vs_main": 23,
+      "unique_blobs_vs_main": 24,
+      "unique_trees_vs_main": 56,
+      "unique_objects_vs_main": 103,
+      "head_date": "2026-10-02T12:13:06+07:00"
+    },
+    {
+      "branch": "upgrade/frontier-roadmap-p0-agent-security-20260903",
+      "ahead": 4,
+      "behind": 269,
+      "unique_commits_vs_main": 4,
+      "unique_blobs_vs_main": 4,
+      "unique_trees_vs_main": 8,
+      "unique_objects_vs_main": 16,
+      "head_date": "2026-09-03T19:44:33+07:00"
+    },
+    {
+      "branch": "upgrade/image-intelligence-pipeline-v1-20260904",
+      "ahead": 5,
+      "behind": 269,
+      "unique_commits_vs_main": 5,
+      "unique_blobs_vs_main": 5,
+      "unique_trees_vs_main": 14,
+      "unique_objects_vs_main": 24,
+      "head_date": "2026-09-04T06:28:14+07:00"
+    },
+    {
+      "branch": "upgrade/install-ux-a1-20260903",
+      "ahead": 7,
+      "behind": 269,
+      "unique_commits_vs_main": 7,
+      "unique_blobs_vs_main": 7,
+      "unique_trees_vs_main": 12,
+      "unique_objects_vs_main": 26,
+      "head_date": "2026-09-03T20:08:40+07:00"
+    },
+    {
+      "branch": "upgrade/knowledge-persistence-v2-20260903",
+      "ahead": 44,
+      "behind": 269,
+      "unique_commits_vs_main": 44,
+      "unique_blobs_vs_main": 32,
+      "unique_trees_vs_main": 83,
+      "unique_objects_vs_main": 159,
+      "head_date": "2026-09-04T02:53:58+07:00"
+    },
+    {
+      "branch": "upgrade/omni-control-plane-20261006",
+      "ahead": 3,
+      "behind": 54,
+      "unique_commits_vs_main": 3,
+      "unique_blobs_vs_main": 3,
+      "unique_trees_vs_main": 6,
+      "unique_objects_vs_main": 12,
+      "head_date": "2026-10-06T03:40:54+07:00"
+    },
+    {
+      "branch": "upgrade/system-wide-20260920",
+      "ahead": 3,
+      "behind": 88,
+      "unique_commits_vs_main": 3,
+      "unique_blobs_vs_main": 3,
+      "unique_trees_vs_main": 6,
+      "unique_objects_vs_main": 12,
+      "head_date": "2026-09-20T04:43:06+07:00"
+    },
+    {
+      "branch": "verify/category-a-canonical",
+      "ahead": 1,
+      "behind": 54,
+      "unique_commits_vs_main": 1,
+      "unique_blobs_vs_main": 1,
+      "unique_trees_vs_main": 3,
+      "unique_objects_vs_main": 5,
+      "head_date": "2026-10-04T21:23:09+07:00"
+    },
+    {
+      "branch": "verify/cloud-phase3-linux-v1",
+      "ahead": 20,
+      "behind": 335,
+      "unique_commits_vs_main": 20,
+      "unique_blobs_vs_main": 86,
+      "unique_trees_vs_main": 68,
+      "unique_objects_vs_main": 174,
+      "head_date": "2026-08-22T05:54:35+07:00"
+    },
+    {
+      "branch": "verify/docker-full-capability-20260903",
+      "ahead": 4,
+      "behind": 269,
+      "unique_commits_vs_main": 4,
+      "unique_blobs_vs_main": 4,
+      "unique_trees_vs_main": 10,
+      "unique_objects_vs_main": 18,
+      "head_date": "2026-09-03T23:10:48+07:00"
+    },
+    {
+      "branch": "verify/q04-exact-sha",
+      "ahead": 1,
+      "behind": 414,
+      "unique_commits_vs_main": 1,
+      "unique_blobs_vs_main": 1,
+      "unique_trees_vs_main": 3,
+      "unique_objects_vs_main": 5,
+      "head_date": "2026-08-14T03:32:23+07:00"
+    },
+    {
+      "branch": "verify/q04-q05-converged",
+      "ahead": 8,
+      "behind": 406,
+      "unique_commits_vs_main": 8,
+      "unique_blobs_vs_main": 8,
+      "unique_trees_vs_main": 22,
+      "unique_objects_vs_main": 38,
+      "head_date": "2026-08-14T04:31:56+07:00"
+    },
+    {
+      "branch": "verify/q04-q05-converged-final",
+      "ahead": 1,
+      "behind": 414,
+      "unique_commits_vs_main": 1,
+      "unique_blobs_vs_main": 1,
+      "unique_trees_vs_main": 3,
+      "unique_objects_vs_main": 5,
+      "head_date": "2026-08-14T03:19:33+07:00"
+    },
+    {
+      "branch": "verify/q04-q05-converged-v2",
+      "ahead": 1,
+      "behind": 414,
+      "unique_commits_vs_main": 1,
+      "unique_blobs_vs_main": 1,
+      "unique_trees_vs_main": 3,
+      "unique_objects_vs_main": 5,
+      "head_date": "2026-08-14T03:19:33+07:00"
+    },
+    {
+      "branch": "verify/q04-q05-converged-v3",
+      "ahead": 0,
+      "behind": 408,
+      "unique_commits_vs_main": 0,
+      "unique_blobs_vs_main": 0,
+      "unique_trees_vs_main": 0,
+      "unique_objects_vs_main": 0,
+      "head_date": "2026-08-14T01:02:09+07:00"
+    },
+    {
+      "branch": "verify/q05-exact-ci",
+      "ahead": 9,
+      "behind": 408,
+      "unique_commits_vs_main": 9,
+      "unique_blobs_vs_main": 9,
+      "unique_trees_vs_main": 36,
+      "unique_objects_vs_main": 54,
+      "head_date": "2026-08-14T04:46:05+07:00"
+    },
+    {
+      "branch": "verify/q06-q07-main-a8f18",
+      "ahead": 1,
+      "behind": 401,
+      "unique_commits_vs_main": 1,
+      "unique_blobs_vs_main": 1,
+      "unique_trees_vs_main": 3,
+      "unique_objects_vs_main": 5,
+      "head_date": "2026-08-14T04:43:58+07:00"
+    },
+    {
+      "branch": "verify/q09-live-evidence",
+      "ahead": 1,
+      "behind": 400,
+      "unique_commits_vs_main": 1,
+      "unique_blobs_vs_main": 1,
+      "unique_trees_vs_main": 3,
+      "unique_objects_vs_main": 5,
+      "head_date": "2026-08-14T04:51:45+07:00"
+    },
+    {
+      "branch": "verify/q09-live-evidence-v2",
+      "ahead": 1,
+      "behind": 399,
+      "unique_commits_vs_main": 1,
+      "unique_blobs_vs_main": 1,
+      "unique_trees_vs_main": 3,
+      "unique_objects_vs_main": 5,
+      "head_date": "2026-08-14T04:53:46+07:00"
+    },
+    {
+      "branch": "verify/q10-dependency-audit",
+      "ahead": 3,
+      "behind": 395,
+      "unique_commits_vs_main": 3,
+      "unique_blobs_vs_main": 3,
+      "unique_trees_vs_main": 9,
+      "unique_objects_vs_main": 15,
+      "head_date": "2026-08-14T22:29:53+07:00"
+    },
+    {
+      "branch": "verify/q11-final-subject",
+      "ahead": 6,
+      "behind": 335,
+      "unique_commits_vs_main": 6,
+      "unique_blobs_vs_main": 5,
+      "unique_trees_vs_main": 15,
+      "unique_objects_vs_main": 26,
+      "head_date": "2026-11-20T00:54:19+07:00"
+    },
+    {
+      "branch": "verify/q11-main-944d7cb-20261120",
+      "ahead": 5,
+      "behind": 0,
+      "unique_commits_vs_main": 5,
+      "unique_blobs_vs_main": 5,
+      "unique_trees_vs_main": 15,
+      "unique_objects_vs_main": 25,
+      "head_date": "2026-11-19T18:35:13Z"
+    },
+    {
+      "branch": "verify/q12-delegation-v2",
+      "ahead": 1,
+      "behind": 373,
+      "unique_commits_vs_main": 1,
+      "unique_blobs_vs_main": 1,
+      "unique_trees_vs_main": 3,
+      "unique_objects_vs_main": 5,
+      "head_date": "2026-08-14T22:58:17+07:00"
+    },
+    {
+      "branch": "verify/q12-final-subject",
+      "ahead": 18,
+      "behind": 335,
+      "unique_commits_vs_main": 18,
+      "unique_blobs_vs_main": 16,
+      "unique_trees_vs_main": 48,
+      "unique_objects_vs_main": 82,
+      "head_date": "2026-11-20T00:45:51+07:00"
+    },
+    {
+      "branch": "verify/q14-final-subject",
+      "ahead": 3,
+      "behind": 335,
+      "unique_commits_vs_main": 3,
+      "unique_blobs_vs_main": 3,
+      "unique_trees_vs_main": 9,
+      "unique_objects_vs_main": 15,
+      "head_date": "2026-11-20T00:27:46+07:00"
+    },
+    {
+      "branch": "verify/sale-gates-20260922",
+      "ahead": 5,
+      "behind": 335,
+      "unique_commits_vs_main": 5,
+      "unique_blobs_vs_main": 31,
+      "unique_trees_vs_main": 21,
+      "unique_objects_vs_main": 57,
+      "head_date": "2026-09-21T23:24:23Z"
+    },
+    {
+      "branch": "verify/sale-gates-v2-20260922",
+      "ahead": 5,
+      "behind": 335,
+      "unique_commits_vs_main": 5,
+      "unique_blobs_vs_main": 31,
+      "unique_trees_vs_main": 20,
+      "unique_objects_vs_main": 56,
+      "head_date": "2026-09-21T23:33:14Z"
+    }
+  ]
+}
