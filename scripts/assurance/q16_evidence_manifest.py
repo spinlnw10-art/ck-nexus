@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Create a non-authoritative Q16 evidence manifest from fixed CI workspace paths."""
+"""Create a non-authoritative Q16 manifest from fixed repository-workspace paths."""
 from __future__ import annotations
 
 import hashlib
@@ -9,6 +9,13 @@ import re
 from pathlib import Path
 
 SHA_RE = re.compile(r"^[0-9a-f]{40}$")
+WORKSPACE = Path("evidence/assurance/shadow/q16")
+INPUTS = {
+    "scancode_full_repo": "scancode-full-repo.json",
+    "scancode_install_report": "scancode-install-report.json",
+    "ort_analyzer": "analyzer-result.json",
+    "ort_scanner": "scan-result.yml",
+}
 
 
 def digest(path: Path) -> str:
@@ -22,22 +29,14 @@ def digest(path: Path) -> str:
 def build_manifest(candidate_sha: str, workspace: Path) -> dict:
     if not SHA_RE.fullmatch(candidate_sha):
         raise ValueError("candidate SHA must be a 40-character lowercase Git commit SHA")
-    root = workspace.resolve(strict=True)
-    inputs = {
-        "scancode_full_repo": root / "scancode-full-repo.json",
-        "scancode_install_report": root / "scancode-install-report.json",
-        "ort_analyzer": root / "q16" / "analyzer-result.json",
-        "ort_scanner": root / "q16" / "scan-result.yml",
-    }
     artifacts = {}
-    for name, path in inputs.items():
+    for name, filename in INPUTS.items():
+        path = workspace / filename
         if path.is_symlink() or not path.is_file():
             raise ValueError(f"required {name} report is missing or unsafe")
-        resolved = path.resolve(strict=True)
-        resolved.relative_to(root)
         artifacts[name] = {
-            "size_bytes": resolved.stat().st_size,
-            "sha256": digest(resolved),
+            "size_bytes": path.stat().st_size,
+            "sha256": digest(path),
         }
 
     return {
@@ -61,10 +60,12 @@ def build_manifest(candidate_sha: str, workspace: Path) -> dict:
 
 
 def main() -> int:
-    root = Path(os.environ["RUNNER_TEMP"]).resolve(strict=True)
-    candidate_sha = os.environ["GITHUB_SHA"]
-    output = root / "q16" / "q16-evidence.json"
-    evidence = build_manifest(candidate_sha, root)
+    root = Path.cwd()
+    workspace = root / WORKSPACE
+    if workspace.is_symlink() or not workspace.is_dir():
+        raise ValueError("fixed Q16 workspace is missing or unsafe")
+    evidence = build_manifest(os.environ["GITHUB_SHA"], workspace)
+    output = workspace / "q16-evidence.json"
     with output.open("x", encoding="utf-8") as stream:
         stream.write(json.dumps(evidence, indent=2, sort_keys=True) + "\n")
     print(json.dumps({"status": "EVIDENCE_MANIFEST_CREATED", "artifacts": 4}))
