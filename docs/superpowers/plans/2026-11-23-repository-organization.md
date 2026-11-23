@@ -82,8 +82,8 @@ Expected: users can find the new navigation hub from README; the checked index h
 - Consumes: Task 1 path-reference inventory, current `services/email_gateway/repository.py`, packaging configuration.
 - Produces: one canonical PostgreSQL migration source or a documented reason to retain multiple copies.
 
-- [ ] Inspect `pyproject.toml`, build backend package-data configuration and wheel/sdist contents.
-- [ ] Search source, tests, scripts, workflows, Docker/deployment assets and docs for all three paths and generic migration globs.
+- [x] Inspect `pyproject.toml`, setuptools package-data configuration and the runtime migration loader; wheel/sdist contents remain unverified because Termux lacks `setuptools.build_meta`.
+- [x] Search source, tests, scripts, workflows, Docker/deployment assets and docs for all three paths and generic migration globs; Docker Compose and installed-package runtime consumers are identified.
 - [ ] Verify any installer or external deployment consumer before proposing a move.
 - [ ] Add/adjust tests first for the canonical runtime/package contract; observe failure before implementation if behavior changes.
 - [ ] If safe, change consumers/package data and regenerate `SHA256SUMS` in the same PR.
