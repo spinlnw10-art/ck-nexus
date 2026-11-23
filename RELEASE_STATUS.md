@@ -4,13 +4,13 @@
 
 - PR: https://github.com/spinlnw10-art/ck-nexus/pull/392
 - PR state: OPEN; merge state BLOCKED; review decision REVIEW_REQUIRED; base main.
-- Latest PR head / documentation commit: 0944ffd179e3789838185412dbcf2944caafb7e2.
+- Latest PR head is a moving Git ref; read it live with GitHub CLI before acting. The previously observed head 0944ffd... was advanced by the AI handoff documentation update.
 - Application code candidate SHA scanned by Q10: efbb2ee157fcfdedfde054508fafaf21cbaf88fa.
 - Commits after the code candidate through the current PR head change documentation only; do not mislabel the Q10 report as if it were scanned against the documentation head.
-- Both remote task branches ops/provider-free-go-clean and fix/q10-attachment-hardening-20261123 were verified at 0944ffd179e3789838185412dbcf2944caafb7e2.
+- Both remote task branches were verified equal after the handoff update; query live refs for their current SHA.
 - main remains at 944d7cb70a5d59d53c8fb379752bbee2085f7c8c; PR #392 has not been merged.
 - Work was performed in the isolated Termux worktree ~/cknexus-pr392-audit; the primary worktree was not modified.
-- No merge or deployment has occurred.
+- The documentation push triggered a new CI cycle; its checks must be read live and not inferred from the previous head.\n- No merge or deployment has occurred.
 
 **AI handoff:** Read [docs/ops/AI_HANDOFF_CURRENT_TRUTH.md](docs/ops/AI_HANDOFF_CURRENT_TRUTH.md) first, then [docs/ops/CKNEXUS_WORK_LEDGER.md](docs/ops/CKNEXUS_WORK_LEDGER.md). These identify canonical files, historical files, exact SHAs, completed work, and no-repeat rules.
 

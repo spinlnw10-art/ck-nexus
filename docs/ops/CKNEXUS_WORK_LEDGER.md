@@ -31,11 +31,11 @@ Purpose: prevent duplicate scans, duplicate fixes, and conflicting status report
 ## Current AI handoff and verified PR head — 2026-11-23
 
 - First-read handoff: [AI_HANDOFF_CURRENT_TRUTH.md](AI_HANDOFF_CURRENT_TRUTH.md). It defines the canonical document order, exact SHA meanings, completed work, open blockers, and historical/confusing files.
-- PR #392 latest head: 0944ffd179e3789838185412dbcf2944caafb7e2; state OPEN / BLOCKED / REVIEW_REQUIRED.
-- Both fix/q10-attachment-hardening-20261123 and ops/provider-free-go-clean remote refs were read back at 0944ffd179e3789838185412dbcf2944caafb7e2.
+- PR #392 head is a moving ref; read it live with gh pr view 392 before acting. The previously observed head 0944ffd... was advanced by the AI handoff documentation update.
+- Both task branch refs were read back equal after the handoff update; query live refs for the current SHA.
 - main remains 944d7cb70a5d59d53c8fb379752bbee2085f7c8c; no merge or deployment.
 - Q10 report remains bound to application code SHA efbb2ee157fcfdedfde054508fafaf21cbaf88fa; commits through PR head 0944ffd... are documentation-only. Never relabel the Q10 source SHA.
-- Latest checks on PR head 0944ffd...: CodeQL, Analyze Actions, Analyze JS/TS, Analyze Python, attack-regression, preflight, test, universal-system PASS; SonarCloud Code Analysis FAIL; CodeRabbit skipped.
+- Previous complete checks on 0944ffd...: CodeQL, Analyze Actions, Analyze JS/TS, Analyze Python, attack-regression, preflight, test, universal-system PASS; SonarCloud Code Analysis FAIL; CodeRabbit skipped. The handoff documentation push triggered new CI; read current checks live.
 - This handoff update corrects stale README/RELEASE_STATUS references that previously described efbb2ee... as the PR head. Do not redo this documentation reconciliation absent new facts.
 - Documentation validation: git diff --check PASS; python -m pytest -q tests/test_readme_homepage.py PASS (3 passed). The bare pytest command was unavailable, but the Python module invocation succeeded.
 

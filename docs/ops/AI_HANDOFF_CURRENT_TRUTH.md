@@ -22,12 +22,13 @@ Do not start from chat history, old reports, README text, or a remembered SHA. T
 | Identity | Exact value | Meaning |
 |---|---|---|
 | PR | https://github.com/spinlnw10-art/ck-nexus/pull/392 | Current review path into main |
-| PR head / docs branch head | 0944ffd179e3789838185412dbcf2944caafb7e2 | Latest pushed commit on both task branches when checked |
+| Moving PR head | Must be read live from GitHub | Never treat a SHA stored in this document as the current branch head |
+| Previous observed PR head | 0944ffd179e3789838185412dbcf2944caafb7e2 | Head before the handoff document was pushed |
 | Code candidate SHA | efbb2ee157fcfdedfde054508fafaf21cbaf88fa | Application source subject for the current Q10 report |
 | Main branch SHA | 944d7cb70a5d59d53c8fb379752bbee2085f7c8c | Main has not received PR #392 |
-| Remote branches | fix/q10-attachment-hardening-20261123, ops/provider-free-go-clean | Both verified at PR head 0944ffd... |
+| Remote branches | fix/q10-attachment-hardening-20261123, ops/provider-free-go-clean | Both were verified equal before the handoff update; query live refs for the current head. |
 
-Commits after the code candidate through PR head are documentation-only. Verified changed files between efbb2ee... and 0944ffd...:
+Commits after the code candidate through the handoff update are documentation-only. Verified changed files between efbb2ee... and 0944ffd...:
 - README.md
 - RELEASE_STATUS.md
 - docs/UNIVERSAL_AI_OPERATING_STANDARD_V1.md
@@ -41,8 +42,8 @@ Therefore: **Q10 report source SHA remains efbb2ee, while current PR head is 094
 - PR #392: **OPEN**
 - Merge state: **BLOCKED**
 - Review decision: **REVIEW_REQUIRED**
-- Latest PR head: 0944ffd179e3789838185412dbcf2944caafb7e2
-- Checks on that head:
+- Latest PR head: read live with gh pr view 392; do not use a stored SHA as current
+- The complete check set last observed on the previous head 0944ffd...:
   - PASS: CodeQL, Analyze Actions, Analyze JavaScript/TypeScript, Analyze Python, attack-regression, preflight, test, universal-system
   - FAIL: SonarCloud Code Analysis
   - SKIPPING: CodeRabbit
