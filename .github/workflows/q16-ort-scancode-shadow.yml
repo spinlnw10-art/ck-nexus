@@ -94,7 +94,7 @@ jobs:
       - name: Scan complete CK-NEXUS source tree with ScanCode
         run: |
           set -euo pipefail
-          scancode --license --copyright --package --info --json-pp "$RUNNER_TEMP/scancode-full-repo.json" . --ignore ".git/**" --ignore ".venv/**" --ignore "node_modules/**" --ignore "**/__pycache__/**" --ignore "**/.pytest_cache/**" --ignore "**/dist/**" --ignore "**/build/**"
+          scancode --license --copyright --package --info --json-pp "$RUNNER_TEMP/scancode-full-repo.json" . --ignore ".git/**" --ignore ".venv/**" --ignore "node_modules/**" --ignore ".env*" --ignore "**/.env*" --ignore "**/__pycache__/**" --ignore "**/.pytest_cache/**" --ignore "**/dist/**" --ignore "**/build/**"
           mkdir -p evidence/assurance/shadow/q16
           cp "$RUNNER_TEMP/scancode-full-repo.json" evidence/assurance/shadow/q16/scancode-full-repo.json
           cp "$RUNNER_TEMP/scancode-install-report.json" evidence/assurance/shadow/q16/scancode-install-report.json
