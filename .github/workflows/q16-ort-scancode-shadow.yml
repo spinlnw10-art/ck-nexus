@@ -91,15 +91,15 @@ jobs:
           "$ORT_BIN" --info analyze -f JSON -i tests/fixtures/q16-license -o "$RUNNER_TEMP/q16/analyzer"
           ANALYZER_RESULT="$(find "$RUNNER_TEMP/q16/analyzer" -maxdepth 1 -type f \( -name 'analyzer-result.json' -o -name 'analyzer-result.yml' \) -print -quit)"
           test -n "$ANALYZER_RESULT"
+          cp "$ANALYZER_RESULT" "$RUNNER_TEMP/q16/analyzer-result.json"
           "$ORT_BIN" scan -i "$ANALYZER_RESULT" -o "$RUNNER_TEMP/q16/scanner"
           SCAN_RESULT="$(find "$RUNNER_TEMP/q16/scanner" -maxdepth 1 -type f \( -name 'scan-result.yml' -o -name 'scan-result.json' \) -print -quit)"
           test -n "$SCAN_RESULT"
-          echo "ORT_ANALYZER_RESULT=$ANALYZER_RESULT" >> "$GITHUB_ENV"
-          echo "ORT_SCAN_RESULT=$SCAN_RESULT" >> "$GITHUB_ENV"
+          cp "$SCAN_RESULT" "$RUNNER_TEMP/q16/scan-result.yml"
 
       - name: Create candidate-bound Q16 evidence manifest
         run: |
-          python scripts/assurance/q16_evidence_manifest.py --candidate-sha "$GITHUB_SHA" --allowed-root "$RUNNER_TEMP" --scancode-report "$RUNNER_TEMP/scancode-full-repo.json" --scancode-install-report "$SCANCODE_INSTALL_REPORT" --ort-analyzer-result "$ORT_ANALYZER_RESULT" --ort-scan-result "$ORT_SCAN_RESULT" --output "$RUNNER_TEMP/q16/q16-evidence.json"
+          python scripts/assurance/q16_evidence_manifest.py
           cat "$RUNNER_TEMP/q16/q16-evidence.json"
 
       - name: Validate Q16 evidence through CK-NEXUS EvidenceGraph
