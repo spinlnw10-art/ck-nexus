@@ -13,7 +13,8 @@ MODULE_PATH = (
     / "q16_evidence_manifest.py"
 )
 SPEC = importlib.util.spec_from_file_location("q16_evidence_manifest", MODULE_PATH)
-assert SPEC is not None and SPEC.loader is not None
+assert SPEC is not None
+assert SPEC.loader is not None
 MODULE = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(MODULE)
 
@@ -51,10 +52,10 @@ class Q16EvidenceManifestTests(unittest.TestCase):
             self.assertFalse(manifest["authority"]["legal_conclusion_made"])
 
     def test_rejects_invalid_candidate_sha(self) -> None:
-        with tempfile.TemporaryDirectory() as directory, self.assertRaisesRegex(
-            ValueError, "candidate SHA"
-        ):
-            MODULE.build_manifest("not-a-sha", self._workspace(Path(directory)))
+        with tempfile.TemporaryDirectory() as directory:
+            workspace = self._workspace(Path(directory))
+            with self.assertRaisesRegex(ValueError, "candidate SHA"):
+                MODULE.build_manifest("not-a-sha", workspace)
 
     def test_rejects_symlink_report(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
