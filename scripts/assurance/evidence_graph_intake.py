@@ -73,11 +73,10 @@ def _fixed_artifact(root: Path, relative_path: str) -> Path:
     return resolved
 
 
-def build_graph_document(
+def _validate_manifest(
     manifest: dict[str, Any],
-    allowed_root: Path,
     profile: str,
-) -> dict[str, Any]:
+) -> tuple[str, str, dict[str, str], dict[str, Any]]:
     if profile not in ARTIFACT_PATHS:
         raise EvidenceIntakeError("unsupported evidence profile")
     if not isinstance(manifest, dict):
@@ -92,74 +91,97 @@ def build_graph_document(
     expected = ARTIFACT_PATHS[profile]
     if not isinstance(artifacts, dict) or set(artifacts) != set(expected):
         raise EvidenceIntakeError("manifest artifact set does not match its fixed profile")
+    return candidate_sha, evidence_type, expected, artifacts
 
+
+def _build_artifact_node(
+    root: Path,
+    claim_node_id: str,
+    name: str,
+    relative_path: str,
+    descriptor: Any,
+    observed_at: str,
+) -> tuple[EvidenceGraphNode, EvidenceGraphEdge, dict[str, Any]]:
+    if not isinstance(descriptor, dict) or "path" in descriptor:
+        raise EvidenceIntakeError("artifact descriptors must not contain file paths")
+    declared_sha = descriptor.get("sha256")
+    declared_size = descriptor.get("size_bytes")
+    if not isinstance(declared_sha, str) or not re.fullmatch(r"[0-9a-f]{64}", declared_sha):
+        raise EvidenceIntakeError("artifact SHA-256 is invalid")
+    if (
+        isinstance(declared_size, bool)
+        or not isinstance(declared_size, int)
+        or declared_size < 0
+    ):
+        raise EvidenceIntakeError("artifact size is invalid")
+
+    resolved = _fixed_artifact(root, relative_path)
+    if resolved.stat().st_size != declared_size or _sha256(resolved) != declared_sha:
+        raise EvidenceIntakeError("artifact size or SHA-256 does not match manifest")
+
+    node_id = f"source:{claim_node_id.split(':')[1]}:{name}"
+    source_id = f"sha256:{declared_sha}"
+    node = EvidenceGraphNode(
+        node_id=node_id,
+        kind=EvidenceNodeKind.SOURCE,
+        source_id=source_id,
+        observed_at=observed_at,
+    )
+    edge_id = hashlib.sha256(f"{claim_node_id}->{node_id}".encode()).hexdigest()
+    edge = EvidenceGraphEdge(
+        edge_id=f"edge:{edge_id}",
+        from_node_id=claim_node_id,
+        to_node_id=node_id,
+        kind=EvidenceEdgeKind.DERIVED_FROM,
+        independent_validation=False,
+    )
+    record = {
+        "name": name,
+        "node_id": node_id,
+        "source_id": source_id,
+        "size_bytes": declared_size,
+        "sha256": declared_sha,
+    }
+    return node, edge, record
+
+
+def build_graph_document(
+    manifest: dict[str, Any],
+    allowed_root: Path,
+    profile: str,
+) -> dict[str, Any]:
+    candidate_sha, evidence_type, expected, artifacts = _validate_manifest(
+        manifest, profile
+    )
     root = allowed_root.resolve(strict=True)
     observed_at = manifest.get("observed_at")
     if not isinstance(observed_at, str) or not observed_at:
         observed_at = datetime.now(UTC).isoformat()
 
-    nodes: list[EvidenceGraphNode] = []
-    edges: list[EvidenceGraphEdge] = []
-    artifact_records: list[dict[str, Any]] = []
     claim_id = f"{evidence_type}:{candidate_sha}"
     claim_node_id = f"claim:{candidate_sha}:{evidence_type}"
-    nodes.append(
+    nodes = [
         EvidenceGraphNode(
             node_id=claim_node_id,
             kind=EvidenceNodeKind.CLAIM,
             claim_id=claim_id,
             observed_at=observed_at,
         )
-    )
-
+    ]
+    edges: list[EvidenceGraphEdge] = []
+    artifact_records: list[dict[str, Any]] = []
     for name, relative_path in expected.items():
-        descriptor = artifacts.get(name)
-        if not isinstance(descriptor, dict) or "path" in descriptor:
-            raise EvidenceIntakeError("artifact descriptors must not contain file paths")
-        declared_sha = descriptor.get("sha256")
-        declared_size = descriptor.get("size_bytes")
-        if not isinstance(declared_sha, str) or not re.fullmatch(r"[0-9a-f]{64}", declared_sha):
-            raise EvidenceIntakeError("artifact SHA-256 is invalid")
-        if (
-            isinstance(declared_size, bool)
-            or not isinstance(declared_size, int)
-            or declared_size < 0
-        ):
-            raise EvidenceIntakeError("artifact size is invalid")
-
-        resolved = _fixed_artifact(root, relative_path)
-        if resolved.stat().st_size != declared_size or _sha256(resolved) != declared_sha:
-            raise EvidenceIntakeError("artifact size or SHA-256 does not match manifest")
-
-        node_id = f"source:{candidate_sha}:{name}"
-        source_id = f"sha256:{declared_sha}"
-        nodes.append(
-            EvidenceGraphNode(
-                node_id=node_id,
-                kind=EvidenceNodeKind.SOURCE,
-                source_id=source_id,
-                observed_at=observed_at,
-            )
+        node, edge, record = _build_artifact_node(
+            root,
+            claim_node_id,
+            name,
+            relative_path,
+            artifacts.get(name),
+            observed_at,
         )
-        edge_id = hashlib.sha256(f"{claim_node_id}->{node_id}".encode()).hexdigest()
-        edges.append(
-            EvidenceGraphEdge(
-                edge_id=f"edge:{edge_id}",
-                from_node_id=claim_node_id,
-                to_node_id=node_id,
-                kind=EvidenceEdgeKind.DERIVED_FROM,
-                independent_validation=False,
-            )
-        )
-        artifact_records.append(
-            {
-                "name": name,
-                "node_id": node_id,
-                "source_id": source_id,
-                "size_bytes": declared_size,
-                "sha256": declared_sha,
-            }
-        )
+        nodes.append(node)
+        edges.append(edge)
+        artifact_records.append(record)
 
     graph = EvidenceGraph(tuple(nodes), tuple(edges))
     lineage = graph.trace_lineage(claim_node_id)
@@ -238,7 +260,7 @@ def main() -> int:
         document = build_graph_document(manifest, root, profile)
         with output_path.open("x", encoding="utf-8") as stream:
             stream.write(json.dumps(document, indent=2, sort_keys=True) + "\n")
-    except (OSError, json.JSONDecodeError, ValueError) as exc:
+    except (OSError, ValueError) as exc:
         raise SystemExit(f"EvidenceGraph intake rejected: {exc}") from exc
 
     print(
