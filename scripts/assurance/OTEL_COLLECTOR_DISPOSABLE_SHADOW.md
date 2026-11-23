@@ -34,7 +34,8 @@ mint OIDC-backed attestations. The locally built image is not pushed to a regist
   authorization, API-key, credential-reference, URL and database-statement attributes.
 - CI asserts the trace and parent/child span IDs plus metric name appear in Collector debug
   output, and that synthetic secret markers do not appear.
-- A cleanup step stops the container and removes the internal Docker network.
+- A candidate-bound manifest hashes the image provenance, immutable image ID/archive digest, Collector log and synthetic test result. The existing CK-NEXUS `EvidenceGraph` intake validates each path/size/hash and emits `CLAIM` / `SOURCE` nodes with `DERIVED_FROM` edges; no edge claims independent validation.
+- The graph and supporting synthetic evidence are retained as a 30-day CI artifact. A cleanup step stops the container and removes the internal Docker network.
 
 ## Limits
 
