@@ -1,13 +1,44 @@
-# Live status update — 2026-11-23 08:52 ICT
+# Live status update — 2026-11-23 (PR #392 current candidate)
 
 **Decision: NO-GO FOR PRODUCTION.**
 
-- PR #392 head `bdf224b66e2798920f9fc3b3ae872086bb737ee5`; OPEN / BLOCKED / REVIEW_REQUIRED; no merge/deploy.
-- Checks: `test` FAIL (pytest could not import `creator_app` because CI did not set repository-root `PYTHONPATH`); preflight, CodeQL, Analyze Actions, Analyze JavaScript/TypeScript, Analyze Python, attack-regression, universal-system, and SonarCloud PASS; CodeRabbit skipped. CI/Q15 import-path fixes now set `PYTHONPATH: ${{ github.workspace }}`, and candidate gate dispatch now honors `skip_q13=true`; pending CI/gate verification.
-- Provider key auth via models-list GET: Gemini, Mistral, OpenRouter and local OpenAI AUTH_OK; Groq and Cerebras AUTH_FAILED. No inference call or paid usage was made.
-- Q11 remains blocked under the current OpenAI Responses API contract; alternative vendors are not equivalent Q11 evidence without reviewed contract changes.
-- Q10 no-repeat lock: until 2026-11-24 07:50 ICT.
-- Full production closure remains blocked by Q10 review and current-subject Q11–Q16 evidence/review requirements.
+## Current exact candidate
+
+- PR #392: OPEN; base `main`; head branch `ops/provider-free-go-clean`; no merge or deployment.
+- Candidate source SHA: `c656ad5991464d7e9457adc2a33507b0d0daa623`.
+- Candidate source tree: `ea290bb80de030a020c6b94582fe436c25dccbd6`.
+- Canonical Q10–Q16 runtime manifest: `d3fb76bb9d576e88f9873eda1ff9eff23edeae41030439e3bea619ae1dbdc56c`.
+- Candidate automated-gates run: `45117449244`; Q10 and Q11 were skipped.
+
+## Latest candidate evidence (run 45117449244)
+
+| Gate | Result | Meaning |
+|---|---|---|
+| Q10 | NOT_VERIFIED | Skipped; independent security review and current-subject scan remain open. |
+| Q11 | BLOCKED / NOT_VERIFIED | Skipped; valid OpenAI credential and authorized live test are still required. |
+| Q12 | PASS | Delegated cgroup v2 enforcement and non-root worker were observed. |
+| Q13 | PASS_CANDIDATE | Isolated staging backup/restore and sentinel round-trip passed. |
+| Q14 | PASS_CANDIDATE | Staging alert delivery and health/metrics checks passed. |
+| Q15 | PASS_CANDIDATE | Fresh Ubuntu 24.04 host smoke and portable regression passed. |
+| Q16 image | PASS_CANDIDATE | Candidate image checks passed, including non-root runtime. |
+| Q16 licenses | PASS | 56 runtime distributions; unresolved license evidence: 0. |
+
+The six downloaded artifact ZIPs were opened and their JSON contents inspected. Their source SHA and runtime manifest match the candidate above. However, their workflow branch is `ops/provider-free-go-clean`; the release provenance verifier currently allowlists different branches for Q12–Q16. Therefore these artifacts are **not yet accepted by the final release provenance gate**. The allowlist was not weakened.
+
+## Corrections made on this PR branch
+
+- Updated all three stale final-package manifest pins from `370f8a8...` to the canonical candidate manifest `d3fb76b...`.
+- Updated the final package's runtime inventory assertion from 55 to 56, matching the latest candidate license artifact.
+- The final package remains fail-closed: Q10/Q11 are unresolved and Q14 is still candidate-only. No package release, merge, or deployment is authorized.
+
+## Remaining blockers
+
+1. Q10: wait for the no-repeat lock to expire at **2026-11-24 07:50 ICT**, then perform the required current-candidate scan and independent human security review.
+2. Q11: obtain an owner-authorized valid OpenAI API credential and an approved live test path. No paid generation request has been made.
+3. Q12–Q16: regenerate/verify evidence through the provenance-approved branch paths; do not bypass branch restrictions or relabel candidate results as production PASS.
+4. Obtain required independent review and complete the final production package only after every mandatory gate passes.
+
+**Release decision remains NO-GO.** Q01–Q09 are not re-certified by this PR update; historical evidence must be checked separately.
 
 ---
 
