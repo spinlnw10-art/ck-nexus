@@ -352,4 +352,3 @@ This audit proposes no source-file move, source-file deletion, branch archival o
 ### Snapshot boundary clarification
 
 The repository had 401 pre-existing live branches when the audit branch was created. The audit branch itself is excluded from its own baseline evidence to avoid a self-referential record: adding or updating the evidence files changes that branch's own HEAD and tree. The audit branch is tracked separately by Draft PR #393; the PR head SHA is checked live in the final verification. Thus, the retention baseline covers every pre-existing branch, and the newly created audit branch is separately visible and preserved.
-
