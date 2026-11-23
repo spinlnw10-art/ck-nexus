@@ -5,6 +5,8 @@ on:
     paths:
       - "tests/fixtures/q16-license/**"
       - "scripts/assurance/q16_evidence_manifest.py"
+      - "scripts/assurance/evidence_graph_intake.py"
+      - "tests/assurance/test_evidence_graph_intake.py"
       - "scripts/assurance/ort-q16-config.yml"
       - "tests/assurance/test_q16_evidence_manifest.py"
       - ".github/workflows/q16-ort-scancode-shadow.yml"
@@ -100,5 +102,25 @@ jobs:
           python scripts/assurance/q16_evidence_manifest.py --candidate-sha "$GITHUB_SHA" --allowed-root "$RUNNER_TEMP" --scancode-report "$RUNNER_TEMP/scancode-full-repo.json" --scancode-install-report "$SCANCODE_INSTALL_REPORT" --ort-analyzer-result "$ORT_ANALYZER_RESULT" --ort-scan-result "$ORT_SCAN_RESULT" --output "$RUNNER_TEMP/q16/q16-evidence.json"
           cat "$RUNNER_TEMP/q16/q16-evidence.json"
 
-      - name: Run evidence manifest unit tests
-        run: python -m unittest tests.assurance.test_q16_evidence_manifest -v
+      - name: Validate Q16 evidence through CK-NEXUS EvidenceGraph
+        run: |
+          python scripts/assurance/evidence_graph_intake.py \
+            --manifest "$RUNNER_TEMP/q16/q16-evidence.json" \
+            --allowed-root "$RUNNER_TEMP" \
+            --output "$RUNNER_TEMP/q16/q16-evidence-graph.json"
+
+      - name: Run evidence and graph intake unit tests
+        run: |
+          python -m unittest tests.assurance.test_q16_evidence_manifest -v
+          python -m unittest tests.assurance.test_evidence_graph_intake -v
+
+      - name: Retain candidate-bound Q16 evidence bundle
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: q16-license-evidence-${{ github.sha }}
+          path: |
+            ${{ runner.temp }}/scancode-full-repo.json
+            ${{ runner.temp }}/scancode-install-report.json
+            ${{ runner.temp }}/q16/**
+          if-no-files-found: error
+          retention-days: 30
