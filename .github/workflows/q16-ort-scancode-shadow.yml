@@ -151,12 +151,15 @@ jobs:
           cp "$REPO_SCAN_RESULT" evidence/assurance/shadow/q16/ort-full-repo-scan-result.yml
 
       - name: Create candidate-bound Q16 evidence manifest
+        env:
+          CANDIDATE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
         run: |
           python scripts/assurance/q16_evidence_manifest.py
           cat evidence/assurance/shadow/q16/q16-evidence.json
 
       - name: Validate Q16 evidence through CK-NEXUS EvidenceGraph
         env:
+          CANDIDATE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
           PYTHONPATH: .
         run: |
           python scripts/assurance/evidence_graph_intake.py
