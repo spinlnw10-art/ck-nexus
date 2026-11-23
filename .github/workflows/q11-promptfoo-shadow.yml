@@ -35,15 +35,26 @@ jobs:
           node - <<'NODE'
           const fs = require("node:fs");
           const report = JSON.parse(fs.readFileSync("q11-promptfoo-results.json", "utf8"));
-          const rows = Array.isArray(report.results) ? report.results : [];
-          const passed = rows.filter((row) => row && row.success === true).length;
-          const failed = rows.length - passed;
-          if (rows.length !== 6 || passed !== 6 || failed !== 0) {
+          const evaluation = report.results;
+          const rows = Array.isArray(evaluation?.results) ? evaluation.results : [];
+          const stats = evaluation?.stats ?? {};
+          const passed = Number(stats.successes ?? -1);
+          const failed = Number(stats.failures ?? -1);
+          const errors = Number(stats.errors ?? -1);
+          const rowPasses = rows.filter((row) => row && row.success === true).length;
+          if (
+            rows.length !== 6 ||
+            passed !== 6 ||
+            failed !== 0 ||
+            errors !== 0 ||
+            rowPasses !== 6
+          ) {
             console.error(JSON.stringify({
               top_level_keys: Object.keys(report),
+              evaluation_keys: evaluation && typeof evaluation === "object" ? Object.keys(evaluation) : [],
               result_count: rows.length,
-              passed,
-              failed,
+              stats,
+              row_passes: rowPasses,
               sample_result: rows[0] ?? null
             }, null, 2));
             process.exit(1);
@@ -52,6 +63,7 @@ jobs:
             mode: "SYNTHETIC_SHADOW_ONLY",
             cases_passed: passed,
             cases_failed: failed,
+            cases_errored: errors,
             q11_gate_decision: "NO_GATE_DECISION"
           }, null, 2));
           NODE
