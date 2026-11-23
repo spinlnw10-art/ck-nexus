@@ -1,0 +1,5456 @@
+{
+  "snapshot_date": "2026-11-23",
+  "repository": "spinlnw10-art/ck-nexus",
+  "branch_api_count": 402,
+  "protected_branch_count": 1,
+  "branches_with_open_pr": 219,
+  "branches_without_any_pr": 102,
+  "pr_inventory": {
+    "total": 355,
+    "open": 220,
+    "closed": 135,
+    "merged": 88,
+    "closed_unmerged": 47
+  },
+  "branches": [
+    {
+      "name": "agent/closure-diagnostics-2026-10-02",
+      "head_sha": "8f71916e610a5ca5e5cbad368954face38793855",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "agent/unified-control-package",
+      "head_sha": "a6e74b5d4aabf1c0b255f4fab5ad1cc24063749d",
+      "protected": false,
+      "prs": [
+        {
+          "number": 15,
+          "state": "closed",
+          "merged": true,
+          "draft": false,
+          "title": "release: converge Unified Control into Q10-Q16 candidate",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/15",
+          "head_sha": "85b93c2e0770a9efc81a73f993cbe50547f51eed"
+        }
+      ]
+    },
+    {
+      "name": "arch/autonomous-platform-fabric-gen3-v01",
+      "head_sha": "7ecc1bdec491b355dc0fb3c9e9d1af368eecccde",
+      "protected": false,
+      "prs": [
+        {
+          "number": 23,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "Architecture: autonomous platform fabric Gen3 extensions",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/23",
+          "head_sha": "7ecc1bdec491b355dc0fb3c9e9d1af368eecccde"
+        }
+      ]
+    },
+    {
+      "name": "arch/autonomous-platform-fabric-v01",
+      "head_sha": "83365a919d57168db8467223d47bbc81815393ab",
+      "protected": false,
+      "prs": [
+        {
+          "number": 18,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "Architecture: autonomous platform fabric contracts",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/18",
+          "head_sha": "83365a919d57168db8467223d47bbc81815393ab"
+        }
+      ]
+    },
+    {
+      "name": "arch/base44-cknexus-federation-v01",
+      "head_sha": "d4f634cad3ae413900be7a86f197d069c4ba548f",
+      "protected": false,
+      "prs": [
+        {
+          "number": 24,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "Architecture: federate Base44/Solas with CK-NEXUS",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/24",
+          "head_sha": "d4f634cad3ae413900be7a86f197d069c4ba548f"
+        }
+      ]
+    },
+    {
+      "name": "arch/cognitive-governor-contracts-v01",
+      "head_sha": "9a5fc1dc3414e138b1bf3758ee36cdb1406a75cc",
+      "protected": false,
+      "prs": [
+        {
+          "number": 30,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "Architecture: define Cognitive Governor consensus and evaluation contracts",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/30",
+          "head_sha": "9a5fc1dc3414e138b1bf3758ee36cdb1406a75cc"
+        }
+      ]
+    },
+    {
+      "name": "arch/control-plane-contracts-v01",
+      "head_sha": "80351d2395e693249f92bda3b7c2bf8e029a94ff",
+      "protected": false,
+      "prs": [
+        {
+          "number": 26,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "Architecture: define Control Plane command and approval contracts",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/26",
+          "head_sha": "80351d2395e693249f92bda3b7c2bf8e029a94ff"
+        }
+      ]
+    },
+    {
+      "name": "arch/fabric-hardening-v02",
+      "head_sha": "6bb7527d296814ad79dddc1b63aa4a25ca743771",
+      "protected": false,
+      "prs": [
+        {
+          "number": 25,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "Architecture: harden capability resolution and execution semantics",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/25",
+          "head_sha": "6bb7527d296814ad79dddc1b63aa4a25ca743771"
+        }
+      ]
+    },
+    {
+      "name": "arch/knowledge-memory-ingestion-v01",
+      "head_sha": "4017b6de7ef78f4537a03820c8f76a6990f72fa6",
+      "protected": false,
+      "prs": [
+        {
+          "number": 27,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "Architecture: govern memory knowledge and capability ingestion",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/27",
+          "head_sha": "4017b6de7ef78f4537a03820c8f76a6990f72fa6"
+        }
+      ]
+    },
+    {
+      "name": "arch/monorepo-layered-v01",
+      "head_sha": "d67eae6eba746fd4a11d1df98155866d89fe978d",
+      "protected": false,
+      "prs": [
+        {
+          "number": 17,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "Architecture: layered monorepo target and migration plan",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/17",
+          "head_sha": "d67eae6eba746fd4a11d1df98155866d89fe978d"
+        }
+      ]
+    },
+    {
+      "name": "arch/monorepo-layered-v1",
+      "head_sha": "fa3fb00a8f4314cc83184ed65dc36060549b443e",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "arch/observability-evidence-contracts-v01",
+      "head_sha": "b5cef69996ea66fc9839f868b1e4662978914f1c",
+      "protected": false,
+      "prs": [
+        {
+          "number": 28,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "Architecture: define observability SLO cost and evidence freshness contracts",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/28",
+          "head_sha": "b5cef69996ea66fc9839f868b1e4662978914f1c"
+        }
+      ]
+    },
+    {
+      "name": "arch/recovery-q14-contracts-v01",
+      "head_sha": "75e932e71d06f28a1fd4b8b1791d2d7cf0977655",
+      "protected": false,
+      "prs": [
+        {
+          "number": 29,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "Architecture: define Q14 recovery and restore contracts",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/29",
+          "head_sha": "75e932e71d06f28a1fd4b8b1791d2d7cf0977655"
+        }
+      ]
+    },
+    {
+      "name": "arch/unified-architecture-package-v01",
+      "head_sha": "5c93d4cd41a8f5c689686ef5793c6013c0b9138b",
+      "protected": false,
+      "prs": [
+        {
+          "number": 31,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "Architecture: package unified CK-NEXUS target and implementation waves",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/31",
+          "head_sha": "5c93d4cd41a8f5c689686ef5793c6013c0b9138b"
+        }
+      ]
+    },
+    {
+      "name": "audit/20261014-readonly-baseline",
+      "head_sha": "5ef8501225f6ce9d9fc170ce377a7e3a2a34c2bd",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "audit/bootstrap-v5.2.3",
+      "head_sha": "7e19473b9b0c481732fa05a589a5083056a1f798",
+      "protected": false,
+      "prs": [
+        {
+          "number": 297,
+          "state": "open",
+          "merged": false,
+          "draft": false,
+          "title": "feat(security): Bootstrap v5.2.3 evidence hardening",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/297",
+          "head_sha": "7e19473b9b0c481732fa05a589a5083056a1f798"
+        }
+      ]
+    },
+    {
+      "name": "audit/canonical-evidence-ledger-20261001",
+      "head_sha": "a7d2588c885a2d29fe09faa9369be008da79081a",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "audit/repository-organization-20261123",
+      "head_sha": "4b92a45906488bb79ae2a0ac03fbf796bf1109a8",
+      "protected": false,
+      "prs": [
+        {
+          "number": 393,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "docs(audit): repository organization inventory and safe consolidation plan",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/393",
+          "head_sha": "4b92a45906488bb79ae2a0ac03fbf796bf1109a8"
+        }
+      ]
+    },
+    {
+      "name": "automation/capability-registry-weekly-2026-11-09",
+      "head_sha": "136413f8bceb4fbbba21c08109e97df4e77e18ed",
+      "protected": false,
+      "prs": [
+        {
+          "number": 361,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "chore(registry): review AGNES external capabilities",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/361",
+          "head_sha": "136413f8bceb4fbbba21c08109e97df4e77e18ed"
+        }
+      ]
+    },
+    {
+      "name": "backup/ck-nexus-snapshot-2026-08-21",
+      "head_sha": "7d2ab8ced2112a34d79027530a2248b550f493f1",
+      "protected": false,
+      "prs": [
+        {
+          "number": 108,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "chore: export CK-NEXUS development snapshot",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/108",
+          "head_sha": "7d2ab8ced2112a34d79027530a2248b550f493f1"
+        }
+      ]
+    },
+    {
+      "name": "backup/pre-consolidation-20261031",
+      "head_sha": "687059303163510ace163eaba65b7890624d6e67",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "backup/reinstall-2026-08-25",
+      "head_sha": "a045951996a69e9c9bbfd6afed662b13a44b944d",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "backup/termux-20261029",
+      "head_sha": "687059303163510ace163eaba65b7890624d6e67",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "brand/github-presentation-20261008",
+      "head_sha": "270ed1999e7ae57c27b85e99d1c5a63ad1213e8a",
+      "protected": false,
+      "prs": [
+        {
+          "number": 283,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "docs: professionalize CK-NEXUS GitHub presentation",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/283",
+          "head_sha": "270ed1999e7ae57c27b85e99d1c5a63ad1213e8a"
+        }
+      ]
+    },
+    {
+      "name": "c2-only",
+      "head_sha": "3ab6cb754df9d4e872a214b0ad478fb95a1484e9",
+      "protected": false,
+      "prs": [
+        {
+          "number": 299,
+          "state": "open",
+          "merged": false,
+          "draft": false,
+          "title": "security(prompt): isolate user data in JSON object (C2)",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/299",
+          "head_sha": "3ab6cb754df9d4e872a214b0ad478fb95a1484e9"
+        }
+      ]
+    },
+    {
+      "name": "chore/auto-update-badge-system",
+      "head_sha": "09b3317c7622ce87e1b81170480b98763cf0345d",
+      "protected": false,
+      "prs": [
+        {
+          "number": 364,
+          "state": "open",
+          "merged": false,
+          "draft": false,
+          "title": "feat: add evidence-driven gate status badges",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/364",
+          "head_sha": "09b3317c7622ce87e1b81170480b98763cf0345d"
+        }
+      ]
+    },
+    {
+      "name": "chore/q10-rebaseline",
+      "head_sha": "bfa05c930d92d25fd75921c905e3583f27f1aecc",
+      "protected": false,
+      "prs": [
+        {
+          "number": 325,
+          "state": "closed",
+          "merged": false,
+          "draft": false,
+          "title": "Q10 rebaseline to fe81c22d",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/325",
+          "head_sha": "bfa05c930d92d25fd75921c905e3583f27f1aecc"
+        }
+      ]
+    },
+    {
+      "name": "ci/development-infra-evidence-boundary-v1",
+      "head_sha": "04107daf9f76f19ce7497a0f0b1d08cbcaf7c88a",
+      "protected": false,
+      "prs": [
+        {
+          "number": 122,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "ci: classify infra branches as development-only evidence lanes",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/122",
+          "head_sha": "04107daf9f76f19ce7497a0f0b1d08cbcaf7c88a"
+        }
+      ]
+    },
+    {
+      "name": "cknexus/auto-dev/11c25d2fc2eb5bdb",
+      "head_sha": "b1b443ef0dc7b9f4bf59544857b004b89f390d52",
+      "protected": false,
+      "prs": [
+        {
+          "number": 305,
+          "state": "closed",
+          "merged": false,
+          "draft": true,
+          "title": "[CK-NEXUS Auto-Fix] Task manual-test-1793060392",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/305",
+          "head_sha": "b1b443ef0dc7b9f4bf59544857b004b89f390d52"
+        }
+      ]
+    },
+    {
+      "name": "cknexus/auto-dev/20261026-final-gate",
+      "head_sha": "64e3fc010837990a2b8ed6243cabc16e489bfe9b",
+      "protected": false,
+      "prs": [
+        {
+          "number": 304,
+          "state": "open",
+          "merged": false,
+          "draft": false,
+          "title": "ci: add CK-NEXUS GitHub final gate",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/304",
+          "head_sha": "64e3fc010837990a2b8ed6243cabc16e489bfe9b"
+        }
+      ]
+    },
+    {
+      "name": "cknexus/auto-dev/371efa6adc491a8a",
+      "head_sha": "f0fb9a7cb020e012dfbaa4e829245b3a54f4b099",
+      "protected": false,
+      "prs": [
+        {
+          "number": 312,
+          "state": "closed",
+          "merged": false,
+          "draft": true,
+          "title": "[CK-NEXUS Auto-Fix] Task n8n-proactive-2026-10-30",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/312",
+          "head_sha": "f0fb9a7cb020e012dfbaa4e829245b3a54f4b099"
+        }
+      ]
+    },
+    {
+      "name": "cknexus/auto-dev/857789e8232d1642",
+      "head_sha": "bb2edead4630619e3cdfef9045e734de146d6b4c",
+      "protected": false,
+      "prs": [
+        {
+          "number": 310,
+          "state": "closed",
+          "merged": false,
+          "draft": true,
+          "title": "[CK-NEXUS Auto-Fix] Task n8n-proactive-2026-10-29",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/310",
+          "head_sha": "bb2edead4630619e3cdfef9045e734de146d6b4c"
+        }
+      ]
+    },
+    {
+      "name": "cknexus/auto-dev/9c71df302c5d1f68-bff3ef06b6e2",
+      "head_sha": "34ea704e3ab155cfd7b7162f0bd74ef75fb50829",
+      "protected": false,
+      "prs": [
+        {
+          "number": 307,
+          "state": "closed",
+          "merged": false,
+          "draft": true,
+          "title": "[CK-NEXUS Auto-Fix] Task n8n-proactive-2026-10-26",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/307",
+          "head_sha": "34ea704e3ab155cfd7b7162f0bd74ef75fb50829"
+        }
+      ]
+    },
+    {
+      "name": "cknexus/auto-dev/a240f6777fbce37b",
+      "head_sha": "8ad05f5e97931b6dfdb6c9a397d396e700ac6374",
+      "protected": false,
+      "prs": [
+        {
+          "number": 308,
+          "state": "closed",
+          "merged": false,
+          "draft": true,
+          "title": "[CK-NEXUS Auto-Fix] Task n8n-proactive-2026-10-27",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/308",
+          "head_sha": "8ad05f5e97931b6dfdb6c9a397d396e700ac6374"
+        }
+      ]
+    },
+    {
+      "name": "cknexus/auto-dev/cc836a629922ca99",
+      "head_sha": "fa8eb754e9d5ac1ebe1d939498c904d2af1e7bd5",
+      "protected": false,
+      "prs": [
+        {
+          "number": 309,
+          "state": "closed",
+          "merged": false,
+          "draft": true,
+          "title": "[CK-NEXUS Auto-Fix] Task n8n-proactive-2026-10-28",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/309",
+          "head_sha": "fa8eb754e9d5ac1ebe1d939498c904d2af1e7bd5"
+        }
+      ]
+    },
+    {
+      "name": "cknexus/auto-dev/dc18b325364a804a",
+      "head_sha": "4c5c091923e9e6b93f34fa47e1b52c9c5b7bbcf4",
+      "protected": false,
+      "prs": [
+        {
+          "number": 306,
+          "state": "closed",
+          "merged": false,
+          "draft": true,
+          "title": "[CK-NEXUS Auto-Fix] Task n8n-proactive-2026-10-24",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/306",
+          "head_sha": "4c5c091923e9e6b93f34fa47e1b52c9c5b7bbcf4"
+        }
+      ]
+    },
+    {
+      "name": "cknexus/auto-dev/e42fc04424360811",
+      "head_sha": "ae8c0f422dce23b4c41d7ea209779e507ae559e8",
+      "protected": false,
+      "prs": [
+        {
+          "number": 319,
+          "state": "closed",
+          "merged": false,
+          "draft": true,
+          "title": "[CK-NEXUS Auto-Fix] Task n8n-proactive-2026-10-31",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/319",
+          "head_sha": "ae8c0f422dce23b4c41d7ea209779e507ae559e8"
+        }
+      ]
+    },
+    {
+      "name": "closure/no-go-20261001",
+      "head_sha": "216bbee23dcc54c6f1b55271701e8df328b90165",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "closure/one-shot-evidence-closure-20261002",
+      "head_sha": "583954184211472f7b8955c8baf80428f1373ec5",
+      "protected": false,
+      "prs": [
+        {
+          "number": 252,
+          "state": "open",
+          "merged": false,
+          "draft": false,
+          "title": "closure: one-shot evidence and trusted verifier pin",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/252",
+          "head_sha": "583954184211472f7b8955c8baf80428f1373ec5"
+        }
+      ]
+    },
+    {
+      "name": "closure/q10-q16-unification-20261105",
+      "head_sha": "13cf6e1b2744c796dda85052b2b92a65e570536c",
+      "protected": false,
+      "prs": [
+        {
+          "number": 354,
+          "state": "open",
+          "merged": false,
+          "draft": false,
+          "title": "ci(release): enforce exact Q10-Q16 evidence closure",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/354",
+          "head_sha": "13cf6e1b2744c796dda85052b2b92a65e570536c"
+        }
+      ]
+    },
+    {
+      "name": "code-coverage-agent/fix-341440761-1333067619-504675e3-5573-4c55-8a40-02cfbfbc651f",
+      "head_sha": "cfe3ca4517ca4aec5076a5404f347af56afd6dd5",
+      "protected": false,
+      "prs": [
+        {
+          "number": 296,
+          "state": "closed",
+          "merged": false,
+          "draft": true,
+          "title": "No changes made: insufficient quota to complete coverage setup",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/296",
+          "head_sha": "cfe3ca4517ca4aec5076a5404f347af56afd6dd5"
+        }
+      ]
+    },
+    {
+      "name": "codex/q11-capability-gates",
+      "head_sha": "e40e7417eac8f8cae6f96d956e32b1f66d4d6aad",
+      "protected": false,
+      "prs": [
+        {
+          "number": 278,
+          "state": "open",
+          "merged": false,
+          "draft": false,
+          "title": "Q11 capability sub-gates and fail-closed provider verification",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/278",
+          "head_sha": "e40e7417eac8f8cae6f96d956e32b1f66d4d6aad"
+        }
+      ]
+    },
+    {
+      "name": "codex/q11-p02-error-classification",
+      "head_sha": "9e739a2eb83ef4bdbb81973da81021149ef68bc4",
+      "protected": false,
+      "prs": [
+        {
+          "number": 279,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "Q11 P0.2: classify provider failures and emit controlled evidence",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/279",
+          "head_sha": "9e739a2eb83ef4bdbb81973da81021149ef68bc4"
+        }
+      ]
+    },
+    {
+      "name": "design/contextual-automation-workspace",
+      "head_sha": "9a3f4d8b70b26a9964e9ed83a06cfb6fccbc2ade",
+      "protected": false,
+      "prs": [
+        {
+          "number": 367,
+          "state": "open",
+          "merged": false,
+          "draft": false,
+          "title": "Design/contextual automation workspace",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/367",
+          "head_sha": "9a3f4d8b70b26a9964e9ed83a06cfb6fccbc2ade"
+        }
+      ]
+    },
+    {
+      "name": "dev/agnes-cognitive-fabric-v1",
+      "head_sha": "d182ea427cf66178cc4f3f9f42adf7156813d3f9",
+      "protected": false,
+      "prs": [
+        {
+          "number": 137,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat(agnes): Cognitive Fabric v1 runtime",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/137",
+          "head_sha": "d182ea427cf66178cc4f3f9f42adf7156813d3f9"
+        }
+      ]
+    },
+    {
+      "name": "dev/agnes-design-intelligence-v1",
+      "head_sha": "c03dcb4cf40f6935aeda3958f13daa3d45ea01dc",
+      "protected": false,
+      "prs": [
+        {
+          "number": 148,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat(agnes): governed Design Intelligence kernel v1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/148",
+          "head_sha": "c03dcb4cf40f6935aeda3958f13daa3d45ea01dc"
+        }
+      ]
+    },
+    {
+      "name": "dev/freemium-intelligence-mesh-v1",
+      "head_sha": "e0f592c17d7879aefe5d10a4e4fe93385a94508c",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "dev/state-projector-v1",
+      "head_sha": "5539491ec5bb9ae3d8c6aff83d4631e3c2ce63e3",
+      "protected": false,
+      "prs": [
+        {
+          "number": 144,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat(runtime): deterministic State Projector v1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/144",
+          "head_sha": "5539491ec5bb9ae3d8c6aff83d4631e3c2ce63e3"
+        }
+      ]
+    },
+    {
+      "name": "dev/system-skills-harvest-v1",
+      "head_sha": "86b97e7d4acd00055f1bf292e7e09e74e16f5e78",
+      "protected": false,
+      "prs": [
+        {
+          "number": 202,
+          "state": "closed",
+          "merged": false,
+          "draft": true,
+          "title": "feat: governed system skills harvest and admission v1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/202",
+          "head_sha": "86b97e7d4acd00055f1bf292e7e09e74e16f5e78"
+        }
+      ]
+    },
+    {
+      "name": "diag/pr181-ruff-import-v1",
+      "head_sha": "0adf67255732aeb90458bf4130e3be901567330f",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "docs/automation-intake-gateway",
+      "head_sha": "a0de5df91a111f76d6de844e6c43e514109ae864",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "docs/autonomous-platform-knowledge-base-2026-10-31",
+      "head_sha": "2042f0bb7ff5451d799cd32a46d51f39ae2d5bfd",
+      "protected": false,
+      "prs": [
+        {
+          "number": 321,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "docs: establish CK-NEXUS autonomous platform knowledge base",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/321",
+          "head_sha": "2042f0bb7ff5451d799cd32a46d51f39ae2d5bfd"
+        }
+      ]
+    },
+    {
+      "name": "docs/control-state-foundation-2026-10-12",
+      "head_sha": "504ddda41e72de593810277d9c313ce3a874f007",
+      "protected": false,
+      "prs": [
+        {
+          "number": 291,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "docs: add machine-readable control state foundation",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/291",
+          "head_sha": "504ddda41e72de593810277d9c313ce3a874f007"
+        }
+      ]
+    },
+    {
+      "name": "docs/dgx-spark-ai-server-launch-20260904",
+      "head_sha": "1feeb356af92a6f895c33a04c9b23fc421e8fbe9",
+      "protected": false,
+      "prs": [
+        {
+          "number": 199,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "docs: add DGX Spark AI Server launch brief",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/199",
+          "head_sha": "1feeb356af92a6f895c33a04c9b23fc421e8fbe9"
+        }
+      ]
+    },
+    {
+      "name": "docs/evidence-closure-system-2026-10-12",
+      "head_sha": "1d6c00e8fe70439b336ce72ed25424ae984e80bb",
+      "protected": false,
+      "prs": [
+        {
+          "number": 292,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "docs(audit): add CK-NEXUS evidence closure system",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/292",
+          "head_sha": "1d6c00e8fe70439b336ce72ed25424ae984e80bb"
+        }
+      ]
+    },
+    {
+      "name": "docs/gen7-capability-gap-matrix-v1",
+      "head_sha": "ebda7849c016305d1088c42c771fe66fadd4c474",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "docs/knowledge-source-learning-blueprints-20260904",
+      "head_sha": "3ceae15e81c1779d096f521ab863b186c20840dd",
+      "protected": false,
+      "prs": [
+        {
+          "number": 209,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "docs: connected sources and learning consolidation blueprints",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/209",
+          "head_sha": "3ceae15e81c1779d096f521ab863b186c20840dd"
+        }
+      ]
+    },
+    {
+      "name": "docs/master-recovery-ledger-2026-10-12",
+      "head_sha": "41666a6a7bd39d6ea651e083afee616ec3040105",
+      "protected": false,
+      "prs": [
+        {
+          "number": 290,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "docs: add evidence-based master recovery ledger",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/290",
+          "head_sha": "41666a6a7bd39d6ea651e083afee616ec3040105"
+        }
+      ]
+    },
+    {
+      "name": "docs/q10-q12-runbook-subject89",
+      "head_sha": "c56211d52989f8c84f74f668c676dff3460a3235",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "docs/q10-q16-current-state-20261120",
+      "head_sha": "59bb346b65e8f33297e67d0f6d9f53298493151e",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "docs/readme-operational-status-20261117",
+      "head_sha": "9dede30a98331861bcf773fbee198d9107e5de29",
+      "protected": false,
+      "prs": [
+        {
+          "number": 371,
+          "state": "open",
+          "merged": false,
+          "draft": false,
+          "title": "docs: update README operational status",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/371",
+          "head_sha": "9dede30a98331861bcf773fbee198d9107e5de29"
+        }
+      ]
+    },
+    {
+      "name": "docs/readme-rc-disclosure-agnes-5d-20261112",
+      "head_sha": "85afb6bc188ee347eb21cbc19b60613ad0ef2024",
+      "protected": false,
+      "prs": [
+        {
+          "number": 368,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "docs: clarify RC disclosure and Agnes 5D roadmap",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/368",
+          "head_sha": "85afb6bc188ee347eb21cbc19b60613ad0ef2024"
+        }
+      ]
+    },
+    {
+      "name": "docs/release-status-candidates-20261101",
+      "head_sha": "9d54bd90ff8b6a5ecc13bf40b7e86758dc34ddb4",
+      "protected": false,
+      "prs": [
+        {
+          "number": 341,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "docs(release): record current Q13 and Q15 candidates",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/341",
+          "head_sha": "9d54bd90ff8b6a5ecc13bf40b7e86758dc34ddb4"
+        }
+      ]
+    },
+    {
+      "name": "docs/repository-consolidation-20261104",
+      "head_sha": "b82423b083b85c13ef2fb9aaf0ba29b2097013a8",
+      "protected": false,
+      "prs": [
+        {
+          "number": 352,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "docs: repository consolidation and explicit NO-GO status",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/352",
+          "head_sha": "b82423b083b85c13ef2fb9aaf0ba29b2097013a8"
+        }
+      ]
+    },
+    {
+      "name": "feat/adaptive-cognitive-chat-ui",
+      "head_sha": "d5f8a192ea14e9623fa8699e8caf85a32a0ba310",
+      "protected": false,
+      "prs": [
+        {
+          "number": 110,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat(web): adaptive cognitive chat workspace",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/110",
+          "head_sha": "d5f8a192ea14e9623fa8699e8caf85a32a0ba310"
+        }
+      ]
+    },
+    {
+      "name": "feat/adk-graph-execution-adapter",
+      "head_sha": "6de669c620756287ad90ffa82db6d0879d40a394",
+      "protected": false,
+      "prs": [
+        {
+          "number": 262,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat: add optional Google ADK graph execution adapter",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/262",
+          "head_sha": "6de669c620756287ad90ffa82db6d0879d40a394"
+        }
+      ]
+    },
+    {
+      "name": "feat/agnes-cognitive-foundation-v1",
+      "head_sha": "6ae8bb99d33ccf6160ccb3d019c15bbab05e479b",
+      "protected": false,
+      "prs": [
+        {
+          "number": 116,
+          "state": "closed",
+          "merged": false,
+          "draft": true,
+          "title": "feat(agnes): cognitive foundation for capability composition",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/116",
+          "head_sha": "6ae8bb99d33ccf6160ccb3d019c15bbab05e479b"
+        }
+      ]
+    },
+    {
+      "name": "feat/agnes-experiential-memory-v1",
+      "head_sha": "1d330796de31b4171f7091e619be6398bef8de33",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "feat/agnes-expert-fabric-v1",
+      "head_sha": "cf2926b2fe36bfbabc7ab72cbd60aaa4fed939e4",
+      "protected": false,
+      "prs": [
+        {
+          "number": 181,
+          "state": "closed",
+          "merged": false,
+          "draft": true,
+          "title": "SUPERSEDED: governed Expert Fabric v1 (reconciled by PR #193)",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/181",
+          "head_sha": "cf2926b2fe36bfbabc7ab72cbd60aaa4fed939e4"
+        }
+      ]
+    },
+    {
+      "name": "feat/agnes-idea-experimenter-v1",
+      "head_sha": "2f3e8f33aab1ba4fe979e3d1442e366912176aa8",
+      "protected": false,
+      "prs": [
+        {
+          "number": 111,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat(agnes): idea auto-experimenter and multi-assistant evaluation",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/111",
+          "head_sha": "2f3e8f33aab1ba4fe979e3d1442e366912176aa8"
+        }
+      ]
+    },
+    {
+      "name": "feat/agnes-persistent-ops-memory-20261110",
+      "head_sha": "eb30d34903ab0dcce4c446caa97daf5730568cc7",
+      "protected": false,
+      "prs": [
+        {
+          "number": 365,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat(agnes): bounded parallel execution and reliability guards",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/365",
+          "head_sha": "eb30d34903ab0dcce4c446caa97daf5730568cc7"
+        }
+      ]
+    },
+    {
+      "name": "feat/agnes-sentinel-evidence-auditor-20261105",
+      "head_sha": "f9cef56f51e0d4a22c8421cb8208310f9f255ad4",
+      "protected": false,
+      "prs": [
+        {
+          "number": 360,
+          "state": "open",
+          "merged": false,
+          "draft": false,
+          "title": "feat: add Sentinel evidence auditor to AI team",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/360",
+          "head_sha": "f9cef56f51e0d4a22c8421cb8208310f9f255ad4"
+        }
+      ]
+    },
+    {
+      "name": "feat/agnes-skill-foundry-v1",
+      "head_sha": "b29a028c04ee6bcbd6409e508ad9c2e159322182",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "feat/ai-product-evolution-factory-20261006",
+      "head_sha": "930cbde76a80571893319ff5b599d40ccf8ecf77",
+      "protected": false,
+      "prs": [
+        {
+          "number": 266,
+          "state": "closed",
+          "merged": false,
+          "draft": false,
+          "title": "feat(ai-factory): add idea harvesting, market signals, and autonomous closure gates",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/266",
+          "head_sha": "930cbde76a80571893319ff5b599d40ccf8ecf77"
+        }
+      ]
+    },
+    {
+      "name": "feat/apidog-capability-gateway-20261008",
+      "head_sha": "5f66819fdd35d504c2c4432cb9f29ed2b0961a81",
+      "protected": false,
+      "prs": [
+        {
+          "number": 284,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat: add Apidog capability gateway",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/284",
+          "head_sha": "5f66819fdd35d504c2c4432cb9f29ed2b0961a81"
+        }
+      ]
+    },
+    {
+      "name": "feat/approval-durability-verifier-v1",
+      "head_sha": "aca9e92bd66f8a3abcab34d3f485cdb1fc3242ac",
+      "protected": false,
+      "prs": [
+        {
+          "number": 118,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat(security): durable approval replay and verifier registry",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/118",
+          "head_sha": "aca9e92bd66f8a3abcab34d3f485cdb1fc3242ac"
+        }
+      ]
+    },
+    {
+      "name": "feat/assurance-profile-20260903",
+      "head_sha": "ada622d9975268fa6bed0ac1eb987c51eb0bb30d",
+      "protected": false,
+      "prs": [
+        {
+          "number": 201,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "governance: add CK-NEXUS Assurance Profile 2026",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/201",
+          "head_sha": "ada622d9975268fa6bed0ac1eb987c51eb0bb30d"
+        }
+      ]
+    },
+    {
+      "name": "feat/canonical-release-subject-forensics-20261110",
+      "head_sha": "5ccb7499a7482034069b29251b904e6f28a3a35c",
+      "protected": false,
+      "prs": [
+        {
+          "number": 363,
+          "state": "open",
+          "merged": false,
+          "draft": false,
+          "title": "Centralize canonical release subject calculation",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/363",
+          "head_sha": "5ccb7499a7482034069b29251b904e6f28a3a35c"
+        }
+      ]
+    },
+    {
+      "name": "feat/ck-nexus-platform-scaffold",
+      "head_sha": "c01f4b2877a3f38a4b7a8603bebacbdd70aca2b1",
+      "protected": false,
+      "prs": [
+        {
+          "number": 12,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat: scaffold expanded CK-NEXUS cognitive platform",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/12",
+          "head_sha": "c01f4b2877a3f38a4b7a8603bebacbdd70aca2b1"
+        }
+      ]
+    },
+    {
+      "name": "feat/ck-nexus-test-portal",
+      "head_sha": "40650ddf4dc92588c53d340725f0988c0b1880d3",
+      "protected": false,
+      "prs": [
+        {
+          "number": 370,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat: add governed CK-NEXUS Chat Portal and free provider routing",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/370",
+          "head_sha": "40650ddf4dc92588c53d340725f0988c0b1880d3"
+        }
+      ]
+    },
+    {
+      "name": "feat/cknexus-agent-operating-model-main-20261105",
+      "head_sha": "2b442c4e9f932869015864a73311ade458042e4e",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "feat/cknexus-certification-portal-v1",
+      "head_sha": "e003a963703680500efa154dbc6b66e8ea2234e6",
+      "protected": false,
+      "prs": [
+        {
+          "number": 372,
+          "state": "open",
+          "merged": false,
+          "draft": false,
+          "title": "feat(certification): add assessment portal prototype and owner signoff",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/372",
+          "head_sha": "e003a963703680500efa154dbc6b66e8ea2234e6"
+        }
+      ]
+    },
+    {
+      "name": "feat/cloud-worker-bridge-20261101",
+      "head_sha": "7b14f5e6d1ba27986b37a43ffdf154221c701c4c",
+      "protected": false,
+      "prs": [
+        {
+          "number": 345,
+          "state": "open",
+          "merged": false,
+          "draft": false,
+          "title": "feat(automation): add cloud worker and Pinterest reference connector",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/345",
+          "head_sha": "7b14f5e6d1ba27986b37a43ffdf154221c701c4c"
+        }
+      ]
+    },
+    {
+      "name": "feat/cognitive-control-universe-v1",
+      "head_sha": "f08fdc238641c7f8157937295bb7dbed9a3ba7b6",
+      "protected": false,
+      "prs": [
+        {
+          "number": 43,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat: add CK-NEXUS Cognitive Control Universe runtime digital twin",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/43",
+          "head_sha": "f08fdc238641c7f8157937295bb7dbed9a3ba7b6"
+        }
+      ]
+    },
+    {
+      "name": "feat/credential-scope-termux-sandbox-v1",
+      "head_sha": "484058c979835f8f207d37b3810a9a79ace5e0ab",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "feat/didit-kyb-react-native",
+      "head_sha": "2ab081963df280ef6eeb01699ad4b06369d41132",
+      "protected": false,
+      "prs": [
+        {
+          "number": 250,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat: Didit KYB React Native integration",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/250",
+          "head_sha": "2ab081963df280ef6eeb01699ad4b06369d41132"
+        }
+      ]
+    },
+    {
+      "name": "feat/facebook-meta-connector",
+      "head_sha": "e1bb690e63255fbe351dd4d2879f9e59b2c3fd50",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "feat/free-fallback-85",
+      "head_sha": "91f554ecf2483533af3097dad9bb890eee57cfa9",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "feat/gemini-provider-20261119",
+      "head_sha": "b0f1c601118053f12d14f2f2f9c84eafd7770c0b",
+      "protected": false,
+      "prs": [
+        {
+          "number": 390,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat(ai): add governed Gemini provider with live smoke verification",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/390",
+          "head_sha": "b0f1c601118053f12d14f2f2f9c84eafd7770c0b"
+        }
+      ]
+    },
+    {
+      "name": "feat/live-development-status-20261101",
+      "head_sha": "f4c41f36f3de0e7e9a2f06c3c9f14124190814a7",
+      "protected": false,
+      "prs": [
+        {
+          "number": 335,
+          "state": "closed",
+          "merged": true,
+          "draft": false,
+          "title": "feat(dashboard): live read-only development status",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/335",
+          "head_sha": "9a5a82b16adae80838bc29b13e670008dafefd96"
+        }
+      ]
+    },
+    {
+      "name": "feat/llm-keypool",
+      "head_sha": "816e80ac02707ab5dddce6aa156ef8e754394750",
+      "protected": false,
+      "prs": [
+        {
+          "number": 8,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat: LLM key pool with credit health, auto-rotation, and free-mode fallback",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/8",
+          "head_sha": "816e80ac02707ab5dddce6aa156ef8e754394750"
+        }
+      ]
+    },
+    {
+      "name": "feat/n8n-runtime-registration-guard-v1",
+      "head_sha": "489ecb18a0c940b935f0ae3eb89601d0744af73c",
+      "protected": false,
+      "prs": [
+        {
+          "number": 146,
+          "state": "closed",
+          "merged": false,
+          "draft": true,
+          "title": "feat(n8n): add fail-closed runtime webhook registration guard",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/146",
+          "head_sha": "489ecb18a0c940b935f0ae3eb89601d0744af73c"
+        }
+      ]
+    },
+    {
+      "name": "feat/omni-runtime-binding-20261006",
+      "head_sha": "48ad506a240e9888257ddf4065ff4b313ef8f3db",
+      "protected": false,
+      "prs": [
+        {
+          "number": 264,
+          "state": "closed",
+          "merged": false,
+          "draft": true,
+          "title": "feat(omni): bind runtime contracts and add 18 negative gates",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/264",
+          "head_sha": "48ad506a240e9888257ddf4065ff4b313ef8f3db"
+        }
+      ]
+    },
+    {
+      "name": "feat/phase0-governed-contracts",
+      "head_sha": "af93da475fcc1c32801f26e57025a585b70e72ae",
+      "protected": false,
+      "prs": [
+        {
+          "number": 44,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat: Phase 0 governed runtime contracts",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/44",
+          "head_sha": "af93da475fcc1c32801f26e57025a585b70e72ae"
+        }
+      ]
+    },
+    {
+      "name": "feat/provider-council-omni-fabric-v1",
+      "head_sha": "bc94f299aa20f9c2af84b6030db84a7b5c1971bf",
+      "protected": false,
+      "prs": [
+        {
+          "number": 112,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat(providers): governed omni assistant council",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/112",
+          "head_sha": "bc94f299aa20f9c2af84b6030db84a7b5c1971bf"
+        }
+      ]
+    },
+    {
+      "name": "feat/real-provider-adapters-v1",
+      "head_sha": "3531f2b908dab3a78b597b252357a5544f07d452",
+      "protected": false,
+      "prs": [
+        {
+          "number": 114,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat(providers): scoped real provider adapters",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/114",
+          "head_sha": "3531f2b908dab3a78b597b252357a5544f07d452"
+        }
+      ]
+    },
+    {
+      "name": "feat/research-control-profiles-20261006",
+      "head_sha": "d3faa9a031bd2900e5b5bf4632b4a54fb0cc8d8b",
+      "protected": false,
+      "prs": [
+        {
+          "number": 269,
+          "state": "open",
+          "merged": false,
+          "draft": false,
+          "title": "feat: add research control profiles for identity telemetry and standards",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/269",
+          "head_sha": "d3faa9a031bd2900e5b5bf4632b4a54fb0cc8d8b"
+        }
+      ]
+    },
+    {
+      "name": "feat/search-control-registry-20261101",
+      "head_sha": "900d77b140535fdae15132e74b40124ab8bab570",
+      "protected": false,
+      "prs": [
+        {
+          "number": 347,
+          "state": "open",
+          "merged": false,
+          "draft": false,
+          "title": "feat(search-control): add provenance and action contracts",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/347",
+          "head_sha": "900d77b140535fdae15132e74b40124ab8bab570"
+        }
+      ]
+    },
+    {
+      "name": "feat/signed-approval-authority-v1",
+      "head_sha": "e607a42a59f2bd499d8c1210999702382aab888a",
+      "protected": false,
+      "prs": [
+        {
+          "number": 115,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat(security): signed approval challenge authority",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/115",
+          "head_sha": "e607a42a59f2bd499d8c1210999702382aab888a"
+        }
+      ]
+    },
+    {
+      "name": "feat/telegram-alerting-control-universe-v1",
+      "head_sha": "f08fdc238641c7f8157937295bb7dbed9a3ba7b6",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "feat/telegram-control-v1",
+      "head_sha": "2219dc9b235e6740b4c9625c820541dd1d03adc8",
+      "protected": false,
+      "prs": [
+        {
+          "number": 131,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat(telegram): add fail-closed CK-NEXUS control bridge",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/131",
+          "head_sha": "2219dc9b235e6740b4c9625c820541dd1d03adc8"
+        }
+      ]
+    },
+    {
+      "name": "feat/universal-ai-standard-20261006",
+      "head_sha": "bbb618b49c360ca8475e91c50cbbe2aeddda11d3",
+      "protected": false,
+      "prs": [
+        {
+          "number": 265,
+          "state": "closed",
+          "merged": false,
+          "draft": true,
+          "title": "docs: establish universal AI operating standard and alternative paths",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/265",
+          "head_sha": "bbb618b49c360ca8475e91c50cbbe2aeddda11d3"
+        }
+      ]
+    },
+    {
+      "name": "feat/universal-omni-mainline-20261006",
+      "head_sha": "02e9b24a2df0019fbf0cce137f04adcfbdadba91",
+      "protected": false,
+      "prs": [
+        {
+          "number": 273,
+          "state": "closed",
+          "merged": false,
+          "draft": false,
+          "title": "feat: integrate universal AI standard and OMNI runtime binding",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/273",
+          "head_sha": "02e9b24a2df0019fbf0cce137f04adcfbdadba91"
+        }
+      ]
+    },
+    {
+      "name": "feat/universal-provider-onboarding-v1",
+      "head_sha": "9807e5ffb68a05b39602978d103ae2730cd1c534",
+      "protected": false,
+      "prs": [
+        {
+          "number": 113,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat(providers): universal onboarding registry",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/113",
+          "head_sha": "9807e5ffb68a05b39602978d103ae2730cd1c534"
+        }
+      ]
+    },
+    {
+      "name": "feature/autonomous-brain-foundation",
+      "head_sha": "9a6d8f2a05bf412940389e7c6084cac1140fec40",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "feature/ck-codex-account-switcher",
+      "head_sha": "10f38f2fcc1aac84fcaca1fbaedfd54afa1198f8",
+      "protected": false,
+      "prs": [
+        {
+          "number": 251,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat: CK-Codex Account Switcher plugin",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/251",
+          "head_sha": "10f38f2fcc1aac84fcaca1fbaedfd54afa1198f8"
+        }
+      ]
+    },
+    {
+      "name": "feature/cknexus-agent-operating-model-20261031",
+      "head_sha": "5d1bb78b2de8c7ff1f8cc0f23ea713379cdea921",
+      "protected": false,
+      "prs": [
+        {
+          "number": 316,
+          "state": "open",
+          "merged": false,
+          "draft": false,
+          "title": "feat(agents): add CK-NEXUS specialist roles and skills",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/316",
+          "head_sha": "5d1bb78b2de8c7ff1f8cc0f23ea713379cdea921"
+        }
+      ]
+    },
+    {
+      "name": "feature/claude-provider-bridge-release-20261117",
+      "head_sha": "9cae276b67278a1fe1b04bbde998425abefdee51",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "feature/claude-provider-pr-20261117",
+      "head_sha": "fcb93e47c9aafc4bbc5bfc6f115b605cf3d642ff",
+      "protected": false,
+      "prs": [
+        {
+          "number": 377,
+          "state": "open",
+          "merged": false,
+          "draft": false,
+          "title": "feat(ai): add Claude provider fallback adapter",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/377",
+          "head_sha": "fcb93e47c9aafc4bbc5bfc6f115b605cf3d642ff"
+        }
+      ]
+    },
+    {
+      "name": "feature/github-identity-portal",
+      "head_sha": "946663d752a6d320be2f5171ff3ef20d88e3d814",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "feature/global-knowledge-discovery-20260907",
+      "head_sha": "2a7510e902499b961481cad8f2ca3f7785d27d86",
+      "protected": false,
+      "prs": [
+        {
+          "number": 238,
+          "state": "closed",
+          "merged": false,
+          "draft": true,
+          "title": "feat: global knowledge discovery and connection foundation",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/238",
+          "head_sha": "2a7510e902499b961481cad8f2ca3f7785d27d86"
+        }
+      ]
+    },
+    {
+      "name": "feature/merge-history-package",
+      "head_sha": "d202adfa78f7fb92cb66271e1e05e52e3c57330f",
+      "protected": false,
+      "prs": [
+        {
+          "number": 210,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "Recovery reconciliation + evidence-based SYSTEM_MANIFEST (2026-09-04)",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/210",
+          "head_sha": "d202adfa78f7fb92cb66271e1e05e52e3c57330f"
+        }
+      ]
+    },
+    {
+      "name": "fix/agnes-omni-context-injection-20261011",
+      "head_sha": "e7e39ef063e4d6e5ab22649c891d7e7b0992562f",
+      "protected": false,
+      "prs": [
+        {
+          "number": 289,
+          "state": "open",
+          "merged": false,
+          "draft": false,
+          "title": "fix: close sandbox runtime and release validation gaps",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/289",
+          "head_sha": "e7e39ef063e4d6e5ab22649c891d7e7b0992562f"
+        }
+      ]
+    },
+    {
+      "name": "fix/agnes-triad-attestation-test-fixtures-v1",
+      "head_sha": "2f24d329e2765d670b9450bdfcd01c8f3cc01829",
+      "protected": false,
+      "prs": [
+        {
+          "number": 176,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "test(agnes): reconcile Triad evaluator fixtures with publisher attestations",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/176",
+          "head_sha": "2f24d329e2765d670b9450bdfcd01c8f3cc01829"
+        }
+      ]
+    },
+    {
+      "name": "fix/agnes-triad-dashboard-authority-tamper-v1",
+      "head_sha": "08325b77925f191c0609cb1b8ad86930324b93ed",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "fix/agnes-triad-evidence-attestation-ruff-v1",
+      "head_sha": "a9c0635c553325a88520e9ad882fd53bbcc14830",
+      "protected": false,
+      "prs": [
+        {
+          "number": 172,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "style(agnes): restore Triad attestation exact-head lint",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/172",
+          "head_sha": "a9c0635c553325a88520e9ad882fd53bbcc14830"
+        }
+      ]
+    },
+    {
+      "name": "fix/agnes-triad-evidence-publisher-attestation-v1",
+      "head_sha": "392b9895a7e0be5106ae3bb2b28a3e8a97654cb7",
+      "protected": false,
+      "prs": [
+        {
+          "number": 171,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "fix(agnes): bind evidence quorum to trusted publisher attestations",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/171",
+          "head_sha": "392b9895a7e0be5106ae3bb2b28a3e8a97654cb7"
+        }
+      ]
+    },
+    {
+      "name": "fix/agnes-triad-evidence-test-attestation-v1",
+      "head_sha": "4f487a4d71580f630a428955e0a9d7b81060b398",
+      "protected": false,
+      "prs": [
+        {
+          "number": 173,
+          "state": "closed",
+          "merged": false,
+          "draft": true,
+          "title": "test(agnes): bind evidence evaluator regression to publisher attestations",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/173",
+          "head_sha": "4f487a4d71580f630a428955e0a9d7b81060b398"
+        }
+      ]
+    },
+    {
+      "name": "fix/agnes-triad-revision-lineage-v1",
+      "head_sha": "11059fb5e009484ce71cc5546b968e492dc2af19",
+      "protected": false,
+      "prs": [
+        {
+          "number": 168,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "fix(agnes): enforce fail-closed debate revision lineage",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/168",
+          "head_sha": "11059fb5e009484ce71cc5546b968e492dc2af19"
+        }
+      ]
+    },
+    {
+      "name": "fix/ai-harvester-safe-error-classification",
+      "head_sha": "dda7567883f13e40cce9925ac91ce4df77b8a4d1",
+      "protected": false,
+      "prs": [
+        {
+          "number": 287,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "Add safe error classification to AI GitHub harvester",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/287",
+          "head_sha": "dda7567883f13e40cce9925ac91ce4df77b8a4d1"
+        }
+      ]
+    },
+    {
+      "name": "fix/aikido-security-findings-20260828",
+      "head_sha": "f6e15670b3994c7ac4db81b8a25ee52c4ab37317",
+      "protected": false,
+      "prs": [
+        {
+          "number": 197,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "Security: harden Aikido findings",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/197",
+          "head_sha": "f6e15670b3994c7ac4db81b8a25ee52c4ab37317"
+        }
+      ]
+    },
+    {
+      "name": "fix/allowlist-checkout-tag",
+      "head_sha": "8afc78e5fd5d7649906c5cd617144f7fa7588810",
+      "protected": false,
+      "prs": [
+        {
+          "number": 349,
+          "state": "closed",
+          "merged": false,
+          "draft": false,
+          "title": "fix: restore allowlist workflow checkout (fails after #348)",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/349",
+          "head_sha": "8afc78e5fd5d7649906c5cd617144f7fa7588810"
+        }
+      ]
+    },
+    {
+      "name": "fix/ci-release-evidence-boundary-20261006",
+      "head_sha": "7990ba7005994fcb11798ce4e9a708d400e0cdca",
+      "protected": false,
+      "prs": [
+        {
+          "number": 275,
+          "state": "open",
+          "merged": false,
+          "draft": false,
+          "title": "fix(ci): isolate release-bound exact-tree evidence",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/275",
+          "head_sha": "7990ba7005994fcb11798ce4e9a708d400e0cdca"
+        }
+      ]
+    },
+    {
+      "name": "fix/claim-registry-global-ci-v1",
+      "head_sha": "df5f1f4ce88b370dc6be6c2bf06381f404ba8e90",
+      "protected": false,
+      "prs": [
+        {
+          "number": 159,
+          "state": "closed",
+          "merged": false,
+          "draft": true,
+          "title": "fix(governance): close Claim Registry global Ruff blockers",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/159",
+          "head_sha": "df5f1f4ce88b370dc6be6c2bf06381f404ba8e90"
+        }
+      ]
+    },
+    {
+      "name": "fix/claim-registry-ruff-v1",
+      "head_sha": "8c6b728f875213815b4e58877bffb8938b1e8f68",
+      "protected": false,
+      "prs": [
+        {
+          "number": 161,
+          "state": "closed",
+          "merged": false,
+          "draft": true,
+          "title": "fix(claims): clear global Ruff blockers for Claim Registry [SUPERSEDED]",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/161",
+          "head_sha": "8c6b728f875213815b4e58877bffb8938b1e8f68"
+        }
+      ]
+    },
+    {
+      "name": "fix/connector-snapshot-serialization",
+      "head_sha": "f9bc213a4f32b24b1b06b880b9f8ac538125fe45",
+      "protected": false,
+      "prs": [
+        {
+          "number": 38,
+          "state": "open",
+          "merged": false,
+          "draft": false,
+          "title": "fix: connector discovery snapshot serialization",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/38",
+          "head_sha": "f9bc213a4f32b24b1b06b880b9f8ac538125fe45"
+        }
+      ]
+    },
+    {
+      "name": "fix/connector-snapshot-serialization-v2",
+      "head_sha": "2e182e2bd3ed2674816e8778406e4a0e7c7556fb",
+      "protected": false,
+      "prs": [
+        {
+          "number": 40,
+          "state": "closed",
+          "merged": true,
+          "draft": false,
+          "title": "fix: connector discovery snapshot serialization v2",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/40",
+          "head_sha": "2e182e2bd3ed2674816e8778406e4a0e7c7556fb"
+        }
+      ]
+    },
+    {
+      "name": "fix/evidence-source-tree-binding-20261012",
+      "head_sha": "b7bd83ba6d157dcfe353fa81744c75e7f14b4e13",
+      "protected": false,
+      "prs": [
+        {
+          "number": 293,
+          "state": "open",
+          "merged": false,
+          "draft": false,
+          "title": "Harden release evidence source provenance checks",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/293",
+          "head_sha": "b7bd83ba6d157dcfe353fa81744c75e7f14b4e13"
+        }
+      ]
+    },
+    {
+      "name": "fix/failure-memory-event-schema-v1",
+      "head_sha": "d9ba1844631042477fd10338cb100a3b32e75196",
+      "protected": false,
+      "prs": [
+        {
+          "number": 157,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "fix(reliability): fail closed on forged failure-memory replay events",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/157",
+          "head_sha": "d9ba1844631042477fd10338cb100a3b32e75196"
+        }
+      ]
+    },
+    {
+      "name": "fix/failure-memory-fingerprint-replay-v1",
+      "head_sha": "a4c3ff32b879d36eeb8c50a65f0359e690cf99bb",
+      "protected": false,
+      "prs": [
+        {
+          "number": 160,
+          "state": "closed",
+          "merged": false,
+          "draft": true,
+          "title": "fix(reliability): bind failure replay fingerprints to canonical payload [SUPERSEDED BY #162]",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/160",
+          "head_sha": "a4c3ff32b879d36eeb8c50a65f0359e690cf99bb"
+        }
+      ]
+    },
+    {
+      "name": "fix/final-package-provenance-binding",
+      "head_sha": "d7edd2ab5e3db4c265c87d3407375dbd527a54a5",
+      "protected": false,
+      "prs": [
+        {
+          "number": 21,
+          "state": "closed",
+          "merged": true,
+          "draft": false,
+          "title": "security: bind final package to evidence provenance",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/21",
+          "head_sha": "d7edd2ab5e3db4c265c87d3407375dbd527a54a5"
+        }
+      ]
+    },
+    {
+      "name": "fix/issue-65-peer-bound-connector-transport",
+      "head_sha": "83645accf25847d20005a395fb620f3ab45905a6",
+      "protected": false,
+      "prs": [
+        {
+          "number": 69,
+          "state": "closed",
+          "merged": false,
+          "draft": true,
+          "title": "security: bind connector transport to validated peer IPs",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/69",
+          "head_sha": "83645accf25847d20005a395fb620f3ab45905a6"
+        }
+      ]
+    },
+    {
+      "name": "fix/n8n-webhook-registration-v1",
+      "head_sha": "15215b8e556fa47e3a5489d380cfdcbbec4c11e1",
+      "protected": false,
+      "prs": [
+        {
+          "number": 145,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "fix(n8n): assign stable webhook ids for production webhook registration",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/145",
+          "head_sha": "15215b8e556fa47e3a5489d380cfdcbbec4c11e1"
+        }
+      ]
+    },
+    {
+      "name": "fix/omega-bounded-timeout-20261018",
+      "head_sha": "06e04572dcbea7607c091b0575a0c2d1463e2887",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "fix/omega-bounded-timeout-pipe-20261018",
+      "head_sha": "a9dadeeb276bfc5da9c97174a11601f9989a2e81",
+      "protected": false,
+      "prs": [
+        {
+          "number": 298,
+          "state": "open",
+          "merged": false,
+          "draft": false,
+          "title": "fix(security): bound bootstrap timeout and test adversarial pipes",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/298",
+          "head_sha": "a9dadeeb276bfc5da9c97174a11601f9989a2e81"
+        }
+      ]
+    },
+    {
+      "name": "fix/p0-authorization-bypass-20261112",
+      "head_sha": "42ac293329f1fd5950ac90273a5070dbc8d938bd",
+      "protected": false,
+      "prs": [
+        {
+          "number": 369,
+          "state": "open",
+          "merged": false,
+          "draft": false,
+          "title": "fix(p0): require verified approver token for task completion",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/369",
+          "head_sha": "42ac293329f1fd5950ac90273a5070dbc8d938bd"
+        }
+      ]
+    },
+    {
+      "name": "fix/p0-ruff-lint",
+      "head_sha": "35da185485fd0571269bee926e2482fe4de8246e",
+      "protected": false,
+      "prs": [
+        {
+          "number": 313,
+          "state": "closed",
+          "merged": false,
+          "draft": false,
+          "title": "fix(lint): unblock deterministic quality gate",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/313",
+          "head_sha": "35da185485fd0571269bee926e2482fe4de8246e"
+        }
+      ]
+    },
+    {
+      "name": "fix/pr365-office-archive-hardening-20261111",
+      "head_sha": "2a6c5ffc6a63730bb2ad1225947ddec8d36bf488",
+      "protected": false,
+      "prs": [
+        {
+          "number": 366,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "fix(security): enforce bounded policy for Office archives",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/366",
+          "head_sha": "2a6c5ffc6a63730bb2ad1225947ddec8d36bf488"
+        }
+      ]
+    },
+    {
+      "name": "fix/pr46-cknexus-ci-ruff-v1",
+      "head_sha": "da9910368bac4e185b23dd4b33ba80dc7ee1fd6e",
+      "protected": false,
+      "prs": [
+        {
+          "number": 47,
+          "state": "closed",
+          "merged": true,
+          "draft": false,
+          "title": "chore: clear PR46 CK-NEXUS Ruff drift",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/47",
+          "head_sha": "da9910368bac4e185b23dd4b33ba80dc7ee1fd6e"
+        }
+      ]
+    },
+    {
+      "name": "fix/q03-dependency-closure",
+      "head_sha": "f7e12f0bc8bedafc358358fb800ec95fef79f983",
+      "protected": false,
+      "prs": [
+        {
+          "number": 2,
+          "state": "closed",
+          "merged": true,
+          "draft": false,
+          "title": "Q03: refresh dependency closure lock",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/2",
+          "head_sha": "f7e12f0bc8bedafc358358fb800ec95fef79f983"
+        },
+        {
+          "number": 1,
+          "state": "closed",
+          "merged": true,
+          "draft": false,
+          "title": "fix: Q03 dependency closure (uv.lock refresh)",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/1",
+          "head_sha": "f7e12f0bc8bedafc358358fb800ec95fef79f983"
+        }
+      ]
+    },
+    {
+      "name": "fix/q04-q05-ci-repro",
+      "head_sha": "16ac906111dc8173f4841ae66109a30a3b4a8ed0",
+      "protected": false,
+      "prs": [
+        {
+          "number": 7,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "Q04/Q05: enforce frozen sync before quality gates",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/7",
+          "head_sha": "16ac906111dc8173f4841ae66109a30a3b4a8ed0"
+        }
+      ]
+    },
+    {
+      "name": "fix/q05-bandit",
+      "head_sha": "9e97a1d719a59d4721763654b6973915c247a369",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "fix/q05-bandit-hardening",
+      "head_sha": "578143595d8c11403fae9e4aa881886cd2cf4461",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "fix/q05-e501",
+      "head_sha": "5470413762d753b2687a2c9c5ae9d73f97bb8e24",
+      "protected": false,
+      "prs": [
+        {
+          "number": 10,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "verify: converged Q04 frozen sync + Q05 candidate",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/10",
+          "head_sha": "5470413762d753b2687a2c9c5ae9d73f97bb8e24"
+        },
+        {
+          "number": 6,
+          "state": "closed",
+          "merged": true,
+          "draft": false,
+          "title": "converge: Q03 dependency closure + Q05 quality baseline",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/6",
+          "head_sha": "5470413762d753b2687a2c9c5ae9d73f97bb8e24"
+        },
+        {
+          "number": 5,
+          "state": "open",
+          "merged": false,
+          "draft": false,
+          "title": "fix: resolve all 58 E501 line-length violations (Q05b = 0)",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/5",
+          "head_sha": "5470413762d753b2687a2c9c5ae9d73f97bb8e24"
+        }
+      ]
+    },
+    {
+      "name": "fix/q05-import-order-final",
+      "head_sha": "796be8a9e3ad7f29503bdee6b7be5e779e4c5593",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "fix/q05-ruff-baseline",
+      "head_sha": "1bf1cdeba8da51576a1b111448bcb182cffb8e07",
+      "protected": false,
+      "prs": [
+        {
+          "number": 3,
+          "state": "closed",
+          "merged": true,
+          "draft": false,
+          "title": "fix: Q05 Ruff baseline cleanup (logic fixes first)",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/3",
+          "head_sha": "1bf1cdeba8da51576a1b111448bcb182cffb8e07"
+        }
+      ]
+    },
+    {
+      "name": "fix/q05-ruff-format",
+      "head_sha": "7fed15fe5265e8a0e2169aad81c918c35279e563",
+      "protected": false,
+      "prs": [
+        {
+          "number": 4,
+          "state": "closed",
+          "merged": true,
+          "draft": false,
+          "title": "style: ruff format baseline (Q05 style normalization)",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/4",
+          "head_sha": "7fed15fe5265e8a0e2169aad81c918c35279e563"
+        }
+      ]
+    },
+    {
+      "name": "fix/q09-governance-binding",
+      "head_sha": "1f3202244da348cce67b8ba52a585c45fab46a4a",
+      "protected": false,
+      "prs": [
+        {
+          "number": 11,
+          "state": "closed",
+          "merged": true,
+          "draft": false,
+          "title": "Q09: bind Connector Fabric execution to CapabilityAuthority",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/11",
+          "head_sha": "1f3202244da348cce67b8ba52a585c45fab46a4a"
+        }
+      ]
+    },
+    {
+      "name": "fix/q10-archive-policy-evidence-20261110",
+      "head_sha": "7d4555cf855ac2d73de54188c8601a362daa1c31",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "fix/q10-attachment-hardening-20261123",
+      "head_sha": "442adae86adaa8dc887cac4b7ef0836a4d4f5ca4",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "fix/q10-dependency-audit",
+      "head_sha": "071a5a4a67dea7ab60c832971a953ba530de6a7c",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "fix/q10-dependency-vulnerabilities-20261119",
+      "head_sha": "31398dde92532684931c92fbe204c95920b6bcec",
+      "protected": false,
+      "prs": [
+        {
+          "number": 388,
+          "state": "open",
+          "merged": false,
+          "draft": false,
+          "title": "fix(security): eliminate 45 dependency vulnerabilities",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/388",
+          "head_sha": "31398dde92532684931c92fbe204c95920b6bcec"
+        }
+      ]
+    },
+    {
+      "name": "fix/q10-gate-medium-and-report-20261119",
+      "head_sha": "db5f375a1f45e2570d9bd7eaa7450d5f5a08b7ac",
+      "protected": false,
+      "prs": [
+        {
+          "number": 387,
+          "state": "open",
+          "merged": false,
+          "draft": false,
+          "title": "fix(security): fail Q10 on medium findings and correct evidence",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/387",
+          "head_sha": "db5f375a1f45e2570d9bd7eaa7450d5f5a08b7ac"
+        }
+      ]
+    },
+    {
+      "name": "fix/q12-current-subject-20261006",
+      "head_sha": "1c6d9b0d70c23cdae314e5be0baa6823a04795f7",
+      "protected": false,
+      "prs": [
+        {
+          "number": 276,
+          "state": "open",
+          "merged": false,
+          "draft": false,
+          "title": "fix(q12): bind final verification to current frozen subject",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/276",
+          "head_sha": "1c6d9b0d70c23cdae314e5be0baa6823a04795f7"
+        }
+      ]
+    },
+    {
+      "name": "fix/q12-delegation-preflight-20260905",
+      "head_sha": "3d005b176fc076e855639b3b2ee9e5abe3217d37",
+      "protected": false,
+      "prs": [
+        {
+          "number": 231,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "ci: harden Q12 delegated cgroup v2 preflight",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/231",
+          "head_sha": "3d005b176fc076e855639b3b2ee9e5abe3217d37"
+        }
+      ]
+    },
+    {
+      "name": "fix/q12-verifier-branch-preflight-20260905",
+      "head_sha": "9ef87b6d58a2580d5531d80de90367173ee6a077",
+      "protected": false,
+      "prs": [
+        {
+          "number": 232,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "ci: harden canonical Q12 verifier preflight",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/232",
+          "head_sha": "9ef87b6d58a2580d5531d80de90367173ee6a077"
+        }
+      ]
+    },
+    {
+      "name": "fix/q15-launcher-mode",
+      "head_sha": "4264a51a1ad9fde2d8bd54f351aabd30bc5ac6e8",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "fix/q15-launcher-mode-v2",
+      "head_sha": "b24189e950ef29b6854418247f675725e6d8237e",
+      "protected": false,
+      "prs": [
+        {
+          "number": 16,
+          "state": "closed",
+          "merged": true,
+          "draft": false,
+          "title": "fix(Q15): preserve executable unified launcher",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/16",
+          "head_sha": "b24189e950ef29b6854418247f675725e6d8237e"
+        }
+      ]
+    },
+    {
+      "name": "fix/q16-sandbox-chroot-path-20261011",
+      "head_sha": "e04c412fdb6126a9d3349c8ab81d5d678221cd27",
+      "protected": false,
+      "prs": [
+        {
+          "number": 288,
+          "state": "closed",
+          "merged": false,
+          "draft": true,
+          "title": "fix(sandbox): invoke chroot by absolute path",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/288",
+          "head_sha": "e04c412fdb6126a9d3349c8ab81d5d678221cd27"
+        }
+      ]
+    },
+    {
+      "name": "fix/qwen-probe-httpsconnection",
+      "head_sha": "18028179a204896646be9e110749504cf58fb78d",
+      "protected": false,
+      "prs": [
+        {
+          "number": 339,
+          "state": "open",
+          "merged": false,
+          "draft": false,
+          "title": "security(qwen): use validated HTTPSConnection for daily probe",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/339",
+          "head_sha": "18028179a204896646be9e110749504cf58fb78d"
+        }
+      ]
+    },
+    {
+      "name": "fix/refresh-main-candidate-evidence-20260907",
+      "head_sha": "58b9ada401d566843524f2f4d76b02be9e2cfd7c",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "fix/refresh-q05-q08-q09-a6e74b5d-20260907",
+      "head_sha": "ab3062d0829bebde6dda65d664f2836a308bfb5d",
+      "protected": false,
+      "prs": [
+        {
+          "number": 249,
+          "state": "closed",
+          "merged": false,
+          "draft": true,
+          "title": "Evidence: refresh Q05/Q08/Q09 for main a6e74b5d",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/249",
+          "head_sha": "ab3062d0829bebde6dda65d664f2836a308bfb5d"
+        }
+      ]
+    },
+    {
+      "name": "fix/release-evidence-provenance",
+      "head_sha": "3eba0abf5326e4194f5f48575be039e807ceb478",
+      "protected": false,
+      "prs": [
+        {
+          "number": 20,
+          "state": "closed",
+          "merged": true,
+          "draft": false,
+          "title": "security: verify release evidence provenance",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/20",
+          "head_sha": "3eba0abf5326e4194f5f48575be039e807ceb478"
+        }
+      ]
+    },
+    {
+      "name": "fix/release-q10-lock-20261119",
+      "head_sha": "1e09afca552401ee3ff7a2d4fb42d0bbda248811",
+      "protected": false,
+      "prs": [
+        {
+          "number": 389,
+          "state": "open",
+          "merged": false,
+          "draft": false,
+          "title": "fix(deps): refresh vulnerable release dependency lock",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/389",
+          "head_sha": "1e09afca552401ee3ff7a2d4fb42d0bbda248811"
+        }
+      ]
+    },
+    {
+      "name": "fix/secret-scan-token-boundary-20261031",
+      "head_sha": "3cea8db3b4d043c86106aa12a8b57bfcc3e4ea35",
+      "protected": false,
+      "prs": [
+        {
+          "number": 315,
+          "state": "closed",
+          "merged": false,
+          "draft": false,
+          "title": "fix(security): avoid task-slug secret scan false positive",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/315",
+          "head_sha": "3cea8db3b4d043c86106aa12a8b57bfcc3e4ea35"
+        }
+      ]
+    },
+    {
+      "name": "fix/security-deps-20261006",
+      "head_sha": "d7cab11c56bfe28d02eb4f67605f62c6c74f75eb",
+      "protected": false,
+      "prs": [
+        {
+          "number": 270,
+          "state": "closed",
+          "merged": false,
+          "draft": false,
+          "title": "fix(security): patch vulnerable PyJWT and urllib3 floors",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/270",
+          "head_sha": "d7cab11c56bfe28d02eb4f67605f62c6c74f75eb"
+        }
+      ]
+    },
+    {
+      "name": "fix/security-deps-20261006-v2",
+      "head_sha": "fd08c325d94d13295afd5211bb2965fd1164b747",
+      "protected": false,
+      "prs": [
+        {
+          "number": 271,
+          "state": "closed",
+          "merged": false,
+          "draft": false,
+          "title": "fix(security): remediate dependency vulnerabilities",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/271",
+          "head_sha": "fd08c325d94d13295afd5211bb2965fd1164b747"
+        }
+      ]
+    },
+    {
+      "name": "fix/triad-subject-sha-validation-v1",
+      "head_sha": "d8196c619170c564cc5bd079f6a3506900a488ba",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "fix/trusted-verifier-image-path",
+      "head_sha": "5c74d168ea6065af4775dff419ee4d16b56b1244",
+      "protected": false,
+      "prs": [
+        {
+          "number": 350,
+          "state": "closed",
+          "merged": false,
+          "draft": false,
+          "title": "fix(ci): align allowlist image path with publish",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/350",
+          "head_sha": "5c74d168ea6065af4775dff419ee4d16b56b1244"
+        }
+      ]
+    },
+    {
+      "name": "fix/windows-sandbox-platform-gate-v1",
+      "head_sha": "79deba2bea9145a071dc3c1d6bc065167c632f38",
+      "protected": false,
+      "prs": [
+        {
+          "number": 138,
+          "state": "closed",
+          "merged": false,
+          "draft": true,
+          "title": "fix(runtime): make Linux sandbox import-safe on Windows",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/138",
+          "head_sha": "79deba2bea9145a071dc3c1d6bc065167c632f38"
+        }
+      ]
+    },
+    {
+      "name": "hardening/scanner-api-least-privilege-20261012",
+      "head_sha": "f8d13b0db2dd3e3b63ef08f58b1e4990c4924c80",
+      "protected": false,
+      "prs": [
+        {
+          "number": 294,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "Harden scanner API and bind scan evidence to source identity",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/294",
+          "head_sha": "f8d13b0db2dd3e3b63ef08f58b1e4990c4924c80"
+        }
+      ]
+    },
+    {
+      "name": "hardening/scorecard-remediation-20260905",
+      "head_sha": "cfbd7a09ff4d8cbce44567a04379adcb412bbffa",
+      "protected": false,
+      "prs": [
+        {
+          "number": 234,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "security: harden Scorecard controls and audit readiness",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/234",
+          "head_sha": "cfbd7a09ff4d8cbce44567a04379adcb412bbffa"
+        }
+      ]
+    },
+    {
+      "name": "infra/q12-linux-host-preflight-v1",
+      "head_sha": "f541901eceada0b9af9079db22daba3ea6f361dd",
+      "protected": false,
+      "prs": [
+        {
+          "number": 121,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "ops(q12): add fail-closed Linux host readiness preflight",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/121",
+          "head_sha": "f541901eceada0b9af9079db22daba3ea6f361dd"
+        }
+      ]
+    },
+    {
+      "name": "infra/windows-vps-worker-bootstrap-v1",
+      "head_sha": "3193dba25caf40ff07fe816436d93fd74c45333c",
+      "protected": false,
+      "prs": [
+        {
+          "number": 120,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "ops: add repeatable Windows VPS development worker bootstrap",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/120",
+          "head_sha": "3193dba25caf40ff07fe816436d93fd74c45333c"
+        }
+      ]
+    },
+    {
+      "name": "integration/termux-change-sync-policy-20261117",
+      "head_sha": "d962dd62584c69b262f7d1e16c9c69857e1e7d4c",
+      "protected": false,
+      "prs": [
+        {
+          "number": 373,
+          "state": "open",
+          "merged": false,
+          "draft": false,
+          "title": "CK-NEXUS integration: agents, certification prototype, transport and SQLite hardening",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/373",
+          "head_sha": "d962dd62584c69b262f7d1e16c9c69857e1e7d4c"
+        }
+      ]
+    },
+    {
+      "name": "main",
+      "head_sha": "944d7cb70a5d59d53c8fb379752bbee2085f7c8c",
+      "protected": true,
+      "prs": []
+    },
+    {
+      "name": "noop",
+      "head_sha": "e1bb690e63255fbe351dd4d2879f9e59b2c3fd50",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "noop-check",
+      "head_sha": "5192e32aebe4702f9dc249f8e1d23054c04dfc73",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "noop-should-not-create",
+      "head_sha": "e4a5722fd33a5fb1bf17486ebfe56751573e8554",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "ops/buyer-download-probe-20260905",
+      "head_sha": "31769de1b60371f348c39ae8886127cc6f7f2bf2",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "ops/buyer-ready-clean-package-20260906",
+      "head_sha": "92d3be0b5218e9bf6284c9f4e412066d90a2cbb0",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "ops/canonical-export-20260904",
+      "head_sha": "b1aecec0e47a499d737d3dccf897b50393b35b16",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "ops/canonical-export-20260904-run",
+      "head_sha": "b4146db8e23dff49520cbbc9d0194a15bcc5872d",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "ops/canonical-export-20260904-trigger",
+      "head_sha": "b4146db8e23dff49520cbbc9d0194a15bcc5872d",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "ops/github-governance-hardening-v1-20260904",
+      "head_sha": "be4c7587dc9488000907e387c0de0d0688e238f4",
+      "protected": false,
+      "prs": [
+        {
+          "number": 223,
+          "state": "closed",
+          "merged": false,
+          "draft": true,
+          "title": "Governance: GitHub repository hardening baseline",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/223",
+          "head_sha": "be4c7587dc9488000907e387c0de0d0688e238f4"
+        }
+      ]
+    },
+    {
+      "name": "ops/independent-verification-source-export-v1",
+      "head_sha": "2cf8dcf0ed1a8fe7c66c67b8d59cf9beb55c0283",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "ops/production-evidence-manifest-v2-1",
+      "head_sha": "7a77b1f48c5fe3dc7a82c3c40cf9667664122e9a",
+      "protected": false,
+      "prs": [
+        {
+          "number": 133,
+          "state": "closed",
+          "merged": false,
+          "draft": true,
+          "title": "ops(evidence): machine-verifiable production manifest v2.1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/133",
+          "head_sha": "7a77b1f48c5fe3dc7a82c3c40cf9667664122e9a"
+        }
+      ]
+    },
+    {
+      "name": "ops/project-state-20261110",
+      "head_sha": "f7860881309de63eb72743d251597ef7b35fbe5e",
+      "protected": false,
+      "prs": [
+        {
+          "number": 362,
+          "state": "open",
+          "merged": false,
+          "draft": false,
+          "title": "docs: add evidence-bound PROJECT_STATE snapshot",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/362",
+          "head_sha": "f7860881309de63eb72743d251597ef7b35fbe5e"
+        }
+      ]
+    },
+    {
+      "name": "ops/provider-free-go-clean",
+      "head_sha": "c0825c7915290be7a8dc2f8c69ae38033f1bbe85",
+      "protected": false,
+      "prs": [
+        {
+          "number": 392,
+          "state": "open",
+          "merged": false,
+          "draft": false,
+          "title": "Route Gemini and Groq with paid fallback disabled",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/392",
+          "head_sha": "c0825c7915290be7a8dc2f8c69ae38033f1bbe85"
+        }
+      ]
+    },
+    {
+      "name": "ops/q10-exact-subject-closure-20260829",
+      "head_sha": "4ffa0afc21562f70ca98d35cd80eaa31c19e5b23",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "ops/q10-host-qualification-20260904",
+      "head_sha": "d6a0bf4eb0df5a7cb1d859493fa8e8f6db81ac06",
+      "protected": false,
+      "prs": [
+        {
+          "number": 208,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "ops: add fail-closed Q10 execution-host qualification",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/208",
+          "head_sha": "d6a0bf4eb0df5a7cb1d859493fa8e8f6db81ac06"
+        }
+      ]
+    },
+    {
+      "name": "ops/q10-linux-execution-20260829",
+      "head_sha": "231431b39252f720e731c342bf03c50391385bdc",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "ops/q10-q12-master-prep-v2",
+      "head_sha": "57cdcf4703ae487d2c9ed395871d9724a6e08327",
+      "protected": false,
+      "prs": [
+        {
+          "number": 45,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "ops: production closure master prep v2",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/45",
+          "head_sha": "57cdcf4703ae487d2c9ed395871d9724a6e08327"
+        }
+      ]
+    },
+    {
+      "name": "ops/q10-q12-production-closure",
+      "head_sha": "7bf01aba188a9ab7dfd7a793ef34c65c383fa428",
+      "protected": false,
+      "prs": [
+        {
+          "number": 39,
+          "state": "closed",
+          "merged": true,
+          "draft": false,
+          "title": "ops: Q10-Q12 production closure runbook",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/39",
+          "head_sha": "b362584a7bf2d3b7e639a0c80292c069ef428344"
+        }
+      ]
+    },
+    {
+      "name": "ops/q10-readonly-materialize-20260827",
+      "head_sha": "9a62fbbfd5af83231f8822561578edb184167f18",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "ops/q10-source-materialization-helper",
+      "head_sha": "49bdb40aad2ba5f6ba70ec5a0463cd4baca0187c",
+      "protected": false,
+      "prs": [
+        {
+          "number": 195,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "chore(q10): read-only frozen source materialization helper",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/195",
+          "head_sha": "49bdb40aad2ba5f6ba70ec5a0463cd4baca0187c"
+        }
+      ]
+    },
+    {
+      "name": "ops/q11-live-provider-smoke-v1",
+      "head_sha": "1ab30ac853fb27388178146317d7885bbe41c127",
+      "protected": false,
+      "prs": [
+        {
+          "number": 123,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "ops(q11): add fail-closed live provider smoke workflow",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/123",
+          "head_sha": "1ab30ac853fb27388178146317d7885bbe41c127"
+        }
+      ]
+    },
+    {
+      "name": "ops/q12-github-hosted-cgroup-diagnostic",
+      "head_sha": "b4cb5039f91dee96df31ae4beada1a72b7233022",
+      "protected": false,
+      "prs": [
+        {
+          "number": 391,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "[DRAFT] Add guarded Q10/Q11 execution and Q12 runner diagnostics",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/391",
+          "head_sha": "b4cb5039f91dee96df31ae4beada1a72b7233022"
+        }
+      ]
+    },
+    {
+      "name": "ops/security-evidence-delta-20260903",
+      "head_sha": "389176708ef491cb8fc79a4dddf578993f47f64c",
+      "protected": false,
+      "prs": [
+        {
+          "number": 200,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "security: add evidence delta scanners (OSV + Checkov + local ZAP)",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/200",
+          "head_sha": "389176708ef491cb8fc79a4dddf578993f47f64c"
+        }
+      ]
+    },
+    {
+      "name": "package/full-system-inventory",
+      "head_sha": "9e06e8f6b62c2f3ff525c43ce47ddeee296887a9",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "post-p0/a2a-agent-admission-v1",
+      "head_sha": "7346c3ccdf19d0d068aff443e2651637f90f9f8c",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "post-p0/agent-security-governance-2026-v1",
+      "head_sha": "fb6c987d320f9344b5af768a3a158fe057941ddb",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "post-p0/agnes-capability-fabric-v1",
+      "head_sha": "4d58c19e52a5031ccedae0488766a527442aea1c",
+      "protected": false,
+      "prs": [
+        {
+          "number": 42,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "post-p0: install AGNES Gen4 capability fabric",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/42",
+          "head_sha": "4d58c19e52a5031ccedae0488766a527442aea1c"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/agnes-capability-gap-matrix-v2026",
+      "head_sha": "9924b488c149a5b9591f26de5739941ca8000dfd",
+      "protected": false,
+      "prs": [
+        {
+          "number": 107,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "docs: add AGNES capability gap matrix v2026",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/107",
+          "head_sha": "9924b488c149a5b9591f26de5739941ca8000dfd"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/agnes-cognitive-foundation-v1",
+      "head_sha": "c609a0ea9be68dc842559f9d67307b65219492ff",
+      "protected": false,
+      "prs": [
+        {
+          "number": 117,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat(agnes): cognitive foundation for capability composition",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/117",
+          "head_sha": "c609a0ea9be68dc842559f9d67307b65219492ff"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/agnes-connected-source-intelligence-v1",
+      "head_sha": "26940d21d5b91e16346132dcee8e05cff7be8ac8",
+      "protected": false,
+      "prs": [
+        {
+          "number": 75,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat: extend AGNES with connected-source intelligence v1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/75",
+          "head_sha": "26940d21d5b91e16346132dcee8e05cff7be8ac8"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/agnes-expert-fabric-reconcile-v2",
+      "head_sha": "53ff8a0d7a1b0f05df813ffb59838d6d2b42aaa6",
+      "protected": false,
+      "prs": [
+        {
+          "number": 193,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat(agnes): reconcile governed Expert Fabric on explicit development lane",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/193",
+          "head_sha": "53ff8a0d7a1b0f05df813ffb59838d6d2b42aaa6"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/agnes-frontier-model-governance-v1",
+      "head_sha": "420b53c0bafb2de9a48483b3202cb7a748d93add",
+      "protected": false,
+      "prs": [
+        {
+          "number": 154,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat(agnes): add frontier model governance v1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/154",
+          "head_sha": "420b53c0bafb2de9a48483b3202cb7a748d93add"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/agnes-frontier-model-governance-v1-temp-check",
+      "head_sha": "5192e32aebe4702f9dc249f8e1d23054c04dfc73",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "post-p0/agnes-knowledge-repository-v1",
+      "head_sha": "e3c3dc81bce6da35fcc36c8fddf9b12b06bb7ace",
+      "protected": false,
+      "prs": [
+        {
+          "number": 150,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat(agnes): search-first knowledge repository v1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/150",
+          "head_sha": "e3c3dc81bce6da35fcc36c8fddf9b12b06bb7ace"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/agnes-learning-consolidator-v1",
+      "head_sha": "2d2d903213a10f2b7fc9a318cc7c0d48ce013196",
+      "protected": false,
+      "prs": [
+        {
+          "number": 177,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat(agnes): add evidence-bound learning consolidator v1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/177",
+          "head_sha": "2d2d903213a10f2b7fc9a318cc7c0d48ce013196"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/agnes-qwen38-delta-v2",
+      "head_sha": "2890049b186e2680fd056506ad5df4e4a9e93475",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "post-p0/agnes-runtime-p0-delta-v1",
+      "head_sha": "5c1c12c43bd9d9aec71794ae1ce04d0c675d0b40",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "post-p0/agnes-s-delta-v1",
+      "head_sha": "705afcd725fa1ee995ca9f74a9ce2a94726df227",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "post-p0/agnes-triad-dashboard-projection-v1",
+      "head_sha": "08325b77925f191c0609cb1b8ad86930324b93ed",
+      "protected": false,
+      "prs": [
+        {
+          "number": 178,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat(agnes): add read-only Triad dashboard projection v1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/178",
+          "head_sha": "08325b77925f191c0609cb1b8ad86930324b93ed"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/agnes-triad-debate-schema-v1",
+      "head_sha": "80ad76ae0f204c2096b5411eab9e262d3142c799",
+      "protected": false,
+      "prs": [
+        {
+          "number": 164,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat(agnes): add deterministic Triad debate schema v1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/164",
+          "head_sha": "80ad76ae0f204c2096b5411eab9e262d3142c799"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/agnes-triad-evidence-evaluator-v1",
+      "head_sha": "2f58740f86b96b93445166b8f82bbb15edb46744",
+      "protected": false,
+      "prs": [
+        {
+          "number": 170,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat(agnes): add bounded Triad evidence evaluator v1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/170",
+          "head_sha": "2f58740f86b96b93445166b8f82bbb15edb46744"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/agnes-triad-evidence-test-attestation-v1",
+      "head_sha": "4f487a4d71580f630a428955e0a9d7b81060b398",
+      "protected": false,
+      "prs": [
+        {
+          "number": 174,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "test(agnes): align evidence evaluator regression with attestation boundary",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/174",
+          "head_sha": "4f487a4d71580f630a428955e0a9d7b81060b398"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/agnes-triad-memory-v1",
+      "head_sha": "e8ca3c6006e483330181daaeea756e4ed86eafc5",
+      "protected": false,
+      "prs": [
+        {
+          "number": 169,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat(agnes): add tamper-evident Triad memory v1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/169",
+          "head_sha": "e8ca3c6006e483330181daaeea756e4ed86eafc5"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/agnes-triad-parallel-scheduler-v1",
+      "head_sha": "4307e876461e0adfc969104621b84410c61fcde6",
+      "protected": false,
+      "prs": [
+        {
+          "number": 158,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat(agnes): deterministic Triad parallel scheduler v1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/158",
+          "head_sha": "4307e876461e0adfc969104621b84410c61fcde6"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/agnes-triad-pipeline-provenance-v1",
+      "head_sha": "d8196c619170c564cc5bd079f6a3506900a488ba",
+      "protected": false,
+      "prs": [
+        {
+          "number": 179,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat(agnes): add end-to-end Triad pipeline provenance v1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/179",
+          "head_sha": "d8196c619170c564cc5bd079f6a3506900a488ba"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/agnes-triad-pulse-v1",
+      "head_sha": "89bcd3724b35139dcfedd74921315f85a496a79c",
+      "protected": false,
+      "prs": [
+        {
+          "number": 175,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat(agnes): add deterministic 15/20 Triad pulse v1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/175",
+          "head_sha": "89bcd3724b35139dcfedd74921315f85a496a79c"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/agnes-triad-runtime-v1",
+      "head_sha": "60daeb3ec35bfcaaf238aa5693691b5492a2d595",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "post-p0/agnes-triad-strict-priority-reconcile-v1",
+      "head_sha": "4025350852032c7222d55ae3f4c69d7344706305",
+      "protected": false,
+      "prs": [
+        {
+          "number": 180,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "fix(agnes): reconcile strict P0 scheduler priority into Triad provenance stack",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/180",
+          "head_sha": "4025350852032c7222d55ae3f4c69d7344706305"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/agnes-triad-strict-priority-v1",
+      "head_sha": "bbf51035d677fba51190818d9508c33d13d024cf",
+      "protected": false,
+      "prs": [
+        {
+          "number": 163,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "fix(agnes): enforce strict P0→P4 Triad scheduling",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/163",
+          "head_sha": "bbf51035d677fba51190818d9508c33d13d024cf"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/agnes-voice-persona-v1",
+      "head_sha": "ed55964f008551212061a26a9e5faaf1e1f240be",
+      "protected": false,
+      "prs": [
+        {
+          "number": 147,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat(agnes): semantic Voice Persona v1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/147",
+          "head_sha": "ed55964f008551212061a26a9e5faaf1e1f240be"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/anyclaw-cleanroom-bridge-v1",
+      "head_sha": "2f15fe6b167a343594634d454bd9e1ee68bc3307",
+      "protected": false,
+      "prs": [
+        {
+          "number": 77,
+          "state": "closed",
+          "merged": true,
+          "draft": false,
+          "title": "security: add AnyClaw clean-room bridge gate v1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/77",
+          "head_sha": "2f15fe6b167a343594634d454bd9e1ee68bc3307"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/anyclaw-cleanroom-mcp-v2",
+      "head_sha": "d789d0cdf4e91f5fcc236319b90e9949170d302f",
+      "protected": false,
+      "prs": [
+        {
+          "number": 78,
+          "state": "closed",
+          "merged": true,
+          "draft": false,
+          "title": "security: add AnyClaw clean-room MCP server v2",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/78",
+          "head_sha": "d789d0cdf4e91f5fcc236319b90e9949170d302f"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/assurance-profile-x1-20260905",
+      "head_sha": "1e5337db61b77134c893e47f87b58f4803029b84",
+      "protected": false,
+      "prs": [
+        {
+          "number": 229,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "Post-P0: CK-NEXUS Assurance Profile X1 + Assessor Data Room",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/229",
+          "head_sha": "1e5337db61b77134c893e47f87b58f4803029b84"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/authzen-authorization-adapter-v1",
+      "head_sha": "10540e405887aafdf1ec5e278a047ca486fc8d93",
+      "protected": false,
+      "prs": [
+        {
+          "number": 192,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat(authzen): add governed Authorization API 1.0 adapter",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/192",
+          "head_sha": "10540e405887aafdf1ec5e278a047ca486fc8d93"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/capability-ai-gateway-v1",
+      "head_sha": "4d78645a3e969b950a2d260622ef7ce34290df2a",
+      "protected": false,
+      "prs": [
+        {
+          "number": 59,
+          "state": "closed",
+          "merged": true,
+          "draft": false,
+          "title": "feat: add capability-based universal AI gateway v1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/59",
+          "head_sha": "4d78645a3e969b950a2d260622ef7ce34290df2a"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/capability-aware-model-fabric-v1",
+      "head_sha": "028fe49b54c426ead937b359578930428c8f3cac",
+      "protected": false,
+      "prs": [
+        {
+          "number": 106,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat: add capability-aware model fabric",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/106",
+          "head_sha": "028fe49b54c426ead937b359578930428c8f3cac"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/chat-b-digital-twin-v2",
+      "head_sha": "42394c0c51925a435093f4ebee9d2661234f4a4a",
+      "protected": false,
+      "prs": [
+        {
+          "number": 130,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat(ui): Chat B governed cognitive twin renderer v2",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/130",
+          "head_sha": "42394c0c51925a435093f4ebee9d2661234f4a4a"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/chat-b-digital-twin-v2-check",
+      "head_sha": "e4a5722fd33a5fb1bf17486ebfe56751573e8554",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "post-p0/chat-b-renderer-adapter-v2",
+      "head_sha": "89191e6b8aeff96e519f9ac2c111baf898ff79fe",
+      "protected": false,
+      "prs": [
+        {
+          "number": 128,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat(ui): add fail-safe cognitive twin renderer adapter v2",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/128",
+          "head_sha": "89191e6b8aeff96e519f9ac2c111baf898ff79fe"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/chat-mcp-bridge-v1",
+      "head_sha": "179fcd8c37e737b49020e875dbba43e65faf358b",
+      "protected": false,
+      "prs": [
+        {
+          "number": 100,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat: add CK-NEXUS read-only Chat/MCP bridge v1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/100",
+          "head_sha": "179fcd8c37e737b49020e875dbba43e65faf358b"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/ci-lane-classifier-v2",
+      "head_sha": "952954fe4f3241d81d2e546092817920cf985d97",
+      "protected": false,
+      "prs": [
+        {
+          "number": 184,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "ci: add explicit fail-closed evidence lane classification",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/184",
+          "head_sha": "952954fe4f3241d81d2e546092817920cf985d97"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/ck-v3-coordination-runtime-v1",
+      "head_sha": "ec310d2eac9995f3b6c4254dfaecd028d1367e48",
+      "protected": false,
+      "prs": [
+        {
+          "number": 82,
+          "state": "closed",
+          "merged": true,
+          "draft": false,
+          "title": "feat: add CK_v3 bounded coordination runtime v1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/82",
+          "head_sha": "ec310d2eac9995f3b6c4254dfaecd028d1367e48"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/ck-v3-execution-planner-v1",
+      "head_sha": "ff675aeee95552c9056288a2818e4886fd8e1f63",
+      "protected": false,
+      "prs": [
+        {
+          "number": 83,
+          "state": "closed",
+          "merged": true,
+          "draft": false,
+          "title": "feat: add CK_v3 deterministic execution planner v1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/83",
+          "head_sha": "ff675aeee95552c9056288a2818e4886fd8e1f63"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/ck-v3-readonly-executor-v1",
+      "head_sha": "3e6e3c25e0dcea92a5ab8152f27e122063f135d8",
+      "protected": false,
+      "prs": [
+        {
+          "number": 85,
+          "state": "closed",
+          "merged": true,
+          "draft": false,
+          "title": "feat: add CK_v3 governed read-only executor v1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/85",
+          "head_sha": "3e6e3c25e0dcea92a5ab8152f27e122063f135d8"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/claim-registry-v1",
+      "head_sha": "a8bb5cf6b1651d813864a840c6244fa0880c4034",
+      "protected": false,
+      "prs": [
+        {
+          "number": 153,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat(governance): add evidence-bound Claim Registry v1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/153",
+          "head_sha": "a8bb5cf6b1651d813864a840c6244fa0880c4034"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/cognitive-digital-twin-renderer-v2",
+      "head_sha": "39b05ea05623ab8eea4ec0b36b443d8b94438067",
+      "protected": false,
+      "prs": [
+        {
+          "number": 129,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat(ui): add Cognitive Digital Twin renderer adapter v2",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/129",
+          "head_sha": "39b05ea05623ab8eea4ec0b36b443d8b94438067"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/cognitive-digital-twin-v1",
+      "head_sha": "7c941616fb592947eb46b4d080f63369b5ff3d39",
+      "protected": false,
+      "prs": [
+        {
+          "number": 119,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat(ui): CK-NEXUS living cognitive digital twin v1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/119",
+          "head_sha": "7c941616fb592947eb46b4d080f63369b5ff3d39"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/cognitive-digital-twin-v2",
+      "head_sha": "d201dd008671d1ce3a0004146479837a0a0ccc17",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "post-p0/cognitive-governor-v1",
+      "head_sha": "a08f3283b30b245b227efa6248303af5553fd3f9",
+      "protected": false,
+      "prs": [
+        {
+          "number": 61,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat: add deterministic cognitive governor and evidence vault v2",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/61",
+          "head_sha": "a08f3283b30b245b227efa6248303af5553fd3f9"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/cognitive-knowledge-fabric-v1-20260903",
+      "head_sha": "9666faca361cf8f7ecb910023e00ee72df13337d",
+      "protected": false,
+      "prs": [
+        {
+          "number": 215,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "Post-P0: Cognitive Knowledge Fabric V1 provenance and conflict contracts",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/215",
+          "head_sha": "9666faca361cf8f7ecb910023e00ee72df13337d"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/commercial-readiness-evidence-v1",
+      "head_sha": "5c8bbb79538364b0d11a506b426faedba575c4ba",
+      "protected": false,
+      "prs": [
+        {
+          "number": 90,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "docs: add commercial readiness evidence index v1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/90",
+          "head_sha": "5c8bbb79538364b0d11a506b426faedba575c4ba"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/connector-observability-v1",
+      "head_sha": "2822674243984a4aa096867884e0b690bebb8dba",
+      "protected": false,
+      "prs": [
+        {
+          "number": 63,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat: add connector continuity observability and evaluation fabric",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/63",
+          "head_sha": "2822674243984a4aa096867884e0b690bebb8dba"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/creator-intelligence-v1-20260904",
+      "head_sha": "85aeefb8791209531da82e942698c2e8808c0d87",
+      "protected": false,
+      "prs": [
+        {
+          "number": 214,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "Post-P0: Creator Intelligence V1 evidence-aware modes",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/214",
+          "head_sha": "85aeefb8791209531da82e942698c2e8808c0d87"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/data-contract-lineage-v1",
+      "head_sha": "fb27e366a4cc83357c2e5968bd7785f7d3c9ce3e",
+      "protected": false,
+      "prs": [
+        {
+          "number": 186,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat(data): add governed ODCS + OpenLineage interoperability v1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/186",
+          "head_sha": "fb27e366a4cc83357c2e5968bd7785f7d3c9ce3e"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/dev-assistant-execution-contract-v1",
+      "head_sha": "0f2068fe13a6a620081af7633485195532bd66c7",
+      "protected": false,
+      "prs": [
+        {
+          "number": 52,
+          "state": "closed",
+          "merged": true,
+          "draft": false,
+          "title": "feat: add fail-closed development assistant execution contracts",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/52",
+          "head_sha": "0f2068fe13a6a620081af7633485195532bd66c7"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/dev-assistant-fabric-v1",
+      "head_sha": "6dbd6ee98f6f93a9d359514b70a7f6fb7a29a34a",
+      "protected": false,
+      "prs": [
+        {
+          "number": 50,
+          "state": "closed",
+          "merged": true,
+          "draft": false,
+          "title": "feat: add governed free-entry development assistant fabric",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/50",
+          "head_sha": "6dbd6ee98f6f93a9d359514b70a7f6fb7a29a34a"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/device-bridge-attested-descriptor-v1",
+      "head_sha": "5468d4814726db32d88e150aba11891f388d8248",
+      "protected": false,
+      "prs": [
+        {
+          "number": 79,
+          "state": "closed",
+          "merged": true,
+          "draft": false,
+          "title": "security: attest MCP source and runtime registry before QR generation",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/79",
+          "head_sha": "5468d4814726db32d88e150aba11891f388d8248"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/dual-track-fabric-integration",
+      "head_sha": "b1724a5ca6ce6bb0f575a9489f7ef25d64e1b8ef",
+      "protected": false,
+      "prs": [
+        {
+          "number": 93,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat: integrate AGNES dual-track intelligence fabric core",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/93",
+          "head_sha": "b1724a5ca6ce6bb0f575a9489f7ef25d64e1b8ef"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/durable-execution-correctness-v2",
+      "head_sha": "5dc495a091fe2ca9dcd583b5f101340792fa9291",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "post-p0/durable-execution-reconcile-v3",
+      "head_sha": "56d103f825a9626954e427e8d1eabebc712490d6",
+      "protected": false,
+      "prs": [
+        {
+          "number": 183,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat(runtime): reconcile hardened durable execution v3",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/183",
+          "head_sha": "56d103f825a9626954e427e8d1eabebc712490d6"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/dynamic-patch-verifier-v1",
+      "head_sha": "c34fd573fbe409e400cbe856cc126b9360f7a760",
+      "protected": false,
+      "prs": [
+        {
+          "number": 55,
+          "state": "closed",
+          "merged": true,
+          "draft": false,
+          "title": "feat: add isolated dynamic patch verifier v1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/55",
+          "head_sha": "c34fd573fbe409e400cbe856cc126b9360f7a760"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/event-contract-standards-v1",
+      "head_sha": "0876e3f982d3c03806cbc82bad2c76b93c16f999",
+      "protected": false,
+      "prs": [
+        {
+          "number": 185,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat(events): add AsyncAPI 3.1 + CloudEvents interoperability v1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/185",
+          "head_sha": "0876e3f982d3c03806cbc82bad2c76b93c16f999"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/evidence-signing-coc-v1-20260904",
+      "head_sha": "84e6fa6f31dae4d403a450c9fcf57fb2dddd0bf0",
+      "protected": false,
+      "prs": [
+        {
+          "number": 227,
+          "state": "open",
+          "merged": false,
+          "draft": false,
+          "title": "Post-P0: Evidence Signing & Chain-of-Custody V1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/227",
+          "head_sha": "84e6fa6f31dae4d403a450c9fcf57fb2dddd0bf0"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/evidence-signing-custody-v1-20260904",
+      "head_sha": "52f27c8f0b3ff7d59a21d7cede35863fafd5b73d",
+      "protected": false,
+      "prs": [
+        {
+          "number": 226,
+          "state": "closed",
+          "merged": false,
+          "draft": false,
+          "title": "Post-P0: Evidence Signing and Chain-of-Custody V1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/226",
+          "head_sha": "52f27c8f0b3ff7d59a21d7cede35863fafd5b73d"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/execution-verifier-v2",
+      "head_sha": "d86600eccee84fe8d7efd05ceb5e34951af0c7ee",
+      "protected": false,
+      "prs": [
+        {
+          "number": 62,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat: add capability execution fabric and trusted verifier v2",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/62",
+          "head_sha": "d86600eccee84fe8d7efd05ceb5e34951af0c7ee"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/external-access-governance-v1",
+      "head_sha": "9df755a9a32d1f1ac5874ce9614b2a936b9f9b45",
+      "protected": false,
+      "prs": [
+        {
+          "number": 149,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "Post-P0: external access and data governance v1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/149",
+          "head_sha": "9df755a9a32d1f1ac5874ce9614b2a936b9f9b45"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/failure-memory-fingerprint-replay-v1",
+      "head_sha": "a4c3ff32b879d36eeb8c50a65f0359e690cf99bb",
+      "protected": false,
+      "prs": [
+        {
+          "number": 162,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "fix(reliability): bind failure replay fingerprints to canonical payload",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/162",
+          "head_sha": "a4c3ff32b879d36eeb8c50a65f0359e690cf99bb"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/failure-memory-regression-immune-v1",
+      "head_sha": "65779068da119cc8e8690c25308c0bb26efd5f45",
+      "protected": false,
+      "prs": [
+        {
+          "number": 156,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat(reliability): add failure memory and regression immunity v1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/156",
+          "head_sha": "65779068da119cc8e8690c25308c0bb26efd5f45"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/free-fallback-85",
+      "head_sha": "6137363e15da84eff78f8a99c0932fee3851dfa9",
+      "protected": false,
+      "prs": [
+        {
+          "number": 143,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "Post-P0: sticky free fallback at 85% remaining credit",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/143",
+          "head_sha": "6137363e15da84eff78f8a99c0932fee3851dfa9"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/gen4-fusion-v0.2",
+      "head_sha": "07010abb4d75c48e2d3d6dd23ba5c3321f26866c",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "post-p0/gen6-2-elastic-swarm-v1",
+      "head_sha": "26e76ae0b4c6a7046bf5c1a020bb2291405b3ea9",
+      "protected": false,
+      "prs": [
+        {
+          "number": 96,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat: add Gen 6.2 elastic swarm contracts",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/96",
+          "head_sha": "26e76ae0b4c6a7046bf5c1a020bb2291405b3ea9"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/gen6-3-cognitive-memory-v1",
+      "head_sha": "a1d096438dbfa54f73f6b2e95bb38d8c90eab1d3",
+      "protected": false,
+      "prs": [
+        {
+          "number": 98,
+          "state": "closed",
+          "merged": false,
+          "draft": true,
+          "title": "SUPERSEDED: Gen 6.3 cognitive memory contracts",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/98",
+          "head_sha": "a1d096438dbfa54f73f6b2e95bb38d8c90eab1d3"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/gen6-3-memory-skill-v1",
+      "head_sha": "67e6ec44ab2c3e770cf6ade45b58f70fcbb31a21",
+      "protected": false,
+      "prs": [
+        {
+          "number": 97,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat: add Gen 6.3 memory learning contracts",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/97",
+          "head_sha": "67e6ec44ab2c3e770cf6ade45b58f70fcbb31a21"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/gen6-4-research-formal-v1",
+      "head_sha": "b307525b15ef4b785e2892450753f79f945f14af",
+      "protected": false,
+      "prs": [
+        {
+          "number": 99,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat: add Gen 6.4 research and formal verification contracts",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/99",
+          "head_sha": "b307525b15ef4b785e2892450753f79f945f14af"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/gen6-5-ui-multimodal-v1",
+      "head_sha": "ec8026c6015baf3ebb2a2988cae6ee4c16ce2e99",
+      "protected": false,
+      "prs": [
+        {
+          "number": 102,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat: add Gen 6.5 governed UI and multimodal contracts",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/102",
+          "head_sha": "ec8026c6015baf3ebb2a2988cae6ee4c16ce2e99"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/gen6-runtime-contracts-v1",
+      "head_sha": "a79b17a9309c680b6ad2a3d9e2a8cba93f0e8e50",
+      "protected": false,
+      "prs": [
+        {
+          "number": 95,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat: add Gen 6 runtime capability contracts",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/95",
+          "head_sha": "a79b17a9309c680b6ad2a3d9e2a8cba93f0e8e50"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/github-governance-hardening-v1-20260904",
+      "head_sha": "be4c7587dc9488000907e387c0de0d0688e238f4",
+      "protected": false,
+      "prs": [
+        {
+          "number": 224,
+          "state": "open",
+          "merged": false,
+          "draft": false,
+          "title": "Post-P0: GitHub repository governance hardening baseline",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/224",
+          "head_sha": "be4c7587dc9488000907e387c0de0d0688e238f4"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/gmail-oauth-setup-doc-v1",
+      "head_sha": "ac9f33e234c55b9ea5d40f92f758a5336d5b0a9c",
+      "protected": false,
+      "prs": [
+        {
+          "number": 64,
+          "state": "closed",
+          "merged": true,
+          "draft": false,
+          "title": "docs: add canonical Gmail OAuth setup guide",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/64",
+          "head_sha": "ac9f33e234c55b9ea5d40f92f758a5336d5b0a9c"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/image-intelligence-pipeline-v1-20260904",
+      "head_sha": "99135e1e2451543df88355589beaca212646b429",
+      "protected": false,
+      "prs": [
+        {
+          "number": 219,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "Post-P0: Image Intelligence V1 image-to-capability pipeline",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/219",
+          "head_sha": "99135e1e2451543df88355589beaca212646b429"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/independent-patch-verifier-v1",
+      "head_sha": "941b54fb555a3573d9b6bc440d81bf0dade0a859",
+      "protected": false,
+      "prs": [
+        {
+          "number": 54,
+          "state": "closed",
+          "merged": true,
+          "draft": false,
+          "title": "feat: add independent static patch verifier v1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/54",
+          "head_sha": "941b54fb555a3573d9b6bc440d81bf0dade0a859"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/inter-chat-communication-bus-v1",
+      "head_sha": "df7236ea56d4f4b737fb66bb456084a61624c8c4",
+      "protected": false,
+      "prs": [
+        {
+          "number": 142,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat(coordination): inter-chat communication bus v1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/142",
+          "head_sha": "df7236ea56d4f4b737fb66bb456084a61624c8c4"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/knowledge-lexical-retrieval-v1-20260904",
+      "head_sha": "24902679504e995bf0166538ffc6a05391b548e5",
+      "protected": false,
+      "prs": [
+        {
+          "number": 217,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "Post-P0: Knowledge Lexical Retrieval V1 PostgreSQL FTS baseline",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/217",
+          "head_sha": "24902679504e995bf0166538ffc6a05391b548e5"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/knowledge-persistence-v2-20260903",
+      "head_sha": "17106e80eab729c1d883a90f47c7ee34bb35dbda",
+      "protected": false,
+      "prs": [
+        {
+          "number": 216,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "Post-P0: Knowledge Persistence V2 PostgreSQL repository",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/216",
+          "head_sha": "17106e80eab729c1d883a90f47c7ee34bb35dbda"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/knowledge-retrieval-evaluation-v1-20260904",
+      "head_sha": "a2152c401971f7a7430479d0edebecdb0ca159f0",
+      "protected": false,
+      "prs": [
+        {
+          "number": 221,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "Post-P0: Knowledge Retrieval Evaluation V1 deterministic quality gates",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/221",
+          "head_sha": "a2152c401971f7a7430479d0edebecdb0ca159f0"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/master-capability-evidence-registry-v1",
+      "head_sha": "f26ce305d49c6daa6e28203cb7b71080856dabeb",
+      "protected": false,
+      "prs": [
+        {
+          "number": 189,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat: Master Capability & Evidence Registry v1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/189",
+          "head_sha": "f26ce305d49c6daa6e28203cb7b71080856dabeb"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/master-controller-v1-20260904",
+      "head_sha": "4834f886e89dfdcecd80aa1f9f1834b40fa115e4",
+      "protected": false,
+      "prs": [
+        {
+          "number": 222,
+          "state": "open",
+          "merged": false,
+          "draft": false,
+          "title": "Post-P0: Master Controller V1 deterministic tool routing",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/222",
+          "head_sha": "4834f886e89dfdcecd80aa1f9f1834b40fa115e4"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/mcp-admission-otel-bridge-v1",
+      "head_sha": "e69a824c80190bcfe4662f5aa49c05ecd0f1e393",
+      "protected": false,
+      "prs": [
+        {
+          "number": 155,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat: add MCP admission and OTel GenAI evidence bridge v1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/155",
+          "head_sha": "e69a824c80190bcfe4662f5aa49c05ecd0f1e393"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/mobile-proof-benchmark-v1",
+      "head_sha": "cceb7833991eb3e73b20261dcc5984a8e714de7e",
+      "protected": false,
+      "prs": [
+        {
+          "number": 151,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "test(mobile): add evidence-first Android benchmark protocol",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/151",
+          "head_sha": "cceb7833991eb3e73b20261dcc5984a8e714de7e"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/n8n-development-agent-fabric",
+      "head_sha": "74f21ffe9cdf760b159ea7a9ba445be3579d3edc",
+      "protected": false,
+      "prs": [
+        {
+          "number": 135,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat(n8n): governed CK-NEXUS development super-agent fabric v2",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/135",
+          "head_sha": "74f21ffe9cdf760b159ea7a9ba445be3579d3edc"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/n8n-runtime-registration-guard-v1",
+      "head_sha": "489ecb18a0c940b935f0ae3eb89601d0744af73c",
+      "protected": false,
+      "prs": [
+        {
+          "number": 152,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat(n8n): runtime registration guard with isolated 2.36.5 restart evidence",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/152",
+          "head_sha": "489ecb18a0c940b935f0ae3eb89601d0744af73c"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/nexus-omni-resilience-v1",
+      "head_sha": "92309199f7c14fa5296551a01a4d4c7a8c09adf8",
+      "protected": false,
+      "prs": [
+        {
+          "number": 104,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat: add NEXUS-OMNI resilience and reliability contracts",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/104",
+          "head_sha": "92309199f7c14fa5296551a01a4d4c7a8c09adf8"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/nexus-omni-ultra-governance-v1",
+      "head_sha": "d1f39e7a9e4609b8d82a38b5716f26f02f62c406",
+      "protected": false,
+      "prs": [
+        {
+          "number": 105,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat: govern NEXUS-OMNI ULTRA capability claims",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/105",
+          "head_sha": "d1f39e7a9e4609b8d82a38b5716f26f02f62c406"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/opencode-control-bridge-v1",
+      "head_sha": "96e706a556847d5e1ec712b92adbf99a8ac8873e",
+      "protected": false,
+      "prs": [
+        {
+          "number": 46,
+          "state": "closed",
+          "merged": true,
+          "draft": false,
+          "title": "feat: CK-NEXUS OpenCode MCP control bridge",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/46",
+          "head_sha": "96e706a556847d5e1ec712b92adbf99a8ac8873e"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/openfeature-evaluation-bridge-v1",
+      "head_sha": "3ed4a402bbe960b2b3378d141f055618d5559346",
+      "protected": false,
+      "prs": [
+        {
+          "number": 194,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat(openfeature): add governed v0.9.0 evaluation bridge",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/194",
+          "head_sha": "3ed4a402bbe960b2b3378d141f055618d5559346"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/personal-data-plane-v1",
+      "head_sha": "e58b71e3f79bb87c21ea0f1cbbf779fef48ed274",
+      "protected": false,
+      "prs": [
+        {
+          "number": 60,
+          "state": "closed",
+          "merged": true,
+          "draft": false,
+          "title": "feat: add privacy-first personal data plane v1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/60",
+          "head_sha": "e58b71e3f79bb87c21ea0f1cbbf779fef48ed274"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/personal-intelligence-v1",
+      "head_sha": "0859ec20ba718c491383c768ef28e8817c93b9a7",
+      "protected": false,
+      "prs": [
+        {
+          "number": 58,
+          "state": "closed",
+          "merged": true,
+          "draft": false,
+          "title": "feat: add privacy-first personal intelligence v1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/58",
+          "head_sha": "0859ec20ba718c491383c768ef28e8817c93b9a7"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/polyglot-engineering-fabric-v1",
+      "head_sha": "00a31f51b4a23fe2f1ed982d725237091dbb386d",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "post-p0/production-evidence-manifest-v2-1",
+      "head_sha": "2381acc89eb54708361118b36ab3f077acfc61da",
+      "protected": false,
+      "prs": [
+        {
+          "number": 134,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "ops(evidence): machine-verifiable production manifest v2.1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/134",
+          "head_sha": "2381acc89eb54708361118b36ab3f077acfc61da"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/repo-file-retention-audit-v1-20260904",
+      "head_sha": "02f22cbcd5fde0c844892f6f51eda4c68990f92b",
+      "protected": false,
+      "prs": [
+        {
+          "number": 225,
+          "state": "open",
+          "merged": false,
+          "draft": false,
+          "title": "Post-P0: Full repository file retention audit",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/225",
+          "head_sha": "02f22cbcd5fde0c844892f6f51eda4c68990f92b"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/research-persistence-v1-20260907",
+      "head_sha": "06f573428638c8e41a5a4db0e8cbeec1c432a06f",
+      "protected": false,
+      "prs": [
+        {
+          "number": 243,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "Post-P0: Research Persistence V1 PostgreSQL",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/243",
+          "head_sha": "06f573428638c8e41a5a4db0e8cbeec1c432a06f"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/sandbox-executor-v1",
+      "head_sha": "8993568da2e7c4734b77659bd59b9ec5fa2de166",
+      "protected": false,
+      "prs": [
+        {
+          "number": 53,
+          "state": "closed",
+          "merged": true,
+          "draft": false,
+          "title": "feat: add fail-closed Post-P0 sandbox executor v1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/53",
+          "head_sha": "8993568da2e7c4734b77659bd59b9ec5fa2de166"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/secure-remote-mcp-contract-v1",
+      "head_sha": "405053513d27503af490407aee0ee431c3f57c38",
+      "protected": false,
+      "prs": [
+        {
+          "number": 81,
+          "state": "closed",
+          "merged": true,
+          "draft": false,
+          "title": "security: add secure remote MCP contract v1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/81",
+          "head_sha": "405053513d27503af490407aee0ee431c3f57c38"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/secure-remote-mcp-http-canary-v1",
+      "head_sha": "fe5121b055b25fcb4cc14baa977c6c6945f410d8",
+      "protected": false,
+      "prs": [
+        {
+          "number": 84,
+          "state": "closed",
+          "merged": true,
+          "draft": false,
+          "title": "security: add authenticated remote MCP HTTP canary v1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/84",
+          "head_sha": "fe5121b055b25fcb4cc14baa977c6c6945f410d8"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/security-attack-regression-v1",
+      "head_sha": "8d63c99c8fffc51a20f3da61fe636aecb45560d0",
+      "protected": false,
+      "prs": [
+        {
+          "number": 67,
+          "state": "closed",
+          "merged": true,
+          "draft": false,
+          "title": "security: add attack regression harness v1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/67",
+          "head_sha": "8d63c99c8fffc51a20f3da61fe636aecb45560d0"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/security-issue-65-peer-binding",
+      "head_sha": "9fc20d030d23e0df09c26a56fc2a51020ebb21bd",
+      "protected": false,
+      "prs": [
+        {
+          "number": 70,
+          "state": "closed",
+          "merged": true,
+          "draft": false,
+          "title": "security: bind connector transport to validated peer IPs",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/70",
+          "head_sha": "9fc20d030d23e0df09c26a56fc2a51020ebb21bd"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/security-issue-66-attachment-validation",
+      "head_sha": "b1b78a798ae50fbc1f4fc9d2a9415154f795a973",
+      "protected": false,
+      "prs": [
+        {
+          "number": 71,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "security: deep-validate Gmail attachment content before parser sandbox",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/71",
+          "head_sha": "b1b78a798ae50fbc1f4fc9d2a9415154f795a973"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/security-regression-evidence-reconcile-v1",
+      "head_sha": "e9d92190c0181261bf2fefed5ec9a117e79a357b",
+      "protected": false,
+      "prs": [
+        {
+          "number": 74,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "fix: reconcile security regression finding status with main",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/74",
+          "head_sha": "e9d92190c0181261bf2fefed5ec9a117e79a357b"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/self-capability-reconcile-v1",
+      "head_sha": "69412a8459fe7f5abd98563e465843093bb0cc6f",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "post-p0/sonar-quality-automation-v1-20260904",
+      "head_sha": "432e4954e634f98642dd187cf710de84e67dd1dd",
+      "protected": false,
+      "prs": [
+        {
+          "number": 228,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "Post-P0: SonarQube Cloud Quality Automation V1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/228",
+          "head_sha": "432e4954e634f98642dd187cf710de84e67dd1dd"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/standards-integration-v1",
+      "head_sha": "b4146db8e23dff49520cbbc9d0194a15bcc5872d",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "post-p0/standards-refresh-2026-08-v1",
+      "head_sha": "bc1e3e94a2066e5716ab5c3de11c6db9a42e18be",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "post-p0/stress-lab-level2-write-activation-gate-v1",
+      "head_sha": "00acc7e4bdf69f09d36ba00664a6fc58d4b808f0",
+      "protected": false,
+      "prs": [
+        {
+          "number": 87,
+          "state": "closed",
+          "merged": true,
+          "draft": false,
+          "title": "security: add Stress Lab Level 2 connector write-activation gate",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/87",
+          "head_sha": "00acc7e4bdf69f09d36ba00664a6fc58d4b808f0"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/system-skills-harvest-v1",
+      "head_sha": "d4b5e7bccc20526a27373a469879db50d966cb5e",
+      "protected": false,
+      "prs": [
+        {
+          "number": 203,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat: governed system skills harvest and admission v1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/203",
+          "head_sha": "d4b5e7bccc20526a27373a469879db50d966cb5e"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/test-standards-enforcement-v1",
+      "head_sha": "047c5ebd737b766fcf8ffe5528efb32d06770c45",
+      "protected": false,
+      "prs": [
+        {
+          "number": 103,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "test: enforce CK-NEXUS Test Standards V1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/103",
+          "head_sha": "047c5ebd737b766fcf8ffe5528efb32d06770c45"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/tool-vps-helper-policy-20260904",
+      "head_sha": "04ef17b484755f73d02a8e10248cb30e92a14a79",
+      "protected": false,
+      "prs": [
+        {
+          "number": 220,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "Post-P0: Tool and VPS Docker Helper operating policy",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/220",
+          "head_sha": "04ef17b484755f73d02a8e10248cb30e92a14a79"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/trusted-registry-verifier-profile-v1",
+      "head_sha": "0d830cde51221eec8213814db8c7cedbe5f600af",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "post-p0/trusted-verifier-allowlist-v1",
+      "head_sha": "14c8689881bf698d04bbb49a26f9d7efc60d289a",
+      "protected": false,
+      "prs": [
+        {
+          "number": 57,
+          "state": "closed",
+          "merged": true,
+          "draft": false,
+          "title": "security: bind dynamic verifier to published trusted image",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/57",
+          "head_sha": "14c8689881bf698d04bbb49a26f9d7efc60d289a"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/trusted-verifier-image-v1",
+      "head_sha": "818bc7b10c3de7e0fcf78515887f90bffe72fba8",
+      "protected": false,
+      "prs": [
+        {
+          "number": 56,
+          "state": "closed",
+          "merged": true,
+          "draft": false,
+          "title": "build: add trusted verifier image v1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/56",
+          "head_sha": "818bc7b10c3de7e0fcf78515887f90bffe72fba8"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/twin-dialogue-bridge-v1",
+      "head_sha": "47d6defe28cbcce341040a8d16f31ec02a2abe8d",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "post-p0/two-chat-coordination-v1",
+      "head_sha": "5f98f23c6841e6f335e9a114e8b0c0e4201b4850",
+      "protected": false,
+      "prs": [
+        {
+          "number": 126,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "docs: coordinate two-chat CK-NEXUS development",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/126",
+          "head_sha": "5f98f23c6841e6f335e9a114e8b0c0e4201b4850"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/universal-model-capability-fabric-v1",
+      "head_sha": "3e6afe644dbea01df85ccf27c20390976820f88f",
+      "protected": false,
+      "prs": [
+        {
+          "number": 72,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat: extend universal model capability fabric v1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/72",
+          "head_sha": "3e6afe644dbea01df85ccf27c20390976820f88f"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/universal-system-clean-v2",
+      "head_sha": "6fba8a12e5eb738e0691072c150a6537439ebeb1",
+      "protected": false,
+      "prs": [
+        {
+          "number": 51,
+          "state": "closed",
+          "merged": true,
+          "draft": false,
+          "title": "feat: clean Universal System integration superseding PR #49",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/51",
+          "head_sha": "6fba8a12e5eb738e0691072c150a6537439ebeb1"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/universal-system-v1",
+      "head_sha": "b796792d1b7a0925011ba2d0fcdebb333f95122a",
+      "protected": false,
+      "prs": [
+        {
+          "number": 49,
+          "state": "closed",
+          "merged": false,
+          "draft": true,
+          "title": "feat: reconcile Universal System, AI Team, SelfCapability and MCP runtime",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/49",
+          "head_sha": "9da213286ec5b2a196c8686980db6ad5d6add6bb"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/verifier-shadow-ledger-wiring-v1",
+      "head_sha": "5603750cbe93905a250da6f22626ed30004ce7fd",
+      "protected": false,
+      "prs": [
+        {
+          "number": 188,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat(verifier): bind shadow gap decisions to append-only ledger v1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/188",
+          "head_sha": "5603750cbe93905a250da6f22626ed30004ce7fd"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/verifier-subject-gap-analysis-v1",
+      "head_sha": "0b7319672adc0009f41115edec314a8fd5c601a4",
+      "protected": false,
+      "prs": [
+        {
+          "number": 187,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat(verifier): add deterministic subject lock and gap analysis v1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/187",
+          "head_sha": "0b7319672adc0009f41115edec314a8fd5c601a4"
+        }
+      ]
+    },
+    {
+      "name": "post-p0/windows-sandbox-platform-gate-v1",
+      "head_sha": "6b3e30569f6e43cb3041ce9e8af3522e0feb7206",
+      "protected": false,
+      "prs": [
+        {
+          "number": 140,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "fix(runtime): Windows-safe Linux sandbox boundary",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/140",
+          "head_sha": "6b3e30569f6e43cb3041ce9e8af3522e0feb7206"
+        }
+      ]
+    },
+    {
+      "name": "prep/closure-operator-pack-v1",
+      "head_sha": "790bc87dcfa2614ccf54508ae5b39bce3a099053",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "prep/q10-native-deep-scan-contract-v2",
+      "head_sha": "c8eef59ebe186454dec695983134096f2d6b405f",
+      "protected": false,
+      "prs": [
+        {
+          "number": 165,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "ops(q10): harden native Deep Security Scan receipt contract v2",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/165",
+          "head_sha": "c8eef59ebe186454dec695983134096f2d6b405f"
+        }
+      ]
+    },
+    {
+      "name": "prep/q10-q12-closure-autopilot-v1",
+      "head_sha": "e1dacb155df2bceef5764104fdc44014d4d4bf38",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "prep/q11-live-smoke-hardening-v2",
+      "head_sha": "dbcbf4c2f2d80fdf19ef6247082af9d0c00e6fbd",
+      "protected": false,
+      "prs": [
+        {
+          "number": 166,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "ops(q11): harden exact-subject live provider evidence v2",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/166",
+          "head_sha": "dbcbf4c2f2d80fdf19ef6247082af9d0c00e6fbd"
+        }
+      ]
+    },
+    {
+      "name": "prep/q12-verifier-hardening-v2",
+      "head_sha": "6f5bdc11f6c30ba71bab8f2aa757563af9cbef9d",
+      "protected": false,
+      "prs": [
+        {
+          "number": 167,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "ops(q12): harden delegated cgroup verifier with active enforcement v2",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/167",
+          "head_sha": "6f5bdc11f6c30ba71bab8f2aa757563af9cbef9d"
+        }
+      ]
+    },
+    {
+      "name": "prepare/q11-subject-89f2925c",
+      "head_sha": "6ec3639b1888d1489a338e65126c104ece509103",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "prepare/q12-subject-89f2925c",
+      "head_sha": "0c1dd2521e1da772ab81f4389bc8ec71004b8691",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "prepare/q14-subject-89f2925c",
+      "head_sha": "75dc50935374a2c88ca5764ecf71c178ab6a16de",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "product/commercial-value-roadmap-20261105",
+      "head_sha": "204a88c965abfc645b2fea035248b08a109e0229",
+      "protected": false,
+      "prs": [
+        {
+          "number": 355,
+          "state": "open",
+          "merged": false,
+          "draft": false,
+          "title": "docs(commercial): define CK-NEXUS value and go-to-market strategy",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/355",
+          "head_sha": "204a88c965abfc645b2fea035248b08a109e0229"
+        }
+      ]
+    },
+    {
+      "name": "q10/aikido-frozen-39f5c1ad",
+      "head_sha": "39f5c1adb9d761ab418cf088ff1f051b1ca731d1",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "q10/aikido-frozen-39f5c1ad-20260829",
+      "head_sha": "39f5c1adb9d761ab418cf088ff1f051b1ca731d1",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "q10/deep-security-preflight-v1",
+      "head_sha": "3e861412b93b8286b10775928474e02dde51068a",
+      "protected": false,
+      "prs": [
+        {
+          "number": 37,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "Q10: prepare exact Codex Security Deep Scan handoff",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/37",
+          "head_sha": "3e861412b93b8286b10775928474e02dde51068a"
+        }
+      ]
+    },
+    {
+      "name": "q10/deep-security-preflight-v1-copycheck",
+      "head_sha": "b9fc673791e8b24ffa1193f489636051f1409d1e",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "q10/frozen-39f5c1ad-aikido",
+      "head_sha": "39f5c1adb9d761ab418cf088ff1f051b1ca731d1",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "r33-closure-hardening-v02",
+      "head_sha": "707cbf8c5f76c0ec550f2ce7a33b5b12760e0b43",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "refresh/subject-89f2925c",
+      "head_sha": "0b997e9f822b22ff243cea768268a61a0d1ae89b",
+      "protected": false,
+      "prs": [
+        {
+          "number": 41,
+          "state": "closed",
+          "merged": true,
+          "draft": false,
+          "title": "release: refresh evidence for rotated runtime subject",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/41",
+          "head_sha": "0b997e9f822b22ff243cea768268a61a0d1ae89b"
+        }
+      ]
+    },
+    {
+      "name": "release/q04-q08-clean",
+      "head_sha": "5470413762d753b2687a2c9c5ae9d73f97bb8e24",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "release/q04-q08-multilane",
+      "head_sha": "e5a20d05e7b4ac3cbe3010feec52a358d799a593",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "release/q10-q16-closure",
+      "head_sha": "139f7e04dfb5d4444c8f5d40a4303240cf0f877e",
+      "protected": false,
+      "prs": [
+        {
+          "number": 14,
+          "state": "closed",
+          "merged": true,
+          "draft": true,
+          "title": "release: Q10-Q16 production closure",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/14",
+          "head_sha": "a55a8d36b0a1b61b426c5d59ab44ebd841eb8d53"
+        }
+      ]
+    },
+    {
+      "name": "research/agentic-systems-gap-map-20261117",
+      "head_sha": "cae9556bd5f5ba6f94de116481d1f5fa2232a2ef",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "research/ai-company-os-intel-20261119",
+      "head_sha": "9639e3da99c814d5842a7dd869403f7b80617f73",
+      "protected": false,
+      "prs": [
+        {
+          "number": 384,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat: integrate SOUL identity and Skill Foundry pipeline",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/384",
+          "head_sha": "9639e3da99c814d5842a7dd869403f7b80617f73"
+        }
+      ]
+    },
+    {
+      "name": "research/ai-tool-registry-20261002",
+      "head_sha": "654735455c80c2be2d7bcfb1bf2c7832f96a252e",
+      "protected": false,
+      "prs": [
+        {
+          "number": 259,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "research: intake AI tool and agent registry",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/259",
+          "head_sha": "654735455c80c2be2d7bcfb1bf2c7832f96a252e"
+        }
+      ]
+    },
+    {
+      "name": "research/ai-tooling-2026-10-25",
+      "head_sha": "efcef0f21e30a7ec1d0cd85b945ae5dfcdf61a98",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "research/blocker-substitution-20260904",
+      "head_sha": "f723be3e1c785a8ca8d90f426dcce2300901e878",
+      "protected": false,
+      "prs": [
+        {
+          "number": 211,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "research: blocker substitution matrix 2026-09-04",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/211",
+          "head_sha": "f723be3e1c785a8ca8d90f426dcce2300901e878"
+        }
+      ]
+    },
+    {
+      "name": "research/continuous-20261006-agent-controls",
+      "head_sha": "ec4bc0c3e88be35d1e4c488de7d17596921427d5",
+      "protected": false,
+      "prs": [
+        {
+          "number": 268,
+          "state": "open",
+          "merged": false,
+          "draft": false,
+          "title": "research: continuous 2026-10-06 agent control findings",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/268",
+          "head_sha": "ec4bc0c3e88be35d1e4c488de7d17596921427d5"
+        }
+      ]
+    },
+    {
+      "name": "research/mcp-2026-07-28-cosign-baseline-v1",
+      "head_sha": "d348691702f689321fd93ad67fb7ef71cf676818",
+      "protected": false,
+      "prs": [
+        {
+          "number": 86,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "research: MCP 2026-07-28 migration + Cosign 3.1.3 security baseline",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/86",
+          "head_sha": "d348691702f689321fd93ad67fb7ef71cf676818"
+        }
+      ]
+    },
+    {
+      "name": "research/universal-ai-os-capability-map-20260827",
+      "head_sha": "47490639391bf5e1d9e7448c18f36125d9a57e50",
+      "protected": false,
+      "prs": [
+        {
+          "number": 182,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "research: Universal Knowledge & Autonomous AI OS capability map",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/182",
+          "head_sha": "47490639391bf5e1d9e7448c18f36125d9a57e50"
+        }
+      ]
+    },
+    {
+      "name": "revert/pr-348",
+      "head_sha": "ecfc96b562bcab8c5a3c6e85c5150751a38b7890",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "review/q11-exact-subject-reconcile-v1",
+      "head_sha": "59080e9b0e49c7b732a9657c67147730a7b4e878",
+      "protected": false,
+      "prs": [
+        {
+          "number": 136,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "fix(q11): reconcile live smoke with frozen production subject",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/136",
+          "head_sha": "59080e9b0e49c7b732a9657c67147730a7b4e878"
+        }
+      ]
+    },
+    {
+      "name": "sale/creator-source-package-v1",
+      "head_sha": "f5cec3186e66e9746f26f208e21e1d75cea990a4",
+      "protected": false,
+      "prs": [
+        {
+          "number": 32,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "Sale: CK-NEXUS Creator Source Package v1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/32",
+          "head_sha": "f5cec3186e66e9746f26f208e21e1d75cea990a4"
+        }
+      ]
+    },
+    {
+      "name": "sale/dev-preview-package-v1",
+      "head_sha": "ca13de095b44cb719eb227a70e56fb2e04d84444",
+      "protected": false,
+      "prs": [
+        {
+          "number": 132,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "docs(sales): CK-NEXUS development preview sales package",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/132",
+          "head_sha": "ca13de095b44cb719eb227a70e56fb2e04d84444"
+        }
+      ]
+    },
+    {
+      "name": "sale/launch-ops-v1.2",
+      "head_sha": "ad485275e9dbb38b02f6e55559517bca41a8cd3c",
+      "protected": false,
+      "prs": [
+        {
+          "number": 34,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "Sales Ops: launch operations v1.2",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/34",
+          "head_sha": "ad485275e9dbb38b02f6e55559517bca41a8cd3c"
+        }
+      ]
+    },
+    {
+      "name": "sale/seller-sales-kit-v1.1",
+      "head_sha": "8e9c147e2bf141622afa9298e4896e9d19533568",
+      "protected": false,
+      "prs": [
+        {
+          "number": 33,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "Sales: CK-NEXUS Seller Sales Kit v1.1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/33",
+          "head_sha": "8e9c147e2bf141622afa9298e4896e9d19533568"
+        }
+      ]
+    },
+    {
+      "name": "security/aikido-q10-hardening-v1",
+      "head_sha": "699e7b3e19ccdc413cf7a1408b8a794581da7e43",
+      "protected": false,
+      "prs": [
+        {
+          "number": 198,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "security: Aikido Q10 hardening v1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/198",
+          "head_sha": "699e7b3e19ccdc413cf7a1408b8a794581da7e43"
+        }
+      ]
+    },
+    {
+      "name": "security/aikido-remediation-20260828",
+      "head_sha": "28532ba5691918f3bf483188b60498b4754479b2",
+      "protected": false,
+      "prs": [
+        {
+          "number": 196,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "security: remediate Aikido findings batch 1",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/196",
+          "head_sha": "28532ba5691918f3bf483188b60498b4754479b2"
+        }
+      ]
+    },
+    {
+      "name": "security/buyer-delivery-path-hardening-20261119",
+      "head_sha": "f29027f5bafc52cb51abee14b50c239e7ceada9e",
+      "protected": false,
+      "prs": [
+        {
+          "number": 379,
+          "state": "open",
+          "merged": false,
+          "draft": false,
+          "title": "fix(security): constrain buyer delivery output paths",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/379",
+          "head_sha": "f29027f5bafc52cb51abee14b50c239e7ceada9e"
+        }
+      ]
+    },
+    {
+      "name": "security/close-public-beta-surface-20261119",
+      "head_sha": "d718d3dd1bcace41bcdd0ab80e26ff1f649dc38d",
+      "protected": false,
+      "prs": [
+        {
+          "number": 383,
+          "state": "open",
+          "merged": false,
+          "draft": false,
+          "title": "security: lock staging and production to the public feedback surface",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/383",
+          "head_sha": "d718d3dd1bcace41bcdd0ab80e26ff1f649dc38d"
+        }
+      ]
+    },
+    {
+      "name": "security/codeql-ssrf-hardening-20261117",
+      "head_sha": "13772b023c4cc9f46eacc1b632b38fe4e47b4d6a",
+      "protected": false,
+      "prs": [
+        {
+          "number": 375,
+          "state": "open",
+          "merged": false,
+          "draft": false,
+          "title": "Harden local HTTP and provider URL boundaries against SSRF",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/375",
+          "head_sha": "13772b023c4cc9f46eacc1b632b38fe4e47b4d6a"
+        }
+      ]
+    },
+    {
+      "name": "security/collect-dev-status-path-hardening-20261119",
+      "head_sha": "cf02f02086c1933c752194c926abadcd9cb5d594",
+      "protected": false,
+      "prs": [
+        {
+          "number": 378,
+          "state": "open",
+          "merged": false,
+          "draft": false,
+          "title": "fix(security): constrain development status output path",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/378",
+          "head_sha": "cf02f02086c1933c752194c926abadcd9cb5d594"
+        }
+      ]
+    },
+    {
+      "name": "security/command-line-hardening-20261117",
+      "head_sha": "ace5eb5f363e387af572c81159caceab466f0e39",
+      "protected": false,
+      "prs": [
+        {
+          "number": 376,
+          "state": "open",
+          "merged": false,
+          "draft": false,
+          "title": "Constrain command execution boundaries",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/376",
+          "head_sha": "ace5eb5f363e387af572c81159caceab466f0e39"
+        }
+      ]
+    },
+    {
+      "name": "security/ghas-codeql-remediation-20261105",
+      "head_sha": "0e5f271797f842976eea331a2bc70565587beda1",
+      "protected": false,
+      "prs": [
+        {
+          "number": 359,
+          "state": "open",
+          "merged": false,
+          "draft": false,
+          "title": "security: remediate GHAS CodeQL findings",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/359",
+          "head_sha": "0e5f271797f842976eea331a2bc70565587beda1"
+        }
+      ]
+    },
+    {
+      "name": "security/no-file-deletions-guard-20261119",
+      "head_sha": "c70185304cba68bff20ff54475eb1a395bcebcf2",
+      "protected": false,
+      "prs": [
+        {
+          "number": 386,
+          "state": "open",
+          "merged": false,
+          "draft": false,
+          "title": "ci: block file deletions in pull requests",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/386",
+          "head_sha": "c70185304cba68bff20ff54475eb1a395bcebcf2"
+        }
+      ]
+    },
+    {
+      "name": "security/p0-n8n-export-guard-20261010",
+      "head_sha": "1944c0b98af28b62166863152c544bc040ddcff9",
+      "protected": false,
+      "prs": [
+        {
+          "number": 286,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "security: add n8n P0 workflow export guard",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/286",
+          "head_sha": "1944c0b98af28b62166863152c544bc040ddcff9"
+        }
+      ]
+    },
+    {
+      "name": "security/scorecard-remediation-20260905",
+      "head_sha": "eb26eb3d62b747102cf39820e42eb71016b4e6c5",
+      "protected": false,
+      "prs": [
+        {
+          "number": 235,
+          "state": "closed",
+          "merged": false,
+          "draft": true,
+          "title": "security: harden Scorecard posture and release evidence",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/235",
+          "head_sha": "eb26eb3d62b747102cf39820e42eb71016b4e6c5"
+        }
+      ]
+    },
+    {
+      "name": "security/semgrep-exact-proof-20260904",
+      "head_sha": "fcb343b04dddb85e4ee8ade12ad6cae2c90546b7",
+      "protected": false,
+      "prs": [
+        {
+          "number": 212,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "security: exact regression proof for Semgrep ERROR findings",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/212",
+          "head_sha": "fcb343b04dddb85e4ee8ade12ad6cae2c90546b7"
+        }
+      ]
+    },
+    {
+      "name": "security/sqlite-hardening-20261117",
+      "head_sha": "f41f4c57d5347a0ce149cc892bf162019e40ce60",
+      "protected": false,
+      "prs": [
+        {
+          "number": 374,
+          "state": "open",
+          "merged": false,
+          "draft": false,
+          "title": "Harden local SQLite database paths and sidecars",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/374",
+          "head_sha": "f41f4c57d5347a0ce149cc892bf162019e40ce60"
+        }
+      ]
+    },
+    {
+      "name": "temp-do-not-use",
+      "head_sha": "970dc40e17c82496e58ef363ed941af3de53c07c",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "tmp-do-not-use",
+      "head_sha": "de6f03051e64786b184f97e37a9170ab65a3d6da",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "ui/cognitive-control-interface-v2",
+      "head_sha": "836a4c928d0535c90004706d8ccd336ef6104822",
+      "protected": false,
+      "prs": [
+        {
+          "number": 109,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "ui: CK-NEXUS Cognitive Control Interface v2",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/109",
+          "head_sha": "836a4c928d0535c90004706d8ccd336ef6104822"
+        }
+      ]
+    },
+    {
+      "name": "ui/unified-command-center-v01",
+      "head_sha": "d0eeb458fbed5bd53d88d2af88892c11506e4a8f",
+      "protected": false,
+      "prs": [
+        {
+          "number": 22,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "UI: professional unified command center prototype",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/22",
+          "head_sha": "d0eeb458fbed5bd53d88d2af88892c11506e4a8f"
+        }
+      ]
+    },
+    {
+      "name": "upgrade/cognitive-knowledge-fabric-v1-20260903",
+      "head_sha": "9666faca361cf8f7ecb910023e00ee72df13337d",
+      "protected": false,
+      "prs": [
+        {
+          "number": 206,
+          "state": "closed",
+          "merged": false,
+          "draft": true,
+          "title": "feat: Cognitive Knowledge Fabric V1 provenance and conflict contracts",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/206",
+          "head_sha": "9666faca361cf8f7ecb910023e00ee72df13337d"
+        }
+      ]
+    },
+    {
+      "name": "upgrade/collaborative-development-framework-v1-20260905",
+      "head_sha": "42f9dcd8da9b4ee7867b90d21c72ce490dca8e0a",
+      "protected": false,
+      "prs": [
+        {
+          "number": 233,
+          "state": "closed",
+          "merged": false,
+          "draft": true,
+          "title": "Collaborative Development Framework V1: live status and AI competency gate",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/233",
+          "head_sha": "42f9dcd8da9b4ee7867b90d21c72ce490dca8e0a"
+        }
+      ]
+    },
+    {
+      "name": "upgrade/creator-intelligence-v1-20260904",
+      "head_sha": "628106487d10b10a556052f4060019ff7af5cf12",
+      "protected": false,
+      "prs": [
+        {
+          "number": 213,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "Creator Intelligence V1: evidence-aware modes from image research",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/213",
+          "head_sha": "628106487d10b10a556052f4060019ff7af5cf12"
+        }
+      ]
+    },
+    {
+      "name": "upgrade/enforcement-stack-vnext-20261002",
+      "head_sha": "53a45dbb860c15c1ee83de2ad64f8c4bbadbda4f",
+      "protected": false,
+      "prs": [
+        {
+          "number": 261,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "architecture: upgrade to enforcement stack vNext",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/261",
+          "head_sha": "53a45dbb860c15c1ee83de2ad64f8c4bbadbda4f"
+        }
+      ]
+    },
+    {
+      "name": "upgrade/frontier-roadmap-p0-agent-security-20260903",
+      "head_sha": "bf5f209fd3bd526653a9d4a25727405047afc453",
+      "protected": false,
+      "prs": [
+        {
+          "number": 204,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "security: frontier roadmap + P0 untrusted-agent action guardrail",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/204",
+          "head_sha": "bf5f209fd3bd526653a9d4a25727405047afc453"
+        }
+      ]
+    },
+    {
+      "name": "upgrade/image-intelligence-pipeline-v1-20260904",
+      "head_sha": "802c42f6d72a3a760cf25aece720473c1f84dbbd",
+      "protected": false,
+      "prs": [
+        {
+          "number": 218,
+          "state": "closed",
+          "merged": false,
+          "draft": true,
+          "title": "Image Intelligence V1: image-to-capability proposal pipeline",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/218",
+          "head_sha": "802c42f6d72a3a760cf25aece720473c1f84dbbd"
+        }
+      ]
+    },
+    {
+      "name": "upgrade/install-ux-a1-20260903",
+      "head_sha": "9fb3f0e1aa50a65c6a4e9aa2df76dfad6fa65775",
+      "protected": false,
+      "prs": [
+        {
+          "number": 205,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "feat: simple ck-nexus install and runtime control UX",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/205",
+          "head_sha": "9fb3f0e1aa50a65c6a4e9aa2df76dfad6fa65775"
+        }
+      ]
+    },
+    {
+      "name": "upgrade/knowledge-persistence-v2-20260903",
+      "head_sha": "17106e80eab729c1d883a90f47c7ee34bb35dbda",
+      "protected": false,
+      "prs": [
+        {
+          "number": 207,
+          "state": "closed",
+          "merged": false,
+          "draft": true,
+          "title": "feat: Knowledge Persistence V2 PostgreSQL repository",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/207",
+          "head_sha": "17106e80eab729c1d883a90f47c7ee34bb35dbda"
+        }
+      ]
+    },
+    {
+      "name": "upgrade/omni-control-plane-20261006",
+      "head_sha": "c783ecc296cb2aa63f971c218d5d6188bae94bc6",
+      "protected": false,
+      "prs": [
+        {
+          "number": 263,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "OMNI v2: governed risk verdict and agent forensics contracts",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/263",
+          "head_sha": "c783ecc296cb2aa63f971c218d5d6188bae94bc6"
+        }
+      ]
+    },
+    {
+      "name": "upgrade/system-wide-20260920",
+      "head_sha": "652fa1fcf79589719db56fc00a090c31e0a5cca5",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "verify/category-a-canonical",
+      "head_sha": "11614d8b91c98ffb2d8d69886ed29168faa73f57",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "verify/cloud-phase3-linux-v1",
+      "head_sha": "576bd81748a96460555cd471517329df1769a234",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "verify/docker-full-capability-20260903",
+      "head_sha": "a9f33a1fa511b491536930bc464b157059e4575f",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "verify/q04-exact-sha",
+      "head_sha": "e2a17cff11366604d1ee720e56c3e33e1102dbc8",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "verify/q04-q05-converged",
+      "head_sha": "fab0e4e6dd8325a43d6860a95a2a70fbee430a45",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "verify/q04-q05-converged-final",
+      "head_sha": "16ac906111dc8173f4841ae66109a30a3b4a8ed0",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "verify/q04-q05-converged-v2",
+      "head_sha": "16ac906111dc8173f4841ae66109a30a3b4a8ed0",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "verify/q04-q05-converged-v3",
+      "head_sha": "9e97a1d719a59d4721763654b6973915c247a369",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "verify/q05-exact-ci",
+      "head_sha": "0e0deff3ff855268ad22c99d8c29b0c081ee6bf5",
+      "protected": false,
+      "prs": [
+        {
+          "number": 9,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "verify(Q05): exact candidate CI without source changes",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/9",
+          "head_sha": "0e0deff3ff855268ad22c99d8c29b0c081ee6bf5"
+        }
+      ]
+    },
+    {
+      "name": "verify/q06-q07-main-a8f18",
+      "head_sha": "c5a45dcdd106170dbbf81751bbd979e4cb880078",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "verify/q09-live-evidence",
+      "head_sha": "a2c9efc4ed7adff57beea5bf2b80ae8d69a2ff75",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "verify/q09-live-evidence-v2",
+      "head_sha": "e0fd4b50752e537b9e6f89bcd6b861f429ef051c",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "verify/q10-dependency-audit",
+      "head_sha": "f543c967597c8a0e1287b2abed819c54752b8cfd",
+      "protected": false,
+      "prs": [
+        {
+          "number": 13,
+          "state": "open",
+          "merged": false,
+          "draft": true,
+          "title": "Q10 supplemental: exact-lock dependency audit",
+          "url": "https://github.com/spinlnw10-art/ck-nexus/pull/13",
+          "head_sha": "f543c967597c8a0e1287b2abed819c54752b8cfd"
+        }
+      ]
+    },
+    {
+      "name": "verify/q11-final-subject",
+      "head_sha": "3395c37da4a3e8a51f215eeca1227591cd2198b9",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "verify/q11-main-944d7cb-20261120",
+      "head_sha": "367b0a9e0793ce6b4a69e4a96f0e589e2a5a1e9e",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "verify/q12-delegation-v2",
+      "head_sha": "48aef6f753de4d19e8af1b7c6f6850a97479ed44",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "verify/q12-final-subject",
+      "head_sha": "457b38ef4f439c90693c13a7b14d72003e953f46",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "verify/q14-final-subject",
+      "head_sha": "40aad4068e3c0d2f7821ee4ecbaadee65a3c31c7",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "verify/sale-gates-20260922",
+      "head_sha": "fd921ebb7aa402d09e134514d658682e5bcfdc73",
+      "protected": false,
+      "prs": []
+    },
+    {
+      "name": "verify/sale-gates-v2-20260922",
+      "head_sha": "060dbab84a684c9e1f934de5be9086a67c7ea52e",
+      "protected": false,
+      "prs": []
+    }
+  ]
+}
