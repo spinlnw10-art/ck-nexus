@@ -48,8 +48,8 @@ jobs:
         run: |
           set -euo pipefail
           base="https://github.com/oss-review-toolkit/ort/releases/download/99.1.0"
-          curl --fail --location --retry 3 "$base/ort-99.1.0.tgz" -o ort.tgz
-          curl --fail --location --retry 3 "$base/ort-99.1.0.tgz.asc" -o ort.tgz.asc
+          curl --fail --location --retry 3 --proto '=https' --proto-redir '=https' "$base/ort-99.1.0.tgz" -o ort.tgz
+          curl --fail --location --retry 3 --proto '=https' --proto-redir '=https' "$base/ort-99.1.0.tgz.asc" -o ort.tgz.asc
           echo "$ORT_SHA256  ort.tgz" | sha256sum --check
           echo "$ORT_SIGNATURE_SHA256  ort.tgz.asc" | sha256sum --check
           python - <<'PY'
@@ -88,7 +88,7 @@ jobs:
           test -f "$WHEEL"
           echo "$SCANCODE_SHA256  $WHEEL" | sha256sum --check
           printf "pluggy==1.6.0\\n" > "$RUNNER_TEMP/scancode-constraints.txt"
-          python -m pip install --constraint "$RUNNER_TEMP/scancode-constraints.txt" --report "$RUNNER_TEMP/scancode-install-report.json" "$WHEEL"
+          python -m pip install --only-binary=:all: --no-deps --constraint "$RUNNER_TEMP/scancode-constraints.txt" --report "$RUNNER_TEMP/scancode-install-report.json" "$WHEEL"
           scancode --version
 
       - name: Scan complete CK-NEXUS source tree with ScanCode
@@ -109,12 +109,12 @@ jobs:
           WHEEL="$RUNNER_TEMP/python-inspector-wheel/python_inspector-0.15.2-py3-none-any.whl"
           test -f "$WHEEL"
           echo "$PYTHON_INSPECTOR_SHA256  $WHEEL" | sha256sum --check
-          python -m pip install --constraint "$RUNNER_TEMP/scancode-constraints.txt" --report "$RUNNER_TEMP/python-inspector-install-report.json" "$WHEEL"
+          python -m pip install --only-binary=:all: --no-deps --constraint "$RUNNER_TEMP/scancode-constraints.txt" --report "$RUNNER_TEMP/python-inspector-install-report.json" "$WHEEL"
           python-inspector --version
           # python-inspector 0.15.2 imports distutils; Python 3.12 removed it.
           # Setuptools' pinned compatibility shim restores the import without
           # changing the interpreter or weakening ORT's unresolved-issue policy.
-          python -m pip install --no-deps "setuptools==80.9.0"
+          python -m pip install --only-binary=:all: --no-deps "setuptools==80.9.0"
           python -c "import distutils.core; import setuptools; print('setuptools compatibility shim:', setuptools.__version__)"
 
       - name: Run ORT analyzer and ScanCode-backed scanner on synthetic fixture
