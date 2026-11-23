@@ -1,7 +1,7 @@
 # CK-NEXUS Work Ledger — Single Source of Work State
 
-Updated: 2026-11-23 07:27 ICT (+07:00)
-Do-not-repeat window: until 2026-11-24 07:27 ICT (+07:00)
+Updated: 2026-11-23 07:40 ICT (+07:00)
+Do-not-repeat window: until 2026-11-24 07:40 ICT (+07:00)
 Purpose: prevent duplicate scans, duplicate fixes, and conflicting status reports.
 
 ## Operating rules
@@ -97,7 +97,7 @@ Reasons currently evidenced:
 6. Request/obtain the required independent review; PR merge and deployment remain separate approval steps.
 
 ## 24-hour duplicate-work lock
-Until 2026-11-24 07:27 ICT, do not repeat the following against SHA efbb2ee157fcfdedfde054508fafaf21cbaf88fa:
+Until 2026-11-24 07:40 ICT, do not repeat the following against SHA efbb2ee157fcfdedfde054508fafaf21cbaf88fa:
 - Q10 layered security scan
 - Bandit scan
 - Secret scan
