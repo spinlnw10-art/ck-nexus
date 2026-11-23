@@ -57,7 +57,7 @@ jobs:
               # processes. Move this service shell into a delegated child first.
               bootstrap="$root/q12-bootstrap"
               mkdir "$bootstrap"
-              printf '%s\\n' "$" > "$bootstrap/cgroup.procs"
+              printf '%s\n' "$$" > "$bootstrap/cgroup.procs"
               export CKNEXUS_AGNES_CGROUP_ROOT="$root"
               available=$(cat "$root/cgroup.controllers")
               for controller in cpu memory pids; do grep -qw "$controller" <<< "$available"; done
