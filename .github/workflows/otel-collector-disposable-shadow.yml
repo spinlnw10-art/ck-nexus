@@ -137,7 +137,7 @@ jobs:
 
       - name: Record candidate-bound local image provenance evidence
         env:
-          CANDIDATE_SHA: ${{ github.sha }}
+          CANDIDATE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
         run: |
           set -euo pipefail
           python - <<'PY'
@@ -181,7 +181,7 @@ jobs:
 
       - name: Build candidate-bound telemetry evidence manifest
         env:
-          CANDIDATE_SHA: ${{ github.sha }}
+          CANDIDATE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
         run: |
           set -euo pipefail
           python - <<'PY'
