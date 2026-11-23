@@ -26,12 +26,13 @@ mint OIDC-backed attestations. The locally built image is not pushed to a regist
 
 ## Experiment
 
-- Internal-only Docker network (`--internal`); only loopback port 4318 is published.
+- Internal-only Docker bridge (`--internal`) with a fixed private address; no host port publishing and no external egress.
 - Read-only root filesystem, no capabilities, no-new-privileges, PID/memory/CPU limits.
 - Synthetic OTLP trace with a parent and child span sharing one trace ID.
 - Synthetic OTLP metric `ck_nexus_shadow_requests`.
-- Resource and span/datapoint attribute processors delete user, tenant, prompt, tool argument,
-  authorization, API-key, credential-reference, URL and database-statement attributes.
+- The OTTL Transform Processor deletes user, tenant, prompt, tool argument, authorization,
+  API-key, credential-reference, URL and database-statement attributes in explicit resource,
+  span and metric-datapoint contexts. This replaces deprecated resource/attributes processors.
 - CI asserts the trace and parent/child span IDs plus metric name appear in Collector debug
   output, and that synthetic secret markers do not appear.
 - A candidate-bound manifest hashes the image provenance, immutable image ID/archive digest, Collector log and synthetic test result. The existing CK-NEXUS `EvidenceGraph` intake validates each path/size/hash and emits `CLAIM` / `SOURCE` nodes with `DERIVED_FROM` edges; no edge claims independent validation.
@@ -47,6 +48,7 @@ can approve, deny, authorize, merge, deploy, access credentials, or decide CK-NE
 ## References
 
 - https://opentelemetry.io/docs/collector/install/docker/
+- https://opentelemetry.io/docs/collector/transforming-telemetry/
 - https://github.com/open-telemetry/opentelemetry-collector-releases/releases/tag/v0.165.0
 - https://github.com/sigstore/cosign
 - https://github.com/actions/attest-build-provenance
