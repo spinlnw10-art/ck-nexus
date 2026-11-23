@@ -76,7 +76,11 @@ def main() -> int:
     output = workspace / "q16-evidence.json"
     with output.open("x", encoding="utf-8") as stream:
         stream.write(json.dumps(evidence, indent=2, sort_keys=True) + "\n")
-    print(json.dumps({"status": "EVIDENCE_MANIFEST_CREATED", "artifacts": len(evidence["artifacts"])}))
+    print(
+        json.dumps(
+            {"status": "EVIDENCE_MANIFEST_CREATED", "artifacts": len(evidence["artifacts"])}
+        )
+    )
     return 0
 
 
