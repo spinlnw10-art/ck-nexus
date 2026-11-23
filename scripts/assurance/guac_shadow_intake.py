@@ -61,7 +61,9 @@ def validate_input(path_text: str) -> dict[str, Any]:
         raw = path.read_bytes()
         document = json.loads(raw)
     except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
-        raise IntakeError(f"cannot read valid UTF-8 JSON from {path}: {exc}") from exc
+        raise IntakeError(
+            f"cannot read valid UTF-8 JSON from {path}: {exc}"
+        ) from exc
     if not isinstance(document, dict):
         raise IntakeError(f"document root must be a JSON object: {path}")
     kind = classify_document(document)
@@ -106,7 +108,10 @@ def build_manifest(candidate_sha: str, inputs: list[str]) -> dict[str, Any]:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--candidate-sha", required=True)
-    parser.add_argument("--input", action="append", default=[], help="SBOM or in-toto JSON file; repeatable")
+    parser.add_argument(
+        "--input", action="append", default=[],
+        help="SBOM or in-toto JSON file; repeatable",
+    )
     parser.add_argument("--output", required=True, help="Manifest output path")
     args = parser.parse_args(argv)
 
