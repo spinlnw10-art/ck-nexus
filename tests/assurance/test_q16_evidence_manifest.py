@@ -51,9 +51,10 @@ class Q16EvidenceManifestTests(unittest.TestCase):
             self.assertFalse(manifest["authority"]["legal_conclusion_made"])
 
     def test_rejects_invalid_candidate_sha(self) -> None:
-        with tempfile.TemporaryDirectory() as directory:
-            with self.assertRaisesRegex(ValueError, "candidate SHA"):
-                MODULE.build_manifest("not-a-sha", self._workspace(Path(directory)))
+        with tempfile.TemporaryDirectory() as directory, self.assertRaisesRegex(
+            ValueError, "candidate SHA"
+        ):
+            MODULE.build_manifest("not-a-sha", self._workspace(Path(directory)))
 
     def test_rejects_symlink_report(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
