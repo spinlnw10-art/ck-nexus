@@ -55,9 +55,12 @@ class DurableExecutionReplayStore:
     def consume_once(self, execution_id: str) -> bool:
         if not execution_id:
             return False
-        db = sqlite3.connect(self.database_path, timeout=2, isolation_level=None)
+        db = sqlite3.connect(self.database_path, timeout=30, isolation_level=None)
         try:
-            db.execute("PRAGMA busy_timeout=2000")
+            # Concurrent workers may queue behind a single atomic claim. Keep the
+            # SQLite lock wait aligned with the durable store rather than failing
+            # valid work after an arbitrary two-second contention window.
+            db.execute("PRAGMA busy_timeout=30000")
             db.execute("BEGIN IMMEDIATE")
             try:
                 db.execute(

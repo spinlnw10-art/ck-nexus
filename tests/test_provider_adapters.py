@@ -56,3 +56,21 @@ async def test_openai_adapter_uses_broker_without_exposing_key() -> None:
     assert result == "provider result"
     assert captured["api_key"] == "sk-provider-secret"
     assert "sk-provider-secret" not in repr(adapter.__dict__)
+
+
+def test_creator_runtime_build_input_serializes_unicode_brief() -> None:
+    from creator_app.runtime import CreatorRuntime
+    from creator_app.schemas import RunRequest
+
+    request = RunRequest(
+        agent_id="editorial-reviewer",
+        prompt="ทดสอบภาษาไทย",
+        audience="ผู้ชมทั่วไป",
+        platform="internal",
+        tone="สั้นมาก",
+        language="ไทย",
+    )
+    rendered = CreatorRuntime._build_input(request)
+
+    assert '"objective_or_source": "ทดสอบภาษาไทย"' in rendered
+    assert '"language": "ไทย"' in rendered

@@ -54,6 +54,7 @@ AGNES is the governed capability layer for CK-NEXUS. Skills describe *how* to pe
     {"id":"legs.workspace_open","version":"1.0.0","organ":"legs","description":"Create or select an isolated local/E2B/Codespaces/Daytona workspace through the broker.","capabilities":["workspace","terminal"],"risk":"external_write","approval_required":true,"executor":"workspace_broker","tags":["workspace","terminal","codespace","sandbox"]},
     {"id":"legs.git_branch","version":"1.0.0","organ":"legs","description":"Create a feature branch without rewriting existing history.","capabilities":["git","branch"],"risk":"local_write","approval_required":false,"executor":"workspace","tags":["git","branch","upgrade","develop"]},
     {"id":"mouth.report","version":"1.0.0","organ":"mouth","description":"Produce a concise evidence-backed report or proposal.","capabilities":["report","explain"],"risk":"read_only","approval_required":false,"executor":"provider","tags":["report","summary","explain","proposal"]},
+    {"id":"ecosystem.accelerate","version":"1.0.0","organ":"nervous_system","description":"Discover, compare, benchmark and govern compatible coding skills, plugins, design systems, browser/API integrations and performance tools.","capabilities":["skill_discovery","tool_benchmark","integration_research","performance_optimization"],"risk":"read_only","approval_required":false,"executor":"research","tags":["discover","benchmark","fast","coding","tools","plugins","browser","integrations","design","performance","api","website","skills","agents"]},
     {"id":"upgrade.self_improve","version":"1.0.0","organ":"nervous_system","description":"Run the governed self-upgrade lifecycle from discovery through evidence; production merge remains approval-gated.","capabilities":["self_upgrade","orchestration"],"risk":"high_impact","approval_required":true,"executor":"controller","tags":["upgrade","self-improve","develop","autonomous"]}
   ]
 }
@@ -65,6 +66,12 @@ AGNES is the governed capability layer for CK-NEXUS. Skills describe *how* to pe
 Discover → Verify source → Extract capability → Compare with current baseline → Create proposal → Risk review → Create isolated branch/workspace → Implement bounded change → Compile → Test → Security scan → Benchmark/eval → Build evidence → Council review → Human approval for merge/canary → Canary → Observe → Rollback on failure → Append learning.
 
 The lifecycle may continue automatically through safe local development steps. It must stop before external/destructive/high-impact actions unless the relevant approval policy has already been satisfied.
+
+## Ecosystem acceleration
+
+When a request involves coding speed, tool selection, skills/plugins, design-to-code, browser automation, APIs, websites or external systems, select `ecosystem.accelerate` alongside the relevant specialist skills. Discover candidates, inventory existing CK-NEXUS capabilities, benchmark against a reproducible baseline, and compare compatibility, quality, security, license, permission scope, data handling and total cost. Prefer reuse/extension before new dependencies. Record provenance and rollback. A discovery result is not an installation or authorization.
+
+ChatGPT plugins and Termux/CK-NEXUS packages are separate installation domains. Verify the connection and runtime independently. External tools remain subordinate to CK-NEXUS Core. Credentials, external writes, paid usage, production changes, merge and deployment require explicit authorization and Core governance. Keep PASS, FAIL, NOT TESTED and BLOCKED distinct; preserve valid historical evidence and avoid unnecessary repeat audits.
 
 ## AGNES Execution Kernel Phase 1 — Security Baseline invariants
 

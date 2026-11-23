@@ -14,6 +14,7 @@ CK-NEXUS is one platform with one canonical application runtime. **Agnes** is it
 | Run the application | [Quick start](#quick-start) · [Canonical Runtime Contract](docs/CK_NEXUS_UNIFIED_OPERATIONS_CONTRACT_V1.md) |
 | See live development evidence | Start the Creator App and open **/development**; API: **/api/dev-status** |
 | Understand Agnes and agent governance | [Agnes Master Upgrade](docs/CK-NEXUS-AGNES-MASTER-UPGRADE.md) · [Development Council](docs/DEVELOPMENT_COUNCIL.md) |
+| Ecosystem skills, plugins, and speed improvements | [CK-NEXUS Ecosystem Growth Memory](docs/CK_NEXUS_ECOSYSTEM_MEMORY.md) · [Ecosystem Acceleration Skill](.github/skills/cknexus-ecosystem-acceleration/SKILL.md) · [System Skills Catalog](capabilities/system-skills.catalog.json) |
 | Review governed specialist assistants | [Agent Operating Model](docs/CK_NEXUS_AGENT_OPERATING_MODEL.md) · [AGNES Capability Fabric](docs/AGNES_CAPABILITY_FABRIC.md) · [System Skills Catalog](capabilities/system-skills.catalog.json) · [PR #413](https://github.com/spinlnw10-art/ck-nexus/pull/413) |
 | Configure integrations | [Integration Hub](docs/INTEGRATION_HUB.md) |
 | Review security and tests | [Security Audit](docs/SECURITY_AUDIT.md) · [Test Report](docs/TEST_REPORT.md) |

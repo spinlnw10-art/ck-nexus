@@ -38,6 +38,7 @@ from creator_app.connector_fabric import (
     OpenAPIClient,
 )
 from creator_app.connector_fabric.security import EndpointSecurityError
+from creator_app.council_authority.runtime_binding import build_omni_context_factory
 from creator_app.credential_broker import CredentialBroker, CredentialId
 from creator_app.credential_vault import build_credential_vault
 from creator_app.dev_team import DevTeamRuntime
@@ -155,6 +156,9 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         credential_broker=credential_broker,
     )
     agnes_skill_file = FilePath(__file__).resolve().parent / "skills" / "agnes" / "SKILL.md"
+    omni_context_factory = build_omni_context_factory(
+        runtime_data_dir=resolved_settings.agnes_ledger_path.parent
+    )
     agnes = AgnesNervousSystem(
         skill_file=agnes_skill_file,
         ledger_path=resolved_settings.agnes_ledger_path,
@@ -168,6 +172,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         environment=resolved_settings.environment,
         phase3_redis_url=resolved_settings.agnes_redis_url,
         phase3_cgroup_root=resolved_settings.agnes_cgroup_root,
+        execution_context_factory=omni_context_factory,
     )
     gmail_oauth = GmailOAuthManager(
         credential_broker,
@@ -1059,7 +1064,16 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     async def agnes_execution_status(
         _: None = Depends(require_access_token),
     ) -> dict[str, object]:
-        return agnes.dispatcher.status()
+        result = agnes.dispatcher.status()
+        result["omni_authority"] = {
+            "configured": agnes.execution_context_factory is not None,
+            "mode": (
+                "independent_http"
+                if agnes.execution_context_factory is not None
+                else "not_configured"
+            ),
+        }
+        return result
 
     @app.post("/api/agnes/execute")
     async def agnes_execute(
@@ -1077,6 +1091,9 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             "allowlist_paths": payload.allowlist_paths,
             "granted_capabilities": payload.granted_capabilities,
         }
+        if (payload.executor or skill.executor) == "sandbox":
+            plan_step["tool_id"] = "linux_namespace_sandbox"
+            plan_step["target_id"] = "local_sandbox_workspace"
         result = await agnes.execute_skill(
             plan_step,
             goal=payload.goal,

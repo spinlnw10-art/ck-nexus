@@ -372,9 +372,17 @@
       "id": "termux_namespace_sandbox",
       "decision": "BLOCKED_BY_EVIDENCE",
       "risk": "guarded",
-      "evidence": "unshare_user_namespace_unavailable_on_current_termux",
+      "evidence": "linux_namespace_runner_health_probe_failed_2026-11-24: unshare failed to execute /bin/bash in the current Termux/PRoot rootfs; 8 sandbox integration tests skipped",
       "source_status": "blocked",
-      "notes": "The current Termux environment rejects unshare -Ur; do not label it an isolated sandbox."
+      "notes": "A bare unshare canary is insufficient: the full namespace/mount/chroot runner cannot start /bin/bash in the current Termux/PRoot rootfs. Keep sandbox execution disabled and do not claim runtime isolation until the complete runner probe passes."
+    },
+    {
+      "id": "ecosystem_acceleration",
+      "decision": "REUSE",
+      "risk": "read_only",
+      "evidence": ".github/skills/cknexus-ecosystem-acceleration/SKILL.md; creator_app/skills/agnes/SKILL.md",
+      "source_status": "current_repo",
+      "notes": "Governed discovery, benchmarking and integration workflow is now part of AGNES skill routing; adoption of external tools remains separately gated."
     }
   ]
 }
