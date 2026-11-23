@@ -1,0 +1,32 @@
+name: Evidence Adapter Unit Tests
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - "scripts/assurance/**"
+      - "tests/assurance/**"
+      - ".github/workflows/evidence-adapter-tests.yml"
+  push:
+    branches: [feature/q10-q16-evidence-adapter-clean]
+    paths:
+      - "scripts/assurance/**"
+      - "tests/assurance/**"
+      - ".github/workflows/evidence-adapter-tests.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  adapter-unit-tests:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - name: Set up Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.12"
+      - name: Run standard-library unit tests
+        run: python -m unittest discover -s tests/assurance -p "test_*.py" -v
