@@ -1,0 +1,3582 @@
+{
+  "snapshot_date": "2026-11-23",
+  "main_sha": "944d7cb70a5d59d53c8fb379752bbee2085f7c8c",
+  "main_tree": "55bc545e5afd6379c46a464608601efeef213a6a",
+  "live_remote_branches": 401,
+  "local_remote_tracking_refs": 407,
+  "stale_local_only_refs": [
+    "docs/clarify-release-evidence-baseline-20261119",
+    "docs/rebaseline-release-status-20261119",
+    "feature/public-beta-feedback-20261119",
+    "pr-387",
+    "pr-392-audit"
+  ],
+  "missing_local_refs": [],
+  "branches_scanned": 401,
+  "errors": [],
+  "distinct_heads": 380,
+  "distinct_trees": 372,
+  "prefix_counts": {
+    "agent": 2,
+    "arch": 12,
+    "audit": 3,
+    "automation": 1,
+    "backup": 4,
+    "brand": 1,
+    "[root]": 8,
+    "chore": 2,
+    "ci": 1,
+    "cknexus": 9,
+    "closure": 3,
+    "code-coverage-agent": 1,
+    "codex": 2,
+    "design": 1,
+    "dev": 5,
+    "diag": 1,
+    "docs": 14,
+    "feat": 40,
+    "feature": 8,
+    "fix": 58,
+    "hardening": 2,
+    "infra": 2,
+    "integration": 1,
+    "ops": 20,
+    "package": 1,
+    "post-p0": 122,
+    "prep": 5,
+    "prepare": 3,
+    "product": 1,
+    "q10": 5,
+    "refresh": 1,
+    "release": 3,
+    "research": 8,
+    "revert": 1,
+    "review": 1,
+    "sale": 4,
+    "security": 13,
+    "ui": 2,
+    "upgrade": 10,
+    "verify": 20
+  },
+  "branches_merged_into_main": 30,
+  "branches_not_merged_into_main": 371,
+  "branches_same_tree_as_main": [
+    "main"
+  ],
+  "same_head_groups": [
+    {
+      "sha": "687059303163510ace163eaba65b7890624d6e67",
+      "branches": [
+        "backup/pre-consolidation-20261031",
+        "backup/termux-20261029"
+      ]
+    },
+    {
+      "sha": "f08fdc238641c7f8157937295bb7dbed9a3ba7b6",
+      "branches": [
+        "feat/cognitive-control-universe-v1",
+        "feat/telegram-alerting-control-universe-v1"
+      ]
+    },
+    {
+      "sha": "e1bb690e63255fbe351dd4d2879f9e59b2c3fd50",
+      "branches": [
+        "feat/facebook-meta-connector",
+        "noop"
+      ]
+    },
+    {
+      "sha": "489ecb18a0c940b935f0ae3eb89601d0744af73c",
+      "branches": [
+        "feat/n8n-runtime-registration-guard-v1",
+        "post-p0/n8n-runtime-registration-guard-v1"
+      ]
+    },
+    {
+      "sha": "08325b77925f191c0609cb1b8ad86930324b93ed",
+      "branches": [
+        "fix/agnes-triad-dashboard-authority-tamper-v1",
+        "post-p0/agnes-triad-dashboard-projection-v1"
+      ]
+    },
+    {
+      "sha": "4f487a4d71580f630a428955e0a9d7b81060b398",
+      "branches": [
+        "fix/agnes-triad-evidence-test-attestation-v1",
+        "post-p0/agnes-triad-evidence-test-attestation-v1"
+      ]
+    },
+    {
+      "sha": "a4c3ff32b879d36eeb8c50a65f0359e690cf99bb",
+      "branches": [
+        "fix/failure-memory-fingerprint-replay-v1",
+        "post-p0/failure-memory-fingerprint-replay-v1"
+      ]
+    },
+    {
+      "sha": "16ac906111dc8173f4841ae66109a30a3b4a8ed0",
+      "branches": [
+        "fix/q04-q05-ci-repro",
+        "verify/q04-q05-converged-final",
+        "verify/q04-q05-converged-v2"
+      ]
+    },
+    {
+      "sha": "9e97a1d719a59d4721763654b6973915c247a369",
+      "branches": [
+        "fix/q05-bandit",
+        "verify/q04-q05-converged-v3"
+      ]
+    },
+    {
+      "sha": "5470413762d753b2687a2c9c5ae9d73f97bb8e24",
+      "branches": [
+        "fix/q05-e501",
+        "release/q04-q08-clean"
+      ]
+    },
+    {
+      "sha": "d8196c619170c564cc5bd079f6a3506900a488ba",
+      "branches": [
+        "fix/triad-subject-sha-validation-v1",
+        "post-p0/agnes-triad-pipeline-provenance-v1"
+      ]
+    },
+    {
+      "sha": "5192e32aebe4702f9dc249f8e1d23054c04dfc73",
+      "branches": [
+        "noop-check",
+        "post-p0/agnes-frontier-model-governance-v1-temp-check"
+      ]
+    },
+    {
+      "sha": "e4a5722fd33a5fb1bf17486ebfe56751573e8554",
+      "branches": [
+        "noop-should-not-create",
+        "post-p0/chat-b-digital-twin-v2-check"
+      ]
+    },
+    {
+      "sha": "b4146db8e23dff49520cbbc9d0194a15bcc5872d",
+      "branches": [
+        "ops/canonical-export-20260904-run",
+        "ops/canonical-export-20260904-trigger",
+        "post-p0/standards-integration-v1"
+      ]
+    },
+    {
+      "sha": "be4c7587dc9488000907e387c0de0d0688e238f4",
+      "branches": [
+        "ops/github-governance-hardening-v1-20260904",
+        "post-p0/github-governance-hardening-v1-20260904"
+      ]
+    },
+    {
+      "sha": "9666faca361cf8f7ecb910023e00ee72df13337d",
+      "branches": [
+        "post-p0/cognitive-knowledge-fabric-v1-20260903",
+        "upgrade/cognitive-knowledge-fabric-v1-20260903"
+      ]
+    },
+    {
+      "sha": "17106e80eab729c1d883a90f47c7ee34bb35dbda",
+      "branches": [
+        "post-p0/knowledge-persistence-v2-20260903",
+        "upgrade/knowledge-persistence-v2-20260903"
+      ]
+    },
+    {
+      "sha": "39f5c1adb9d761ab418cf088ff1f051b1ca731d1",
+      "branches": [
+        "q10/aikido-frozen-39f5c1ad",
+        "q10/aikido-frozen-39f5c1ad-20260829",
+        "q10/frozen-39f5c1ad-aikido"
+      ]
+    }
+  ],
+  "same_tree_groups": [
+    {
+      "tree": "8dc9ddf9d4bf27af5a96179ac655831445ca5d03",
+      "branches": [
+        "backup/pre-consolidation-20261031",
+        "backup/termux-20261029"
+      ]
+    },
+    {
+      "tree": "be9b839370b9c0be11f030e71ab20f3467766d46",
+      "branches": [
+        "feat/agnes-cognitive-foundation-v1",
+        "post-p0/agnes-cognitive-foundation-v1"
+      ]
+    },
+    {
+      "tree": "8913a5964f600729034a04729227b7de53380b0c",
+      "branches": [
+        "feat/cognitive-control-universe-v1",
+        "feat/telegram-alerting-control-universe-v1"
+      ]
+    },
+    {
+      "tree": "c867f484074dc16cf8dc76ec08ce95d7b1387cdc",
+      "branches": [
+        "feat/facebook-meta-connector",
+        "fix/q03-dependency-closure",
+        "noop"
+      ]
+    },
+    {
+      "tree": "f8ac54430ed65cd577fc3be22a1f79fdaa42e32a",
+      "branches": [
+        "feat/n8n-runtime-registration-guard-v1",
+        "post-p0/n8n-runtime-registration-guard-v1"
+      ]
+    },
+    {
+      "tree": "ea2696d8a06fe909a7d2c884f2bae5f124112798",
+      "branches": [
+        "fix/agnes-triad-dashboard-authority-tamper-v1",
+        "post-p0/agnes-triad-dashboard-projection-v1"
+      ]
+    },
+    {
+      "tree": "2bb479290b21c0658e0f1907b0082693ed4171d2",
+      "branches": [
+        "fix/agnes-triad-evidence-test-attestation-v1",
+        "post-p0/agnes-triad-evidence-test-attestation-v1"
+      ]
+    },
+    {
+      "tree": "0525195934f703a8becf8a39f6397b2411e0bb2e",
+      "branches": [
+        "fix/connector-snapshot-serialization-v2",
+        "q10/aikido-frozen-39f5c1ad",
+        "q10/aikido-frozen-39f5c1ad-20260829",
+        "q10/frozen-39f5c1ad-aikido"
+      ]
+    },
+    {
+      "tree": "1e2a1d148309254f67c329a28453b204dbd80859",
+      "branches": [
+        "fix/failure-memory-fingerprint-replay-v1",
+        "post-p0/failure-memory-fingerprint-replay-v1"
+      ]
+    },
+    {
+      "tree": "6106e0510f5c5ef687d376128f36ff0509fe68ff",
+      "branches": [
+        "fix/pr46-cknexus-ci-ruff-v1",
+        "post-p0/opencode-control-bridge-v1"
+      ]
+    },
+    {
+      "tree": "17c7053f25093ff43189b7d25bb326f95f66cc0d",
+      "branches": [
+        "fix/q04-q05-ci-repro",
+        "verify/q04-q05-converged-final",
+        "verify/q04-q05-converged-v2"
+      ]
+    },
+    {
+      "tree": "478fa4439fc4cb41639eb67934cdcb40f297fa12",
+      "branches": [
+        "fix/q05-bandit",
+        "verify/q04-q05-converged-v3"
+      ]
+    },
+    {
+      "tree": "68c390bc03aefd2d9e5bcedff18bab80d6334a84",
+      "branches": [
+        "fix/q05-e501",
+        "release/q04-q08-clean"
+      ]
+    },
+    {
+      "tree": "1bfb62dec8ed841f103403dcc2ed0fd339a83182",
+      "branches": [
+        "fix/q05-ruff-format",
+        "r33-closure-hardening-v02"
+      ]
+    },
+    {
+      "tree": "634a6efd8a77e22e9f98fe1518c1d273f55a0ea8",
+      "branches": [
+        "fix/refresh-main-candidate-evidence-20260907",
+        "fix/refresh-q05-q08-q09-a6e74b5d-20260907"
+      ]
+    },
+    {
+      "tree": "f53e964ad2c47a5d517a9e24fe36498c452b264c",
+      "branches": [
+        "fix/triad-subject-sha-validation-v1",
+        "post-p0/agnes-triad-pipeline-provenance-v1"
+      ]
+    },
+    {
+      "tree": "a907c09dc3f5b2a888ceed2e8f5bf58eef8353a6",
+      "branches": [
+        "noop-check",
+        "post-p0/agnes-frontier-model-governance-v1-temp-check"
+      ]
+    },
+    {
+      "tree": "92c182c414e08212170c33e807fb4e43ca21dc65",
+      "branches": [
+        "noop-should-not-create",
+        "post-p0/chat-b-digital-twin-v2-check"
+      ]
+    },
+    {
+      "tree": "25d9c74db2b553667ad085172f8ac7beff4146aa",
+      "branches": [
+        "ops/canonical-export-20260904-run",
+        "ops/canonical-export-20260904-trigger",
+        "post-p0/standards-integration-v1",
+        "post-p0/stress-lab-level2-write-activation-gate-v1"
+      ]
+    },
+    {
+      "tree": "a3a4e7f636ca8eaa9e17fe6c4992afc9fddadcb4",
+      "branches": [
+        "ops/github-governance-hardening-v1-20260904",
+        "post-p0/github-governance-hardening-v1-20260904"
+      ]
+    },
+    {
+      "tree": "05d4cfc19bfa8c4ad51f65efb3558e7b5350f35a",
+      "branches": [
+        "post-p0/cognitive-knowledge-fabric-v1-20260903",
+        "upgrade/cognitive-knowledge-fabric-v1-20260903"
+      ]
+    },
+    {
+      "tree": "efafbc61d28f6efe137e8e5d7af467ce64d69f3f",
+      "branches": [
+        "post-p0/dev-assistant-fabric-v1",
+        "post-p0/universal-system-clean-v2"
+      ]
+    },
+    {
+      "tree": "34502d35af06dfac5811b7359dec5131cb5eff44",
+      "branches": [
+        "post-p0/knowledge-persistence-v2-20260903",
+        "upgrade/knowledge-persistence-v2-20260903"
+      ]
+    }
+  ],
+  "branches": [
+    {
+      "branch": "agent/closure-diagnostics-2026-10-02",
+      "head": "8f71916e610a5ca5e5cbad368954face38793855",
+      "tree": "aebb7cc2a5f78f491ce17390cf23304797200d6d",
+      "head_date": "2026-10-02T08:16:29+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "agent/unified-control-package",
+      "head": "a6e74b5d4aabf1c0b255f4fab5ad1cc24063749d",
+      "tree": "9fb4cf31098ed92ba9539f7f8cd789bfafc15649",
+      "head_date": "2026-09-07T08:58:03+07:00",
+      "merged_into_main": true,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "arch/autonomous-platform-fabric-gen3-v01",
+      "head": "7ecc1bdec491b355dc0fb3c9e9d1af368eecccde",
+      "tree": "f46dfa31e4bf5e53859012a6db776c66baa2a243",
+      "head_date": "2026-08-15T05:13:55+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "arch/autonomous-platform-fabric-v01",
+      "head": "83365a919d57168db8467223d47bbc81815393ab",
+      "tree": "8868eb9083316801d2b497c5c85e10d6186de0e0",
+      "head_date": "2026-08-14T23:28:06+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "arch/base44-cknexus-federation-v01",
+      "head": "d4f634cad3ae413900be7a86f197d069c4ba548f",
+      "tree": "a8d9eec74e790dcfe254c41fea49cebd3fe17755",
+      "head_date": "2026-08-15T05:24:00+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "arch/cognitive-governor-contracts-v01",
+      "head": "9a5fc1dc3414e138b1bf3758ee36cdb1406a75cc",
+      "tree": "998e5942c650fe546d64b2782760c19c10ec82d0",
+      "head_date": "2026-08-15T05:58:18+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "arch/control-plane-contracts-v01",
+      "head": "80351d2395e693249f92bda3b7c2bf8e029a94ff",
+      "tree": "12a463a1e6fdaeb3ce939b488043399099cfe0e1",
+      "head_date": "2026-08-15T05:49:28+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "arch/fabric-hardening-v02",
+      "head": "6bb7527d296814ad79dddc1b63aa4a25ca743771",
+      "tree": "139f0c049a279de4cfa1f55bacf6014c3c7ae26e",
+      "head_date": "2026-08-15T05:48:48+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "arch/knowledge-memory-ingestion-v01",
+      "head": "4017b6de7ef78f4537a03820c8f76a6990f72fa6",
+      "tree": "dadff674e4faa63b8f3e7b6e5804532d987530bf",
+      "head_date": "2026-08-15T05:50:44+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "arch/monorepo-layered-v01",
+      "head": "d67eae6eba746fd4a11d1df98155866d89fe978d",
+      "tree": "f57f7f5836c2328947674bcada69a1ad8336fdc7",
+      "head_date": "2026-08-14T23:20:04+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "arch/monorepo-layered-v1",
+      "head": "fa3fb00a8f4314cc83184ed65dc36060549b443e",
+      "tree": "2d038010378aceb8e31dcde2bf625c28ed27b3dc",
+      "head_date": "2026-08-14T23:18:47+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "arch/observability-evidence-contracts-v01",
+      "head": "b5cef69996ea66fc9839f868b1e4662978914f1c",
+      "tree": "abd3f2e0b072743712b09343b1500580ee76339c",
+      "head_date": "2026-08-15T05:54:06+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "arch/recovery-q14-contracts-v01",
+      "head": "75e932e71d06f28a1fd4b8b1791d2d7cf0977655",
+      "tree": "5a945f9deb9260dbba341c350825a4c1cc42eeae",
+      "head_date": "2026-08-15T05:56:26+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "arch/unified-architecture-package-v01",
+      "head": "5c93d4cd41a8f5c689686ef5793c6013c0b9138b",
+      "tree": "2551335cc078f4562384421120eb9509931b498a",
+      "head_date": "2026-08-15T06:00:15+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "audit/20261014-readonly-baseline",
+      "head": "5ef8501225f6ce9d9fc170ce377a7e3a2a34c2bd",
+      "tree": "e75767ff83d983db47ca3da865bc9067a1a71bd5",
+      "head_date": "2026-10-14T21:38:55Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "audit/bootstrap-v5.2.3",
+      "head": "7e19473b9b0c481732fa05a589a5083056a1f798",
+      "tree": "07b64e99f20c2a9e1168db1b06921285670af51a",
+      "head_date": "2026-10-17T16:43:12Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "audit/canonical-evidence-ledger-20261001",
+      "head": "a7d2588c885a2d29fe09faa9369be008da79081a",
+      "tree": "ad67fdde45aa6f81bcb1d2dc5bfb51fa39c814c0",
+      "head_date": "2026-10-01T12:01:39+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "automation/capability-registry-weekly-2026-11-09",
+      "head": "136413f8bceb4fbbba21c08109e97df4e77e18ed",
+      "tree": "096066b5f9ab60623f9275d78b1f480998436a06",
+      "head_date": "2026-11-09T04:13:43Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "backup/ck-nexus-snapshot-2026-08-21",
+      "head": "7d2ab8ced2112a34d79027530a2248b550f493f1",
+      "tree": "8c1146fbcfc6a54eb4dbca1eeb80917cf2e0bad6",
+      "head_date": "2026-08-21T11:29:23Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "backup/pre-consolidation-20261031",
+      "head": "687059303163510ace163eaba65b7890624d6e67",
+      "tree": "8dc9ddf9d4bf27af5a96179ac655831445ca5d03",
+      "head_date": "2026-10-26T11:24:07+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "backup/reinstall-2026-08-25",
+      "head": "a045951996a69e9c9bbfd6afed662b13a44b944d",
+      "tree": "863a41b35537c45b86035b44e87a294176f90920",
+      "head_date": "2026-08-25T21:55:42+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "backup/termux-20261029",
+      "head": "687059303163510ace163eaba65b7890624d6e67",
+      "tree": "8dc9ddf9d4bf27af5a96179ac655831445ca5d03",
+      "head_date": "2026-10-26T11:24:07+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "brand/github-presentation-20261008",
+      "head": "270ed1999e7ae57c27b85e99d1c5a63ad1213e8a",
+      "tree": "7e6e20a7d82b973c08351acd5c6d826c6739fe14",
+      "head_date": "2026-10-08T16:22:31+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "c2-only",
+      "head": "3ab6cb754df9d4e872a214b0ad478fb95a1484e9",
+      "tree": "63d413baf625086421cb94e33aafb357492dbe2e",
+      "head_date": "2026-10-19T08:52:13Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "chore/auto-update-badge-system",
+      "head": "09b3317c7622ce87e1b81170480b98763cf0345d",
+      "tree": "b4fe002d6df8bb78ee3bb8fc9814d733ea73b24f",
+      "head_date": "2026-11-10T21:15:41+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "chore/q10-rebaseline",
+      "head": "bfa05c930d92d25fd75921c905e3583f27f1aecc",
+      "tree": "fe714046bf03b0091f8598b4c39f984893a1b4f4",
+      "head_date": "2026-10-31T16:18:22Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "ci/development-infra-evidence-boundary-v1",
+      "head": "04107daf9f76f19ce7497a0f0b1d08cbcaf7c88a",
+      "tree": "73a513b61efd380ba4624e99ab348d8a54d36298",
+      "head_date": "2026-08-22T19:25:46+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "cknexus/auto-dev/11c25d2fc2eb5bdb",
+      "head": "b1b443ef0dc7b9f4bf59544857b004b89f390d52",
+      "tree": "1f2748ab67c0aa6781b75d34f5a6bba716e7e835",
+      "head_date": "2026-10-27T00:25:02Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "cknexus/auto-dev/20261026-final-gate",
+      "head": "64e3fc010837990a2b8ed6243cabc16e489bfe9b",
+      "tree": "b97ada5a9c309e3c8526c692fc7ea9249bef1409",
+      "head_date": "2026-10-26T12:48:05Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "cknexus/auto-dev/371efa6adc491a8a",
+      "head": "f0fb9a7cb020e012dfbaa4e829245b3a54f4b099",
+      "tree": "d0ab0e192411213ad71fb57f53f57faa71ba3186",
+      "head_date": "2026-10-30T04:25:01Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "cknexus/auto-dev/857789e8232d1642",
+      "head": "bb2edead4630619e3cdfef9045e734de146d6b4c",
+      "tree": "053a4e94e1a82a5e6fe571d71c84110e76fb3eb0",
+      "head_date": "2026-10-29T04:25:26Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "cknexus/auto-dev/9c71df302c5d1f68-bff3ef06b6e2",
+      "head": "34ea704e3ab155cfd7b7162f0bd74ef75fb50829",
+      "tree": "772194bea95ebb05113af9ed5c54ca48fdb7def9",
+      "head_date": "2026-10-26T18:55:22Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "cknexus/auto-dev/a240f6777fbce37b",
+      "head": "8ad05f5e97931b6dfdb6c9a397d396e700ac6374",
+      "tree": "a48348b32a9983791aff524664e9474e977ca8b3",
+      "head_date": "2026-10-27T04:25:26Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "cknexus/auto-dev/cc836a629922ca99",
+      "head": "fa8eb754e9d5ac1ebe1d939498c904d2af1e7bd5",
+      "tree": "3afe6bd9d8685c8fa568973ffd8b4989706e51a4",
+      "head_date": "2026-10-28T04:25:26Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "cknexus/auto-dev/dc18b325364a804a",
+      "head": "4c5c091923e9e6b93f34fa47e1b52c9c5b7bbcf4",
+      "tree": "afb37f7d66fb740df7e6ed0af9f14db74bc1e43c",
+      "head_date": "2026-10-25T21:35:04Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "cknexus/auto-dev/e42fc04424360811",
+      "head": "ae8c0f422dce23b4c41d7ea209779e507ae559e8",
+      "tree": "18024a97c2cf4b024734b4166ab78dda931a72f0",
+      "head_date": "2026-10-31T04:25:10Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "closure/no-go-20261001",
+      "head": "216bbee23dcc54c6f1b55271701e8df328b90165",
+      "tree": "7f38d8fd099a9d60a820b47d295677ad5de7fb27",
+      "head_date": "2026-10-01T12:38:55+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "closure/one-shot-evidence-closure-20261002",
+      "head": "583954184211472f7b8955c8baf80428f1373ec5",
+      "tree": "4d1fc791b7c280e277a869c1f8f68686e6d661e9",
+      "head_date": "2026-10-02T08:53:18+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "closure/q10-q16-unification-20261105",
+      "head": "13cf6e1b2744c796dda85052b2b92a65e570536c",
+      "tree": "58d490d1bd670d3cbdbb3302c2b5972155869fe5",
+      "head_date": "2026-11-10T08:16:08Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "code-coverage-agent/fix-341440761-1333067619-504675e3-5573-4c55-8a40-02cfbfbc651f",
+      "head": "cfe3ca4517ca4aec5076a5404f347af56afd6dd5",
+      "tree": "20f2073aae91a586619e91bbfd33cc93ab9da872",
+      "head_date": "2026-10-15T14:01:07Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "codex/q11-capability-gates",
+      "head": "e40e7417eac8f8cae6f96d956e32b1f66d4d6aad",
+      "tree": "b203cbac41db9c4a094b259865c12b23f29d0764",
+      "head_date": "2026-10-08T10:15:19+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "codex/q11-p02-error-classification",
+      "head": "9e739a2eb83ef4bdbb81973da81021149ef68bc4",
+      "tree": "c0c3ed2c14aa769259850a203c2a6258c85e9222",
+      "head_date": "2026-10-08T11:21:05+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "design/contextual-automation-workspace",
+      "head": "9a3f4d8b70b26a9964e9ed83a06cfb6fccbc2ade",
+      "tree": "cbdc35da8d1d308fe34ad6fd9a2e0d92f82e9684",
+      "head_date": "2026-11-11T21:36:29Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "dev/agnes-cognitive-fabric-v1",
+      "head": "d182ea427cf66178cc4f3f9f42adf7156813d3f9",
+      "tree": "bea36b0d83e940861f5b36bb3b8f30f5088d61ad",
+      "head_date": "2026-08-23T11:40:33+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "dev/agnes-design-intelligence-v1",
+      "head": "c03dcb4cf40f6935aeda3958f13daa3d45ea01dc",
+      "tree": "c011fb2af92d3fdc98934c5da3336a7210b36fda",
+      "head_date": "2026-08-23T10:13:45+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "dev/freemium-intelligence-mesh-v1",
+      "head": "e0f592c17d7879aefe5d10a4e4fe93385a94508c",
+      "tree": "fcc2ccfe10fdca58cb0b046afb68550358ed9d34",
+      "head_date": "2026-08-23T07:46:43+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "dev/state-projector-v1",
+      "head": "5539491ec5bb9ae3d8c6aff83d4631e3c2ce63e3",
+      "tree": "97023de9d3de6ae39d208f5b66faf5b2671fe55d",
+      "head_date": "2026-08-23T08:58:32+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "dev/system-skills-harvest-v1",
+      "head": "86b97e7d4acd00055f1bf292e7e09e74e16f5e78",
+      "tree": "6108ee859c1c410cead3b2e837f65cce8672c476",
+      "head_date": "2026-09-03T19:29:44+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "diag/pr181-ruff-import-v1",
+      "head": "0adf67255732aeb90458bf4130e3be901567330f",
+      "tree": "b193deaa4c727a76fffd6cc7c5c1f40e0db7df07",
+      "head_date": "2026-08-27T16:41:12+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "docs/automation-intake-gateway",
+      "head": "a0de5df91a111f76d6de844e6c43e514109ae864",
+      "tree": "4d44467ac600889401b671aaab82f10060472d42",
+      "head_date": "2026-10-12T03:54:50+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "docs/autonomous-platform-knowledge-base-2026-10-31",
+      "head": "2042f0bb7ff5451d799cd32a46d51f39ae2d5bfd",
+      "tree": "9bfd3592da2640b92597283752cefa12a829a01a",
+      "head_date": "2026-10-31T07:56:35Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "docs/control-state-foundation-2026-10-12",
+      "head": "504ddda41e72de593810277d9c313ce3a874f007",
+      "tree": "ecbc9321758896c061920a68e47056b46df9ce84",
+      "head_date": "2026-10-12T06:42:09+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "docs/dgx-spark-ai-server-launch-20260904",
+      "head": "1feeb356af92a6f895c33a04c9b23fc421e8fbe9",
+      "tree": "3d9986a65c869c9c5c0395c36a518e483ecf85b7",
+      "head_date": "2026-08-31T18:10:39+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "docs/evidence-closure-system-2026-10-12",
+      "head": "1d6c00e8fe70439b336ce72ed25424ae984e80bb",
+      "tree": "cd7c36e819b449b7bdb9602736ab0c701d5a66d4",
+      "head_date": "2026-10-12T10:15:53+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "docs/gen7-capability-gap-matrix-v1",
+      "head": "ebda7849c016305d1088c42c771fe66fadd4c474",
+      "tree": "c179d4e80fbd1493a2dca696f62a05abca305a8a",
+      "head_date": "2026-08-22T01:32:04+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "docs/knowledge-source-learning-blueprints-20260904",
+      "head": "3ceae15e81c1779d096f521ab863b186c20840dd",
+      "tree": "2109fe2db072460526051faa72cd3f446eb0d3df",
+      "head_date": "2026-09-04T00:12:41+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "docs/master-recovery-ledger-2026-10-12",
+      "head": "41666a6a7bd39d6ea651e083afee616ec3040105",
+      "tree": "0732f4d150bfa9455498139ad41e7e2cab6c8646",
+      "head_date": "2026-10-12T06:35:23+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "docs/q10-q12-runbook-subject89",
+      "head": "c56211d52989f8c84f74f668c676dff3460a3235",
+      "tree": "5da66e697101eb01821e6f6e3f09c850f1097bb0",
+      "head_date": "2026-08-16T21:01:54+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "docs/q10-q16-current-state-20261120",
+      "head": "59bb346b65e8f33297e67d0f6d9f53298493151e",
+      "tree": "0ddc3064982437c32c58ca68f32b30c82319f0b0",
+      "head_date": "2026-11-20T02:27:44+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "docs/readme-operational-status-20261117",
+      "head": "9dede30a98331861bcf773fbee198d9107e5de29",
+      "tree": "4903bb9bb89edc41758c465586dd16bdb7ccf7ad",
+      "head_date": "2026-11-16T20:44:19Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "docs/readme-rc-disclosure-agnes-5d-20261112",
+      "head": "85afb6bc188ee347eb21cbc19b60613ad0ef2024",
+      "tree": "e8c80749482cac5110fa3d4b32b658c5213c1d19",
+      "head_date": "2026-11-12T03:41:17Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "docs/release-status-candidates-20261101",
+      "head": "9d54bd90ff8b6a5ecc13bf40b7e86758dc34ddb4",
+      "tree": "ba07a4266e7e7c3d3ce0a0e0606a2e3d348cbdc7",
+      "head_date": "2026-10-31T20:36:10Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "docs/repository-consolidation-20261104",
+      "head": "b82423b083b85c13ef2fb9aaf0ba29b2097013a8",
+      "tree": "fd3bf930ae5ed098ee0b9a852ce8b365c1bd09c3",
+      "head_date": "2026-11-04T21:26:42+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "feat/adaptive-cognitive-chat-ui",
+      "head": "d5f8a192ea14e9623fa8699e8caf85a32a0ba310",
+      "tree": "a283c72c737047bcc063d21ef6503f41a18f8a4d",
+      "head_date": "2026-08-22T01:08:28+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "feat/adk-graph-execution-adapter",
+      "head": "6de669c620756287ad90ffa82db6d0879d40a394",
+      "tree": "36e0f37cf9caa38ac60339ee8217e6ed1294c6c1",
+      "head_date": "2026-10-04T05:17:39+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "feat/agnes-cognitive-foundation-v1",
+      "head": "6ae8bb99d33ccf6160ccb3d019c15bbab05e479b",
+      "tree": "be9b839370b9c0be11f030e71ab20f3467766d46",
+      "head_date": "2026-08-22T03:13:56+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "feat/agnes-experiential-memory-v1",
+      "head": "1d330796de31b4171f7091e619be6398bef8de33",
+      "tree": "91f1d48200bf3f03a9792839f1804d786abba600",
+      "head_date": "2026-08-22T01:55:53+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "feat/agnes-expert-fabric-v1",
+      "head": "cf2926b2fe36bfbabc7ab72cbd60aaa4fed939e4",
+      "tree": "90a40a54f82b23552f6a8493c8c5c1d221d31052",
+      "head_date": "2026-08-27T16:42:19+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "feat/agnes-idea-experimenter-v1",
+      "head": "2f3e8f33aab1ba4fe979e3d1442e366912176aa8",
+      "tree": "97eb35a7e1b3976df4ddea41d8e5d84e4126f69c",
+      "head_date": "2026-08-22T02:05:32+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "feat/agnes-persistent-ops-memory-20261110",
+      "head": "eb30d34903ab0dcce4c446caa97daf5730568cc7",
+      "tree": "51f7770ef52970abc2858a144b1ee3791373ac7f",
+      "head_date": "2026-11-11T01:49:22+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "feat/agnes-sentinel-evidence-auditor-20261105",
+      "head": "f9cef56f51e0d4a22c8421cb8208310f9f255ad4",
+      "tree": "d987d520445716e124dc70f56118677ec904fd37",
+      "head_date": "2026-11-10T07:47:16Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "feat/agnes-skill-foundry-v1",
+      "head": "b29a028c04ee6bcbd6409e508ad9c2e159322182",
+      "tree": "f2ff73a1a317bddea7cbc8ea1cda512a7307ee43",
+      "head_date": "2026-08-22T01:59:47+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "feat/ai-product-evolution-factory-20261006",
+      "head": "930cbde76a80571893319ff5b599d40ccf8ecf77",
+      "tree": "6625ae60b9c6064df0704bf132e48411b5471fd8",
+      "head_date": "2026-10-06T04:58:21+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "feat/apidog-capability-gateway-20261008",
+      "head": "5f66819fdd35d504c2c4432cb9f29ed2b0961a81",
+      "tree": "76419b3c9985e2646da480ff3f6bec63ee749f02",
+      "head_date": "2026-10-08T16:36:22+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "feat/approval-durability-verifier-v1",
+      "head": "aca9e92bd66f8a3abcab34d3f485cdb1fc3242ac",
+      "tree": "ef4c04c939219b4d7835ef1aa9b25f6b37303f09",
+      "head_date": "2026-08-22T18:59:19+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "feat/assurance-profile-20260903",
+      "head": "ada622d9975268fa6bed0ac1eb987c51eb0bb30d",
+      "tree": "095a37d11f0df10dd1e5356a03ca154221bb870f",
+      "head_date": "2026-09-03T19:27:37+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "feat/canonical-release-subject-forensics-20261110",
+      "head": "5ccb7499a7482034069b29251b904e6f28a3a35c",
+      "tree": "17f21796743a57c9360cc593975854d91048822a",
+      "head_date": "2026-11-10T19:18:11+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "feat/ck-nexus-platform-scaffold",
+      "head": "c01f4b2877a3f38a4b7a8603bebacbdd70aca2b1",
+      "tree": "2daed9fa5bd4dcdcb13b2ae3eb12609e7ec48123",
+      "head_date": "2026-08-14T22:20:49+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "feat/ck-nexus-test-portal",
+      "head": "40650ddf4dc92588c53d340725f0988c0b1880d3",
+      "tree": "bf622202d3efb70000140d7bcf67bd759c71fdf6",
+      "head_date": "2026-11-16T17:41:55Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "feat/cknexus-agent-operating-model-main-20261105",
+      "head": "2b442c4e9f932869015864a73311ade458042e4e",
+      "tree": "590fc1206ed866a02f82bfa1942ac683405b602c",
+      "head_date": "2026-11-05T08:21:39Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "feat/cknexus-certification-portal-v1",
+      "head": "e003a963703680500efa154dbc6b66e8ea2234e6",
+      "tree": "cebd564975e6f2d088d70426f01ba213583260cb",
+      "head_date": "2026-11-16T22:35:13Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "feat/cloud-worker-bridge-20261101",
+      "head": "7b14f5e6d1ba27986b37a43ffdf154221c701c4c",
+      "tree": "9ea6490144c046e417ac450d1d8965155d5bc97e",
+      "head_date": "2026-11-01T06:08:33Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "feat/cognitive-control-universe-v1",
+      "head": "f08fdc238641c7f8157937295bb7dbed9a3ba7b6",
+      "tree": "8913a5964f600729034a04729227b7de53380b0c",
+      "head_date": "2026-08-18T11:08:10+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "feat/credential-scope-termux-sandbox-v1",
+      "head": "484058c979835f8f207d37b3810a9a79ace5e0ab",
+      "tree": "410ac4fcc204a9e91d8cbdffac0ec53cc864b00c",
+      "head_date": "2026-08-22T02:31:03+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "feat/didit-kyb-react-native",
+      "head": "2ab081963df280ef6eeb01699ad4b06369d41132",
+      "tree": "c88a593b2948520b8dbb7e5493c5da9ea208e3e8",
+      "head_date": "2026-09-07T06:55:00Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "feat/facebook-meta-connector",
+      "head": "e1bb690e63255fbe351dd4d2879f9e59b2c3fd50",
+      "tree": "c867f484074dc16cf8dc76ec08ce95d7b1387cdc",
+      "head_date": "2026-08-13T22:52:10+07:00",
+      "merged_into_main": true,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "feat/free-fallback-85",
+      "head": "91f554ecf2483533af3097dad9bb890eee57cfa9",
+      "tree": "8a6b03305c8d0e571f5f6f9d227c4b85cc847ff2",
+      "head_date": "2026-08-23T07:59:00+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "feat/gemini-provider-20261119",
+      "head": "b0f1c601118053f12d14f2f2f9c84eafd7770c0b",
+      "tree": "ebf976d764783a65e26cd83d946a8a47fa3c507a",
+      "head_date": "2026-11-19T18:21:18Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "feat/live-development-status-20261101",
+      "head": "f4c41f36f3de0e7e9a2f06c3c9f14124190814a7",
+      "tree": "5ff1080fccefeb4c36df317a8cc9b2fe772186c2",
+      "head_date": "2026-10-31T19:31:50Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "feat/llm-keypool",
+      "head": "816e80ac02707ab5dddce6aa156ef8e754394750",
+      "tree": "97ffa174fd9506d524ac3d89df9128aba924cd13",
+      "head_date": "2026-08-17T22:45:50+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "feat/n8n-runtime-registration-guard-v1",
+      "head": "489ecb18a0c940b935f0ae3eb89601d0744af73c",
+      "tree": "f8ac54430ed65cd577fc3be22a1f79fdaa42e32a",
+      "head_date": "2026-08-23T10:31:56+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "feat/omni-runtime-binding-20261006",
+      "head": "48ad506a240e9888257ddf4065ff4b313ef8f3db",
+      "tree": "fae1d7e6bcb9397f26d6b80ed7eb7c6ea0373b99",
+      "head_date": "2026-10-06T04:48:44+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "feat/phase0-governed-contracts",
+      "head": "af93da475fcc1c32801f26e57025a585b70e72ae",
+      "tree": "ba49e1bf2a7c153952338570f1d8ec8c265a2554",
+      "head_date": "2026-08-19T04:32:09+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "feat/provider-council-omni-fabric-v1",
+      "head": "bc94f299aa20f9c2af84b6030db84a7b5c1971bf",
+      "tree": "705668bdf63162c572fdb9e481b3524f864394d3",
+      "head_date": "2026-08-22T02:11:45+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "feat/real-provider-adapters-v1",
+      "head": "3531f2b908dab3a78b597b252357a5544f07d452",
+      "tree": "53bce5d658edf796c3c81145623cded11d9f67c4",
+      "head_date": "2026-08-22T02:36:55+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "feat/research-control-profiles-20261006",
+      "head": "d3faa9a031bd2900e5b5bf4632b4a54fb0cc8d8b",
+      "tree": "f269fcd4ddd8b4f74a32787123c96e3951a2cc6d",
+      "head_date": "2026-10-06T06:17:16+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "feat/search-control-registry-20261101",
+      "head": "900d77b140535fdae15132e74b40124ab8bab570",
+      "tree": "008087fa87ab3ba1973f0acac4d4d496b1062143",
+      "head_date": "2026-11-01T06:47:57Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "feat/signed-approval-authority-v1",
+      "head": "e607a42a59f2bd499d8c1210999702382aab888a",
+      "tree": "2942b9367da4124c10010bbdc21dbad66e6e0c07",
+      "head_date": "2026-08-22T04:33:51+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "feat/telegram-alerting-control-universe-v1",
+      "head": "f08fdc238641c7f8157937295bb7dbed9a3ba7b6",
+      "tree": "8913a5964f600729034a04729227b7de53380b0c",
+      "head_date": "2026-08-18T11:08:10+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "feat/telegram-control-v1",
+      "head": "2219dc9b235e6740b4c9625c820541dd1d03adc8",
+      "tree": "f827aa648547019a317892cf9a607a3dddad1c00",
+      "head_date": "2026-08-22T20:40:44+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "feat/universal-ai-standard-20261006",
+      "head": "bbb618b49c360ca8475e91c50cbbe2aeddda11d3",
+      "tree": "761a04941c8e7f0dc625fc64534899526f53b8b0",
+      "head_date": "2026-10-06T05:01:26+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "feat/universal-omni-mainline-20261006",
+      "head": "02e9b24a2df0019fbf0cce137f04adcfbdadba91",
+      "tree": "8b31457c7b4ca8530d9e6a646b8284f9a316caf7",
+      "head_date": "2026-10-06T07:02:25+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "feat/universal-provider-onboarding-v1",
+      "head": "9807e5ffb68a05b39602978d103ae2730cd1c534",
+      "tree": "cfc56920ecef7e0eddba54df34b483dc93aa99c9",
+      "head_date": "2026-08-22T02:16:00+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "feature/autonomous-brain-foundation",
+      "head": "9a6d8f2a05bf412940389e7c6084cac1140fec40",
+      "tree": "9adf8812a9c3fda7741798a28a6cc2186a48e406",
+      "head_date": "2026-11-01T05:24:45Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "feature/ck-codex-account-switcher",
+      "head": "10f38f2fcc1aac84fcaca1fbaedfd54afa1198f8",
+      "tree": "894f7b0e7f6c60d0f48307e9b37dad68f0749920",
+      "head_date": "2026-09-29T04:03:51+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "feature/cknexus-agent-operating-model-20261031",
+      "head": "5d1bb78b2de8c7ff1f8cc0f23ea713379cdea921",
+      "tree": "e6a7da69e6ee79d5968d7847a3ce2f74512a457b",
+      "head_date": "2026-10-30T20:34:09Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "feature/claude-provider-bridge-release-20261117",
+      "head": "9cae276b67278a1fe1b04bbde998425abefdee51",
+      "tree": "e3df7fdefd20ea6a967f809ebc42cf1d69dbc15a",
+      "head_date": "2026-11-17T06:55:19Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "feature/claude-provider-pr-20261117",
+      "head": "fcb93e47c9aafc4bbc5bfc6f115b605cf3d642ff",
+      "tree": "af08c42a5b37391fbfe40d0080d12d6ca4143648",
+      "head_date": "2026-11-17T07:29:47Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "feature/github-identity-portal",
+      "head": "946663d752a6d320be2f5171ff3ef20d88e3d814",
+      "tree": "abade6d2bd2691abee08f238bcce0e8ce7545e3f",
+      "head_date": "2026-10-30T17:58:54Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "feature/global-knowledge-discovery-20260907",
+      "head": "2a7510e902499b961481cad8f2ca3f7785d27d86",
+      "tree": "0a2af0f7b2850927a0d8c32fddd01a2bf6fb78f6",
+      "head_date": "2026-09-07T03:26:05+07:00",
+      "merged_into_main": true,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "feature/merge-history-package",
+      "head": "d202adfa78f7fb92cb66271e1e05e52e3c57330f",
+      "tree": "4dcd2b502992f4c37964cbdd66863cfde5e306c3",
+      "head_date": "2026-09-04T18:00:14+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/agnes-omni-context-injection-20261011",
+      "head": "e7e39ef063e4d6e5ab22649c891d7e7b0992562f",
+      "tree": "0a34beecf2377d75941e5568dd1acbcd7b61712e",
+      "head_date": "2026-10-12T03:29:23Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/agnes-triad-attestation-test-fixtures-v1",
+      "head": "2f24d329e2765d670b9450bdfcd01c8f3cc01829",
+      "tree": "a1ad8bd326a8c29e9cfea8fe3b1f805b84a09a92",
+      "head_date": "2026-08-23T23:55:38+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/agnes-triad-dashboard-authority-tamper-v1",
+      "head": "08325b77925f191c0609cb1b8ad86930324b93ed",
+      "tree": "ea2696d8a06fe909a7d2c884f2bae5f124112798",
+      "head_date": "2026-08-24T00:03:11+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/agnes-triad-evidence-attestation-ruff-v1",
+      "head": "a9c0635c553325a88520e9ad882fd53bbcc14830",
+      "tree": "55e50a08f549d50d87991480a0f7133c20729d5e",
+      "head_date": "2026-08-23T22:36:55+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/agnes-triad-evidence-publisher-attestation-v1",
+      "head": "392b9895a7e0be5106ae3bb2b28a3e8a97654cb7",
+      "tree": "87ead5db7687a7cc118032dae8fe6c2db71a44f6",
+      "head_date": "2026-08-23T21:37:15+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/agnes-triad-evidence-test-attestation-v1",
+      "head": "4f487a4d71580f630a428955e0a9d7b81060b398",
+      "tree": "2bb479290b21c0658e0f1907b0082693ed4171d2",
+      "head_date": "2026-08-23T23:46:51+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/agnes-triad-revision-lineage-v1",
+      "head": "11059fb5e009484ce71cc5546b968e492dc2af19",
+      "tree": "8236721c449589a7954e99174168162b9ce522f9",
+      "head_date": "2026-08-23T18:33:36+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/ai-harvester-safe-error-classification",
+      "head": "dda7567883f13e40cce9925ac91ce4df77b8a4d1",
+      "tree": "bfff26c40a3997defba993099c36a50a9e01713a",
+      "head_date": "2026-10-13T12:17:23Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/aikido-security-findings-20260828",
+      "head": "f6e15670b3994c7ac4db81b8a25ee52c4ab37317",
+      "tree": "683bf2f5dd684b73cba7b40d86fca32a27e23e09",
+      "head_date": "2026-08-28T00:42:16+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/allowlist-checkout-tag",
+      "head": "8afc78e5fd5d7649906c5cd617144f7fa7588810",
+      "tree": "0d78c2f865e19d4f60571ea70d9eb4f6b59a80dc",
+      "head_date": "2026-11-04T12:36:49+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/ci-release-evidence-boundary-20261006",
+      "head": "7990ba7005994fcb11798ce4e9a708d400e0cdca",
+      "tree": "2a4f92b2164345e34f58cb5db41a923d902c53d6",
+      "head_date": "2026-10-06T09:06:09+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/claim-registry-global-ci-v1",
+      "head": "df5f1f4ce88b370dc6be6c2bf06381f404ba8e90",
+      "tree": "bbabf02947bef7c0b715bb820e98025a74ac0917",
+      "head_date": "2026-08-23T13:27:26+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/claim-registry-ruff-v1",
+      "head": "8c6b728f875213815b4e58877bffb8938b1e8f68",
+      "tree": "895b1acdbc566e0a9e386aaf46a9358a7b629665",
+      "head_date": "2026-08-23T13:33:15+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/connector-snapshot-serialization",
+      "head": "f9bc213a4f32b24b1b06b880b9f8ac538125fe45",
+      "tree": "91de16bcea966892cb69c2599643aa32cf42c9b3",
+      "head_date": "2026-08-16T18:48:29+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/connector-snapshot-serialization-v2",
+      "head": "2e182e2bd3ed2674816e8778406e4a0e7c7556fb",
+      "tree": "0525195934f703a8becf8a39f6397b2411e0bb2e",
+      "head_date": "2026-08-16T20:39:26+07:00",
+      "merged_into_main": true,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/evidence-source-tree-binding-20261012",
+      "head": "b7bd83ba6d157dcfe353fa81744c75e7f14b4e13",
+      "tree": "ec20cb50b3c4792054e0e5e658994490d7a57503",
+      "head_date": "2026-10-12T12:15:31+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/failure-memory-event-schema-v1",
+      "head": "d9ba1844631042477fd10338cb100a3b32e75196",
+      "tree": "ee69c8b37a756dda4aae59e7d76db82a4d1ae18c",
+      "head_date": "2026-08-23T13:12:52+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/failure-memory-fingerprint-replay-v1",
+      "head": "a4c3ff32b879d36eeb8c50a65f0359e690cf99bb",
+      "tree": "1e2a1d148309254f67c329a28453b204dbd80859",
+      "head_date": "2026-08-23T13:29:55+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/final-package-provenance-binding",
+      "head": "d7edd2ab5e3db4c265c87d3407375dbd527a54a5",
+      "tree": "43f9cb9691a0d028a1ef396a0a475c5cd80c4a99",
+      "head_date": "2026-08-15T01:32:15+07:00",
+      "merged_into_main": true,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/issue-65-peer-bound-connector-transport",
+      "head": "83645accf25847d20005a395fb620f3ab45905a6",
+      "tree": "3ed99759e7c116980db4d3e98b6650fa2f9838b5",
+      "head_date": "2026-08-20T06:23:13+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/n8n-webhook-registration-v1",
+      "head": "15215b8e556fa47e3a5489d380cfdcbbec4c11e1",
+      "tree": "a31d021f9e541aa95b55a63f9b549a7216517320",
+      "head_date": "2026-08-23T09:23:48+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/omega-bounded-timeout-20261018",
+      "head": "06e04572dcbea7607c091b0575a0c2d1463e2887",
+      "tree": "ca1bcf7e0da8f43435fba6e4b33d4ad7ce7bc1e1",
+      "head_date": "2026-10-17T20:19:34Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/omega-bounded-timeout-pipe-20261018",
+      "head": "a9dadeeb276bfc5da9c97174a11601f9989a2e81",
+      "tree": "a0e8228222b594244ceb22eb9bba9d999c001b38",
+      "head_date": "2026-10-17T17:18:34Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/p0-authorization-bypass-20261112",
+      "head": "42ac293329f1fd5950ac90273a5070dbc8d938bd",
+      "tree": "83ed49c0e6729b05f0140c5595ac99c2be89627e",
+      "head_date": "2026-11-13T07:14:31Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/p0-ruff-lint",
+      "head": "35da185485fd0571269bee926e2482fe4de8246e",
+      "tree": "79e16db3bbe4d459c3c480a7e055d65e3799915d",
+      "head_date": "2026-10-30T20:22:07Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/pr365-office-archive-hardening-20261111",
+      "head": "2a6c5ffc6a63730bb2ad1225947ddec8d36bf488",
+      "tree": "997802d84a7f5f6867699cefc32972049db59783",
+      "head_date": "2026-11-11T07:21:31+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/pr46-cknexus-ci-ruff-v1",
+      "head": "da9910368bac4e185b23dd4b33ba80dc7ee1fd6e",
+      "tree": "6106e0510f5c5ef687d376128f36ff0509fe68ff",
+      "head_date": "2026-08-20T00:51:37+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/q03-dependency-closure",
+      "head": "f7e12f0bc8bedafc358358fb800ec95fef79f983",
+      "tree": "c867f484074dc16cf8dc76ec08ce95d7b1387cdc",
+      "head_date": "2026-08-13T21:51:45+07:00",
+      "merged_into_main": true,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/q04-q05-ci-repro",
+      "head": "16ac906111dc8173f4841ae66109a30a3b4a8ed0",
+      "tree": "17c7053f25093ff43189b7d25bb326f95f66cc0d",
+      "head_date": "2026-08-14T03:19:33+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/q05-bandit",
+      "head": "9e97a1d719a59d4721763654b6973915c247a369",
+      "tree": "478fa4439fc4cb41639eb67934cdcb40f297fa12",
+      "head_date": "2026-08-14T01:02:09+07:00",
+      "merged_into_main": true,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/q05-bandit-hardening",
+      "head": "578143595d8c11403fae9e4aa881886cd2cf4461",
+      "tree": "04674f506d6b6b2ae716088b53345dc234687ca0",
+      "head_date": "2026-08-14T04:32:31+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/q05-e501",
+      "head": "5470413762d753b2687a2c9c5ae9d73f97bb8e24",
+      "tree": "68c390bc03aefd2d9e5bcedff18bab80d6334a84",
+      "head_date": "2026-08-14T04:40:32+07:00",
+      "merged_into_main": true,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/q05-import-order-final",
+      "head": "796be8a9e3ad7f29503bdee6b7be5e779e4c5593",
+      "tree": "ac4aa4823a2e9c5e8412664dce6fc30afbb0a122",
+      "head_date": "2026-08-14T04:39:30+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/q05-ruff-baseline",
+      "head": "1bf1cdeba8da51576a1b111448bcb182cffb8e07",
+      "tree": "536d9d105d574796d6b33310eea2d6feece521ba",
+      "head_date": "2026-08-13T22:51:19+07:00",
+      "merged_into_main": true,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/q05-ruff-format",
+      "head": "7fed15fe5265e8a0e2169aad81c918c35279e563",
+      "tree": "1bfb62dec8ed841f103403dcc2ed0fd339a83182",
+      "head_date": "2026-08-13T23:18:49+07:00",
+      "merged_into_main": true,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/q09-governance-binding",
+      "head": "1f3202244da348cce67b8ba52a585c45fab46a4a",
+      "tree": "8bb93b75237ac9891a6c60854f705459dc263921",
+      "head_date": "2026-08-14T04:55:48+07:00",
+      "merged_into_main": true,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/q10-archive-policy-evidence-20261110",
+      "head": "7d4555cf855ac2d73de54188c8601a362daa1c31",
+      "tree": "2323dd6633bbe4288b63ed5fa57e5d5e14e87bf8",
+      "head_date": "2026-11-10T19:37:56Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/q10-attachment-hardening-20261123",
+      "head": "442adae86adaa8dc887cac4b7ef0836a4d4f5ca4",
+      "tree": "15e486b36b9ab42203ccd601c34d3def334613d2",
+      "head_date": "2026-11-23T08:55:02+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/q10-dependency-audit",
+      "head": "071a5a4a67dea7ab60c832971a953ba530de6a7c",
+      "tree": "b9f3daace340835c0c371f99aec97297ac564371",
+      "head_date": "2026-10-04T08:44:13Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/q10-dependency-vulnerabilities-20261119",
+      "head": "31398dde92532684931c92fbe204c95920b6bcec",
+      "tree": "01609fe0cd86170f4f38c89c2f990a1d33ed71c4",
+      "head_date": "2026-11-19T23:36:40+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/q10-gate-medium-and-report-20261119",
+      "head": "db5f375a1f45e2570d9bd7eaa7450d5f5a08b7ac",
+      "tree": "4183ab6fa15518cc3b034c6579f51f285314ae7f",
+      "head_date": "2026-11-20T02:48:21+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/q12-current-subject-20261006",
+      "head": "1c6d9b0d70c23cdae314e5be0baa6823a04795f7",
+      "tree": "aaffd2d0f2d7f77ab9ad2237acea7c8fafad4cf1",
+      "head_date": "2026-10-06T12:10:58+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/q12-delegation-preflight-20260905",
+      "head": "3d005b176fc076e855639b3b2ee9e5abe3217d37",
+      "tree": "1a20ddbe9be6f5cd8ef146197ca0ce3b652a1a09",
+      "head_date": "2026-09-05T07:56:30+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/q12-verifier-branch-preflight-20260905",
+      "head": "9ef87b6d58a2580d5531d80de90367173ee6a077",
+      "tree": "0d008419b0d99a3dfe4a3484fbd7508d57411c33",
+      "head_date": "2026-09-05T08:09:50+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/q15-launcher-mode",
+      "head": "4264a51a1ad9fde2d8bd54f351aabd30bc5ac6e8",
+      "tree": "980b04917eb9c2679561d9c5b54ec3b3f5acaf95",
+      "head_date": "2026-08-14T22:45:51+07:00",
+      "merged_into_main": true,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/q15-launcher-mode-v2",
+      "head": "b24189e950ef29b6854418247f675725e6d8237e",
+      "tree": "4d1d6d9f4582f8e23397ccd447d3cf3eeaeec092",
+      "head_date": "2026-08-14T22:49:02+07:00",
+      "merged_into_main": true,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/q16-sandbox-chroot-path-20261011",
+      "head": "e04c412fdb6126a9d3349c8ab81d5d678221cd27",
+      "tree": "4e5e6d5dab30faaebd8f114cb7f0c7d446e9b282",
+      "head_date": "2026-10-11T15:54:19Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/qwen-probe-httpsconnection",
+      "head": "18028179a204896646be9e110749504cf58fb78d",
+      "tree": "109b9e702c13733fc9dac51c49080bdc41a70bba",
+      "head_date": "2026-10-31T19:36:26Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/refresh-main-candidate-evidence-20260907",
+      "head": "58b9ada401d566843524f2f4d76b02be9e2cfd7c",
+      "tree": "634a6efd8a77e22e9f98fe1518c1d273f55a0ea8",
+      "head_date": "2026-09-07T09:38:06+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/refresh-q05-q08-q09-a6e74b5d-20260907",
+      "head": "ab3062d0829bebde6dda65d664f2836a308bfb5d",
+      "tree": "634a6efd8a77e22e9f98fe1518c1d273f55a0ea8",
+      "head_date": "2026-09-07T10:08:26+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/release-evidence-provenance",
+      "head": "3eba0abf5326e4194f5f48575be039e807ceb478",
+      "tree": "bcd069c4c852b0635d01d6ea3f735c04d2a13474",
+      "head_date": "2026-08-15T01:29:34+07:00",
+      "merged_into_main": true,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/release-q10-lock-20261119",
+      "head": "1e09afca552401ee3ff7a2d4fb42d0bbda248811",
+      "tree": "320eb9bfaa67ff0af395af30d4a8045fe38e9f0b",
+      "head_date": "2026-11-20T00:44:24+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/secret-scan-token-boundary-20261031",
+      "head": "3cea8db3b4d043c86106aa12a8b57bfcc3e4ea35",
+      "tree": "3309140427071731a2edc9706cf6bf77b53c3c49",
+      "head_date": "2026-10-30T19:53:16Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/security-deps-20261006",
+      "head": "d7cab11c56bfe28d02eb4f67605f62c6c74f75eb",
+      "tree": "be0c742267372ba9d158ccea4fc6a0ea0dbbd016",
+      "head_date": "2026-10-06T06:27:38+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/security-deps-20261006-v2",
+      "head": "fd08c325d94d13295afd5211bb2965fd1164b747",
+      "tree": "118ce04f5a8609d1d3cd9f8cdc59012e8e85a5da",
+      "head_date": "2026-10-06T06:31:27+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/triad-subject-sha-validation-v1",
+      "head": "d8196c619170c564cc5bd079f6a3506900a488ba",
+      "tree": "f53e964ad2c47a5d517a9e24fe36498c452b264c",
+      "head_date": "2026-08-24T02:13:02+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/trusted-verifier-image-path",
+      "head": "5c74d168ea6065af4775dff419ee4d16b56b1244",
+      "tree": "b6385b9de0d239e1da5c4152ac32ee1a5efad1cc",
+      "head_date": "2026-11-04T12:45:02+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "fix/windows-sandbox-platform-gate-v1",
+      "head": "79deba2bea9145a071dc3c1d6bc065167c632f38",
+      "tree": "1f6b8becb2c91b4f564936aa5c152ed2fcad1d7c",
+      "head_date": "2026-08-23T06:06:25+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "hardening/scanner-api-least-privilege-20261012",
+      "head": "f8d13b0db2dd3e3b63ef08f58b1e4990c4924c80",
+      "tree": "49d37d206898bfd74df4ece1d5699a032adaaf33",
+      "head_date": "2026-10-12T12:03:51+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "hardening/scorecard-remediation-20260905",
+      "head": "cfbd7a09ff4d8cbce44567a04379adcb412bbffa",
+      "tree": "152c01a4cd3bdc7fca970b6babab79b53ff20e12",
+      "head_date": "2026-09-05T03:10:06Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "infra/q12-linux-host-preflight-v1",
+      "head": "f541901eceada0b9af9079db22daba3ea6f361dd",
+      "tree": "60912efbd003b45bbd013d3930ced3a944dde7f8",
+      "head_date": "2026-08-22T19:23:15+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "infra/windows-vps-worker-bootstrap-v1",
+      "head": "3193dba25caf40ff07fe816436d93fd74c45333c",
+      "tree": "f5ecd8c160baff85fb8b01a4c61ce096d2a4d150",
+      "head_date": "2026-08-22T19:28:04+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "integration/termux-change-sync-policy-20261117",
+      "head": "d962dd62584c69b262f7d1e16c9c69857e1e7d4c",
+      "tree": "bdaba8af4bddcdfea9566a28072b0e05f90c693b",
+      "head_date": "2026-11-17T06:25:48Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "main",
+      "head": "944d7cb70a5d59d53c8fb379752bbee2085f7c8c",
+      "tree": "55bc545e5afd6379c46a464608601efeef213a6a",
+      "head_date": "2026-11-19T03:23:43Z",
+      "merged_into_main": true,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "noop",
+      "head": "e1bb690e63255fbe351dd4d2879f9e59b2c3fd50",
+      "tree": "c867f484074dc16cf8dc76ec08ce95d7b1387cdc",
+      "head_date": "2026-08-13T22:52:10+07:00",
+      "merged_into_main": true,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "noop-check",
+      "head": "5192e32aebe4702f9dc249f8e1d23054c04dfc73",
+      "tree": "a907c09dc3f5b2a888ceed2e8f5bf58eef8353a6",
+      "head_date": "2026-08-23T11:26:42+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "noop-should-not-create",
+      "head": "e4a5722fd33a5fb1bf17486ebfe56751573e8554",
+      "tree": "92c182c414e08212170c33e807fb4e43ca21dc65",
+      "head_date": "2026-08-22T19:32:08+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "ops/buyer-download-probe-20260905",
+      "head": "31769de1b60371f348c39ae8886127cc6f7f2bf2",
+      "tree": "4415b218baeb8427c5063b900f3d91147cd832f8",
+      "head_date": "2026-09-05T23:21:30+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "ops/buyer-ready-clean-package-20260906",
+      "head": "92d3be0b5218e9bf6284c9f4e412066d90a2cbb0",
+      "tree": "7975094fa40592f14ccd3f91a4cc888558a51f5c",
+      "head_date": "2026-09-06T00:10:32+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "ops/canonical-export-20260904",
+      "head": "b1aecec0e47a499d737d3dccf897b50393b35b16",
+      "tree": "7635913756b23bb1c7b68666b30994f3697c1f1d",
+      "head_date": "2026-09-04T03:47:33+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "ops/canonical-export-20260904-run",
+      "head": "b4146db8e23dff49520cbbc9d0194a15bcc5872d",
+      "tree": "25d9c74db2b553667ad085172f8ac7beff4146aa",
+      "head_date": "2026-08-23T10:05:54+07:00",
+      "merged_into_main": true,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "ops/canonical-export-20260904-trigger",
+      "head": "b4146db8e23dff49520cbbc9d0194a15bcc5872d",
+      "tree": "25d9c74db2b553667ad085172f8ac7beff4146aa",
+      "head_date": "2026-08-23T10:05:54+07:00",
+      "merged_into_main": true,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "ops/github-governance-hardening-v1-20260904",
+      "head": "be4c7587dc9488000907e387c0de0d0688e238f4",
+      "tree": "a3a4e7f636ca8eaa9e17fe6c4992afc9fddadcb4",
+      "head_date": "2026-09-04T18:56:24+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "ops/independent-verification-source-export-v1",
+      "head": "2cf8dcf0ed1a8fe7c66c67b8d59cf9beb55c0283",
+      "tree": "d1e8c611c2f5d453ec437f7d84a0eee341005441",
+      "head_date": "2026-08-27T18:59:55+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "ops/production-evidence-manifest-v2-1",
+      "head": "7a77b1f48c5fe3dc7a82c3c40cf9667664122e9a",
+      "tree": "74bf3f33cd367075290d54038795e1eb7ead6ca0",
+      "head_date": "2026-08-22T23:09:02+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "ops/project-state-20261110",
+      "head": "f7860881309de63eb72743d251597ef7b35fbe5e",
+      "tree": "6b74e3fefd305a7e0ee8a148b9472536341005b3",
+      "head_date": "2026-11-10T20:57:25Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "ops/provider-free-go-clean",
+      "head": "c0825c7915290be7a8dc2f8c69ae38033f1bbe85",
+      "tree": "13efee537b2f0e584d97431db19667ebd8463b63",
+      "head_date": "2026-11-23T02:00:32-05:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "ops/q10-exact-subject-closure-20260829",
+      "head": "4ffa0afc21562f70ca98d35cd80eaa31c19e5b23",
+      "tree": "b637863a6e202cd720a9df4144e744eee6af87a0",
+      "head_date": "2026-08-29T13:20:50+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "ops/q10-host-qualification-20260904",
+      "head": "d6a0bf4eb0df5a7cb1d859493fa8e8f6db81ac06",
+      "tree": "3b512422fcbdde6abf9fbc62045244bac09b202c",
+      "head_date": "2026-09-05T02:19:37+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "ops/q10-linux-execution-20260829",
+      "head": "231431b39252f720e731c342bf03c50391385bdc",
+      "tree": "3a8b13d0a62d9b0a5e32e95fba37465b60749598",
+      "head_date": "2026-08-29T06:18:55+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "ops/q10-q12-master-prep-v2",
+      "head": "57cdcf4703ae487d2c9ed395871d9724a6e08327",
+      "tree": "dbf44b8fbc293e61ff3ce6af940db86f45b85f42",
+      "head_date": "2026-08-19T22:28:31+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "ops/q10-q12-production-closure",
+      "head": "7bf01aba188a9ab7dfd7a793ef34c65c383fa428",
+      "tree": "c0fe50822a759ab61b27fa0f7530040786f44533",
+      "head_date": "2026-09-19T04:06:36Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "ops/q10-readonly-materialize-20260827",
+      "head": "9a62fbbfd5af83231f8822561578edb184167f18",
+      "tree": "e33bf4b9c23dc853ada9ca2b9e081c6756753c6e",
+      "head_date": "2026-08-27T22:51:16+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "ops/q10-source-materialization-helper",
+      "head": "49bdb40aad2ba5f6ba70ec5a0463cd4baca0187c",
+      "tree": "368286312723de458fd63d6ee7a059f176163bda",
+      "head_date": "2026-08-27T23:22:02+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "ops/q11-live-provider-smoke-v1",
+      "head": "1ab30ac853fb27388178146317d7885bbe41c127",
+      "tree": "624a0a34104af39475ec301dc56906e1f59ae8cc",
+      "head_date": "2026-08-22T17:56:20+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "ops/q12-github-hosted-cgroup-diagnostic",
+      "head": "b4cb5039f91dee96df31ae4beada1a72b7233022",
+      "tree": "5e8bdbce2fd72e86cef594c4aba4f7e7da3e7b40",
+      "head_date": "2026-11-23T03:52:04+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "ops/security-evidence-delta-20260903",
+      "head": "389176708ef491cb8fc79a4dddf578993f47f64c",
+      "tree": "185fcfde85633e01472ff99f8ee35551246033e5",
+      "head_date": "2026-09-03T19:09:32+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "package/full-system-inventory",
+      "head": "9e06e8f6b62c2f3ff525c43ce47ddeee296887a9",
+      "tree": "170b38d389150285a764cd8484889e9d03f07022",
+      "head_date": "2026-08-15T05:26:16+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/a2a-agent-admission-v1",
+      "head": "7346c3ccdf19d0d068aff443e2651637f90f9f8c",
+      "tree": "a9b54298952576be2dc1605a9ac20c1f477dbaaa",
+      "head_date": "2026-08-27T17:05:05+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/agent-security-governance-2026-v1",
+      "head": "fb6c987d320f9344b5af768a3a158fe057941ddb",
+      "tree": "3386197e20b3af3a69b2eea23097056d40194c0a",
+      "head_date": "2026-09-03T19:44:09+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/agnes-capability-fabric-v1",
+      "head": "4d58c19e52a5031ccedae0488766a527442aea1c",
+      "tree": "f0e2e57419445f6854c39657142992155a4958f7",
+      "head_date": "2026-08-18T08:05:25+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/agnes-capability-gap-matrix-v2026",
+      "head": "9924b488c149a5b9591f26de5739941ca8000dfd",
+      "tree": "0f8c975c52fe526c1fe31f2a1c29dd5ec497fcfd",
+      "head_date": "2026-08-21T18:17:33+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/agnes-cognitive-foundation-v1",
+      "head": "c609a0ea9be68dc842559f9d67307b65219492ff",
+      "tree": "be9b839370b9c0be11f030e71ab20f3467766d46",
+      "head_date": "2026-08-22T03:11:22+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/agnes-connected-source-intelligence-v1",
+      "head": "26940d21d5b91e16346132dcee8e05cff7be8ac8",
+      "tree": "801eb8ea070ac5ab5940f535e0546744d1eaa24f",
+      "head_date": "2026-08-20T07:18:34+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/agnes-expert-fabric-reconcile-v2",
+      "head": "53ff8a0d7a1b0f05df813ffb59838d6d2b42aaa6",
+      "tree": "dc70902c762982348306568cc11a59d3015b3c64",
+      "head_date": "2026-08-27T16:51:09+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/agnes-frontier-model-governance-v1",
+      "head": "420b53c0bafb2de9a48483b3202cb7a748d93add",
+      "tree": "c67ab7ab571932fb75d04423194f27d0d77bb541",
+      "head_date": "2026-08-23T11:32:28+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/agnes-frontier-model-governance-v1-temp-check",
+      "head": "5192e32aebe4702f9dc249f8e1d23054c04dfc73",
+      "tree": "a907c09dc3f5b2a888ceed2e8f5bf58eef8353a6",
+      "head_date": "2026-08-23T11:26:42+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/agnes-knowledge-repository-v1",
+      "head": "e3c3dc81bce6da35fcc36c8fddf9b12b06bb7ace",
+      "tree": "521bc76f69bd4ceeeac5bb61e35e891bd84c1df9",
+      "head_date": "2026-08-23T11:38:40+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/agnes-learning-consolidator-v1",
+      "head": "2d2d903213a10f2b7fc9a318cc7c0d48ce013196",
+      "tree": "4f40accc2b27f1f7eef3f3fb33c1b4fb3bb86598",
+      "head_date": "2026-08-23T23:59:01+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/agnes-qwen38-delta-v2",
+      "head": "2890049b186e2680fd056506ad5df4e4a9e93475",
+      "tree": "b4fa6aad85340412ccaaa1010dcb6c94c1b23b4b",
+      "head_date": "2026-08-23T11:25:01+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/agnes-runtime-p0-delta-v1",
+      "head": "5c1c12c43bd9d9aec71794ae1ce04d0c675d0b40",
+      "tree": "2ada0bf1e5269ddd1ca50505e9b5a5605a452c11",
+      "head_date": "2026-08-23T11:20:48+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/agnes-s-delta-v1",
+      "head": "705afcd725fa1ee995ca9f74a9ce2a94726df227",
+      "tree": "de244a209b9c49d4a93c0e339279fbff93c8efda",
+      "head_date": "2026-08-23T03:05:18+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/agnes-triad-dashboard-projection-v1",
+      "head": "08325b77925f191c0609cb1b8ad86930324b93ed",
+      "tree": "ea2696d8a06fe909a7d2c884f2bae5f124112798",
+      "head_date": "2026-08-24T00:03:11+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/agnes-triad-debate-schema-v1",
+      "head": "80ad76ae0f204c2096b5411eab9e262d3142c799",
+      "tree": "92f58a2d25b4f28cdd742a410ed23f8b48e138ed",
+      "head_date": "2026-08-23T19:45:16+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/agnes-triad-evidence-evaluator-v1",
+      "head": "2f58740f86b96b93445166b8f82bbb15edb46744",
+      "tree": "1d15f4a14d47ccc2ff0c0c0377888aa4dea567f7",
+      "head_date": "2026-08-23T19:58:12+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/agnes-triad-evidence-test-attestation-v1",
+      "head": "4f487a4d71580f630a428955e0a9d7b81060b398",
+      "tree": "2bb479290b21c0658e0f1907b0082693ed4171d2",
+      "head_date": "2026-08-23T23:46:51+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/agnes-triad-memory-v1",
+      "head": "e8ca3c6006e483330181daaeea756e4ed86eafc5",
+      "tree": "f3747da6741d554d290bb7d1196af6cb5bda27ed",
+      "head_date": "2026-08-23T19:53:36+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/agnes-triad-parallel-scheduler-v1",
+      "head": "4307e876461e0adfc969104621b84410c61fcde6",
+      "tree": "de6fe099c655383d85c6ae59095776e10caf1f62",
+      "head_date": "2026-08-23T13:29:54+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/agnes-triad-pipeline-provenance-v1",
+      "head": "d8196c619170c564cc5bd079f6a3506900a488ba",
+      "tree": "f53e964ad2c47a5d517a9e24fe36498c452b264c",
+      "head_date": "2026-08-24T02:13:02+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/agnes-triad-pulse-v1",
+      "head": "89bcd3724b35139dcfedd74921315f85a496a79c",
+      "tree": "4e729bf30c1c279e846466d7335b94eee26c2073",
+      "head_date": "2026-08-23T23:54:33+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/agnes-triad-runtime-v1",
+      "head": "60daeb3ec35bfcaaf238aa5693691b5492a2d595",
+      "tree": "74bf0ed85582dae4fd814bebc0ecac676879ba34",
+      "head_date": "2026-08-23T13:31:37+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/agnes-triad-strict-priority-reconcile-v1",
+      "head": "4025350852032c7222d55ae3f4c69d7344706305",
+      "tree": "4aa1b9b051cc1c562b06ab3656e3c7321d979894",
+      "head_date": "2026-08-25T05:01:38+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/agnes-triad-strict-priority-v1",
+      "head": "bbf51035d677fba51190818d9508c33d13d024cf",
+      "tree": "0d7685e98a2a89b836d45c1cd0f335766f6ffc49",
+      "head_date": "2026-08-23T13:39:08+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/agnes-voice-persona-v1",
+      "head": "ed55964f008551212061a26a9e5faaf1e1f240be",
+      "tree": "fa9649b88790505084918e27fef30bfd61812fae",
+      "head_date": "2026-08-23T10:00:35+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/anyclaw-cleanroom-bridge-v1",
+      "head": "2f15fe6b167a343594634d454bd9e1ee68bc3307",
+      "tree": "8765c0f60b8fe50a805734e7b64d32952f9847bd",
+      "head_date": "2026-08-20T07:43:16+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/anyclaw-cleanroom-mcp-v2",
+      "head": "d789d0cdf4e91f5fcc236319b90e9949170d302f",
+      "tree": "99437ec945675efb89fd5b118e801c338a207f81",
+      "head_date": "2026-08-20T07:59:38+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/assurance-profile-x1-20260905",
+      "head": "1e5337db61b77134c893e47f87b58f4803029b84",
+      "tree": "bc5db2fab2be45e972e54d78e65b7769f385e547",
+      "head_date": "2026-09-05T01:30:46+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/authzen-authorization-adapter-v1",
+      "head": "10540e405887aafdf1ec5e278a047ca486fc8d93",
+      "tree": "b34194921f5c335b01d380f260be9c9f4b0c7fe1",
+      "head_date": "2026-08-27T16:46:29+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/capability-ai-gateway-v1",
+      "head": "4d78645a3e969b950a2d260622ef7ce34290df2a",
+      "tree": "cf07fb6bf77f31402c0f106125de3387bae3a0d6",
+      "head_date": "2026-08-20T05:05:07+07:00",
+      "merged_into_main": true,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/capability-aware-model-fabric-v1",
+      "head": "028fe49b54c426ead937b359578930428c8f3cac",
+      "tree": "a9c80e60402c88713be312f7d9016e2ad9490c63",
+      "head_date": "2026-08-21T18:07:03+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/chat-b-digital-twin-v2",
+      "head": "42394c0c51925a435093f4ebee9d2661234f4a4a",
+      "tree": "8ae2969b08869e18289bdddd0527834a2191e943",
+      "head_date": "2026-08-22T19:38:35+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/chat-b-digital-twin-v2-check",
+      "head": "e4a5722fd33a5fb1bf17486ebfe56751573e8554",
+      "tree": "92c182c414e08212170c33e807fb4e43ca21dc65",
+      "head_date": "2026-08-22T19:32:08+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/chat-b-renderer-adapter-v2",
+      "head": "89191e6b8aeff96e519f9ac2c111baf898ff79fe",
+      "tree": "c79ce1ddb7fe2dfc56000de2bf2723732541248d",
+      "head_date": "2026-08-22T19:19:01+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/chat-mcp-bridge-v1",
+      "head": "179fcd8c37e737b49020e875dbba43e65faf358b",
+      "tree": "90cd01e7685789f0b5d299e373c266ff8642e0c1",
+      "head_date": "2026-08-21T17:40:55+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/ci-lane-classifier-v2",
+      "head": "952954fe4f3241d81d2e546092817920cf985d97",
+      "tree": "989312b3c92cfb69d4f0fc80fc03f074e441dc64",
+      "head_date": "2026-08-27T12:08:55+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/ck-v3-coordination-runtime-v1",
+      "head": "ec310d2eac9995f3b6c4254dfaecd028d1367e48",
+      "tree": "bf2e42f086dd7114b9bd41f902a65608d776614c",
+      "head_date": "2026-08-20T08:43:16+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/ck-v3-execution-planner-v1",
+      "head": "ff675aeee95552c9056288a2818e4886fd8e1f63",
+      "tree": "0f1c4e932941a0720f59d7720521952789dd4968",
+      "head_date": "2026-08-20T08:49:53+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/ck-v3-readonly-executor-v1",
+      "head": "3e6e3c25e0dcea92a5ab8152f27e122063f135d8",
+      "tree": "c9d63083791f71aab052e4f0ccaf4f290c06cf05",
+      "head_date": "2026-08-20T09:14:00+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/claim-registry-v1",
+      "head": "a8bb5cf6b1651d813864a840c6244fa0880c4034",
+      "tree": "37cccaebe83199b0c5e423a20666fc9e8c1f5f74",
+      "head_date": "2026-08-23T13:27:02+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/cognitive-digital-twin-renderer-v2",
+      "head": "39b05ea05623ab8eea4ec0b36b443d8b94438067",
+      "tree": "5821ea8d48055118f6457b82f490443f2ac11066",
+      "head_date": "2026-08-22T19:38:16+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/cognitive-digital-twin-v1",
+      "head": "7c941616fb592947eb46b4d080f63369b5ff3d39",
+      "tree": "212364bc3f2422d507d74c32b896f7203d3478d8",
+      "head_date": "2026-08-22T05:36:25+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/cognitive-digital-twin-v2",
+      "head": "d201dd008671d1ce3a0004146479837a0a0ccc17",
+      "tree": "81e4681df9b2dc653bdaa2f36ea4baa9f0bc19af",
+      "head_date": "2026-08-22T19:35:49+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/cognitive-governor-v1",
+      "head": "a08f3283b30b245b227efa6248303af5553fd3f9",
+      "tree": "b143f0019c9783bea6521ce268e7de79a9e1a16e",
+      "head_date": "2026-08-20T05:28:00+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/cognitive-knowledge-fabric-v1-20260903",
+      "head": "9666faca361cf8f7ecb910023e00ee72df13337d",
+      "tree": "05d4cfc19bfa8c4ad51f65efb3558e7b5350f35a",
+      "head_date": "2026-09-03T23:44:08+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/commercial-readiness-evidence-v1",
+      "head": "5c8bbb79538364b0d11a506b426faedba575c4ba",
+      "tree": "93d172ffdb9a653cb4bdd25252c219146c4df8b4",
+      "head_date": "2026-08-21T16:36:27+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/connector-observability-v1",
+      "head": "2822674243984a4aa096867884e0b690bebb8dba",
+      "tree": "0a9c388d8b5b47839c755c49f23c57d5bcfedf5b",
+      "head_date": "2026-08-20T05:25:51+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/creator-intelligence-v1-20260904",
+      "head": "85aeefb8791209531da82e942698c2e8808c0d87",
+      "tree": "7cdbbb70dface1c036afc63e02eeabcfa26d595c",
+      "head_date": "2026-09-04T06:07:19+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/data-contract-lineage-v1",
+      "head": "fb27e366a4cc83357c2e5968bd7785f7d3c9ce3e",
+      "tree": "0fcf52ad792031fa202c4ddb10dabf5401bb4353",
+      "head_date": "2026-08-27T12:16:34+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/dev-assistant-execution-contract-v1",
+      "head": "0f2068fe13a6a620081af7633485195532bd66c7",
+      "tree": "0a1be97591894f2febc681e58d28f3ec095469b2",
+      "head_date": "2026-08-20T03:02:18+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/dev-assistant-fabric-v1",
+      "head": "6dbd6ee98f6f93a9d359514b70a7f6fb7a29a34a",
+      "tree": "efafbc61d28f6efe137e8e5d7af467ce64d69f3f",
+      "head_date": "2026-08-20T02:52:08+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/device-bridge-attested-descriptor-v1",
+      "head": "5468d4814726db32d88e150aba11891f388d8248",
+      "tree": "8427e946590a8a2b1e23f73b07ba5334ba530872",
+      "head_date": "2026-08-20T08:06:56+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/dual-track-fabric-integration",
+      "head": "b1724a5ca6ce6bb0f575a9489f7ef25d64e1b8ef",
+      "tree": "ca71055e02cb9fef0b113a7afd05137ce16c3cff",
+      "head_date": "2026-08-21T16:57:37+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/durable-execution-correctness-v2",
+      "head": "5dc495a091fe2ca9dcd583b5f101340792fa9291",
+      "tree": "8843e8986a989f3322fe32624b1cd6fe6c67cbc0",
+      "head_date": "2026-08-23T11:45:34+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/durable-execution-reconcile-v3",
+      "head": "56d103f825a9626954e427e8d1eabebc712490d6",
+      "tree": "8e1af4beb2f68fc14552bdd00438be1e35e2be5a",
+      "head_date": "2026-08-27T12:06:29+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/dynamic-patch-verifier-v1",
+      "head": "c34fd573fbe409e400cbe856cc126b9360f7a760",
+      "tree": "6964310b2cd8caac34498e3e69b780cfecd55363",
+      "head_date": "2026-08-20T03:32:53+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/event-contract-standards-v1",
+      "head": "0876e3f982d3c03806cbc82bad2c76b93c16f999",
+      "tree": "f3060903b7a59e462c8caf7e5aa9c8367764e38e",
+      "head_date": "2026-08-27T12:10:54+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/evidence-signing-coc-v1-20260904",
+      "head": "84e6fa6f31dae4d403a450c9fcf57fb2dddd0bf0",
+      "tree": "bde9cf9ea5363ca7022e77c6688eb59d0fa6e3dd",
+      "head_date": "2026-09-04T21:05:16+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/evidence-signing-custody-v1-20260904",
+      "head": "52f27c8f0b3ff7d59a21d7cede35863fafd5b73d",
+      "tree": "93789432811eb095fcee3222fab3aeaa8fd52eaf",
+      "head_date": "2026-09-04T20:30:45+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/execution-verifier-v2",
+      "head": "d86600eccee84fe8d7efd05ceb5e34951af0c7ee",
+      "tree": "66d75e089bbaaa35de7ebeb69f7446a0733211da",
+      "head_date": "2026-08-20T05:19:30+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/external-access-governance-v1",
+      "head": "9df755a9a32d1f1ac5874ce9614b2a936b9f9b45",
+      "tree": "667f954ee372aec8933bde47246965031686a56a",
+      "head_date": "2026-08-23T10:12:11+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/failure-memory-fingerprint-replay-v1",
+      "head": "a4c3ff32b879d36eeb8c50a65f0359e690cf99bb",
+      "tree": "1e2a1d148309254f67c329a28453b204dbd80859",
+      "head_date": "2026-08-23T13:29:55+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/failure-memory-regression-immune-v1",
+      "head": "65779068da119cc8e8690c25308c0bb26efd5f45",
+      "tree": "ee6e4dd420b3fb522cb4dd93c6267750b149a21f",
+      "head_date": "2026-08-23T11:52:51+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/free-fallback-85",
+      "head": "6137363e15da84eff78f8a99c0932fee3851dfa9",
+      "tree": "31be772466345faf500c798e8ba71a1dfc039260",
+      "head_date": "2026-08-23T10:00:18+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/gen4-fusion-v0.2",
+      "head": "07010abb4d75c48e2d3d6dd23ba5c3321f26866c",
+      "tree": "929e7ddd555dfd6e36c36dc8995c47a34f09fef4",
+      "head_date": "2026-08-17T22:40:13+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/gen6-2-elastic-swarm-v1",
+      "head": "26e76ae0b4c6a7046bf5c1a020bb2291405b3ea9",
+      "tree": "7de9acf6b012bdd17c9187b4510ded00800d4ff7",
+      "head_date": "2026-08-21T17:24:28+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/gen6-3-cognitive-memory-v1",
+      "head": "a1d096438dbfa54f73f6b2e95bb38d8c90eab1d3",
+      "tree": "826f6980973f9ab9bca07cfc9f6201522b0e1f50",
+      "head_date": "2026-08-21T17:35:37+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/gen6-3-memory-skill-v1",
+      "head": "67e6ec44ab2c3e770cf6ade45b58f70fcbb31a21",
+      "tree": "d2b4d7a6d1b128c9f8608ced49551bc2756d08b6",
+      "head_date": "2026-08-21T18:09:33+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/gen6-4-research-formal-v1",
+      "head": "b307525b15ef4b785e2892450753f79f945f14af",
+      "tree": "80ed81a188ca7b0aa9623a6e23365d3312e05528",
+      "head_date": "2026-08-21T17:40:14+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/gen6-5-ui-multimodal-v1",
+      "head": "ec8026c6015baf3ebb2a2988cae6ee4c16ce2e99",
+      "tree": "5138332856f3dbe4d8e95f000ec70e450e4c1d08",
+      "head_date": "2026-08-21T17:53:51+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/gen6-runtime-contracts-v1",
+      "head": "a79b17a9309c680b6ad2a3d9e2a8cba93f0e8e50",
+      "tree": "5a785d374f5a7a00d10fcb4762e3a8c8827fb878",
+      "head_date": "2026-08-21T17:16:17+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/github-governance-hardening-v1-20260904",
+      "head": "be4c7587dc9488000907e387c0de0d0688e238f4",
+      "tree": "a3a4e7f636ca8eaa9e17fe6c4992afc9fddadcb4",
+      "head_date": "2026-09-04T18:56:24+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/gmail-oauth-setup-doc-v1",
+      "head": "ac9f33e234c55b9ea5d40f92f758a5336d5b0a9c",
+      "tree": "4461c846225053a8e2c4b667dc75cfd5a09406cc",
+      "head_date": "2026-08-20T05:49:52+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/image-intelligence-pipeline-v1-20260904",
+      "head": "99135e1e2451543df88355589beaca212646b429",
+      "tree": "c9f6ab69af0b5a10258dc2185b35a10feaf03568",
+      "head_date": "2026-09-04T17:38:04+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/independent-patch-verifier-v1",
+      "head": "941b54fb555a3573d9b6bc440d81bf0dade0a859",
+      "tree": "a9cfd848746c41fb7d133972d8d59371460d2a8e",
+      "head_date": "2026-08-20T03:25:54+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/inter-chat-communication-bus-v1",
+      "head": "df7236ea56d4f4b737fb66bb456084a61624c8c4",
+      "tree": "bbfb531ef506360e68f612637579d8ddc9afb0a6",
+      "head_date": "2026-08-23T06:32:51+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/knowledge-lexical-retrieval-v1-20260904",
+      "head": "24902679504e995bf0166538ffc6a05391b548e5",
+      "tree": "d91831868116cbacd23e7f26e0330aeafe115c98",
+      "head_date": "2026-09-04T06:26:57+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/knowledge-persistence-v2-20260903",
+      "head": "17106e80eab729c1d883a90f47c7ee34bb35dbda",
+      "tree": "34502d35af06dfac5811b7359dec5131cb5eff44",
+      "head_date": "2026-09-04T02:53:58+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/knowledge-retrieval-evaluation-v1-20260904",
+      "head": "a2152c401971f7a7430479d0edebecdb0ca159f0",
+      "tree": "02b68f1d637da412d3ab9dd826dc6666e8153319",
+      "head_date": "2026-09-04T18:24:33+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/master-capability-evidence-registry-v1",
+      "head": "f26ce305d49c6daa6e28203cb7b71080856dabeb",
+      "tree": "dc487882d83bc716bc4fec40a6ece4a62327a64e",
+      "head_date": "2026-08-27T16:30:32+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/master-controller-v1-20260904",
+      "head": "4834f886e89dfdcecd80aa1f9f1834b40fa115e4",
+      "tree": "2a81f72f1574f3e6e48ae88436e2851d456add90",
+      "head_date": "2026-09-04T18:34:12+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/mcp-admission-otel-bridge-v1",
+      "head": "e69a824c80190bcfe4662f5aa49c05ecd0f1e393",
+      "tree": "a7c276b7a633d295a7e097a992fa504c8cc587aa",
+      "head_date": "2026-08-23T11:51:13+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/mobile-proof-benchmark-v1",
+      "head": "cceb7833991eb3e73b20261dcc5984a8e714de7e",
+      "tree": "d1ec3e18d57227ab3ac449733b7a04461791f87e",
+      "head_date": "2026-08-23T11:21:31+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/n8n-development-agent-fabric",
+      "head": "74f21ffe9cdf760b159ea7a9ba445be3579d3edc",
+      "tree": "1023b0a769d2fca68fdbae3832a47756cd732db7",
+      "head_date": "2026-08-23T01:00:03+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/n8n-runtime-registration-guard-v1",
+      "head": "489ecb18a0c940b935f0ae3eb89601d0744af73c",
+      "tree": "f8ac54430ed65cd577fc3be22a1f79fdaa42e32a",
+      "head_date": "2026-08-23T10:31:56+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/nexus-omni-resilience-v1",
+      "head": "92309199f7c14fa5296551a01a4d4c7a8c09adf8",
+      "tree": "509c575ace2874ff840ded933c97f6ecfcbf5efe",
+      "head_date": "2026-08-21T17:55:49+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/nexus-omni-ultra-governance-v1",
+      "head": "d1f39e7a9e4609b8d82a38b5716f26f02f62c406",
+      "tree": "a5bb0a8651eaa648c83f9ad59d10021ff5e6af7b",
+      "head_date": "2026-08-21T18:01:17+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/opencode-control-bridge-v1",
+      "head": "96e706a556847d5e1ec712b92adbf99a8ac8873e",
+      "tree": "6106e0510f5c5ef687d376128f36ff0509fe68ff",
+      "head_date": "2026-08-20T00:54:17+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/openfeature-evaluation-bridge-v1",
+      "head": "3ed4a402bbe960b2b3378d141f055618d5559346",
+      "tree": "6d7aeabad53635d08a3c4ef8730169a5784d0e0b",
+      "head_date": "2026-08-27T16:59:25+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/personal-data-plane-v1",
+      "head": "e58b71e3f79bb87c21ea0f1cbbf779fef48ed274",
+      "tree": "b3206d85b1ba676bcb27f0510e7ab79d469e4207",
+      "head_date": "2026-08-20T05:22:01+07:00",
+      "merged_into_main": true,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/personal-intelligence-v1",
+      "head": "0859ec20ba718c491383c768ef28e8817c93b9a7",
+      "tree": "d730c0c9b58c08a391de31a05eda1ad7510771d1",
+      "head_date": "2026-08-20T04:19:13+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/polyglot-engineering-fabric-v1",
+      "head": "00a31f51b4a23fe2f1ed982d725237091dbb386d",
+      "tree": "8e5eb57909181cb25bc70dc6fec973c6cf1225fc",
+      "head_date": "2026-08-23T09:55:36+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/production-evidence-manifest-v2-1",
+      "head": "2381acc89eb54708361118b36ab3f077acfc61da",
+      "tree": "28f270a98197cd4c1ed9f7a484a9bd25fcc48052",
+      "head_date": "2026-08-22T23:12:57+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/repo-file-retention-audit-v1-20260904",
+      "head": "02f22cbcd5fde0c844892f6f51eda4c68990f92b",
+      "tree": "89037db18a33dc6a4ef42514cef6055682ad861b",
+      "head_date": "2026-09-04T19:35:53+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/research-persistence-v1-20260907",
+      "head": "06f573428638c8e41a5a4db0e8cbeec1c432a06f",
+      "tree": "8ef050c26f88eab36de6c1b4352372b7aa6114e2",
+      "head_date": "2026-09-07T05:22:22+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/sandbox-executor-v1",
+      "head": "8993568da2e7c4734b77659bd59b9ec5fa2de166",
+      "tree": "350cfab3e680315985ce1d8ef8ac95f3d63dff92",
+      "head_date": "2026-08-20T03:21:50+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/secure-remote-mcp-contract-v1",
+      "head": "405053513d27503af490407aee0ee431c3f57c38",
+      "tree": "1723bd13993a8aebb8d1fc8af2a3312c3af77bb6",
+      "head_date": "2026-08-20T08:38:43+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/secure-remote-mcp-http-canary-v1",
+      "head": "fe5121b055b25fcb4cc14baa977c6c6945f410d8",
+      "tree": "e5a133ddebdff5342d0ce23ebc2446620d0021c4",
+      "head_date": "2026-08-20T09:00:17+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/security-attack-regression-v1",
+      "head": "8d63c99c8fffc51a20f3da61fe636aecb45560d0",
+      "tree": "26eb60c13d34321e903a053363391063c6ea5c62",
+      "head_date": "2026-08-20T06:06:18+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/security-issue-65-peer-binding",
+      "head": "9fc20d030d23e0df09c26a56fc2a51020ebb21bd",
+      "tree": "7077bc8bab056ed1d6798241ecd0b246011efcd5",
+      "head_date": "2026-08-20T06:32:12+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/security-issue-66-attachment-validation",
+      "head": "b1b78a798ae50fbc1f4fc9d2a9415154f795a973",
+      "tree": "e31898c89f2d2c14658888f7fd4c0c48dc16a2cf",
+      "head_date": "2026-08-20T06:36:22+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/security-regression-evidence-reconcile-v1",
+      "head": "e9d92190c0181261bf2fefed5ec9a117e79a357b",
+      "tree": "a1a4d2c91afb44b6c43fbe7d95d7570ae64e3e24",
+      "head_date": "2026-08-20T07:13:12+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/self-capability-reconcile-v1",
+      "head": "69412a8459fe7f5abd98563e465843093bb0cc6f",
+      "tree": "14dd917d38de30bc9c2731d75337be46a86d18f3",
+      "head_date": "2026-08-20T01:32:20+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/sonar-quality-automation-v1-20260904",
+      "head": "432e4954e634f98642dd187cf710de84e67dd1dd",
+      "tree": "ddab16dd0402264c509b0e6b7eb84f6ed6bf0c13",
+      "head_date": "2026-09-04T16:07:26Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/standards-integration-v1",
+      "head": "b4146db8e23dff49520cbbc9d0194a15bcc5872d",
+      "tree": "25d9c74db2b553667ad085172f8ac7beff4146aa",
+      "head_date": "2026-08-23T10:05:54+07:00",
+      "merged_into_main": true,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/standards-refresh-2026-08-v1",
+      "head": "bc1e3e94a2066e5716ab5c3de11c6db9a42e18be",
+      "tree": "0481557f838ef9481fffcc3a9f09eb7a61f70bff",
+      "head_date": "2026-08-23T11:36:54+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/stress-lab-level2-write-activation-gate-v1",
+      "head": "00acc7e4bdf69f09d36ba00664a6fc58d4b808f0",
+      "tree": "25d9c74db2b553667ad085172f8ac7beff4146aa",
+      "head_date": "2026-08-20T12:20:17+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/system-skills-harvest-v1",
+      "head": "d4b5e7bccc20526a27373a469879db50d966cb5e",
+      "tree": "be17b20b4fc97a3e9b2f7baaac0bb5fab7b9775e",
+      "head_date": "2026-09-03T19:41:10+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/test-standards-enforcement-v1",
+      "head": "047c5ebd737b766fcf8ffe5528efb32d06770c45",
+      "tree": "f75289259addbec85ed8e1477c0374c5054ff800",
+      "head_date": "2026-08-21T17:52:54+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/tool-vps-helper-policy-20260904",
+      "head": "04ef17b484755f73d02a8e10248cb30e92a14a79",
+      "tree": "e23dce22881c30c6105dd9027e89f308f31ec443",
+      "head_date": "2026-09-04T06:37:03+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/trusted-registry-verifier-profile-v1",
+      "head": "0d830cde51221eec8213814db8c7cedbe5f600af",
+      "tree": "63ded19c81b41f5723c1a7f0ac0bf62de52969ab",
+      "head_date": "2026-08-27T16:41:04+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/trusted-verifier-allowlist-v1",
+      "head": "14c8689881bf698d04bbb49a26f9d7efc60d289a",
+      "tree": "a804edf0e8d54d12dcfd63be55adff4dd8e71097",
+      "head_date": "2026-08-20T04:18:20+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/trusted-verifier-image-v1",
+      "head": "818bc7b10c3de7e0fcf78515887f90bffe72fba8",
+      "tree": "2c820adfbaeef61e587729b58204cebf1103a734",
+      "head_date": "2026-08-20T04:09:49+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/twin-dialogue-bridge-v1",
+      "head": "47d6defe28cbcce341040a8d16f31ec02a2abe8d",
+      "tree": "0034d13972a333a4d12ccc35fedfb82afec44ae2",
+      "head_date": "2026-08-20T03:00:36+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/two-chat-coordination-v1",
+      "head": "5f98f23c6841e6f335e9a114e8b0c0e4201b4850",
+      "tree": "413e98b3bf848126b45a022d3bfd6252bac01561",
+      "head_date": "2026-08-22T19:08:31+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/universal-model-capability-fabric-v1",
+      "head": "3e6afe644dbea01df85ccf27c20390976820f88f",
+      "tree": "a39cec72289558bb72060a5cffe741b4a76e4059",
+      "head_date": "2026-08-20T07:10:04+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/universal-system-clean-v2",
+      "head": "6fba8a12e5eb738e0691072c150a6537439ebeb1",
+      "tree": "efafbc61d28f6efe137e8e5d7af467ce64d69f3f",
+      "head_date": "2026-08-20T02:57:32+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/universal-system-v1",
+      "head": "b796792d1b7a0925011ba2d0fcdebb333f95122a",
+      "tree": "f176f09b4f5c0bfc099237a47498b10d06cf85cc",
+      "head_date": "2026-08-20T07:32:34+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/verifier-shadow-ledger-wiring-v1",
+      "head": "5603750cbe93905a250da6f22626ed30004ce7fd",
+      "tree": "f87752c34c994d41ceb41d0ca3588181e3895668",
+      "head_date": "2026-08-27T14:44:59+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/verifier-subject-gap-analysis-v1",
+      "head": "0b7319672adc0009f41115edec314a8fd5c601a4",
+      "tree": "da4e5a7df72320b30304c71057dd4ee45996d4da",
+      "head_date": "2026-08-27T14:42:59+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "post-p0/windows-sandbox-platform-gate-v1",
+      "head": "6b3e30569f6e43cb3041ce9e8af3522e0feb7206",
+      "tree": "53e64c1c72173e683b31c32b6bf3844ec6aa14c1",
+      "head_date": "2026-08-23T11:57:38+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "prep/closure-operator-pack-v1",
+      "head": "790bc87dcfa2614ccf54508ae5b39bce3a099053",
+      "tree": "d19de06bc211b6ba5abf3d1e02fe0e42ef72c1b5",
+      "head_date": "2026-08-19T21:55:56+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "prep/q10-native-deep-scan-contract-v2",
+      "head": "c8eef59ebe186454dec695983134096f2d6b405f",
+      "tree": "2d1cc8c88116a4744a44fadbf76182ab4bdb1776",
+      "head_date": "2026-08-24T04:02:24+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "prep/q10-q12-closure-autopilot-v1",
+      "head": "e1dacb155df2bceef5764104fdc44014d4d4bf38",
+      "tree": "56b88f2bf7f1eb1a4abbd8b13520785ca0064542",
+      "head_date": "2026-08-23T11:57:46+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "prep/q11-live-smoke-hardening-v2",
+      "head": "dbcbf4c2f2d80fdf19ef6247082af9d0c00e6fbd",
+      "tree": "229a5ee1c0ba72fb4f8adb9b3800e923922a6eb9",
+      "head_date": "2026-08-24T10:57:34+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "prep/q12-verifier-hardening-v2",
+      "head": "6f5bdc11f6c30ba71bab8f2aa757563af9cbef9d",
+      "tree": "293ab4801495f1a96113cf05dd9661305972f43f",
+      "head_date": "2026-08-24T16:53:05+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "prepare/q11-subject-89f2925c",
+      "head": "6ec3639b1888d1489a338e65126c104ece509103",
+      "tree": "fa761452a661491e718abed60b1fc68fc606df02",
+      "head_date": "2026-08-16T20:46:39+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "prepare/q12-subject-89f2925c",
+      "head": "0c1dd2521e1da772ab81f4389bc8ec71004b8691",
+      "tree": "3d0b2a1d863b09e3bf086859a606c2599544d1db",
+      "head_date": "2026-08-16T20:47:16+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "prepare/q14-subject-89f2925c",
+      "head": "75dc50935374a2c88ca5764ecf71c178ab6a16de",
+      "tree": "cb2a2a1bbae982650fbd8aecd9e1152e8a9af285",
+      "head_date": "2026-08-16T20:46:08+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "product/commercial-value-roadmap-20261105",
+      "head": "204a88c965abfc645b2fea035248b08a109e0229",
+      "tree": "0e1e9363f5801b3be433b6084ec5c4979b0f0eac",
+      "head_date": "2026-11-05T07:39:16+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "q10/aikido-frozen-39f5c1ad",
+      "head": "39f5c1adb9d761ab418cf088ff1f051b1ca731d1",
+      "tree": "0525195934f703a8becf8a39f6397b2411e0bb2e",
+      "head_date": "2026-08-16T20:40:35+07:00",
+      "merged_into_main": true,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "q10/aikido-frozen-39f5c1ad-20260829",
+      "head": "39f5c1adb9d761ab418cf088ff1f051b1ca731d1",
+      "tree": "0525195934f703a8becf8a39f6397b2411e0bb2e",
+      "head_date": "2026-08-16T20:40:35+07:00",
+      "merged_into_main": true,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "q10/deep-security-preflight-v1",
+      "head": "3e861412b93b8286b10775928474e02dde51068a",
+      "tree": "dbf600adda570016ba39eba397097fa128354e63",
+      "head_date": "2026-08-16T18:31:56+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "q10/deep-security-preflight-v1-copycheck",
+      "head": "b9fc673791e8b24ffa1193f489636051f1409d1e",
+      "tree": "dae88fb86b45a586490e380add4bfafb1b0e96c6",
+      "head_date": "2026-08-16T18:28:50+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "q10/frozen-39f5c1ad-aikido",
+      "head": "39f5c1adb9d761ab418cf088ff1f051b1ca731d1",
+      "tree": "0525195934f703a8becf8a39f6397b2411e0bb2e",
+      "head_date": "2026-08-16T20:40:35+07:00",
+      "merged_into_main": true,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "r33-closure-hardening-v02",
+      "head": "707cbf8c5f76c0ec550f2ce7a33b5b12760e0b43",
+      "tree": "1bfb62dec8ed841f103403dcc2ed0fd339a83182",
+      "head_date": "2026-08-13T23:23:15+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "refresh/subject-89f2925c",
+      "head": "0b997e9f822b22ff243cea768268a61a0d1ae89b",
+      "tree": "19038af4121b61667789bc7e83705e9dbf4cd141",
+      "head_date": "2026-08-16T20:57:45+07:00",
+      "merged_into_main": true,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "release/q04-q08-clean",
+      "head": "5470413762d753b2687a2c9c5ae9d73f97bb8e24",
+      "tree": "68c390bc03aefd2d9e5bcedff18bab80d6334a84",
+      "head_date": "2026-08-14T04:40:32+07:00",
+      "merged_into_main": true,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "release/q04-q08-multilane",
+      "head": "e5a20d05e7b4ac3cbe3010feec52a358d799a593",
+      "tree": "3866ad2394e78d20fdb99082171cc8c89582a026",
+      "head_date": "2026-08-14T04:35:10+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "release/q10-q16-closure",
+      "head": "139f7e04dfb5d4444c8f5d40a4303240cf0f877e",
+      "tree": "febf652665c26033186b721bcbdf3cfd8e4509d8",
+      "head_date": "2026-11-19T21:26:05+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "research/agentic-systems-gap-map-20261117",
+      "head": "cae9556bd5f5ba6f94de116481d1f5fa2232a2ef",
+      "tree": "92d344e347f0f5f6568de14fddde8342708384b9",
+      "head_date": "2026-11-16T17:59:11Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "research/ai-company-os-intel-20261119",
+      "head": "9639e3da99c814d5842a7dd869403f7b80617f73",
+      "tree": "b27eb49cf7c78ca3e43e6fc80be6023c8cffe2ac",
+      "head_date": "2026-11-19T15:59:14+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "research/ai-tool-registry-20261002",
+      "head": "654735455c80c2be2d7bcfb1bf2c7832f96a252e",
+      "tree": "ab0241416179d8205553863660333c0213533201",
+      "head_date": "2026-10-02T11:00:01+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "research/ai-tooling-2026-10-25",
+      "head": "efcef0f21e30a7ec1d0cd85b945ae5dfcdf61a98",
+      "tree": "b80a62b6bcbcd3b8273142a60d73a26576a2c701",
+      "head_date": "2026-10-24T20:32:53Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "research/blocker-substitution-20260904",
+      "head": "f723be3e1c785a8ca8d90f426dcce2300901e878",
+      "tree": "23b93592b1fe90580d6a75db89f028ac6b005a54",
+      "head_date": "2026-09-04T03:41:13+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "research/continuous-20261006-agent-controls",
+      "head": "ec4bc0c3e88be35d1e4c488de7d17596921427d5",
+      "tree": "4684a504a8764136ae99acecde7f2f8e21d03142",
+      "head_date": "2026-10-06T05:47:41+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "research/mcp-2026-07-28-cosign-baseline-v1",
+      "head": "d348691702f689321fd93ad67fb7ef71cf676818",
+      "tree": "8ef5348b3b8fb6adaf6e7f321b24b1f41f36e91b",
+      "head_date": "2026-08-20T11:33:04+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "research/universal-ai-os-capability-map-20260827",
+      "head": "47490639391bf5e1d9e7448c18f36125d9a57e50",
+      "tree": "c780d2020b0d432bfbfc8985ccfa91660f15f818",
+      "head_date": "2026-08-27T00:33:34+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "revert/pr-348",
+      "head": "ecfc96b562bcab8c5a3c6e85c5150751a38b7890",
+      "tree": "ee750fc62892eb410241fb95c29ea07d00362849",
+      "head_date": "2026-11-04T12:32:54+07:00",
+      "merged_into_main": true,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "review/q11-exact-subject-reconcile-v1",
+      "head": "59080e9b0e49c7b732a9657c67147730a7b4e878",
+      "tree": "dadc0734da18216517d2b1bb52da1e0beedc8503",
+      "head_date": "2026-08-23T01:27:11+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "sale/creator-source-package-v1",
+      "head": "f5cec3186e66e9746f26f208e21e1d75cea990a4",
+      "tree": "2ac8b37f4205aca6ecdbb324678e2e7cfff85c67",
+      "head_date": "2026-08-16T16:57:55+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "sale/dev-preview-package-v1",
+      "head": "ca13de095b44cb719eb227a70e56fb2e04d84444",
+      "tree": "fb5acf6d5f0f114b7cfbeb7cf169bfb5b3331abd",
+      "head_date": "2026-08-22T22:12:27+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "sale/launch-ops-v1.2",
+      "head": "ad485275e9dbb38b02f6e55559517bca41a8cd3c",
+      "tree": "f986bc3ecf55832f826e415df582adaa3aaae8a2",
+      "head_date": "2026-08-16T17:01:17+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "sale/seller-sales-kit-v1.1",
+      "head": "8e9c147e2bf141622afa9298e4896e9d19533568",
+      "tree": "50249d2102d53e9607d6c968beeb9b9fe4d27d22",
+      "head_date": "2026-08-16T17:00:54+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "security/aikido-q10-hardening-v1",
+      "head": "699e7b3e19ccdc413cf7a1408b8a794581da7e43",
+      "tree": "65da844a81b1a06e384803eed93b8a09b35cd3a6",
+      "head_date": "2026-08-28T15:01:26+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "security/aikido-remediation-20260828",
+      "head": "28532ba5691918f3bf483188b60498b4754479b2",
+      "tree": "c0c80c968cb98dea56d772a65092f9a295841da6",
+      "head_date": "2026-08-28T00:25:25+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "security/buyer-delivery-path-hardening-20261119",
+      "head": "f29027f5bafc52cb51abee14b50c239e7ceada9e",
+      "tree": "c8b06e8ef71afce83e5c68d08bc2399482cd1d54",
+      "head_date": "2026-11-19T09:13:55+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "security/close-public-beta-surface-20261119",
+      "head": "d718d3dd1bcace41bcdd0ab80e26ff1f649dc38d",
+      "tree": "f84831211b736377b502e9abf24be50e88768f13",
+      "head_date": "2026-11-19T10:59:57+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "security/codeql-ssrf-hardening-20261117",
+      "head": "13772b023c4cc9f46eacc1b632b38fe4e47b4d6a",
+      "tree": "a1c5e61eba3eb915c93cb762b2246f21105ac4f7",
+      "head_date": "2026-11-19T14:06:15Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "security/collect-dev-status-path-hardening-20261119",
+      "head": "cf02f02086c1933c752194c926abadcd9cb5d594",
+      "tree": "9e277122d6e0d2a556c9ee53800bd2fc9f61b4ee",
+      "head_date": "2026-11-19T09:05:04+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "security/command-line-hardening-20261117",
+      "head": "ace5eb5f363e387af572c81159caceab466f0e39",
+      "tree": "965ecc645ef5fbba9d6868c37aced84a6bf8646e",
+      "head_date": "2026-11-19T14:06:07Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "security/ghas-codeql-remediation-20261105",
+      "head": "0e5f271797f842976eea331a2bc70565587beda1",
+      "tree": "dec9d56008e692502e4262f999e58f1421764e45",
+      "head_date": "2026-11-23T02:46:31+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "security/no-file-deletions-guard-20261119",
+      "head": "c70185304cba68bff20ff54475eb1a395bcebcf2",
+      "tree": "d9c236827488e2073367eb280b03ea7873a81296",
+      "head_date": "2026-11-19T16:53:57+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "security/p0-n8n-export-guard-20261010",
+      "head": "1944c0b98af28b62166863152c544bc040ddcff9",
+      "tree": "8fdf284311f1ee44e96d8bf1a35e8b4b7486ca15",
+      "head_date": "2026-10-10T13:40:25+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "security/scorecard-remediation-20260905",
+      "head": "eb26eb3d62b747102cf39820e42eb71016b4e6c5",
+      "tree": "602577f5090701db912a49c5fd32e4fdb72f0498",
+      "head_date": "2026-09-05T10:28:26Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "security/semgrep-exact-proof-20260904",
+      "head": "fcb343b04dddb85e4ee8ade12ad6cae2c90546b7",
+      "tree": "b6a127f6793cd50dd94a01f65216722ef8b56985",
+      "head_date": "2026-09-04T03:22:20+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "security/sqlite-hardening-20261117",
+      "head": "f41f4c57d5347a0ce149cc892bf162019e40ce60",
+      "tree": "1edb4e92cd13d1914acd6728f0e9f863499d00a0",
+      "head_date": "2026-11-19T08:42:44+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "temp-do-not-use",
+      "head": "970dc40e17c82496e58ef363ed941af3de53c07c",
+      "tree": "0c613ba629af8358ce444f75c7e72f957b4cbc2f",
+      "head_date": "2026-08-22T19:32:58+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "tmp-do-not-use",
+      "head": "de6f03051e64786b184f97e37a9170ab65a3d6da",
+      "tree": "d5600e8d81561cfd03b3a35050ceef015629a21b",
+      "head_date": "2026-08-15T01:26:18+07:00",
+      "merged_into_main": true,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "ui/cognitive-control-interface-v2",
+      "head": "836a4c928d0535c90004706d8ccd336ef6104822",
+      "tree": "ea7895e693ae7a46cc24f4c6dd20fdde0d2d4d96",
+      "head_date": "2026-08-21T23:21:15+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "ui/unified-command-center-v01",
+      "head": "d0eeb458fbed5bd53d88d2af88892c11506e4a8f",
+      "tree": "1f1b087dc8caae1ae09bf69962c610016201e5f5",
+      "head_date": "2026-08-15T04:59:32+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "upgrade/cognitive-knowledge-fabric-v1-20260903",
+      "head": "9666faca361cf8f7ecb910023e00ee72df13337d",
+      "tree": "05d4cfc19bfa8c4ad51f65efb3558e7b5350f35a",
+      "head_date": "2026-09-03T23:44:08+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "upgrade/collaborative-development-framework-v1-20260905",
+      "head": "42f9dcd8da9b4ee7867b90d21c72ce490dca8e0a",
+      "tree": "2a12db91f22e699d6443ad5ea8e59c91af829254",
+      "head_date": "2026-09-05T10:14:25+07:00",
+      "merged_into_main": true,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "upgrade/creator-intelligence-v1-20260904",
+      "head": "628106487d10b10a556052f4060019ff7af5cf12",
+      "tree": "762cb469d28a59fd07ac149426370d504acbe2f1",
+      "head_date": "2026-09-05T23:02:41+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "upgrade/enforcement-stack-vnext-20261002",
+      "head": "53a45dbb860c15c1ee83de2ad64f8c4bbadbda4f",
+      "tree": "131995c0faeea21d9a628d66de67da1433080b55",
+      "head_date": "2026-10-02T12:13:06+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "upgrade/frontier-roadmap-p0-agent-security-20260903",
+      "head": "bf5f209fd3bd526653a9d4a25727405047afc453",
+      "tree": "4503102d71a8f641876d1b789323deb2e5fe56f6",
+      "head_date": "2026-09-03T19:44:33+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "upgrade/image-intelligence-pipeline-v1-20260904",
+      "head": "802c42f6d72a3a760cf25aece720473c1f84dbbd",
+      "tree": "c1918f270bd3687ad47dad6f8e00d039eb50dba1",
+      "head_date": "2026-09-04T06:28:14+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "upgrade/install-ux-a1-20260903",
+      "head": "9fb3f0e1aa50a65c6a4e9aa2df76dfad6fa65775",
+      "tree": "182695b847cc48901b27838b31d98c382f25b9ee",
+      "head_date": "2026-09-03T20:08:40+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "upgrade/knowledge-persistence-v2-20260903",
+      "head": "17106e80eab729c1d883a90f47c7ee34bb35dbda",
+      "tree": "34502d35af06dfac5811b7359dec5131cb5eff44",
+      "head_date": "2026-09-04T02:53:58+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "upgrade/omni-control-plane-20261006",
+      "head": "c783ecc296cb2aa63f971c218d5d6188bae94bc6",
+      "tree": "8ff1eace0fe644cfc5b53a1cdf55b4e3be151700",
+      "head_date": "2026-10-06T03:40:54+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "upgrade/system-wide-20260920",
+      "head": "652fa1fcf79589719db56fc00a090c31e0a5cca5",
+      "tree": "166e4c29b0951d1e9b7f85d2b81d18da7074669d",
+      "head_date": "2026-09-20T04:43:06+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "verify/category-a-canonical",
+      "head": "11614d8b91c98ffb2d8d69886ed29168faa73f57",
+      "tree": "30cd0657ab5d2b3c19df8afcaa0547099b3fae8b",
+      "head_date": "2026-10-04T21:23:09+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "verify/cloud-phase3-linux-v1",
+      "head": "576bd81748a96460555cd471517329df1769a234",
+      "tree": "5bdce82780ef74e0c4b803a0b8e50d2fdbb7c9f0",
+      "head_date": "2026-08-22T05:54:35+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "verify/docker-full-capability-20260903",
+      "head": "a9f33a1fa511b491536930bc464b157059e4575f",
+      "tree": "b06d6f411e0188e5b87eb17a1e883020be03d4ee",
+      "head_date": "2026-09-03T23:10:48+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "verify/q04-exact-sha",
+      "head": "e2a17cff11366604d1ee720e56c3e33e1102dbc8",
+      "tree": "72967947bc5993fa3c34c08cee5aa61ea0fc8e91",
+      "head_date": "2026-08-14T03:32:23+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "verify/q04-q05-converged",
+      "head": "fab0e4e6dd8325a43d6860a95a2a70fbee430a45",
+      "tree": "a2325e8865fd92e6b1033837ee5f71c23fa9285b",
+      "head_date": "2026-08-14T04:31:56+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "verify/q04-q05-converged-final",
+      "head": "16ac906111dc8173f4841ae66109a30a3b4a8ed0",
+      "tree": "17c7053f25093ff43189b7d25bb326f95f66cc0d",
+      "head_date": "2026-08-14T03:19:33+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "verify/q04-q05-converged-v2",
+      "head": "16ac906111dc8173f4841ae66109a30a3b4a8ed0",
+      "tree": "17c7053f25093ff43189b7d25bb326f95f66cc0d",
+      "head_date": "2026-08-14T03:19:33+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "verify/q04-q05-converged-v3",
+      "head": "9e97a1d719a59d4721763654b6973915c247a369",
+      "tree": "478fa4439fc4cb41639eb67934cdcb40f297fa12",
+      "head_date": "2026-08-14T01:02:09+07:00",
+      "merged_into_main": true,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "verify/q05-exact-ci",
+      "head": "0e0deff3ff855268ad22c99d8c29b0c081ee6bf5",
+      "tree": "569ac9eef70b6492b8e416b375cc91bce272debd",
+      "head_date": "2026-08-14T04:46:05+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "verify/q06-q07-main-a8f18",
+      "head": "c5a45dcdd106170dbbf81751bbd979e4cb880078",
+      "tree": "434fd0240d6642d50ac59441096836cfdc10b8a2",
+      "head_date": "2026-08-14T04:43:58+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "verify/q09-live-evidence",
+      "head": "a2c9efc4ed7adff57beea5bf2b80ae8d69a2ff75",
+      "tree": "f692025110c4543335fc64c1e28aab7ba01ec896",
+      "head_date": "2026-08-14T04:51:45+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "verify/q09-live-evidence-v2",
+      "head": "e0fd4b50752e537b9e6f89bcd6b861f429ef051c",
+      "tree": "e1eb4b53f02ec69e0b158ef3ab4f700973f2fea2",
+      "head_date": "2026-08-14T04:53:46+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "verify/q10-dependency-audit",
+      "head": "f543c967597c8a0e1287b2abed819c54752b8cfd",
+      "tree": "b7f871ea6e50bed1e71597459e300d3a9b978a68",
+      "head_date": "2026-08-14T22:29:53+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "verify/q11-final-subject",
+      "head": "3395c37da4a3e8a51f215eeca1227591cd2198b9",
+      "tree": "3984d272c24a42c063a8b4fad36a1431d9f7cdc0",
+      "head_date": "2026-11-20T00:54:19+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "verify/q11-main-944d7cb-20261120",
+      "head": "367b0a9e0793ce6b4a69e4a96f0e589e2a5a1e9e",
+      "tree": "133c4dfb6dacf2398a3377d5493c0a16f735c5a2",
+      "head_date": "2026-11-19T18:35:13Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "verify/q12-delegation-v2",
+      "head": "48aef6f753de4d19e8af1b7c6f6850a97479ed44",
+      "tree": "fb99c58240c0bd3fe5a5d33e0651ac235a77a8c6",
+      "head_date": "2026-08-14T22:58:17+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "verify/q12-final-subject",
+      "head": "457b38ef4f439c90693c13a7b14d72003e953f46",
+      "tree": "7e8ccd43da9bf880b42a320e9d154d796c734b2d",
+      "head_date": "2026-11-20T00:45:51+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "verify/q14-final-subject",
+      "head": "40aad4068e3c0d2f7821ee4ecbaadee65a3c31c7",
+      "tree": "f4140ca20b21c51e3f392a2be2b54b1144d9f21f",
+      "head_date": "2026-11-20T00:27:46+07:00",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "verify/sale-gates-20260922",
+      "head": "fd921ebb7aa402d09e134514d658682e5bcfdc73",
+      "tree": "435026a0a7db5857d1be64fd0585a9554791ded1",
+      "head_date": "2026-09-21T23:24:23Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    },
+    {
+      "branch": "verify/sale-gates-v2-20260922",
+      "head": "060dbab84a684c9e1f934de5be9086a67c7ea52e",
+      "tree": "22c49d12c52c77365d88604932a277b6300537fd",
+      "head_date": "2026-09-21T23:33:14Z",
+      "merged_into_main": false,
+      "stale_local_sha_mismatch": false
+    }
+  ],
+  "merged_into_main": 30,
+  "not_merged_into_main": 371,
+  "same_tree_as_main": [
+    "main"
+  ],
+  "scope_note": "Baseline covers 401 pre-existing live remote branches at audit start. The audit branch audit/repository-organization-20261123 is excluded from its own evidence to avoid self-referential HEAD/tree snapshots; it is tracked separately by Draft PR #393."
+}

@@ -10,6 +10,7 @@ CK-NEXUS is one platform with one canonical application runtime. **Agnes** is it
 
 | Need | Open |
 |---|---|
+| Browse all documentation | [Documentation Index](docs/README.md) |
 | Understand the system | [Unified Architecture](docs/CK_NEXUS_UNIFIED_ARCHITECTURE.md) · [Architecture](docs/ARCHITECTURE.md) |
 | Run the application | [Quick start](#quick-start) · [Canonical Runtime Contract](docs/CK_NEXUS_UNIFIED_OPERATIONS_CONTRACT_V1.md) |
 | See live development evidence | Start the Creator App and open **/development**; API: **/api/dev-status** |
@@ -74,7 +75,7 @@ Windows PowerShell:
 Copy-Item .env.example .env.local
 python -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -e ".[dev]"
-.\.venv\Scripts\python.exe -m creator_app.unified
+python -m creator_app.unified
 ~~~
 
 Open http://127.0.0.1:8000. The canonical application entry point is:
