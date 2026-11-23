@@ -11,8 +11,6 @@ on:
 
 permissions:
   contents: read
-  id-token: write
-  attestations: write
 
 concurrency:
   group: otel-collector-disposable-shadow-${{ github.ref }}
@@ -107,11 +105,46 @@ jobs:
           fi
           echo "PASS: trace IDs and parent-child linkage observed; metric observed; secret markers absent."
 
-      - name: Attest locally built image archive
-        uses: actions/attest-build-provenance@977bb373ede98d70efdf65b84cb5f73e068dcc2a
-        with:
-          subject-path: otelcol-shadow-image.tar
-          subject-name: ck-nexus-otelcol-shadow-0.165.0
+      - name: Record candidate-bound local image provenance evidence
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          image_id = Path("collector-image-id.txt").read_text(encoding="utf-8").strip()
+          archive_line = Path("collector-image-archive.sha256").read_text(encoding="utf-8").split()
+          if not image_id.startswith("sha256:") or len(image_id) != 71:
+              raise SystemExit("invalid local image config digest")
+          if not archive_line or len(archive_line[0]) != 64:
+              raise SystemExit("invalid image archive SHA-256")
+          evidence = {
+              "schema_version": 1,
+              "evidence_type": "CK-NEXUS-OTEL-COLLECTOR-IMAGE-PROVENANCE-SHADOW",
+              "candidate_commit_sha": "\${{ github.sha }}",
+              "upstream": {
+                  "repository": "open-telemetry/opentelemetry-collector-releases",
+                  "release_tag": "v0.165.0",
+                  "asset_sha256": "78570dd4bd6570bc41eb327869ef913bbf91b87dd8170ebebbf43bec71f6370d",
+                  "sigstore_bundle_sha256": "57b0d726808d75cfc35e3f4c3e9cf7f836157e5b0375086dde33cbd05959c8b6",
+                  "cosign_blob_signature_verified": True,
+                  "certificate_identity": "open-telemetry/opentelemetry-collector-releases workflow at refs/tags/v0.165.0",
+              },
+              "local_image": {
+                  "config_digest": image_id,
+                  "archive_sha256": archive_line[0],
+                  "registry_push": False,
+              },
+              "authority": {
+                  "gate_decision_made": False,
+                  "external_tool_authority": "evidence only",
+              },
+          }
+          output = Path("collector-image-provenance.json")
+          output.write_text(json.dumps(evidence, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+          print(json.dumps({"status": "LOCAL_PROVENANCE_EVIDENCE_RECORDED", "image_digest": image_id}))
+          PY
+          sha256sum collector-image-provenance.json | tee collector-image-provenance.sha256
 
       - name: Stop and remove disposable resources
         if: always()
