@@ -76,7 +76,13 @@ class Q16IntakeTests(unittest.TestCase):
             )
         self.path.write_text("[]", encoding="utf-8")
         with self.assertRaises(MODULE.IntakeError):
-            MODULE.intake(self.path, tool="ort", version="1", candidate_sha=CANDIDATE, allowed_root=Path(self.temp.name))
+            MODULE.intake(
+                self.path,
+                tool="ort",
+                version="1",
+                candidate_sha=CANDIDATE,
+                allowed_root=Path(self.temp.name),
+            )
 
     def test_rejects_path_outside_allowed_root(self) -> None:
         outside = Path(self.temp.name).parent / (Path(self.temp.name).name + "-outside.json")
@@ -106,7 +112,13 @@ class Q16IntakeTests(unittest.TestCase):
             )
         self.path.write_bytes(b"")
         with self.assertRaises(MODULE.IntakeError):
-            MODULE.intake(self.path, tool="ort", version="1", candidate_sha=CANDIDATE, allowed_root=Path(self.temp.name))
+            MODULE.intake(
+                self.path,
+                tool="ort",
+                version="1",
+                candidate_sha=CANDIDATE,
+                allowed_root=Path(self.temp.name),
+            )
 
 
 if __name__ == "__main__":
