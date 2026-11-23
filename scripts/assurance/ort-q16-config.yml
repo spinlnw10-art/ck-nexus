@@ -1,4 +1,8 @@
 ort:
+  analyzer:
+    allowDynamicVersions: true
+    enabledPackageManagers: [NPM, PIP]
+    skipExcluded: true
   scanner:
     scanners:
       ScanCode:
