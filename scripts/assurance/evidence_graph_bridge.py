@@ -262,7 +262,15 @@ def main() -> int:
         )
     except (OSError, EvidenceGraphError, ValueError) as exc:
         parser.error(str(exc))
-    print(json.dumps({"status": "EVIDENCE_GRAPH_CREATED", "nodes": len(graph["nodes"]), "edges": len(graph["edges"])}))
+    print(
+        json.dumps(
+            {
+                "status": "EVIDENCE_GRAPH_CREATED",
+                "nodes": len(graph["nodes"]),
+                "edges": len(graph["edges"]),
+            }
+        )
+    )
     return 0
 
 
