@@ -140,7 +140,7 @@ def main() -> int:
                 "parent_span_id": PARENT_SPAN_ID,
                 "child_span_id": CHILD_SPAN_ID,
                 "metric": "ck_nexus_shadow_requests",
-                "secret_markers": list(SECRET_MARKERS),
+                "sensitive_synthetic_attributes_injected": True,
                 "no_external_exporter_configured": True,
             },
             sort_keys=True,
