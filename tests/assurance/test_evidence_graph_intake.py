@@ -19,73 +19,79 @@ SPEC.loader.exec_module(MODULE)
 
 
 class EvidenceGraphIntakeTests(unittest.TestCase):
-    def _manifest(self, root: Path) -> dict:
-        artifact = root / "scan-report.json"
-        artifact.write_text('{"synthetic":true}', encoding="utf-8")
+    def _manifest(self, root: Path, profile: str = "q16") -> dict:
+        artifacts = {}
+        for name, relative_path in MODULE.ARTIFACT_PATHS[profile].items():
+            artifact = root / relative_path
+            artifact.parent.mkdir(parents=True, exist_ok=True)
+            artifact.write_text('{"synthetic":true}', encoding="utf-8")
+            artifacts[name] = {
+                "size_bytes": artifact.stat().st_size,
+                "sha256": hashlib.sha256(artifact.read_bytes()).hexdigest(),
+            }
         return {
             "candidate_commit_sha": "a" * 40,
-            "evidence_type": "CK-NEXUS-Q16-LICENSE-SCAN",
-            "artifacts": {
-                "scancode": {
-                    "path": str(artifact),
-                    "size_bytes": artifact.stat().st_size,
-                    "sha256": hashlib.sha256(artifact.read_bytes()).hexdigest(),
-                }
-            },
+            "evidence_type": (
+                "CK-NEXUS-Q16-LICENSE-SCAN"
+                if profile == "q16"
+                else "CK-NEXUS-OTEL-SHADOW"
+            ),
+            "artifacts": artifacts,
         }
 
-    def test_builds_candidate_bound_graph_with_non_authoritative_edges(self) -> None:
+    def test_builds_candidate_bound_q16_graph(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            result = MODULE.build_graph_document(self._manifest(root), root)
+            result = MODULE.build_graph_document(self._manifest(root), root, "q16")
             self.assertEqual(result["candidate_commit_sha"], "a" * 40)
-            self.assertEqual(result["graph_report"]["node_count"], 2)
-            self.assertEqual(result["graph_report"]["edge_count"], 1)
+            self.assertEqual(result["graph_report"]["node_count"], 5)
+            self.assertEqual(result["graph_report"]["edge_count"], 4)
             self.assertFalse(result["authority"]["gate_decision_made"])
             self.assertFalse(result["authority"]["independent_validation_claimed"])
-            self.assertFalse(result["edges"][0]["independent_validation"])
+            self.assertTrue(
+                all(not edge["independent_validation"] for edge in result["edges"])
+            )
+
+    def test_builds_candidate_bound_otel_graph(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            result = MODULE.build_graph_document(
+                self._manifest(root, "otel"), root, "otel"
+            )
+            self.assertEqual(result["evidence_type"], "CK-NEXUS-OTEL-SHADOW")
+            self.assertEqual(result["graph_report"]["node_count"], 6)
+            self.assertEqual(result["graph_report"]["edge_count"], 5)
 
     def test_rejects_tampered_artifact(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             manifest = self._manifest(root)
-            (root / "scan-report.json").write_text('{"tampered":true}', encoding="utf-8")
+            (root / "scancode-full-repo.json").write_text(
+                '{"tampered":true}', encoding="utf-8"
+            )
             with self.assertRaisesRegex(MODULE.EvidenceIntakeError, "does not match"):
-                MODULE.build_graph_document(manifest, root)
+                MODULE.build_graph_document(manifest, root, "q16")
 
-    def test_rejects_artifact_outside_allowed_root(self) -> None:
+    def test_rejects_artifact_path_in_manifest(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
-            base = Path(directory)
-            root = base / "root"
-            root.mkdir()
-            outside = base / "outside.json"
-            outside.write_text("{}", encoding="utf-8")
-            manifest = {
-                "candidate_commit_sha": "b" * 40,
-                "evidence_type": "CK-NEXUS-OTEL-SHADOW",
-                "artifacts": {
-                    "external": {
-                        "path": str(outside),
-                        "size_bytes": outside.stat().st_size,
-                        "sha256": hashlib.sha256(outside.read_bytes()).hexdigest(),
-                    }
-                },
-            }
-            with self.assertRaisesRegex(MODULE.EvidenceIntakeError, "within allowed root"):
-                MODULE.build_graph_document(manifest, root)
+            root = Path(directory)
+            manifest = self._manifest(root)
+            manifest["artifacts"]["scancode_full_repo"]["path"] = "../../outside"
+            with self.assertRaisesRegex(MODULE.EvidenceIntakeError, "must not contain file paths"):
+                MODULE.build_graph_document(manifest, root, "q16")
 
     def test_rejects_empty_artifact_set(self) -> None:
-        with tempfile.TemporaryDirectory() as directory, self.assertRaisesRegex(
-            MODULE.EvidenceIntakeError, "1 to 50"
-        ):
-            MODULE.build_graph_document(
-                {
-                    "candidate_commit_sha": "c" * 40,
-                    "evidence_type": "CK-NEXUS-OTEL-SHADOW",
-                    "artifacts": {},
-                },
-                Path(directory),
-            )
+        with tempfile.TemporaryDirectory() as directory:
+            with self.assertRaisesRegex(MODULE.EvidenceIntakeError, "fixed profile"):
+                MODULE.build_graph_document(
+                    {
+                        "candidate_commit_sha": "c" * 40,
+                        "evidence_type": "CK-NEXUS-Q16-LICENSE-SCAN",
+                        "artifacts": {},
+                    },
+                    Path(directory),
+                    "q16",
+                )
 
 
 if __name__ == "__main__":
