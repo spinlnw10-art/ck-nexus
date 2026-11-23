@@ -1,6 +1,6 @@
 # CK-NEXUS Agent Operating Model
 
-Status: proposed implementation. Activation depends on merging the pull request to the default branch and on the target agent harness supporting repository customizations.
+Status: implemented on the PR #413 feature branch; not merged or activated in production. External profile activation still depends on the target agent harness supporting repository customizations.
 
 ## Purpose
 
@@ -25,6 +25,10 @@ These are distinct layers:
 - cknexus_dev_execution_plan is plan-only. Do not treat a planned task as executed.
 - cknexus_auto_dispatch may invoke the in-process team; use it only for bounded
   development planning/work and retain the existing approval and evidence gates.
+
+## Integrated AGNES capability fabric
+
+The feature branch also connects the existing `BrainRuntime` to a deterministic `ExpertRouter`, external-assistant planning, append-only experiential memory, and fail-closed skill admission. See [AGNES Capability Fabric](AGNES_CAPABILITY_FABRIC.md) and the [System Skills Catalog](../capabilities/system-skills.catalog.json) for lifecycle, evidence, cost, and authority boundaries. These components produce plans and pending evidence; they do not start external workers, install skills, or grant Core authority.
 
 ## Primary system and subordinate-assistant hierarchy
 

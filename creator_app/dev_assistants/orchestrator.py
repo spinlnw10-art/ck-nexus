@@ -33,10 +33,18 @@ class DevAssistantFabric:
                     "assistant_id": spec.assistant_id,
                     "name": spec.name,
                     "available": executable is not None,
+                    "availability_basis": "binary_on_path_only"
+                    if executable is not None
+                    else "not_found_on_path",
+                    "runtime_verified": False,
+                    "runtime_status": "NOT_CHECKED",
                     "command": executable,
                     "capabilities": sorted(spec.capabilities),
                     "free_entry_path": spec.free_entry_path,
                     "inference_may_cost": spec.inference_may_cost,
+                    "cost_gate": "REQUIRES_EXPLICIT_APPROVAL"
+                    if spec.inference_may_cost
+                    else "LOCAL_RESOURCE_ONLY",
                     "authority": "CK-NEXUS",
                     "external_mutation_authorized": False,
                 }
@@ -75,8 +83,16 @@ class DevAssistantFabric:
                 "name": spec.name,
                 "score": score,
                 "available": executable is not None,
+                "availability_basis": "binary_on_path_only"
+                if executable is not None
+                else "not_found_on_path",
+                "runtime_verified": False,
                 "command": executable,
                 "matched_capabilities": sorted(required & spec.capabilities),
+                "inference_may_cost": spec.inference_may_cost,
+                "cost_gate": "REQUIRES_EXPLICIT_APPROVAL"
+                if spec.inference_may_cost
+                else "LOCAL_RESOURCE_ONLY",
                 "external_mutation_authorized": False,
             }
             for score, spec, executable in ranked[:limit]
@@ -104,12 +120,20 @@ class DevAssistantFabric:
                     "execution_state": "PLANNED_NOT_EXECUTED",
                 }
             )
+        cost_approval_required = any(
+            candidate.get("inference_may_cost", True)
+            for stream in streams
+            for candidate in stream["candidates"]
+        )
         return {
             "task": clean_task,
             "authority": "CK-NEXUS",
             "production_status": "NO-GO",
             "release_evidence": False,
             "external_mutation_authorized": False,
+            "execution_state": "PLANNED_NOT_EXECUTED",
+            "runtime_verified": False,
+            "cost_authorization_required": cost_approval_required,
             "workstreams": streams,
         }
 

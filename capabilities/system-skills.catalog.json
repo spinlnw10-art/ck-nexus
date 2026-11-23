@@ -1,0 +1,380 @@
+{
+  "schema": "cknexus.system-skills.catalog.v1",
+  "catalog_id": "CKNEXUS_SYSTEM_SKILLS",
+  "generated_at": "2026-11-23",
+  "purpose": "Deduplicate and govern reusable CK-NEXUS capabilities harvested from canonical code and historical development artifacts.",
+  "adoption_policy": {
+    "lifecycle": [
+      "DISCOVER",
+      "DEDUP",
+      "BENCHMARK",
+      "SECURITY_REVIEW",
+      "INDEPENDENT_VERIFY",
+      "CORE_APPROVAL",
+      "CANONICAL_ADOPT"
+    ],
+    "auto_safe_risks": [
+      "read_only",
+      "local_reversible"
+    ],
+    "human_gated_risks": [
+      "guarded",
+      "credentialed",
+      "external_side_effect",
+      "paid",
+      "production",
+      "unknown"
+    ],
+    "auto_install": false,
+    "auto_activate": false,
+    "auto_merge": false,
+    "auto_deploy": false,
+    "authority_scope": "NONE",
+    "production_status": "NO-GO"
+  },
+  "skills": [
+    {
+      "id": "pattern_selection_router",
+      "decision": "REUSE",
+      "risk": "read_only",
+      "evidence": "orchestration/registry.py; orchestration/selector.py; orchestration/patterns.json",
+      "source_status": "current_repo",
+      "notes": "Canonical pattern registry and selector already exist."
+    },
+    {
+      "id": "connector_fabric",
+      "decision": "REUSE",
+      "risk": "guarded",
+      "evidence": "creator_app/connector_fabric/",
+      "source_status": "current_repo",
+      "notes": "Reuse fail-closed MCP/OpenAPI discovery and authorization boundaries."
+    },
+    {
+      "id": "provider_router",
+      "decision": "REUSE",
+      "risk": "guarded",
+      "evidence": "creator_app/providers.py; creator_app/credentials/capability_router.py",
+      "source_status": "current_repo",
+      "notes": "Canonical provider routing exists; cloud calls remain governed by explicit settings and policy."
+    },
+    {
+      "id": "sandboxed_execution",
+      "decision": "REUSE",
+      "risk": "guarded",
+      "evidence": "creator_app/agnes/execution/sandbox/",
+      "source_status": "current_repo",
+      "notes": "Reuse existing sandbox contract; verify platform isolation before claiming runtime safety."
+    },
+    {
+      "id": "observability_fabric",
+      "decision": "REUSE",
+      "risk": "read_only",
+      "evidence": "docs/Q14 telemetry policy; .github/workflows/",
+      "source_status": "current_repo_partial",
+      "notes": "Policy and CI evidence exist; do not claim a live Collector unless separately verified."
+    },
+    {
+      "id": "council_governance",
+      "decision": "REUSE",
+      "risk": "guarded",
+      "evidence": "creator_app/control_plane/; creator_app/agnes/execution/",
+      "source_status": "current_repo",
+      "notes": "Core/L3 remains the only authority for policy, approvals and gates."
+    },
+    {
+      "id": "provenance_replay",
+      "decision": "EXTEND",
+      "risk": "local_reversible",
+      "evidence": "creator_app/agnes_ledger.py; creator_app/agnes_experiential_memory.py",
+      "source_status": "current_repo_partial",
+      "notes": "Extend append-only evidence with bounded replay and fork binding."
+    },
+    {
+      "id": "command_normalizer",
+      "decision": "EXTEND",
+      "risk": "local_reversible",
+      "evidence": "orchestration/",
+      "source_status": "historical_candidate",
+      "notes": "Prototype requires current regression and injection tests before adoption."
+    },
+    {
+      "id": "capability_admission_fabric",
+      "decision": "REUSE",
+      "risk": "read_only",
+      "evidence": "capabilities/system-skills.catalog.json; scripts/system_skill_admission.py",
+      "source_status": "current_repo",
+      "notes": "Read-only catalog and admission decision tool; never installs or activates skills."
+    },
+    {
+      "id": "capability_benchmark",
+      "decision": "NEW_SKILL",
+      "risk": "read_only",
+      "evidence": "historical_design_candidate",
+      "source_status": "historical_candidate",
+      "notes": "Create measurable baseline/delta evaluation with reproducible evidence."
+    },
+    {
+      "id": "research_delta_scout",
+      "decision": "NEW_SKILL",
+      "risk": "read_only",
+      "evidence": "historical_search_first_workflow",
+      "source_status": "historical_candidate",
+      "notes": "Search-first discovery with source freshness and independent verification."
+    },
+    {
+      "id": "human_gate_manager",
+      "decision": "EXTEND",
+      "risk": "guarded",
+      "evidence": "creator_app/control_plane/; creator_app/agnes_approval.py",
+      "source_status": "current_repo_partial",
+      "notes": "Extend Core approval contracts; never substitute caller-provided identity strings."
+    },
+    {
+      "id": "tool_permission_compiler",
+      "decision": "NEW_SKILL",
+      "risk": "guarded",
+      "evidence": "creator_app/connector_fabric/; creator_app/agnes/execution/permissions.py",
+      "source_status": "current_repo_partial",
+      "notes": "Compile capability and permission grants only from Core-issued authority."
+    },
+    {
+      "id": "cost_quota_guard",
+      "decision": "NEW_SKILL",
+      "risk": "guarded",
+      "evidence": "creator_app/providers.py; creator_app/dev_assistants/",
+      "source_status": "current_repo_partial",
+      "notes": "Add budget and quota gates before paid model or remote worker execution."
+    },
+    {
+      "id": "external_evidence_intake",
+      "decision": "NEW_SKILL",
+      "risk": "read_only",
+      "evidence": "docs/Q10-Q16; creator_app/agnes_ledger.py",
+      "source_status": "current_repo_partial",
+      "notes": "Normalize external evidence with provenance, digest and release-candidate binding."
+    },
+    {
+      "id": "semantic_ir",
+      "decision": "NEW_SKILL",
+      "risk": "local_reversible",
+      "evidence": "historical_design_candidate",
+      "source_status": "historical_candidate",
+      "notes": "Typed intermediate representation for tasks, artifacts, tools and policies."
+    },
+    {
+      "id": "dependency_graph_memory",
+      "decision": "NEW_SKILL",
+      "risk": "local_reversible",
+      "evidence": "historical_design_candidate",
+      "source_status": "historical_candidate",
+      "notes": "Track dependency and impact relations with versioned evidence."
+    },
+    {
+      "id": "causal_temporal_memory",
+      "decision": "NEW_SKILL",
+      "risk": "local_reversible",
+      "evidence": "creator_app/agnes_experiential_memory.py",
+      "source_status": "current_repo_partial",
+      "notes": "Extend validated experiences with causal and temporal relations."
+    },
+    {
+      "id": "retrieval_quality_evaluator",
+      "decision": "NEW_SKILL",
+      "risk": "read_only",
+      "evidence": "creator_app/brain/runtime.py; creator_app/global_knowledge/",
+      "source_status": "current_repo_partial",
+      "notes": "Measure retrieval precision, freshness, rights and provenance."
+    },
+    {
+      "id": "long_context_budgeter",
+      "decision": "NEW_SKILL",
+      "risk": "read_only",
+      "evidence": "historical_design_candidate",
+      "source_status": "historical_candidate",
+      "notes": "Budget context and preserve source references rather than silently truncating evidence."
+    },
+    {
+      "id": "adaptive_scheduler",
+      "decision": "NEW_SKILL",
+      "risk": "local_reversible",
+      "evidence": "creator_app/control_plane/",
+      "source_status": "current_repo_partial",
+      "notes": "Adaptive scheduling requires bounded retries, fairness and deterministic replay."
+    },
+    {
+      "id": "self_healing_supervisor",
+      "decision": "NEW_SKILL",
+      "risk": "guarded",
+      "evidence": "historical_design_candidate",
+      "source_status": "historical_candidate",
+      "notes": "Must not change policy, credentials or production state without Core approval."
+    },
+    {
+      "id": "interchat_coordination_protocol",
+      "decision": "NEW_SKILL",
+      "risk": "read_only",
+      "evidence": "historical_design_candidate",
+      "source_status": "historical_candidate",
+      "notes": "Use CLAIM/HEARTBEAT/RESULT/VERIFY/COMPLETE with lease expiry and evidence refs."
+    },
+    {
+      "id": "skill_versioning_rollback",
+      "decision": "NEW_SKILL",
+      "risk": "guarded",
+      "evidence": "creator_app/agnes_skill_foundry.py",
+      "source_status": "current_repo_partial",
+      "notes": "Add immutable versions and rollback plans; Core approval required for activation."
+    },
+    {
+      "id": "multimodal_artifact_router",
+      "decision": "EVALUATE",
+      "risk": "local_reversible",
+      "evidence": "historical_multimodal_candidate",
+      "source_status": "historical_candidate",
+      "notes": "Image/audio/video/document routing is not yet runtime-verified.",
+      "modalities": [
+        "image",
+        "audio",
+        "video",
+        "pdf",
+        "document"
+      ]
+    },
+    {
+      "id": "failure_memory",
+      "decision": "BLOCKED_BY_EVIDENCE",
+      "risk": "local_reversible",
+      "evidence": "historical_lineage_requires_rebuild",
+      "source_status": "blocked",
+      "notes": "Historical evidence is stale or incomplete; rebuild and re-test from current canonical base."
+    },
+    {
+      "id": "state_projector",
+      "decision": "BLOCKED_BY_EVIDENCE",
+      "risk": "read_only",
+      "evidence": "historical_lineage_requires_rebuild",
+      "source_status": "blocked",
+      "notes": "Historical refs alone are not implementation evidence."
+    },
+    {
+      "id": "learning_consolidator",
+      "decision": "BLOCKED_BY_EVIDENCE",
+      "risk": "local_reversible",
+      "evidence": "historical_lineage_requires_rebuild",
+      "source_status": "blocked",
+      "notes": "Requires validated provenance and independent verification."
+    },
+    {
+      "id": "durable_execution_v3",
+      "decision": "BLOCKED_BY_EVIDENCE",
+      "risk": "guarded",
+      "evidence": "historical_ci_failures",
+      "source_status": "blocked",
+      "notes": "Prior CI failures; rebuild from current dispatcher and test deterministically."
+    },
+    {
+      "id": "agnes_triad_parallel_scheduler",
+      "decision": "BLOCKED_BY_EVIDENCE",
+      "risk": "guarded",
+      "evidence": "historical_ci_failures",
+      "source_status": "blocked",
+      "notes": "Prior CI failures; no parallel authority or execution until concurrency gates pass."
+    },
+    {
+      "id": "agnes_evidence_evaluator",
+      "decision": "BLOCKED_BY_EVIDENCE",
+      "risk": "read_only",
+      "evidence": "historical_ci_failures",
+      "source_status": "blocked",
+      "notes": "Prior CI failures; independent evidence evaluator must be rebuilt and verified."
+    },
+    {
+      "id": "expert_fabric",
+      "decision": "REUSE",
+      "risk": "read_only",
+      "evidence": "creator_app/expert_fabric/; creator_app/brain/runtime.py",
+      "source_status": "current_repo",
+      "notes": "Deterministic specialist routing is integrated as planning-only metadata."
+    },
+    {
+      "id": "experiential_memory",
+      "decision": "REUSE",
+      "risk": "guarded",
+      "evidence": "creator_app/agnes_experiential_memory.py; creator_app/agnes_ledger.py",
+      "source_status": "current_repo",
+      "notes": "Append-only lessons; only Core-validated provenance is retrievable."
+    },
+    {
+      "id": "skill_foundry",
+      "decision": "REUSE",
+      "risk": "guarded",
+      "evidence": "creator_app/agnes_skill_foundry.py; creator_app/agnes_approval.py",
+      "source_status": "current_repo",
+      "notes": "Fail-closed admission; REGISTERABLE never means installed or active."
+    },
+    {
+      "id": "dev_assistant_fabric",
+      "decision": "EXTEND",
+      "risk": "guarded",
+      "evidence": "creator_app/dev_assistants/; integrations/opencode-control-bridge/",
+      "source_status": "current_repo_partial",
+      "notes": "Profiles and plans exist; external runtime launch is not verified."
+    },
+    {
+      "id": "provider_onboarding_registry",
+      "decision": "NEW_SKILL",
+      "risk": "credentialed",
+      "evidence": "historical_provider_onboarding_candidate",
+      "source_status": "historical_candidate",
+      "notes": "Provider lifecycle must require scoped credentials, verification and Core authorization."
+    },
+    {
+      "id": "provider_council",
+      "decision": "EVALUATE",
+      "risk": "paid",
+      "evidence": "historical_provider_council_candidate",
+      "source_status": "historical_candidate",
+      "notes": "Multi-provider calls may incur cost; no execution without explicit cost approval."
+    },
+    {
+      "id": "real_provider_adapters",
+      "decision": "EVALUATE",
+      "risk": "paid",
+      "evidence": "historical_real_provider_adapter_candidate",
+      "source_status": "historical_candidate",
+      "notes": "API contracts and pricing require current official verification before implementation."
+    },
+    {
+      "id": "idea_auto_experimenter",
+      "decision": "EVALUATE",
+      "risk": "paid",
+      "evidence": "historical_idea_experimenter_candidate",
+      "source_status": "historical_candidate",
+      "notes": "Parallel model experiments require budget/quota controls and evidence-based promotion."
+    },
+    {
+      "id": "cloud_worker_bridge",
+      "decision": "EVALUATE",
+      "risk": "paid",
+      "evidence": "historical_github_actions_worker_candidate",
+      "source_status": "historical_candidate",
+      "notes": "Remote CI worker is disabled by default and requires explicit compute-cost approval."
+    },
+    {
+      "id": "codex_cli_bridge",
+      "decision": "EVALUATE",
+      "risk": "credentialed",
+      "evidence": "historical_codex_bridge_candidate",
+      "source_status": "historical_candidate",
+      "notes": "No Codex CLI runtime or authentication path is verified on this Termux device."
+    },
+    {
+      "id": "termux_namespace_sandbox",
+      "decision": "BLOCKED_BY_EVIDENCE",
+      "risk": "guarded",
+      "evidence": "unshare_user_namespace_unavailable_on_current_termux",
+      "source_status": "blocked",
+      "notes": "The current Termux environment rejects unshare -Ur; do not label it an isolated sandbox."
+    }
+  ]
+}

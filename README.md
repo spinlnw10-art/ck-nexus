@@ -14,7 +14,7 @@ CK-NEXUS is one platform with one canonical application runtime. **Agnes** is it
 | Run the application | [Quick start](#quick-start) · [Canonical Runtime Contract](docs/CK_NEXUS_UNIFIED_OPERATIONS_CONTRACT_V1.md) |
 | See live development evidence | Start the Creator App and open **/development**; API: **/api/dev-status** |
 | Understand Agnes and agent governance | [Agnes Master Upgrade](docs/CK-NEXUS-AGNES-MASTER-UPGRADE.md) · [Development Council](docs/DEVELOPMENT_COUNCIL.md) |
-| Review governed specialist assistants | [Agent Operating Model](docs/CK_NEXUS_AGENT_OPERATING_MODEL.md) · [PR #413](https://github.com/spinlnw10-art/ck-nexus/pull/413) |
+| Review governed specialist assistants | [Agent Operating Model](docs/CK_NEXUS_AGENT_OPERATING_MODEL.md) · [AGNES Capability Fabric](docs/AGNES_CAPABILITY_FABRIC.md) · [System Skills Catalog](capabilities/system-skills.catalog.json) · [PR #413](https://github.com/spinlnw10-art/ck-nexus/pull/413) |
 | Configure integrations | [Integration Hub](docs/INTEGRATION_HUB.md) |
 | Review security and tests | [Security Audit](docs/SECURITY_AUDIT.md) · [Test Report](docs/TEST_REPORT.md) |
 | Prepare a release | [Release Status](RELEASE_STATUS.md) · [Release Checklist](docs/RELEASE_CHECKLIST.md) · [Q10–Q16 Contract](docs/Q10_Q16_CLOSURE_CONTRACT.md) |
@@ -57,13 +57,13 @@ Users / API / Web Workspace
 
 ## Agent-assisted engineering status
 
-CK-NEXUS is adding a governed specialist-assistant layer through [PR #413](https://github.com/spinlnw10-art/ck-nexus/pull/413) (draft; branch `integration/agent-specialists-evidence-tier-20261123`). The proposed roles cover coordination, planning, implementation, security review, test verification, evidence stewardship, and SRE recovery.
+CK-NEXUS is extending the governed specialist-assistant layer through [PR #413](https://github.com/spinlnw10-art/ck-nexus/pull/413) (draft; branch `integration/agent-specialists-evidence-tier-20261123`). The branch now combines internal specialist routing, external assistant planning, provenance-backed experiential memory, fail-closed skill admission, and a read-only system-skills adoption catalog.
 
-**Authority remains with CK-NEXUS Core / L3.** AGNES and the existing CK-NEXUS control-plane remain the primary orchestration path; external assistants are subordinate workers and cannot approve policy, access production credentials, change release gates, merge, or deploy.
+**Authority remains with CK-NEXUS Core / L3.** `ExpertRouter` recommends internal roles; `DevAssistantFabric` creates external workstream plans; `ExperientialMemory` exposes only Core-validated lessons; and `SkillFoundry` can mark a candidate `REGISTERABLE` only after evidence and Core approval. None of these components grants execution authority, installs or activates a skill, or approves production changes.
 
-**Implementation status:** the PR currently contributes specialist profiles, reusable skills, operating rules, and focused metadata/authority tests. Its PR description records two focused Termux test groups (18 and 20 passing tests) plus Ruff and diff checks. This does **not** establish that an external agent runtime is installed, launched, or completing end-to-end code changes. OpenCode/Aider/OpenHands runtime activation and agent round-trip evidence remain pending.
+**Runtime status:** assistant binary discovery is explicitly separated from runtime health. The current Termux inventory found an Ollama executable, but no running Ollama service or end-to-end assistant task was verified. OpenCode/Aider/OpenHands/Codex CLI, real cloud-provider adapters, and the GitHub Actions cloud worker remain candidates. Paid model/API or cloud execution is not triggered by this branch. The Termux user-namespace limitation also means the namespace sandbox is not claimed as active isolation on this device.
 
-The PR is not merged. Production remains **NO-GO** until the exact release candidate passes all mandatory gates. See [Release Status](RELEASE_STATUS.md) and the [Q10–Q16 Closure Contract](docs/Q10_Q16_CLOSURE_CONTRACT.md).
+Focused Termux checks: **58 tests passed** and full-repository `ruff check .` passed. Coverage includes specialist routing, assistant cost/runtime gates, Core approval binding, independent verification, quarantine release, concurrent append-only memory provenance, skill admission, catalog policy, and `BrainRuntime` integration. See [AGNES Capability Fabric](docs/AGNES_CAPABILITY_FABRIC.md) and [System Skills Catalog](capabilities/system-skills.catalog.json) for exact boundaries. The PR is not merged; Production remains **NO-GO** until the exact release candidate passes all mandatory gates. See [Release Status](RELEASE_STATUS.md) and the [Q10–Q16 Closure Contract](docs/Q10_Q16_CLOSURE_CONTRACT.md).
 
 ## Quick start
 
