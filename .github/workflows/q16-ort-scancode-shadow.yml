@@ -137,8 +137,8 @@ jobs:
 
       - name: Analyze and scan full CK-NEXUS dependency graph with ORT
         env:
-          ORT_DATA_DIR: \${{ runner.temp }}/ort-data
-          ORT_CONFIG_DIR: \${{ runner.temp }}/ort-config
+          ORT_DATA_DIR: ${{ runner.temp }}/ort-data
+          ORT_CONFIG_DIR: ${{ runner.temp }}/ort-config
           LC_ALL: en_US.UTF-8
         run: |
           set -euo pipefail
