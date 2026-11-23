@@ -14,6 +14,7 @@ CK-NEXUS is one platform with one canonical application runtime. **Agnes** is it
 | Run the application | [Quick start](#quick-start) · [Canonical Runtime Contract](docs/CK_NEXUS_UNIFIED_OPERATIONS_CONTRACT_V1.md) |
 | See live development evidence | Start the Creator App and open **/development**; API: **/api/dev-status** |
 | Understand Agnes and agent governance | [Agnes Master Upgrade](docs/CK-NEXUS-AGNES-MASTER-UPGRADE.md) · [Development Council](docs/DEVELOPMENT_COUNCIL.md) |
+| Review governed specialist assistants | [Agent Operating Model](docs/CK_NEXUS_AGENT_OPERATING_MODEL.md) · [PR #413](https://github.com/spinlnw10-art/ck-nexus/pull/413) |
 | Configure integrations | [Integration Hub](docs/INTEGRATION_HUB.md) |
 | Review security and tests | [Security Audit](docs/SECURITY_AUDIT.md) · [Test Report](docs/TEST_REPORT.md) |
 | Prepare a release | [Release Status](RELEASE_STATUS.md) · [Release Checklist](docs/RELEASE_CHECKLIST.md) · [Q10–Q16 Contract](docs/Q10_Q16_CLOSURE_CONTRACT.md) |
@@ -53,6 +54,16 @@ Users / API / Web Workspace
 ~~~
 
 **Authority boundary:** CK-NEXUS Core / L3 Authority owns state, memory, permissions, policy, execution decisions, and evidence. External tools and workflow services are adapters only; they do not become policy or release authorities. All consequential mutations must pass the applicable CK-NEXUS permission, approval, idempotency, and verification controls.
+
+## Agent-assisted engineering status
+
+CK-NEXUS is adding a governed specialist-assistant layer through [PR #413](https://github.com/spinlnw10-art/ck-nexus/pull/413) (draft; branch `integration/agent-specialists-evidence-tier-20261123`). The proposed roles cover coordination, planning, implementation, security review, test verification, evidence stewardship, and SRE recovery.
+
+**Authority remains with CK-NEXUS Core / L3.** AGNES and the existing CK-NEXUS control-plane remain the primary orchestration path; external assistants are subordinate workers and cannot approve policy, access production credentials, change release gates, merge, or deploy.
+
+**Implementation status:** the PR currently contributes specialist profiles, reusable skills, operating rules, and focused metadata/authority tests. Its PR description records two focused Termux test groups (18 and 20 passing tests) plus Ruff and diff checks. This does **not** establish that an external agent runtime is installed, launched, or completing end-to-end code changes. OpenCode/Aider/OpenHands runtime activation and agent round-trip evidence remain pending.
+
+The PR is not merged. Production remains **NO-GO** until the exact release candidate passes all mandatory gates. See [Release Status](RELEASE_STATUS.md) and the [Q10–Q16 Closure Contract](docs/Q10_Q16_CLOSURE_CONTRACT.md).
 
 ## Quick start
 
