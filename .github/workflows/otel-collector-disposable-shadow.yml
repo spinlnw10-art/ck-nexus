@@ -200,7 +200,6 @@ jobs:
           for name, path in names.items():
               data = path.read_bytes()
               artifacts[name] = {
-                  "path": str(path.resolve(strict=True)),
                   "size_bytes": len(data),
                   "sha256": hashlib.sha256(data).hexdigest(),
               }
@@ -222,10 +221,7 @@ jobs:
 
       - name: Validate telemetry evidence through CK-NEXUS EvidenceGraph
         run: |
-          python scripts/assurance/evidence_graph_intake.py \
-            --manifest otel-shadow-evidence-manifest.json \
-            --allowed-root "$GITHUB_WORKSPACE" \
-            --output otel-shadow-evidence-graph.json
+          python scripts/assurance/evidence_graph_intake.py --profile otel
 
       - name: Run EvidenceGraph intake unit tests
         run: python -m unittest tests.assurance.test_evidence_graph_intake -v
