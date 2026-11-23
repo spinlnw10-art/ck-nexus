@@ -110,13 +110,14 @@ def main() -> int:
             "artifact_digest": args.expected_artifact_digest,
         }
         for key, value in expected.items():
-            if key == "source_sha":
+            if key in ("source_sha", "source_tree"):
                 if not GIT_SHA_RE.fullmatch(value):
                     raise ValueError("expected source SHA must be 40 lowercase hex characters")
             elif not SHA256_RE.fullmatch(value):
                 raise ValueError(f"expected {key} must be 64 lowercase hex characters")
         result = validate(report, expected, sha256_file(args.input))
-        args.output.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+        serialized = json.dumps(result, indent=2, sort_keys=True) + "\n"
+        args.output.write_text(serialized, encoding="utf-8")
         summary_keys = (
             "status",
             "gate_state_changed",
