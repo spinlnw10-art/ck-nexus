@@ -17,9 +17,12 @@ The workflow uses the official OpenTelemetry Collector core release `v0.165.0` f
   Sigstore bundle, GitHub Actions OIDC issuer, repository/workflow identity and exact release tag.
 
 The Collector image is built locally from the verified official binary using `FROM scratch`.
-No mutable base image is pulled. CI records the image config digest and the SHA-256 of the
-saved image archive, then creates a GitHub build-provenance attestation for that archive.
-The locally built image is not pushed to a registry.
+No mutable base image is pulled. CI records the immutable image config digest and SHA-256
+of the saved image archive in a candidate-bound local provenance evidence document.
+The upstream binary has a verified Sigstore blob signature; the local image record is
+unsigned evidence (not a signed SLSA attestation). The PR workflow deliberately has no
+`id-token: write` or `attestations: write` permission, so untrusted pull-request code cannot
+mint OIDC-backed attestations. The locally built image is not pushed to a registry.
 
 ## Experiment
 
