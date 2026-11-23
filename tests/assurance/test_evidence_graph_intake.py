@@ -44,8 +44,8 @@ class EvidenceGraphIntakeTests(unittest.TestCase):
             root = Path(directory)
             result = MODULE.build_graph_document(self._manifest(root), root, "q16")
             self.assertEqual(result["candidate_commit_sha"], "a" * 40)
-            self.assertEqual(result["graph_report"]["node_count"], 5)
-            self.assertEqual(result["graph_report"]["edge_count"], 4)
+            self.assertEqual(result["graph_report"]["node_count"], 7)
+            self.assertEqual(result["graph_report"]["edge_count"], 6)
             self.assertFalse(result["authority"]["gate_decision_made"])
             self.assertFalse(result["authority"]["independent_validation_claimed"])
             self.assertTrue(
