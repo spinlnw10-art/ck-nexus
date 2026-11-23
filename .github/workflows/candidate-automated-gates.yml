@@ -115,6 +115,11 @@ jobs:
                       reasons.append(f"{filename} missing artifact digest")
                   if not accepted(evidence):
                       reasons.append(f"{filename} gate result is not reusable")
+                  # Metadata is not proof that the referenced artifact bytes were fetched.
+                  # Keep reuse fail-closed until download + digest verification exists.
+                  reasons.append(
+                      f"{filename} artifact payload was not downloaded and SHA-256 verified"
+                  )
               statuses[gate] = {
                   "status": "REUSED_VALID" if not reasons else "NOT_VERIFIED",
                   "reasons": reasons,
@@ -143,6 +148,11 @@ jobs:
                   out.write(f"- **{gate}: {row['status']}**\\n")
                   for reason in row["reasons"]:
                       out.write(f"  - {reason}\\n")
+          if statuses and not summary["all_skipped_gates_reused"]:
+              raise SystemExit(
+                  "Skipped gates are blocked: artifact payload retrieval and SHA-256 "
+                  "verification are not implemented. Run the gate or add verified artifact reuse."
+              )
           PY
       - name: Upload skipped-gate status (including NOT_VERIFIED)
         if: always()
