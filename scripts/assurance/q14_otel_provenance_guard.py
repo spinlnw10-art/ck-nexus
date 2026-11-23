@@ -35,16 +35,27 @@ def _unique_object(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
     return result
 
 
-def load_json(path: Path, *, max_bytes: int = 20 * 1024 * 1024) -> tuple[Any, bytes]:
+def load_json(
+    path: Path,
+    *,
+    allowed_root: Path,
+    max_bytes: int = 20 * 1024 * 1024,
+) -> tuple[Any, bytes]:
+    root = allowed_root.resolve(strict=True)
     try:
         info = path.lstat()
     except OSError as exc:
         raise EvidenceError("evidence input cannot be accessed") from exc
     if stat.S_ISLNK(info.st_mode) or not stat.S_ISREG(info.st_mode):
         raise EvidenceError("evidence input must be a regular non-symlink file")
+    resolved = path.resolve(strict=True)
+    try:
+        resolved.relative_to(root)
+    except ValueError as exc:
+        raise EvidenceError("evidence input must remain inside the allowed root") from exc
     if info.st_size == 0 or info.st_size > max_bytes:
         raise EvidenceError("evidence input size is outside the permitted range")
-    raw = path.read_bytes()
+    raw = resolved.read_bytes()
     if len(raw) != info.st_size:
         raise EvidenceError("evidence changed while being read")
     try:
@@ -85,11 +96,19 @@ def _decode_statement(entry: dict[str, Any]) -> dict[str, Any]:
     try:
         decoded = base64.b64decode(payload, validate=True)
         statement = json.loads(decoded, object_pairs_hook=_unique_object)
-    except (ValueError, UnicodeDecodeError, json.JSONDecodeError) as exc:
+    except (ValueError, UnicodeDecodeError) as exc:
         raise EvidenceError("Cosign attestation payload is not valid base64 JSON") from exc
     if not isinstance(statement, dict):
         raise EvidenceError("attestation statement must be a JSON object")
     return statement
+
+
+def _subject_matches_digest(subject: dict[str, Any], expected_digest: str) -> bool:
+    digests = subject.get("digest")
+    return (
+        isinstance(digests, dict)
+        and digests.get("sha256") == expected_digest.removeprefix("sha256:")
+    )
 
 
 def verify_slsa_subject(document: Any, expected_digest: str) -> dict[str, Any]:
@@ -108,11 +127,7 @@ def verify_slsa_subject(document: Any, expected_digest: str) -> dict[str, Any]:
         for subject in subjects:
             if not isinstance(subject, dict):
                 continue
-            digests = subject.get("digest")
-            if (
-                isinstance(digests, dict)
-                and digests.get("sha256") == expected_digest.removeprefix("sha256:")
-            ):
+            if _subject_matches_digest(subject, expected_digest):
                 matched.append({
                     "predicate_type": predicate_type,
                     "subject_name": subject.get("name", ""),
@@ -134,6 +149,7 @@ def build_report(
     release_tag: str,
     candidate_sha: str,
     slsa_status: str,
+    allowed_root: Path,
 ) -> dict[str, Any]:
     if not COMMIT_RE.fullmatch(candidate_sha):
         raise EvidenceError("candidate SHA must be 40 lowercase hexadecimal characters")
@@ -144,7 +160,7 @@ def build_report(
     if slsa_status not in SLSA_STATUSES:
         raise EvidenceError("SLSA status is invalid")
 
-    signature_doc, signature_raw = load_json(signature_path)
+    signature_doc, signature_raw = load_json(signature_path, allowed_root=allowed_root)
     digest = extract_verified_digest(signature_doc)
     provenance_hash = None
     provenance_summary = {
@@ -155,7 +171,9 @@ def build_report(
     if slsa_status == "VERIFIED":
         if provenance_path is None:
             raise EvidenceError("verified SLSA status requires provenance evidence")
-        provenance_doc, provenance_raw = load_json(provenance_path)
+        provenance_doc, provenance_raw = load_json(
+            provenance_path, allowed_root=allowed_root
+        )
         provenance_summary = verify_slsa_subject(provenance_doc, digest)
         provenance_hash = hashlib.sha256(provenance_raw).hexdigest()
     elif provenance_path is not None:
@@ -182,7 +200,7 @@ def build_report(
     }
 
 
-def main() -> int:
+def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--signature-input", type=Path, required=True)
     parser.add_argument("--provenance-input", type=Path)
@@ -194,7 +212,10 @@ def main() -> int:
     parser.add_argument("--extract-digest", action="store_true")
     args = parser.parse_args()
     try:
-        signature_doc, _ = load_json(args.signature_input)
+        allowed_root = Path.cwd().resolve(strict=True)
+        signature_doc, _ = load_json(
+            args.signature_input, allowed_root=allowed_root
+        )
         if args.extract_digest:
             print(extract_verified_digest(signature_doc))
             return 0
@@ -207,14 +228,14 @@ def main() -> int:
             release_tag=args.release_tag,
             candidate_sha=args.candidate_sha,
             slsa_status=args.slsa_status,
+            allowed_root=allowed_root,
         )
         rendered = json.dumps(report, sort_keys=True, indent=2) + "\n"
         args.output.write_text(rendered, encoding="utf-8")
     except (EvidenceError, OSError) as exc:
         parser.error(str(exc))
     print("Q14_IMAGE_PROVENANCE_EVIDENCE_RECORDED")
-    return 0
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    main()
