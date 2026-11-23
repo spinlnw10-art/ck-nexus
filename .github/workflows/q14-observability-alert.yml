@@ -215,18 +215,24 @@ jobs:
               static_configs:
                 - targets: [host.docker.internal:8000]
           YAML
+          PROMETHEUS_IMAGE="prom/prometheus@sha256:63805ebb8d2b3920190daf1cb14a60871b16fd38bed42b857a3182bc621f4996"
+          ALERTMANAGER_IMAGE="prom/alertmanager@sha256:27c475db5fb156cab31d5c18a4251ac7ed567746a2483ff264516437a39b15ba"
+          docker pull "$PROMETHEUS_IMAGE"
+          docker pull "$ALERTMANAGER_IMAGE"
+          docker image inspect "$PROMETHEUS_IMAGE" --format '{{range .RepoDigests}}{{println .}}{{end}}' | grep -Fqx "$PROMETHEUS_IMAGE"
+          docker image inspect "$ALERTMANAGER_IMAGE" --format '{{range .RepoDigests}}{{println .}}{{end}}' | grep -Fqx "$ALERTMANAGER_IMAGE"
           docker run -d --name q14-alertmanager --network q14-observability \
             --add-host=host.docker.internal:host-gateway \
             -p 127.0.0.1:9093:9093 \
             -v "$Q14_STATE_DIR/alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro" \
-            prom/alertmanager:v0.28.1 \
+            "$ALERTMANAGER_IMAGE" \
             --config.file=/etc/alertmanager/alertmanager.yml
           docker run -d --name q14-prometheus --network q14-observability \
             --add-host=host.docker.internal:host-gateway \
             -p 127.0.0.1:9090:9090 \
             -v "$Q14_STATE_DIR/prometheus.yml:/etc/prometheus/prometheus.yml:ro" \
             -v "$GITHUB_WORKSPACE/observability/alert_rules.yaml:/etc/prometheus/alert_rules.yaml:ro" \
-            prom/prometheus:v3.5.0 \
+            "$PROMETHEUS_IMAGE" \
             --config.file=/etc/prometheus/prometheus.yml \
             --storage.tsdb.path=/prometheus
           for i in $(seq 1 60); do
@@ -302,18 +308,26 @@ jobs:
                   text=True, capture_output=True, check=False,
               )
               return result.stdout.strip() if result.returncode == 0 else None
-          def image_digest(name):
+          def image_digests(name):
               result = subprocess.run(
                   ["docker", "inspect", "--format", "{{json .RepoDigests}}", name],
                   text=True, capture_output=True, check=False,
               )
               if result.returncode != 0:
-                  return None
+                  return []
               try:
                   values = json.loads(result.stdout)
-                  return values[0] if values else None
+                  return values if isinstance(values, list) else []
               except json.JSONDecodeError:
-                  return None
+                  return []
+          expected_prometheus = "prom/prometheus@sha256:63805ebb8d2b3920190daf1cb14a60871b16fd38bed42b857a3182bc621f4996"
+          expected_alertmanager = "prom/alertmanager@sha256:27c475db5fb156cab31d5c18a4251ac7ed567746a2483ff264516437a39b15ba"
+          prometheus_digests = image_digests("q14-prometheus")
+          alertmanager_digests = image_digests("q14-alertmanager")
+          images_verified = (
+              expected_prometheus in prometheus_digests
+              and expected_alertmanager in alertmanager_digests
+          )
           receipt_rows = []
           if receipt.is_file():
               receipt_rows = [json.loads(line) for line in receipt.read_text().splitlines() if line]
@@ -323,7 +337,7 @@ jobs:
           )
           api_log = root / "api.log"
           health_ok = (root / "p0-check-passed").is_file()
-          passed = firing and receipt.is_file() and api_log.is_file() and health_ok
+          passed = firing and receipt.is_file() and api_log.is_file() and health_ok and images_verified
           evidence = {
               "schema_version": 5,
               "gate": "Q14",
@@ -339,15 +353,17 @@ jobs:
               "alert_delivery": "PASS" if firing else "NOT_VERIFIED",
               "alert_receipt_sha256": digest(receipt),
               "alert_receipt_count": len(receipt_rows),
-              "prometheus_image": "prom/prometheus:v3.5.0",
+              "prometheus_image": expected_prometheus,
               "prometheus_image_id": image_id("q14-prometheus"),
-              "prometheus_repo_digest": image_digest("q14-prometheus"),
-              "alertmanager_image": "prom/alertmanager:v0.28.1",
+              "prometheus_repo_digests": prometheus_digests,
+              "prometheus_digest_verified": expected_prometheus in prometheus_digests,
+              "alertmanager_image": expected_alertmanager,
               "alertmanager_image_id": image_id("q14-alertmanager"),
-              "alertmanager_repo_digest": image_digest("q14-alertmanager"),
+              "alertmanager_repo_digests": alertmanager_digests,
+              "alertmanager_digest_verified": expected_alertmanager in alertmanager_digests,
               "health_metrics_gate": "PASS" if health_ok else "NOT_VERIFIED",
               "result": "PASS_CANDIDATE" if passed else "BLOCKED",
-              "production_promotion_allowed": passed,
+              "production_promotion_allowed": False,
               "live_production_touched": False,
           }
           Path("Q14_OBSERVABILITY_ALERT.json").write_text(
@@ -378,4 +394,4 @@ jobs:
 
       - name: Enforce Q14 evidence
         if: success()
-        run: .venv/bin/python -c "import json; x=json.load(open('Q14_OBSERVABILITY_ALERT.json')); assert x['result']=='PASS_CANDIDATE' and x['alert_delivery']=='PASS' and x['production_promotion_allowed'] is True"
+        run: .venv/bin/python -c "import json; x=json.load(open('Q14_OBSERVABILITY_ALERT.json')); assert x['result']=='PASS_CANDIDATE' and x['alert_delivery']=='PASS' and x['prometheus_digest_verified'] and x['alertmanager_digest_verified'] and x['production_promotion_allowed'] is False"
