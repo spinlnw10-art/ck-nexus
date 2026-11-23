@@ -1,6 +1,11 @@
 name: Q10 SBOM Shadow Scan
 
 on:
+  push:
+    branches: [staging/q10-sbom-shadow]
+    paths:
+      - "**"
+      - ".github/workflows/q10-sbom-shadow.yml"
   pull_request:
     types: [opened, synchronize, reopened]
     paths:
