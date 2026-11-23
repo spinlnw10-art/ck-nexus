@@ -41,10 +41,15 @@ ScanCode covers the checked-out repository source tree while explicitly excludin
 
 ## Safety
 
-- No production data, secrets, credentials, external package downloads requested by the fixture,
-  or persistent scan-result backend.
-- CI runner is ephemeral; report artifacts remain in the job workspace unless explicitly
-  published later through a separately reviewed retention policy.
+- No production data, production credentials, or persistent scan-result backend are used.
+- The workflow contacts GitHub and package registries to retrieve pinned tool artifacts and
+  resolve the synthetic fixture / repository dependency metadata. ORT may download package
+  metadata or source archives into its ephemeral runner cache; it does not install these
+  dependencies into CK-NEXUS or a production runtime.
+- `.env*` files are excluded from ScanCode and ORT input copies. This is an explicit license-scan
+  coverage exclusion; separate secret-scanning controls remain responsible for those files.
+- CI runner is ephemeral; the candidate-bound report bundle is retained as a GitHub Actions
+  artifact for 30 days, not written to production storage.
 - ORT / ScanCode findings are advisory inputs for human/legal review. They cannot approve
   licenses, change policy, merge, deploy, or decide CK-NEXUS gates.
 
