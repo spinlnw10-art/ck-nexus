@@ -10,7 +10,7 @@
 - Latest candidate commit inspected in the current work ledger: `bdf224b66e2798920f9fc3b3ae872086bb737ee5`.
 - Latest documentation commit in this update: `256c461aaa7d5dd5a2002af9bf957ae575c6e4f8`.
 - `main` remains `944d7cb70a5d59d53c8fb379752bbee2085f7c8c`; no merge or deployment has occurred.
-- Latest observed workflow batch for candidate commit `bdf224b6`: preflight, attack-regression, and universal-system completed successfully; the main `test` workflow failed during import/collection. The work ledger records an import-path correction; a successful rerun has not yet been verified.
+- Earlier workflow batch for candidate commit `bdf224b6`: preflight, attack-regression, and universal-system passed; the main `test` workflow failed during import/collection. After the import-path correction recorded in the work ledger, all four workflows triggered by documentation-only commit `bb49f89c5389c8782b11f5bf526f81986e6a9658` completed successfully: CK-NEXUS CI run `45127681507`, preflight `45127681466`, attack-regression `45127681501`, and universal-system `45127681406`. The application/runtime candidate was unchanged by that documentation commit. These CI results do not close Q10–Q16.
 - The README documentation update triggered CK-NEXUS CI run `45127564198`, observed as QUEUED. Do not infer a result until GitHub reports completion.
 - Provider-focused regression subset: 32/32 passed. This is not the complete required test suite.
 - Canonical Q10–Q16 manifest recorded by the current work ledger: `370f8a8f405e9b960e8b41722d0f61a4269237d137b94c014a1c2598e75e08de`.
