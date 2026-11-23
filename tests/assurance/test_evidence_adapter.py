@@ -59,6 +59,21 @@ class EvidenceAdapterTests(unittest.TestCase):
         self.assertEqual(result["status"], "INCOMPLETE")
         self.assertIn("tool_version", result["missing_fields"])
 
+    def test_invalid_git_tree_sha_is_incomplete(self) -> None:
+        invalid = dict(self.report, source_tree="c" * 64)
+        result = MODULE.validate(invalid, self.expected, "f" * 64)
+        self.assertEqual(result["status"], "INCOMPLETE")
+        self.assertIn("invalid_source_tree", result["binding_or_scope_errors"])
+
+    def test_runtime_digest_mismatch_is_incomplete(self) -> None:
+        invalid = dict(self.report, runtime_subject_sha256="9" * 64)
+        result = MODULE.validate(invalid, self.expected, "f" * 64)
+        self.assertEqual(result["status"], "INCOMPLETE")
+        self.assertIn(
+            "runtime_subject_sha256_mismatch",
+            result["binding_or_scope_errors"],
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
