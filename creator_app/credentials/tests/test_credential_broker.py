@@ -2,6 +2,8 @@
 
 from creator_app.credential_broker import (
     CredentialBroker as LegacyCredentialBroker,
+)
+from creator_app.credential_broker import (
     CredentialId as LegacyCredentialId,
 )
 from creator_app.credentials.credential_broker import (
