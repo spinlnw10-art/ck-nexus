@@ -28,6 +28,24 @@ def test_redaction_is_recursive():
     assert payload == {"token": "[REDACTED]", "nested": {"api_key": "[REDACTED]", "ok": "value"}}
 
 
+def test_shared_privacy_redactor_covers_nested_fields_and_secret_text():
+    payload = redact(
+        {
+            "message": "Authorization: Bearer abc.def",
+            "nested": {
+                "api_key": "sk-" + "a" * 24,
+                "note": "contact person@example.com",
+            },
+        }
+    )
+    serialized = json.dumps(payload)
+    assert "abc.def" not in serialized
+    assert "sk-" + "a" * 24 not in serialized
+    assert "person@example.com" not in serialized
+    assert "<redacted-bearer-token>" in serialized
+    assert payload["nested"]["api_key"] == "[REDACTED]"
+
+
 def test_structured_logger_never_emits_secret(caplog):
     caplog.set_level(logging.INFO, logger="cknexus.observability")
     StructuredLogger().emit(

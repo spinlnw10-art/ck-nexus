@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="th" data-theme="nexus">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="NEXUS — CK-NEXUS governed AI workspace">
+<title>NEXUS — AI Workspace</title>
+<link rel="stylesheet" href="/static/workspace.css">
+</head>
+<body>
+<div class="ambient" aria-hidden="true"><i></i><i></i><i></i><span class="stars"></span></div>
+<aside class="sidebar">
+  <a class="brand" href="/workspace" aria-label="NEXUS home"><span class="brand-word">NEXUS</span><span class="brand-orbit"></span></a>
+  <button class="new-chat" id="new-chat"><span>＋</span> New chat</button>
+  <div class="side-label">WORKSPACE</div>
+  <button class="side-link active" data-panel="chat"><span>◈</span> Chat</button>
+  <button class="side-link" data-panel="history"><span>◷</span> History</button>
+  <button class="side-link" data-panel="functions"><span>⌘</span> Functions</button>
+  <button class="side-link" data-panel="connections"><span>⎆</span> Connections</button>
+  <div class="side-label side-label-spaced">SYSTEM</div>
+  <a class="side-link" href="/development"><span>⌁</span> Evidence dashboard</a>
+  <button class="side-link" id="settings-open"><span>⚙</span> Settings</button>
+  <div class="sidebar-bottom"><span class="status-dot" id="status-dot"></span><span id="status-label">Connecting…</span><small id="model-label">API status</small></div>
+</aside>
+<main class="main">
+<header class="topbar"><div class="mobile-brand">NEXUS</div><div class="crumb">WORKSPACE <span>/</span> <b id="view-label">CHAT</b></div><div class="top-right"><span class="secure-pill" id="runtime-mode">CHECKING RUNTIME</span><button class="hub-shortcut" id="connections-shortcut" type="button">Plugin Hub</button><button class="avatar" id="settings-shortcut" aria-label="Settings">N</button></div></header>
+<section class="chat-view view active" id="chat-view">
+  <section class="neural-panel" aria-label="Live CK-NEXUS system overview">
+    <div class="neural-head"><div><span class="eyebrow">NEXUS NEURAL CORE</span><h2>System <em>topology</em></h2></div><span class="topology-caption" id="topology-caption">SYNCING SYSTEM DATA</span></div>
+    <div class="neural-stage">
+      <div class="orbit orbit-one" aria-hidden="true"></div><div class="orbit orbit-two" aria-hidden="true"></div>
+      <div class="neural-core" id="neural-core"><span class="core-halo"></span><span class="core-symbol">N</span><strong id="core-state">CONNECTING</strong><small id="core-substate">CK-NEXUS RUNTIME</small></div>
+      <div class="agent-orbit" id="agent-orbit" aria-label="Registered agents"></div>
+    </div>
+    <div class="neural-metrics"><div><strong id="metric-agents">—</strong><span>REGISTERED AGENTS</span></div><div><strong id="metric-database">—</strong><span>DATABASE</span></div><div><strong id="metric-mode">—</strong><span>INFERENCE MODE</span></div></div>
+    <p class="neural-foot" id="neural-foot">สถานะจะแสดงตามข้อมูลที่ API รายงานจริง</p>
+  </section>
+  <div class="suggestions" id="suggestions" aria-label="Available functions">
+    <button class="suggestion" data-prompt="ช่วยวางแผนงานนี้เป็นขั้นตอน พร้อมระบุผลลัพธ์และข้อจำกัด"><span>✧</span><b>วางแผนงาน</b><small>แตกงานเป็นขั้นตอน</small></button>
+    <button class="suggestion" data-prompt="ช่วยค้นคว้าและสรุปประเด็นนี้ พร้อมแยกข้อเท็จจริงกับข้อเสนอ"><span>⌕</span><b>ค้นคว้าและสรุป</b><small>จัดโครงสร้างข้อมูล</small></button>
+    <button class="suggestion" data-prompt="ช่วยสร้างเนื้อหาจากโจทย์นี้ โดยระบุกลุ่มเป้าหมายและรูปแบบให้เหมาะสม"><span>✎</span><b>สร้างเนื้อหา</b><small>ร่างและปรับเนื้อหา</small></button>
+    <button class="suggestion" data-prompt="ช่วยตรวจทานงานนี้และเสนอจุดที่ควรปรับปรุง"><span>◎</span><b>ตรวจทานงาน</b><small>วิเคราะห์และปรับปรุง</small></button>
+  </div>
+  <div class="conversation" id="conversation" aria-live="polite"></div>
+  <form class="composer" id="chat-form">
+    <div class="composer-top"><label class="agent-picker-label" for="agent-picker">WORKING WITH</label><select id="agent-picker" aria-label="Select available agent"><option value="">Loading available agents…</option></select><span class="composer-hint">Enter ↵ to send</span></div>
+    <textarea id="prompt" rows="2" maxlength="8000" placeholder="Message NEXUS…"></textarea>
+    <div class="composer-bottom"><span class="input-note">AI can make mistakes. Verify important information.</span><button class="send-button" id="send-button" type="submit" disabled aria-label="Send message">↑</button></div>
+  </form>
+  <div class="below-note">NEXUS · GOVERNED INTELLIGENCE <span>NO EVIDENCE → NO DONE</span></div>
+</section>
+<section class="view secondary-view" id="history-view"><div class="section-head"><p class="eyebrow">YOUR WORK</p><h1>Recent <em>conversations.</em></h1><p>ประวัติที่บันทึกไว้ใน CK-NEXUS session</p></div><div id="history-list" class="history-list"><p class="muted">กำลังโหลดประวัติ…</p></div></section>
+<section class="view secondary-view" id="functions-view"><div class="section-head"><p class="eyebrow">AVAILABLE CAPABILITIES</p><h1>Tools that are <em>real.</em></h1><p>รายการ Agent ที่ลงทะเบียน พร้อมค้นหา Function จาก Connector ที่ผ่าน Schema Verification แล้ว</p></div><form class="tool-search" id="tool-search-form"><label for="tool-search-query">SEARCH VERIFIED CONNECTOR FUNCTIONS</label><div class="tool-search-row"><input id="tool-search-query" type="search" minlength="2" maxlength="200" placeholder="เช่น search documents, github issues, read files" required><button type="submit" id="tool-search-submit">Search functions</button><button type="button" id="mcp-registry-search" class="registry-search-button">Search MCP Registry</button></div><p>ค้นหา Local Schema ที่ตรวจสอบแล้ว หรือ Official MCP Registry · Discovery only · ไม่ติดตั้งหรือเรียกใช้เครื่องมือ</p></form><div id="tool-search-results" class="tool-search-results" aria-live="polite"><p class="muted">พิมพ์คำค้นเพื่อค้นหา Functions จาก Connector ที่ตรวจสอบแล้ว</p></div><div class="function-divider"></div><h2 class="function-subhead">Registered CK-NEXUS Agents</h2><div id="function-list" class="function-list"><p class="muted">กำลังตรวจสอบ Agent registry…</p></div></section>
+<section class="view secondary-view" id="connections-view"><div class="section-head"><p class="eyebrow">PLUGIN INTELLIGENCE & AUTOMATION</p><h1>Installed <em>plugins.</em></h1><p>แสดงเฉพาะ Adapter ที่ติดตั้งใน CK-NEXUS และ Connector ที่ลงทะเบียนไว้ การติดตั้งไม่เท่ากับการอนุญาตใช้งาน</p></div><div class="plugin-hub-meta"><span id="plugin-count">กำลังค้นหาปลั๊กอิน…</span><button type="button" id="plugins-refresh">Refresh inventory</button></div><div id="plugin-list" class="plugin-list"><p class="muted">กำลังค้นหา Adapter ที่ติดตั้ง…</p></div><div class="connector-section"><h2>Registered MCP / API Connectors</h2><p class="muted">เครื่องมือภายนอกจะไม่ถูกเปิดให้ AI เรียกใช้จนกว่าจะผ่าน Schema Verification และ CK Policy Authority</p><div id="connector-list" class="plugin-list"><p class="muted">กำลังตรวจสอบ Connector Registry…</p></div></div></section>
+</main>
+<dialog id="settings-dialog"><form method="dialog" class="settings-card"><button class="dialog-close" aria-label="Close">×</button><p class="eyebrow">CONNECTION SETTINGS</p><h2>Workspace access</h2><p>Access token จะถูกเก็บเฉพาะใน session ของเบราว์เซอร์นี้ และส่งให้ API ผ่าน Authorization header เท่านั้น</p><label for="token-input">CK-NEXUS ACCESS TOKEN</label><input id="token-input" type="password" autocomplete="off" placeholder="Paste token locally"><div class="settings-actions"><button type="button" class="clear-token" id="clear-token">Clear token</button><button type="button" class="save-token" id="save-token">Save for this session</button></div></form></dialog>
+<aside class="music-dock" id="music-dock" aria-label="YouTube music player">
+  <div class="music-head"><div><span class="music-kicker">NEXUS AUDIO</span><strong>YouTube Music</strong><small>QUICK ACCESS</small></div><div class="music-actions"><button type="button" id="music-toggle" aria-expanded="false">Open</button><button type="button" id="music-close" class="music-close" aria-label="Close audio panel" title="Close">×</button></div></div>
+  <div class="music-body" id="music-body" hidden>
+    <p class="music-note">เปิดค้นหาเพลงบน YouTube ได้ทันที โดยไม่ต้องกรอก URL</p>
+    <a class="music-search-link" href="https://www.youtube.com/results?search_query=focus+music" target="_blank" rel="noopener noreferrer">ค้นหาเพลงบน YouTube ↗</a>
+  </div>
+</aside>
+<button type="button" class="music-reopen" id="music-reopen" aria-label="Open audio panel" hidden>♫ <span>Audio</span></button>
+<div class="toast" id="toast" role="status"></div>
+<script src="/static/workspace.js" defer></script>
+</body></html>

@@ -155,3 +155,67 @@ def _canonical_url(value: str) -> str:
         host = f"{host}:{parts.port}"
     path = parts.path.rstrip("/") or "/"
     return urlunsplit((parts.scheme.casefold(), host, path, "", ""))
+
+
+
+def rank_discovered_functions(
+    query: str,
+    functions: list[dict[str, object]] | tuple[dict[str, object], ...],
+    *,
+    limit: int = 30,
+) -> tuple[dict[str, object], ...]:
+    """Rank functions from verified connector snapshots without granting execution.
+
+    The caller must supply only tools from a persisted, schema-verified snapshot.
+    Returned records deliberately omit endpoints, credentials and input schemas.
+    """
+    if not query.strip():
+        raise ValueError("query is required")
+    if len(query) > 200:
+        raise ValueError("query must be <= 200 characters")
+    if not 1 <= limit <= 100:
+        raise ValueError("limit must be within 1..100")
+
+    terms = _tokens(query)
+    ranked: list[dict[str, object]] = []
+    seen: set[str] = set()
+    for function in functions:
+        connector_id = str(function.get("connector_id", "")).strip()
+        name = str(function.get("name", "")).strip()
+        logical_name = str(function.get("logical_name", "")).strip()
+        if not connector_id or not name or not logical_name or logical_name in seen:
+            continue
+        description = str(function.get("description", ""))
+        searchable = _tokens(" ".join((name, logical_name, description)))
+        matched = tuple(sorted(terms.intersection(searchable)))
+        score = round(len(matched) / len(terms), 4) if terms else 0.0
+        if score == 0:
+            continue
+        seen.add(logical_name)
+        risk = str(function.get("risk", "UNKNOWN")).upper()
+        ranked.append(
+            {
+                "connector_id": connector_id,
+                "name": name,
+                "logical_name": logical_name,
+                "description": description[:300],
+                "risk": risk,
+                "schema_hash": str(function.get("schema_hash", "")),
+                "connector_state": str(function.get("connector_state", "")),
+                "score": score,
+                "matched_terms": list(matched),
+                "approval_required": risk != "READ_ONLY",
+                "execution_available": False,
+                "disposition": "discovery_only_policy_authorization_required",
+            }
+        )
+    return tuple(
+        sorted(
+            ranked,
+            key=lambda item: (
+                -float(item["score"]),
+                -len(item["matched_terms"]),  # type: ignore[arg-type]
+                str(item["logical_name"]).casefold(),
+            ),
+        )[:limit]
+    )
