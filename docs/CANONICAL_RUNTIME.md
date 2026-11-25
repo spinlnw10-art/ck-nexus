@@ -29,6 +29,11 @@ No launcher may create a parallel FastAPI app or bypass unified control installa
 The compatibility interfaces exist to avoid breaking existing operators; they are not separate
 runtime implementations.
 
+On Termux, use `./start.sh`. The canonical launcher prefers the locked
+`.venv-termux-runtime` environment when present and preloads the matching
+`libpython<major.minor>.so` shared library so Android can resolve symbols used by native Python
+extensions. This remains the same `creator_app.unified` runtime, not a separate application.
+
 ## Deployment configuration
 
 - `docker-compose.p0.yml` is for isolated P0/staging validation.

@@ -91,22 +91,59 @@ class LinuxNamespaceRunner:
     async def health(self) -> dict[str, object]:
         if not self.unshare:
             return {"ready": False, "backend": self.backend_name, "reason": "unshare_not_available"}
-        proc = await asyncio.create_subprocess_exec(
-            self.unshare,
-            "-Urmpn",
-            "--fork",
-            "/bin/true",
-            stdout=asyncio.subprocess.DEVNULL,
-            stderr=asyncio.subprocess.PIPE,
-        )
-        _, stderr = await proc.communicate()
+
+        # Probe the same namespace, process limit, mount, chroot and exec path used by
+        # run(). A bare unshare /bin/true can pass even when NPROC prevents shell forks
+        # or the mount/chroot setup is unavailable.
+        self.policy.base_dir.mkdir(parents=True, exist_ok=True)
+        with tempfile.TemporaryDirectory(
+            prefix="agnes-health-", dir=self.policy.base_dir
+        ) as temporary:
+            probe_root = Path(temporary) / "root"
+            probe_workspace = Path(temporary) / "workspace"
+            probe_root.mkdir()
+            probe_workspace.mkdir()
+            args = [
+                self.unshare,
+                "-Urmpn",
+                "--fork",
+                "/bin/bash",
+                "-c",
+                _SETUP_SCRIPT,
+                "_",
+                str(probe_root),
+                str(probe_workspace),
+                str(self.policy.max_processes),
+                "",
+                "/usr/bin/true",
+            ]
+            proc = await asyncio.create_subprocess_exec(
+                *args,
+                stdout=asyncio.subprocess.DEVNULL,
+                stderr=asyncio.subprocess.PIPE,
+                start_new_session=True,
+            )
+            try:
+                _, stderr = await asyncio.wait_for(proc.communicate(), timeout=5)
+            except TimeoutError:
+                with contextlib.suppress(ProcessLookupError):
+                    os.killpg(proc.pid, signal.SIGKILL)
+                await proc.wait()
+                return {
+                    "ready": False,
+                    "backend": self.backend_name,
+                    "production_safe": self.production_safe,
+                    "reason": "sandbox_health_probe_timed_out",
+                }
+
+        ready = proc.returncode == 0
         return {
-            "ready": proc.returncode == 0,
+            "ready": ready,
             "backend": self.backend_name,
-            "network": "isolated_namespace",
-            "filesystem": "chroot_with_read_only_system_binds",
+            "network": "isolated_namespace" if ready else "unverified",
+            "filesystem": "chroot_with_read_only_system_binds" if ready else "unverified",
             "production_safe": self.production_safe,
-            "reason": None if proc.returncode == 0 else stderr.decode(errors="replace")[:1000],
+            "reason": None if ready else stderr.decode(errors="replace")[:1000],
         }
 
     def _resolve_executable(self, command: tuple[str, ...]) -> tuple[str, ...]:

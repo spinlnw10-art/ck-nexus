@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import urllib.error
 import urllib.request
+from collections.abc import Callable
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from typing import Any
 
@@ -343,7 +344,7 @@ class HttpIndependentOmniAuthority(IndependentOmniAuthority):
         self,
         base_url: str,
         *,
-        service_token: str,
+        service_token: str | Callable[[], str],
         public_key: Ed25519PublicKey,
         issuer_id: str,
         timeout_seconds: float = 2.0,
@@ -363,12 +364,15 @@ class HttpIndependentOmniAuthority(IndependentOmniAuthority):
 
     def _post(self, path: str, body: dict[str, Any]) -> dict[str, Any]:
         raw = json.dumps(body, separators=(",", ":"), ensure_ascii=False).encode()
+        token = self.service_token() if callable(self.service_token) else self.service_token
+        if not token:
+            raise RuntimeError("OMNI service token unavailable")
         req = urllib.request.Request(
             self.base_url + path,
             data=raw,
             method="POST",
             headers={
-                "Authorization": "Bearer " + self.service_token,
+                "Authorization": "Bearer " + token,
                 "Content-Type": "application/json",
                 "Cache-Control": "no-store",
             },
