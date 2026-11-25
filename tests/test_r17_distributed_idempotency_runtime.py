@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from tests.termux_support import skip_on_termux
 import sys
 from pathlib import Path
 
@@ -8,6 +7,7 @@ import pytest
 
 from creator_app.agnes_runtime import AgnesNervousSystem
 from creator_app.config import Settings
+from tests.termux_support import skip_on_termux
 
 ROOT = Path(__file__).resolve().parents[1]
 SKILLS = ROOT / "creator_app" / "skills" / "agnes" / "SKILL.md"

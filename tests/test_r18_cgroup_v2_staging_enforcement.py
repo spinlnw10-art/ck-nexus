@@ -1,12 +1,12 @@
 from __future__ import annotations
 
-from tests.termux_support import skip_on_termux
 from pathlib import Path
 
 import pytest
 
 from creator_app.agnes.execution.phase3.hardening import CgroupV2Manager
 from creator_app.agnes_runtime import AgnesNervousSystem
+from tests.termux_support import skip_on_termux
 
 ROOT = Path(__file__).resolve().parents[1]
 SKILLS = ROOT / "creator_app" / "skills" / "agnes" / "SKILL.md"

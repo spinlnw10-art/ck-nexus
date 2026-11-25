@@ -1,10 +1,10 @@
-from tests.termux_support import skip_on_termux
 import json
 import subprocess
 from pathlib import Path
 
 from creator_app.control_plane.task_store import TaskStore
 from creator_app.n8n_intelligence.auto_developer import AutoDeveloper
+from tests.termux_support import skip_on_termux
 
 
 def _queue(tmp_path: Path, payload: dict) -> TaskStore:

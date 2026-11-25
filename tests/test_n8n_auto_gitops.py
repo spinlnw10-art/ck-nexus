@@ -1,9 +1,9 @@
-from tests.termux_support import skip_on_termux
 import json
 import subprocess
 from pathlib import Path
 
 from creator_app.n8n_intelligence.auto_gitops import AutoGitOps
+from tests.termux_support import skip_on_termux
 
 
 def _evidence(tmp_path: Path, **updates) -> tuple[Path, Path]:

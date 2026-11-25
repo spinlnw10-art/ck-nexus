@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from tests.termux_support import skip_on_termux
 import errno
 import os
 import shutil
@@ -15,6 +14,7 @@ from creator_app.agnes.execution.phase3.sandbox import HardenedLinuxNamespaceRun
 from creator_app.agnes.execution.sandbox import SandboxPolicy, SandboxWorkspaceManager
 from creator_app.agnes_runtime import AgnesNervousSystem
 from tests.omni_context_factory import make_test_omni_context
+from tests.termux_support import skip_on_termux
 
 BASELINE = "dce9e0f30e4e17d43c794c7f8ddb1e7d6e85f17e"
 ROOT = Path(__file__).resolve().parents[1]
@@ -24,7 +24,9 @@ SKILLS = ROOT / "creator_app" / "skills" / "agnes" / "SKILL.md"
 def _trusted_sandbox_git_available() -> bool:
     # Termux executables live under /data/data/... and are intentionally excluded
     # from the Linux chroot runner's trusted system paths.
-    if sys.platform == "android" or os.environ.get("PREFIX", "").startswith("/data/data/com.termux"):
+    if sys.platform == "android" or os.environ.get("PREFIX", "").startswith(
+        "/data/data/com.termux"
+    ):
         return False
     candidate = shutil.which("git")
     if not candidate:
@@ -57,7 +59,9 @@ async def test_hardened_runner_enables_no_new_privs_and_seccomp(tmp_path: Path):
     runner = HardenedLinuxNamespaceRunner(policy)
     health = await runner.health()
     if not health["ready"]:
-        pytest.skip("host does not provide the Linux namespace/chroot capabilities required by this test")
+        pytest.skip(
+            "host does not provide the Linux namespace/chroot capabilities required by this test"
+        )
     assert health["ready"] is True
     assert health["seccomp"] == "enabled_deny_dangerous_syscalls"
     result = await runner.run(
@@ -82,9 +86,7 @@ def test_cgroup_v2_doctor_is_truthful():
     # Termux and restricted containers may deny access to cgroup metadata.
     # The doctor must remain truthful and never claim enforcement is ready.
     expected_ready = (
-        health["unified_v2"]
-        and health["delegated_writable"]
-        and not health["missing_controllers"]
+        health["unified_v2"] and health["delegated_writable"] and not health["missing_controllers"]
     )
     assert health["ready"] is expected_ready
 

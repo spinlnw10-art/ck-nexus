@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from tests.termux_support import skip_on_termux
 import asyncio
 import os
 import sys
@@ -18,6 +17,7 @@ from creator_app.device_bridge.descriptor_generator import (
     registry_sha256,
 )
 from creator_app.device_bridge.mcp_server_v2 import TOOL_NAMES, TOOL_SPECS
+from tests.termux_support import skip_on_termux
 
 
 def test_generated_descriptor_matches_exact_runtime_registry(tmp_path: Path) -> None:

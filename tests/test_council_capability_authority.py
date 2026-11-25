@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from tests.termux_support import skip_on_termux
 import hashlib
 import json
 import sqlite3
@@ -17,6 +16,7 @@ from creator_app.council_authority.authority import (
 )
 from creator_app.council_authority.identity import IdentityError, IdentityVerifier
 from creator_app.council_authority.storage import AuthorityStore
+from tests.termux_support import skip_on_termux
 
 CONTRACT = json.loads(
     (Path(__file__).parents[1] / "contracts/capability-policy.example.json").read_text()

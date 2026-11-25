@@ -230,9 +230,7 @@ class TestBuildFreeAdapters:
     def test_shared_quota_tracker(self):
         with patch.dict(os.environ, {"GROQ_API_KEY": "gsk_test"}):
             qt = QuotaTracker()
-            adapters = build_free_adapters(
-                quota_tracker=qt, allow_limited_free_tier=True
-            )
+            adapters = build_free_adapters(quota_tracker=qt, allow_limited_free_tier=True)
             assert len(adapters) >= 1
             # Record on adapter's tracker should reflect in shared tracker
             adapters[0]._quota.record("groq", tokens=100)

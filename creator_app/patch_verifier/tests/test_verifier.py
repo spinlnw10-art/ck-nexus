@@ -1,4 +1,3 @@
-from tests.termux_support import skip_on_termux
 """Tests for CK-NEXUS independent static patch verification."""
 
 import hashlib
@@ -14,6 +13,7 @@ from creator_app.patch_verifier.verifier import (
     PatchVerificationPolicy,
     _inspect_patch,
 )
+from tests.termux_support import skip_on_termux
 
 _EXECUTION_ID = "devexec-" + "a" * 20
 _ASSISTANT_ID = "aider"
@@ -117,12 +117,7 @@ def test_inspector_rejects_workflow_mutation() -> None:
 
 
 def test_inspector_rejects_environment_file() -> None:
-    patch = (
-        b"diff --git a/.env b/.env\n"
-        b"--- a/.env\n"
-        b"+++ b/.env\n"
-        b"@@ -1 +1 @@\n-old\n+new\n"
-    )
+    patch = b"diff --git a/.env b/.env\n--- a/.env\n+++ b/.env\n@@ -1 +1 @@\n-old\n+new\n"
     with pytest.raises(PatchRejected, match="forbidden file"):
         _inspect_patch(patch, PatchVerificationPolicy())
 
@@ -141,12 +136,7 @@ def test_inspector_rejects_symlink_change() -> None:
 
 
 def test_inspector_rejects_binary_patch() -> None:
-    patch = (
-        b"diff --git a/image.bin b/image.bin\n"
-        b"GIT binary patch\n"
-        b"literal 1\n"
-        b"AcmZQz\n"
-    )
+    patch = b"diff --git a/image.bin b/image.bin\nGIT binary patch\nliteral 1\nAcmZQz\n"
     with pytest.raises(PatchRejected, match="binary"):
         _inspect_patch(patch, PatchVerificationPolicy())
 
