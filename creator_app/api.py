@@ -4,6 +4,7 @@ import asyncio
 import hmac
 import json
 import os
+import re
 import time
 from contextlib import asynccontextmanager
 from datetime import UTC, datetime
@@ -1086,8 +1087,25 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         version: Annotated[str, Query(min_length=1, max_length=80)] = "latest",
     ) -> dict[str, object]:
         """Read sanitized public package metadata; installation and execution stay disabled."""
+        normalized_name = name.strip()
+        if not re.fullmatch(
+            r"[A-Za-z0-9][A-Za-z0-9._-]{0,127}/[A-Za-z0-9][A-Za-z0-9._-]{0,127}",
+            normalized_name,
+        ):
+            raise HTTPException(
+                status_code=422,
+                detail="name must be a namespace/name identifier",
+            )
+        normalized_version = version.strip()
+        if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9.+_-]{0,79}", normalized_version):
+            raise HTTPException(
+                status_code=422,
+                detail="version contains unsupported characters",
+            )
         try:
-            return await asyncio.to_thread(get_mcp_registry_server_details, name, version)
+            return await asyncio.to_thread(
+                get_mcp_registry_server_details, normalized_name, normalized_version
+            )
         except ValueError as exc:
             raise HTTPException(status_code=422, detail=str(exc)) from exc
         except MCPRegistryNotFoundError as exc:

@@ -50,10 +50,16 @@ def test_cloud_provider_is_not_preferred_by_default_in_zero_cost_mode(
 
 
 def test_gmail_oauth_start_never_exposes_client_secret(tmp_path: Path, monkeypatch) -> None:
+    from cryptography.fernet import Fernet
+
     monkeypatch.setenv("GMAIL_CLIENT_ID", "gmail-client-id")
     monkeypatch.setenv("GMAIL_CLIENT_SECRET", "gmail-client-secret")
+    monkeypatch.setenv("CKNEXUS_VAULT_KEY", Fernet.generate_key().decode("ascii"))
     settings = make_settings(
         tmp_path,
+        credential_vault_enabled=True,
+        credential_vault_path=tmp_path / "credential-vault.db",
+        credential_vault_key_configured=True,
         gmail_oauth_enabled=True,
         gmail_redirect_uri="http://localhost:8000/api/integrations/gmail/oauth/callback",
     )
