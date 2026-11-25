@@ -9,6 +9,8 @@ from collections import defaultdict
 from dataclasses import dataclass
 from uuid import uuid4
 
+from creator_app.privacy_firewall.firewall import redact_value
+
 CORRELATION_HEADER = "X-Correlation-ID"
 _SAFE_CORRELATION = re.compile(r"^[A-Za-z0-9._:-]{1,128}$")
 
@@ -21,29 +23,8 @@ def correlation_id(value: str | None) -> str:
 
 
 def redact(value: object) -> object:
-    if isinstance(value, dict):
-        redacted: dict[str, object] = {}
-        for key, item in value.items():
-            lowered = key.lower()
-            if any(
-                token in lowered
-                for token in (
-                    "token",
-                    "secret",
-                    "password",
-                    "api_key",
-                    "authorization",
-                    "cookie",
-                    "credential",
-                )
-            ):
-                redacted[key] = "[REDACTED]"
-            else:
-                redacted[key] = redact(item)
-        return redacted
-    if isinstance(value, (list, tuple)):
-        return [redact(item) for item in value]
-    return value
+    """Compatibility facade over the shared privacy firewall redactor."""
+    return redact_value(value)
 
 
 class StructuredLogger:

@@ -7,6 +7,7 @@ from creator_app.global_knowledge.tool_discovery import (
     ToolCandidate,
     ToolKind,
     plan_tool_search,
+    rank_discovered_functions,
     rank_tool_candidates,
 )
 
@@ -69,3 +70,76 @@ def test_rank_limit_is_validated() -> None:
     candidate = ToolCandidate(name="search", url="https://example.test/search")
     with pytest.raises(ValueError, match="limit"):
         rank_tool_candidates("search", [candidate], limit=0)
+
+
+
+def test_rank_discovered_functions_is_safe_and_ranks_by_relevance() -> None:
+    functions = [
+        {
+            "connector_id": "docs",
+            "name": "search_documents",
+            "logical_name": "docs.search_documents",
+            "description": "Search indexed project documents",
+            "risk": "READ_ONLY",
+            "schema_hash": "abc123",
+            "connector_state": "SCHEMA_VERIFIED",
+        },
+        {
+            "connector_id": "mail",
+            "name": "send_email",
+            "logical_name": "mail.send_email",
+            "description": "Send an email message",
+            "risk": "WRITE",
+            "schema_hash": "def456",
+            "connector_state": "SCHEMA_VERIFIED",
+        },
+    ]
+    ranked = rank_discovered_functions("search documents", functions)
+    assert ranked[0]["logical_name"] == "docs.search_documents"
+    assert ranked[0]["execution_available"] is False
+    assert ranked[0]["approval_required"] is False
+    assert len(ranked) == 1
+    assert all(
+        item["disposition"] == "discovery_only_policy_authorization_required"
+        for item in ranked
+    )
+    assert all("url" not in item and "input_schema" not in item for item in ranked)
+
+
+def test_rank_discovered_functions_validates_bounds_and_deduplicates() -> None:
+    function = {
+        "connector_id": "docs",
+        "name": "search",
+        "logical_name": "docs.search",
+        "risk": "READ_ONLY",
+    }
+    assert len(rank_discovered_functions("search", [function, function])) == 1
+    with pytest.raises(ValueError, match="query is required"):
+        rank_discovered_functions(" ", [function])
+    with pytest.raises(ValueError, match="200 characters"):
+        rank_discovered_functions("x" * 201, [function])
+    with pytest.raises(ValueError, match="limit"):
+        rank_discovered_functions("search", [function], limit=0)
+
+
+
+def test_rank_discovered_functions_does_not_dedupe_before_matching() -> None:
+    functions = [
+        {
+            "connector_id": "docs",
+            "name": "list_documents",
+            "logical_name": "docs.search",
+            "description": "List items",
+            "risk": "READ_ONLY",
+        },
+        {
+            "connector_id": "docs",
+            "name": "search_documents",
+            "logical_name": "docs.search",
+            "description": "Search indexed documents",
+            "risk": "READ_ONLY",
+        },
+    ]
+    ranked = rank_discovered_functions("search documents", functions)
+    assert len(ranked) == 1
+    assert ranked[0]["name"] == "search_documents"

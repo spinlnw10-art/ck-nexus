@@ -1,8 +1,10 @@
 from __future__ import annotations
 
+import asyncio
 import hmac
 import json
 import os
+import re
 import time
 from contextlib import asynccontextmanager
 from datetime import UTC, datetime
@@ -22,7 +24,7 @@ from fastapi import (
     UploadFile,
     status,
 )
-from fastapi.responses import FileResponse, JSONResponse, PlainTextResponse
+from fastapi.responses import FileResponse, JSONResponse, PlainTextResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 
 from creator_app.agnes_runtime import AgnesNervousSystem, AgnesPolicy
@@ -44,6 +46,13 @@ from creator_app.credential_vault import build_credential_vault
 from creator_app.dev_team import DevTeamRuntime
 from creator_app.github_app import GitHubAppAuth, GitHubAppAuthError
 from creator_app.github_integration import GitHubIntegration
+from creator_app.global_knowledge.mcp_registry_discovery import (
+    MCPRegistryDiscoveryError,
+    MCPRegistryNotFoundError,
+    get_mcp_registry_server_details,
+    search_mcp_registry,
+)
+from creator_app.global_knowledge.tool_discovery import rank_discovered_functions
 from creator_app.gmail_oauth import GmailOAuthError, GmailOAuthManager
 from creator_app.health import DependencyState, DependencyStatus, evaluate_health
 from creator_app.integrations import GoogleDriveIntegration, SlackIntegration
@@ -54,6 +63,7 @@ from creator_app.observability import (
     StructuredLogger,
     correlation_id,
 )
+from creator_app.plugin_intelligence import build_plugin_catalog
 from creator_app.providers import build_provider_router
 from creator_app.public_feedback import PublicFeedbackRequest, PublicFeedbackStore
 from creator_app.rate_limit import SlidingWindowRateLimiter
@@ -960,6 +970,155 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             "integrations": integrations,
         }
 
+    @app.get("/api/plugins", dependencies=[Depends(require_access_token)])
+    async def list_installed_plugins() -> dict[str, object]:
+        # Reuse the existing adapter health checks; the catalog never exposes secrets,
+        # endpoint URLs, or raw credential references.
+        integration_payload = await integrations_status(None)
+        statuses = {
+            str(item.get("id")): item
+            for item in integration_payload.get("integrations", [])
+            if isinstance(item, dict)
+        }
+        github = dict(statuses.get("github", {}))
+        github.update(github.get("details", {}))
+        github_app = statuses.get("github-app", {})
+        gmail = statuses.get("gmail", {})
+        slack = statuses.get("slack", {})
+        google_drive = statuses.get("google_drive", {})
+        openai = statuses.get("openai", {})
+        connectors = connector_fabric.registry.list() if connector_fabric is not None else ()
+        return build_plugin_catalog(
+            github=github,
+            slack=slack,
+            google_drive=google_drive,
+            gmail=gmail,
+            github_app=github_app,
+            openai=openai,
+            connectors=connectors,
+            connector_fabric_available=connector_fabric is not None,
+        )
+
+    @app.get("/api/tools/search", dependencies=[Depends(require_access_token)])
+    async def search_discovered_functions(
+        q: Annotated[str, Query(min_length=2, max_length=200)],
+        limit: Annotated[int, Query(ge=1, le=50)] = 30,
+    ) -> dict[str, object]:
+        """Search only tools in schema-verified connector snapshots; never execute."""
+        if connector_fabric is None:
+            return {
+                "available": False,
+                "query": q,
+                "count": 0,
+                "results": [],
+                "message": "Connector Fabric is disabled; no external functions are searchable.",
+                "execution_enabled": False,
+            }
+
+        eligible_states = {
+            "SCHEMA_VERIFIED",
+            "POLICY_APPROVED",
+            "ACTIVE_READ_ONLY",
+            "ACTIVE_WRITE",
+        }
+        discovered: list[dict[str, object]] = []
+        for record in connector_fabric.registry.list():
+            if record.state.value not in eligible_states:
+                continue
+            try:
+                snapshot = connector_fabric.registry.snapshot(record.config.connector_id)
+            except KeyError:
+                continue
+            for tool in snapshot.tools:
+                discovered.append(
+                    {
+                        "connector_id": tool.connector_id,
+                        "name": tool.name,
+                        "logical_name": tool.logical_name,
+                        "description": tool.description,
+                        "risk": tool.risk.value,
+                        "schema_hash": snapshot.schema_hash,
+                        "connector_state": record.state.value,
+                    }
+                )
+
+        results = rank_discovered_functions(q, discovered, limit=limit)
+        return {
+            "available": True,
+            "query": q,
+            "count": len(results),
+            "results": list(results),
+            "execution_enabled": False,
+            "policy": (
+                "Discovery is informational; CK-NEXUS Core authorization is required "
+                "for every execution."
+            ),
+        }
+
+    @app.get(
+        "/api/tools/discovery/mcp-registry",
+        dependencies=[Depends(require_access_token)],
+    )
+    async def discover_public_mcp_servers(
+        q: Annotated[str, Query(min_length=3, max_length=120)],
+        limit: Annotated[int, Query(ge=1, le=50)] = 20,
+        cursor: Annotated[str | None, Query(max_length=512)] = None,
+    ) -> dict[str, object]:
+        """Read-only search of the official MCP Registry; candidates remain untrusted."""
+        try:
+            return await asyncio.to_thread(search_mcp_registry, q, limit, cursor=cursor)
+        except ValueError as exc:
+            raise HTTPException(status_code=422, detail=str(exc)) from exc
+        except MCPRegistryDiscoveryError as exc:
+            raise HTTPException(
+                status_code=502,
+                detail={
+                    "error": "MCP_REGISTRY_UNAVAILABLE",
+                    "message": str(exc),
+                },
+            ) from exc
+
+    @app.get(
+        "/api/tools/discovery/mcp-registry/details",
+        dependencies=[Depends(require_access_token)],
+    )
+    async def inspect_public_mcp_server(
+        name: Annotated[str, Query(min_length=3, max_length=260)],
+        version: Annotated[str, Query(min_length=1, max_length=80)] = "latest",
+    ) -> dict[str, object]:
+        """Read sanitized public package metadata; installation and execution stay disabled."""
+        normalized_name = name.strip()
+        if not re.fullmatch(
+            r"[A-Za-z0-9][A-Za-z0-9._-]{0,127}/[A-Za-z0-9][A-Za-z0-9._-]{0,127}",
+            normalized_name,
+        ):
+            raise HTTPException(
+                status_code=422,
+                detail="name must be a namespace/name identifier",
+            )
+        normalized_version = version.strip()
+        if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9.+_-]{0,79}", normalized_version):
+            raise HTTPException(
+                status_code=422,
+                detail="version contains unsupported characters",
+            )
+        try:
+            return await asyncio.to_thread(
+                get_mcp_registry_server_details, normalized_name, normalized_version
+            )
+        except ValueError as exc:
+            raise HTTPException(status_code=422, detail=str(exc)) from exc
+        except MCPRegistryNotFoundError as exc:
+            raise HTTPException(
+                status_code=404,
+                detail={"error": "MCP_SERVER_NOT_FOUND", "message": str(exc)},
+            ) from exc
+        except MCPRegistryDiscoveryError as exc:
+            raise HTTPException(
+                status_code=502,
+                detail={"error": "MCP_REGISTRY_UNAVAILABLE", "message": str(exc)},
+            ) from exc
+
     @app.post("/api/integrations/test-all")
     async def integrations_test_all(_: None = Depends(require_access_token)) -> dict[str, object]:
         return await integrations_status(_)
@@ -1029,11 +1188,36 @@ def create_app(settings: Settings | None = None) -> FastAPI:
 
     @app.get("/api/integrations/gmail/oauth/start")
     async def gmail_oauth_start(_: None = Depends(require_access_token)) -> dict[str, object]:
+        if gmail_oauth.status().get("token_persistence") != "encrypted-vault":
+            raise HTTPException(
+                status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                detail={
+                    "error": "ENCRYPTED_CREDENTIAL_VAULT_REQUIRED",
+                    "message": "Gmail OAuth requires encrypted credential persistence.",
+                },
+            )
         return {"authorization_url": gmail_oauth.authorization_url()}
 
     @app.get("/api/integrations/gmail/oauth/callback")
-    def gmail_oauth_callback(code: str = Query(...), state: str = Query(...)) -> dict[str, object]:
-        return {"status": "authorized", "gmail": gmail_oauth.exchange_code(code=code, state=state)}
+    def gmail_oauth_callback(
+        code: str | None = Query(default=None),
+        state: str | None = Query(default=None),
+        error: str | None = Query(default=None),
+    ) -> RedirectResponse:
+        if error:
+            return RedirectResponse(url="/workspace?gmail=denied", status_code=303)
+        if not code or not state:
+            return RedirectResponse(url="/workspace?gmail=failed", status_code=303)
+        if gmail_oauth.status().get("token_persistence") != "encrypted-vault":
+            raise HTTPException(
+                status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                detail={
+                    "error": "ENCRYPTED_CREDENTIAL_VAULT_REQUIRED",
+                    "message": "Gmail OAuth requires encrypted credential persistence.",
+                },
+            )
+        gmail_oauth.exchange_code(code=code, state=state)
+        return RedirectResponse(url="/workspace?gmail=connected", status_code=303)
 
     @app.post("/api/integrations/gmail/revoke-local")
     async def gmail_revoke_local(
@@ -1452,6 +1636,10 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     @app.get("/demo", include_in_schema=False)
     async def full_system_demo() -> FileResponse:
         return FileResponse(WEB_DIR / "full-system.html")
+
+    @app.get("/workspace", include_in_schema=False)
+    async def nexus_workspace() -> FileResponse:
+        return FileResponse(WEB_DIR / "workspace.html")
 
     app.mount("/static", StaticFiles(directory=WEB_DIR), name="static")
 
