@@ -33,14 +33,23 @@ class CgroupV2Manager:
 
     def health(self) -> dict[str, object]:
         controllers_file = self.root / "cgroup.controllers"
-        unified = controllers_file.exists()
+        # Android/Termux and restricted containers may deny even metadata probes
+        # under /sys/fs/cgroup. A health check must report unavailable rather than
+        # raising and preventing the application from starting.
+        try:
+            unified = controllers_file.is_file()
+        except OSError:
+            unified = False
         controllers: set[str] = set()
         if unified:
             try:
                 controllers = set(controllers_file.read_text(encoding="utf-8").split())
             except OSError:
                 controllers = set()
-        writable = self.root.is_dir() and os.access(self.root, os.W_OK)
+        try:
+            writable = self.root.is_dir() and os.access(self.root, os.W_OK)
+        except OSError:
+            writable = False
         missing = sorted(self.REQUIRED_CONTROLLERS - controllers)
         return {
             "unified_v2": unified,

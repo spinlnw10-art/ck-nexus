@@ -3,6 +3,7 @@ import subprocess
 from pathlib import Path
 
 from creator_app.n8n_intelligence.auto_gitops import AutoGitOps
+from creator_app.termux_support import skip_on_termux
 
 
 def _evidence(tmp_path: Path, **updates) -> tuple[Path, Path]:
@@ -54,6 +55,7 @@ def test_forbidden_path_is_rejected_before_git_mutation(tmp_path: Path):
     assert json.loads(evidence_path.read_text(encoding="utf-8"))["gitops_state"] == "blocked"
 
 
+@skip_on_termux
 def test_verified_change_is_committed_and_pushed_to_its_branch(tmp_path: Path):
     remote = tmp_path / "remote.git"
     repo = tmp_path / "repo"

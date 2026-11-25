@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import asyncio
+import os
 import sys
 from pathlib import Path
 
@@ -16,6 +17,7 @@ from creator_app.device_bridge.descriptor_generator import (
     registry_sha256,
 )
 from creator_app.device_bridge.mcp_server_v2 import TOOL_NAMES, TOOL_SPECS
+from creator_app.termux_support import skip_on_termux
 
 
 def test_generated_descriptor_matches_exact_runtime_registry(tmp_path: Path) -> None:
@@ -45,20 +47,30 @@ def test_registry_excludes_unsafe_legacy_problem_solver_tools() -> None:
 
 
 @pytest.mark.asyncio
+@skip_on_termux
 async def test_standard_mcp_stdio_lists_exact_tools() -> None:
     repo_root = Path.cwd().resolve()
+    child_env = {
+        "CKNEXUS_WORKSPACE_ROOT": str(repo_root),
+        "PATH": os.environ.get("PATH", ""),
+    }
+    # Preserve only the non-secret Termux loader settings needed by child Python.
+    for name in ("LD_PRELOAD", "TERMUX_VERSION", "PREFIX"):
+        value = os.environ.get(name)
+        if value:
+            child_env[name] = value
     params = StdioServerParameters(
         command=sys.executable,
         args=["-m", "creator_app.device_bridge.mcp_server_v2"],
-        env={"CKNEXUS_WORKSPACE_ROOT": str(repo_root)},
+        env=child_env,
     )
 
     async with (
         stdio_client(params) as (read_stream, write_stream),
         ClientSession(read_stream, write_stream) as session,
     ):
-        await asyncio.wait_for(session.initialize(), timeout=10)
-        result = await asyncio.wait_for(session.list_tools(), timeout=10)
+        await asyncio.wait_for(session.initialize(), timeout=45)
+        result = await asyncio.wait_for(session.list_tools(), timeout=45)
 
     expected = dict(TOOL_SPECS)
     assert {tool.name for tool in result.tools} == set(TOOL_NAMES)

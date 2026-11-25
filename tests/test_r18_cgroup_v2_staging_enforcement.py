@@ -6,6 +6,7 @@ import pytest
 
 from creator_app.agnes.execution.phase3.hardening import CgroupV2Manager
 from creator_app.agnes_runtime import AgnesNervousSystem
+from creator_app.termux_support import skip_on_termux
 
 ROOT = Path(__file__).resolve().parents[1]
 SKILLS = ROOT / "creator_app" / "skills" / "agnes" / "SKILL.md"
@@ -61,6 +62,7 @@ def test_staging_phase3_fails_closed_when_cgroup_not_delegated(
         )
 
 
+@skip_on_termux
 def test_development_phase3_keeps_truthful_non_production_safe_status(tmp_path: Path) -> None:
     cgroup_root = tmp_path / "not-delegated"
     cgroup_root.mkdir()

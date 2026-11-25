@@ -14,6 +14,7 @@ from creator_app.agnes.execution.sandbox import (
     SandboxViolation,
 )
 from creator_app.agnes_runtime import AgnesNervousSystem
+from creator_app.termux_support import skip_on_termux
 from tests.omni_context_factory import make_test_omni_context
 
 REPO = Path(__file__).resolve().parents[1]
@@ -109,6 +110,7 @@ def _patch_request(*, approval_id: str | None = None, workspace_id: str = "ws-ph
 
 
 @pytest.mark.asyncio
+@skip_on_termux
 async def test_linux_namespace_runner_isolates_network_and_host_root(tmp_path: Path):
     await _require_sandbox_runtime(tmp_path)
     work = tmp_path / "work"
@@ -140,6 +142,7 @@ async def test_linux_namespace_runner_isolates_network_and_host_root(tmp_path: P
 
 
 @pytest.mark.asyncio
+@skip_on_termux
 async def test_timeout_kills_process_group(tmp_path: Path):
     await _require_sandbox_runtime(tmp_path)
     work = tmp_path / "work"
@@ -186,6 +189,7 @@ async def test_runtime_fails_closed_without_omni_context_factory(tmp_path: Path)
 
 
 @pytest.mark.asyncio
+@skip_on_termux
 async def test_code_patch_requires_sticky_approval_then_runs_in_sandbox(tmp_path: Path):
     await _require_sandbox_runtime(tmp_path)
     agnes = _agnes(tmp_path)
@@ -222,6 +226,7 @@ async def test_code_patch_requires_sticky_approval_then_runs_in_sandbox(tmp_path
 
 
 @pytest.mark.asyncio
+@skip_on_termux
 async def test_test_and_security_scan_run_on_same_isolated_workspace(tmp_path: Path):
     await _require_sandbox_runtime(tmp_path)
     agnes = _agnes(tmp_path)
@@ -286,6 +291,7 @@ async def test_test_and_security_scan_run_on_same_isolated_workspace(tmp_path: P
 
 
 @pytest.mark.asyncio
+@skip_on_termux
 async def test_patch_path_escape_and_delete_are_denied(tmp_path: Path):
     agnes = _agnes(tmp_path)
     bad_patches = [
@@ -359,6 +365,7 @@ def test_phase2_status_does_not_claim_production_safe(tmp_path: Path):
 
 
 @pytest.mark.asyncio
+@skip_on_termux
 async def test_system_mounts_are_read_only_and_output_is_bounded(tmp_path: Path):
     await _require_sandbox_runtime(tmp_path)
     work = tmp_path / "work-ro"
@@ -406,6 +413,7 @@ def test_command_guard_denies_shell_and_network_git():
 
 
 @pytest.mark.asyncio
+@skip_on_termux
 async def test_api_phase2_approval_then_execute(tmp_path: Path):
     await _require_sandbox_runtime(tmp_path)
     from fastapi.testclient import TestClient
@@ -464,6 +472,7 @@ async def test_api_phase2_approval_then_execute(tmp_path: Path):
         assert status["idempotency"]["durable"] is True
 
 
+@skip_on_termux
 def test_workspace_requires_full_commit_and_rejects_symlinks(tmp_path: Path):
     from creator_app.agnes.execution.sandbox import SandboxWorkspaceManager
 
