@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "phase": "PR-414-AUTOMATED-REVIEW",
-  "observed_at": "2026-11-25T17:01:20Z",
+  "observed_at": "2026-11-25T17:02:50Z",
   "status": "WARN",
   "host": "GitHub-hosted Actions runners plus Termux read-only review checkout",
   "checks": [
@@ -53,7 +53,7 @@
     {
       "name": "dependency_audit",
       "status": "WARN",
-      "detail": "pip-audit --local exited 0 on the separate review environment with dev, billing, gateway and github-app extras installed. The email extra was not included in that local audit; the dedicated Dependency Audit workflow is schedule/workflow_dispatch only and was not run for this PR."
+      "detail": "pip-audit --local exited 0 on the isolated review environment with dev, billing, gateway and github-app extras installed; the email extra was not included. A subsequent uv sync --locked --all-extras --dev --no-install-project on Termux failed because psycopg-binary==3.3.4 has no Android aarch64 wheel. Termux package search found no libpq package in the configured repositories, so the email/PostgreSQL extra cannot be installed on this device without a supported alternative. The dedicated Dependency Audit workflow is schedule/workflow_dispatch only and was not run for this PR."
     },
     {
       "name": "license_review",
@@ -109,12 +109,17 @@
       "name": "current_head_github_ci",
       "status": "PASS",
       "detail": "All 7 GitHub Actions workflows passed on current PR head b0dfbf785fcdb64e84d5620efccec68c68db93ba. CK-NEXUS CI: 1068 passed, 2 skipped, 12 warnings; secret scan passed across 920 tracked files. Universal System: 103 passed, Bandit 0 blocking findings. Security Attack Regression: 19 passed. Research Stack: 53 + 2 passed. Personal Data Plane: 9 + 14 + 10 passed. AI Factory: 39 passed. Trusted Verifier Image CI passed."
+    },
+    {
+      "name": "termux_all_extras_install",
+      "status": "WARN",
+      "detail": "Termux all-extras sync is blocked by psycopg-binary==3.3.4 lacking an Android aarch64 wheel; pkg search found no libpq package in configured Termux repositories. The base Development/Mock runtime and non-email extras remain usable, but the email/PostgreSQL extra is not installed on Termux."
     }
   ],
   "evidence": {
     "stdout": "Current PR head b0dfbf785fcdb64e84d5620efccec68c68db93ba: 7/7 GitHub Actions workflows passed; CK-NEXUS CI 1068 passed, 2 skipped, 12 warnings; Termux focused suite 48 passed; Ruff and git diff --check passed; runtime endpoints returned HTTP 200.",
-    "stderr": "Termux full suite at 231c9d6e exited 1 with 30 failures, 29 attributable to Android/Termux subprocess, namespace, cgroup and compiler limitations; one Android platform expectation was corrected in b0dfbf78. SonarCloud remains cancelled/failed. Runtime process was not restarted at final head.",
-    "result": "CI PASS on current PR head. Overall review remains WARN: SonarCloud, auth policy, dependency/license gate policy, legal license confirmation, separate runner isolation, complete dependency/license audit and live Evidence Graph ingestion remain unresolved. Termux full suite is not green due platform limitations; focused Termux tests pass.",
+    "stderr": "Termux full suite at 231c9d6e exited 1 with 30 failures, 29 attributable to Android/Termux subprocess, namespace, cgroup and compiler limitations; one Android platform expectation was corrected in b0dfbf78. SonarCloud remains cancelled/failed. Runtime process was not restarted at final head. Termux all-extras dependency sync is blocked by psycopg-binary lacking an Android aarch64 wheel; no libpq package found.",
+    "result": "CI PASS on current PR head. Overall review remains WARN: SonarCloud, auth policy, dependency/license gate policy, legal license confirmation, separate runner isolation, complete dependency/license audit and live Evidence Graph ingestion remain unresolved. Termux full suite is not green due platform limitations; focused Termux tests pass. Full optional email/PostgreSQL extra remains unavailable on Termux due missing psycopg-binary Android wheel.",
     "sha256sums": "Not computed for downloaded CI logs; immutable subject commit SHA and GitHub Actions run IDs are recorded in details."
   },
   "audit": {
@@ -231,7 +236,8 @@
       "Live Evidence Graph and Audit Log ingestion interface",
       "Final commit runtime verification after Termux companion reconnect",
       "Termux full-suite run showed a failure marker; final test summary/exit code unavailable after device disconnect",
-      "Termux full suite is not green: 29 host-capability failures remain on Android/Termux; validate those tests on a supported Linux host (GitHub CI passed)"
+      "Termux full suite is not green: 29 host-capability failures remain on Android/Termux; validate those tests on a supported Linux host (GitHub CI passed)",
+      "Termux cannot install the email/PostgreSQL extra because psycopg-binary has no Android aarch64 wheel and no libpq package was found; requires an Android-compatible database-driver strategy or Linux host"
     ],
     "evidence_commit_sha": "4f34626833d5faaf49e3c980a6400b907e177ac1",
     "termux_review_suite_sha": "231c9d6e9964a8e71590364235f748809bfcc02b",
@@ -282,6 +288,12 @@
       "warnings": 12,
       "platform_specific_failures": 29,
       "platform_expectation_fixed_in": "b0dfbf785fcdb64e84d5620efccec68c68db93ba"
+    },
+    "termux_all_extras": {
+      "status": "BLOCKED",
+      "package": "psycopg-binary==3.3.4",
+      "platform": "android_30_arm64_v8a",
+      "libpq_package_found": false
     }
   }
 }
