@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "phase": "PR-414-AUTOMATED-REVIEW",
-  "observed_at": "2026-11-25T16:52:13Z",
+  "observed_at": "2026-11-25T16:55:20Z",
   "status": "WARN",
   "host": "GitHub-hosted Actions runners plus Termux read-only review checkout",
   "checks": [
@@ -84,6 +84,11 @@
       "name": "evidence_graph_ingestion",
       "status": "WARN",
       "detail": "The running CK-NEXUS API exposed no Evidence Graph/Audit Log ingestion endpoint. This repository artifact is a serialized evidence-graph snapshot only; it has not been ingested into the live Core graph or runtime ledger."
+    },
+    {
+      "name": "termux_full_suite_attempt",
+      "status": "WARN",
+      "detail": "A full pytest run was started in the separate read-only Termux checkout at commit 231c9d6e9964a8e71590364235f748809bfcc02b with the Termux libpython preload. One failure marker appeared in the progress stream; the final pytest summary and exit code could not be retrieved after the Termux companion disconnected. This is not counted as a passing local full-suite run."
     }
   ],
   "evidence": {
@@ -203,7 +208,10 @@
       "Legal owner confirmation for proprietary license terms",
       "Separate reviewer runner/device isolation",
       "Live Evidence Graph and Audit Log ingestion interface",
-      "Final commit runtime verification after Termux companion reconnect"
-    ]
+      "Final commit runtime verification after Termux companion reconnect",
+      "Termux full-suite run showed a failure marker; final test summary/exit code unavailable after device disconnect"
+    ],
+    "evidence_commit_sha": "4f34626833d5faaf49e3c980a6400b907e177ac1",
+    "termux_review_suite_sha": "231c9d6e9964a8e71590364235f748809bfcc02b"
   }
 }
