@@ -14,8 +14,8 @@ from creator_app.agnes.execution.sandbox import (
     SandboxViolation,
 )
 from creator_app.agnes_runtime import AgnesNervousSystem
+from creator_app.termux_support import skip_on_termux
 from tests.omni_context_factory import make_test_omni_context
-from tests.termux_support import skip_on_termux
 
 REPO = Path(__file__).resolve().parents[1]
 SKILL_FILE = REPO / "creator_app" / "skills" / "agnes" / "SKILL.md"

@@ -7,7 +7,7 @@ from fastapi.testclient import TestClient
 
 from creator_app.api import create_app
 from creator_app.config import Settings
-from tests.termux_support import skip_on_termux
+from creator_app.termux_support import skip_on_termux
 
 
 def test_development_dashboard_page_and_assets_are_served(tmp_path: Path) -> None:

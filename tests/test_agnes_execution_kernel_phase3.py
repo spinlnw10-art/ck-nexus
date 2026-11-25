@@ -13,8 +13,8 @@ from creator_app.agnes.execution.phase3.hardening import CgroupV2Manager
 from creator_app.agnes.execution.phase3.sandbox import HardenedLinuxNamespaceRunner
 from creator_app.agnes.execution.sandbox import SandboxPolicy, SandboxWorkspaceManager
 from creator_app.agnes_runtime import AgnesNervousSystem
+from creator_app.termux_support import skip_on_termux
 from tests.omni_context_factory import make_test_omni_context
-from tests.termux_support import skip_on_termux
 
 BASELINE = "dce9e0f30e4e17d43c794c7f8ddb1e7d6e85f17e"
 ROOT = Path(__file__).resolve().parents[1]

@@ -15,7 +15,7 @@ from creator_app.dynamic_verifier.verifier import (
     _verifier_container_command,
 )
 from creator_app.patch_verifier import verifier as static_module
-from tests.termux_support import skip_on_termux
+from creator_app.termux_support import skip_on_termux
 
 _EXECUTION_ID = "devexec-" + "a" * 20
 _IMAGE = (

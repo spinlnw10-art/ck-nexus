@@ -13,7 +13,7 @@ from creator_app.patch_verifier.verifier import (
     PatchVerificationPolicy,
     _inspect_patch,
 )
-from tests.termux_support import skip_on_termux
+from creator_app.termux_support import skip_on_termux
 
 _EXECUTION_ID = "devexec-" + "a" * 20
 _ASSISTANT_ID = "aider"
