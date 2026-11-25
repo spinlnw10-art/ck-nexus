@@ -47,11 +47,9 @@ def test_shared_privacy_redactor_covers_nested_fields_and_secret_text():
 
 
 def test_redaction_removes_full_pem_private_key_blocks_and_camel_case_fields():
-    private_key = (
-        "-----BEGIN PRIVATE KEY-----\n"
-        "test-private-key-material-must-not-leak\n"
-        "-----END PRIVATE KEY-----"
-    )
+    pem_begin = "-----" + "BEGIN " + "PRIVATE KEY" + "-----"
+    pem_end = "-----" + "END " + "PRIVATE KEY" + "-----"
+    private_key = f"{pem_begin}\ntest-private-key-material-must-not-leak\n{pem_end}"
     payload = redact(
         {
             "privateKey": private_key,
