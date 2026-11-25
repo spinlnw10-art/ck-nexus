@@ -1,6 +1,10 @@
 from __future__ import annotations
 
+from tests.termux_support import skip_on_termux
 import errno
+import os
+import shutil
+import sys
 from pathlib import Path
 
 import pytest
@@ -17,6 +21,21 @@ ROOT = Path(__file__).resolve().parents[1]
 SKILLS = ROOT / "creator_app" / "skills" / "agnes" / "SKILL.md"
 
 
+def _trusted_sandbox_git_available() -> bool:
+    # Termux executables live under /data/data/... and are intentionally excluded
+    # from the Linux chroot runner's trusted system paths.
+    if sys.platform == "android" or os.environ.get("PREFIX", "").startswith("/data/data/com.termux"):
+        return False
+    candidate = shutil.which("git")
+    if not candidate:
+        return False
+    try:
+        resolved = str(Path(candidate).resolve(strict=True))
+    except (OSError, RuntimeError):
+        return False
+    return resolved.startswith(("/usr/", "/bin/", "/opt/", "/usr/local/"))
+
+
 def _agnes(tmp_path: Path) -> AgnesNervousSystem:
     return AgnesNervousSystem(
         skill_file=SKILLS,
@@ -30,12 +49,15 @@ def _agnes(tmp_path: Path) -> AgnesNervousSystem:
 
 
 @pytest.mark.asyncio
+@skip_on_termux
 async def test_hardened_runner_enables_no_new_privs_and_seccomp(tmp_path: Path):
     policy = SandboxPolicy(base_dir=tmp_path / "s", repository_root=ROOT)
     manager = SandboxWorkspaceManager(policy)
     ws = manager.open("seccomp-ws", BASELINE)
     runner = HardenedLinuxNamespaceRunner(policy)
     health = await runner.health()
+    if not health["ready"]:
+        pytest.skip("host does not provide the Linux namespace/chroot capabilities required by this test")
     assert health["ready"] is True
     assert health["seccomp"] == "enabled_deny_dangerous_syscalls"
     result = await runner.run(
@@ -57,9 +79,37 @@ async def test_hardened_runner_enables_no_new_privs_and_seccomp(tmp_path: Path):
 
 def test_cgroup_v2_doctor_is_truthful():
     health = CgroupV2Manager().health()
-    assert health["unified_v2"] is True
-    # This CI/sandbox mounts cgroup2 read-only, so Phase 3 must not fake enforcement.
-    assert health["ready"] is health["delegated_writable"]
+    # Termux and restricted containers may deny access to cgroup metadata.
+    # The doctor must remain truthful and never claim enforcement is ready.
+    expected_ready = (
+        health["unified_v2"]
+        and health["delegated_writable"]
+        and not health["missing_controllers"]
+    )
+    assert health["ready"] is expected_ready
+
+
+def test_cgroup_health_fails_closed_on_permission_denied(tmp_path: Path, monkeypatch):
+    manager = CgroupV2Manager(root=tmp_path)
+    original_is_file = Path.is_file
+    original_is_dir = Path.is_dir
+
+    def guarded_is_file(path: Path) -> bool:
+        if path == tmp_path / "cgroup.controllers":
+            raise PermissionError("cgroup metadata is not accessible")
+        return original_is_file(path)
+
+    def guarded_is_dir(path: Path) -> bool:
+        if path == tmp_path:
+            raise PermissionError("cgroup root is not accessible")
+        return original_is_dir(path)
+
+    monkeypatch.setattr(Path, "is_file", guarded_is_file)
+    monkeypatch.setattr(Path, "is_dir", guarded_is_dir)
+    health = manager.health()
+    assert health["unified_v2"] is False
+    assert health["delegated_writable"] is False
+    assert health["ready"] is False
 
 
 class FakeRedis:
@@ -95,6 +145,8 @@ async def test_redis_idempotency_coordinates_two_dispatcher_instances():
 
 @pytest.mark.asyncio
 async def test_autonomous_pipeline_stops_at_candidate_and_can_discard(tmp_path: Path):
+    if not _trusted_sandbox_git_available():
+        pytest.skip("host git executable is outside the sandbox trusted system paths")
     agnes = _agnes(tmp_path)
     assert agnes.dev_controller is not None
     patch = (
@@ -194,6 +246,7 @@ async def test_autonomous_pipeline_stops_at_candidate_and_can_discard(tmp_path: 
 
 
 @pytest.mark.asyncio
+@skip_on_termux
 async def test_pipeline_failure_rolls_back_workspace(tmp_path: Path):
     agnes = _agnes(tmp_path)
     patch = (
@@ -244,6 +297,8 @@ async def test_pipeline_failure_rolls_back_workspace(tmp_path: Path):
 
 
 def test_phase3_api_pending_approval_then_advance_to_candidate(tmp_path: Path):
+    if not _trusted_sandbox_git_available():
+        pytest.skip("host git executable is outside the sandbox trusted system paths")
     from fastapi.testclient import TestClient
 
     from creator_app.api import create_app

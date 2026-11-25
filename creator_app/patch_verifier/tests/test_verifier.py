@@ -1,3 +1,4 @@
+from tests.termux_support import skip_on_termux
 """Tests for CK-NEXUS independent static patch verification."""
 
 import hashlib
@@ -61,6 +62,7 @@ def _repo(tmp_path: Path) -> tuple[Path, str]:
     return repo, result.stdout.decode().strip()
 
 
+@skip_on_termux
 def test_verifier_checks_exact_source_applicability(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
@@ -89,6 +91,7 @@ def test_verifier_checks_exact_source_applicability(
     assert verification["patch_applied_to_canonical_checkout"] is False
 
 
+@skip_on_termux
 def test_verifier_rejects_patch_digest_mismatch(tmp_path: Path) -> None:
     repo, source_sha = _repo(tmp_path)
     with pytest.raises(PatchRejected, match="digest mismatch"):
@@ -159,6 +162,7 @@ def test_inspector_rejects_path_traversal() -> None:
         _inspect_patch(patch, PatchVerificationPolicy())
 
 
+@skip_on_termux
 def test_verifier_refuses_root_host(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,

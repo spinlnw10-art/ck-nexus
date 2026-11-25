@@ -179,7 +179,8 @@ class TestOpenAICompatibleAdapter:
 
 
 class TestGeminiAdapter:
-    def test_not_available_without_key(self):
+    def test_not_available_without_key(self, monkeypatch):
+        monkeypatch.delenv("GEMINI_API_KEY", raising=False)
         adapter = GeminiAdapter()
         assert adapter.is_available() is False
 

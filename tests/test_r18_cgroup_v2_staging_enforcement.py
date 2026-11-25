@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from tests.termux_support import skip_on_termux
 from pathlib import Path
 
 import pytest
@@ -61,6 +62,7 @@ def test_staging_phase3_fails_closed_when_cgroup_not_delegated(
         )
 
 
+@skip_on_termux
 def test_development_phase3_keeps_truthful_non_production_safe_status(tmp_path: Path) -> None:
     cgroup_root = tmp_path / "not-delegated"
     cgroup_root.mkdir()

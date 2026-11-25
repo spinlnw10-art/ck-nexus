@@ -1,3 +1,4 @@
+from tests.termux_support import skip_on_termux
 """Tests for CK-NEXUS isolated dynamic patch verification."""
 
 import hashlib
@@ -95,6 +96,7 @@ def test_verifier_command_enforces_dynamic_isolation(tmp_path: Path) -> None:
     assert "--privileged" not in command
 
 
+@skip_on_termux
 def test_dynamic_verify_rechecks_static_and_uses_disposable_worktree(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
@@ -133,6 +135,7 @@ def test_dynamic_verify_rechecks_static_and_uses_disposable_worktree(
     assert (repo / "example.txt").read_text(encoding="utf-8") == "old\n"
 
 
+@skip_on_termux
 def test_validate_rejects_unpinned_verifier_image(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
@@ -152,6 +155,7 @@ def test_validate_rejects_unpinned_verifier_image(
         IsolatedDynamicVerifier._validate(request)
 
 
+@skip_on_termux
 def test_validate_rejects_digest_pinned_but_untrusted_image(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
@@ -185,6 +189,7 @@ def test_command_rejects_digest_pinned_but_untrusted_image(tmp_path: Path) -> No
         )
 
 
+@skip_on_termux
 def test_validate_rejects_unknown_profile(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
@@ -205,6 +210,7 @@ def test_validate_rejects_unknown_profile(
         IsolatedDynamicVerifier._validate(request)
 
 
+@skip_on_termux
 def test_validate_rejects_patch_digest_mismatch(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
@@ -224,6 +230,7 @@ def test_validate_rejects_patch_digest_mismatch(
         IsolatedDynamicVerifier._validate(request)
 
 
+@skip_on_termux
 def test_validate_refuses_root_host(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,

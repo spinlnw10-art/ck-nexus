@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from tests.termux_support import skip_on_termux
 import hashlib
 import json
 import sqlite3
@@ -270,6 +271,7 @@ def test_expired_grant_is_rejected_inside_consume_transaction(tmp_path):
         assert row["used"] == 0
 
 
+@skip_on_termux
 def test_uncommitted_consume_is_rolled_back_after_process_crash(tmp_path):
     import subprocess
     import sys

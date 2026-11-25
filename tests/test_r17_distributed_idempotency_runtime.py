@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from tests.termux_support import skip_on_termux
 import sys
 from pathlib import Path
 
@@ -34,6 +35,7 @@ def test_phase3_staging_rejects_non_redis_scheme(tmp_path: Path):
         _make(tmp_path, environment="staging", phase3_redis_url="http://redis.invalid")
 
 
+@skip_on_termux
 def test_phase3_development_keeps_local_durable_store(tmp_path: Path):
     agnes = _make(tmp_path, environment="development")
     status = agnes.status()["execution_kernel"]["idempotency"]

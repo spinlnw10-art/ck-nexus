@@ -1,3 +1,4 @@
+from tests.termux_support import skip_on_termux
 import json
 import subprocess
 from pathlib import Path
@@ -96,6 +97,7 @@ def test_successful_run_requires_tests_and_keeps_head_unchanged(tmp_path: Path):
     assert evidence["index_clean"] is True
 
 
+@skip_on_termux
 def test_dirty_primary_repo_uses_isolated_git_worktree(tmp_path: Path):
 
     repo = tmp_path / "repo"
