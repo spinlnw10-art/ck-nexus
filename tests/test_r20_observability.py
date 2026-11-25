@@ -46,6 +46,35 @@ def test_shared_privacy_redactor_covers_nested_fields_and_secret_text():
     assert payload["nested"]["api_key"] == "[REDACTED]"
 
 
+def test_redaction_removes_full_pem_private_key_blocks_and_camel_case_fields():
+    private_key = (
+        "-----BEGIN PRIVATE KEY-----\n"
+        "test-private-key-material-must-not-leak\n"
+        "-----END PRIVATE KEY-----"
+    )
+    payload = redact(
+        {
+            "privateKey": private_key,
+            "apiKey": "arbitrary-api-key-material",
+            "accessToken": "arbitrary-access-token",
+            "clientSecret": "arbitrary-client-secret",
+            "message": private_key,
+            "safeKey": "non-secret-identifier",
+        }
+    )
+    encoded = json.dumps(payload)
+    assert "test-private-key-material-must-not-leak" not in encoded
+    assert "arbitrary-api-key-material" not in encoded
+    assert "arbitrary-access-token" not in encoded
+    assert "arbitrary-client-secret" not in encoded
+    assert payload["privateKey"] == "[REDACTED]"
+    assert payload["apiKey"] == "[REDACTED]"
+    assert payload["accessToken"] == "[REDACTED]"
+    assert payload["clientSecret"] == "[REDACTED]"
+    assert payload["safeKey"] == "non-secret-identifier"
+    assert "<redacted-private-key>" in payload["message"]
+
+
 def test_structured_logger_never_emits_secret(caplog):
     caplog.set_level(logging.INFO, logger="cknexus.observability")
     StructuredLogger().emit(

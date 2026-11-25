@@ -19,10 +19,13 @@ _PHONE_RE = re.compile(r"(?<!\d)(?:\+?\d[\d .()-]{7,}\d)(?!\d)")
 _API_KEY_RE = re.compile(
     r"(?:sk-[A-Za-z0-9_-]{16,}|gh[pousr]_[A-Za-z0-9]{20,}|AIza[0-9A-Za-z_-]{20,})"
 )
-_PRIVATE_KEY_RE = re.compile(r"-----BEGIN (?:RSA |OPENSSH |EC )?PRIVATE KEY-----")
+_PRIVATE_KEY_RE = re.compile(
+    r"-----BEGIN (?P<kind>(?:RSA |OPENSSH |EC |DSA |ENCRYPTED )?PRIVATE KEY)-----"
+    r"[\s\S]*?-----END (?P=kind)-----"
+)
 _BEARER_RE = re.compile(r"Bearer\s+[A-Za-z0-9._~+/-]+=*", re.IGNORECASE)
 _SECRET_FIELD_PARTS = (
-    "token", "secret", "password", "api_key", "authorization", "cookie", "credential", "private_key"
+    "token", "secret", "password", "apikey", "authorization", "cookie", "credential", "privatekey"
 )
 
 _CLASS_RANK = {
@@ -73,8 +76,8 @@ def redact_value(value: object) -> object:
     if isinstance(value, dict):
         redacted: dict[object, object] = {}
         for key, item in value.items():
-            lowered = str(key).lower()
-            if any(part in lowered for part in _SECRET_FIELD_PARTS):
+            normalized_key = re.sub(r"[^a-z0-9]", "", str(key).casefold())
+            if any(part in normalized_key for part in _SECRET_FIELD_PARTS):
                 redacted[key] = "[REDACTED]"
             else:
                 redacted[key] = redact_value(item)
