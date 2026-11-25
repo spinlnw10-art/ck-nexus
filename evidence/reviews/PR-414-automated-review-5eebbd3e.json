@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "phase": "PR-414-AUTOMATED-REVIEW",
-  "observed_at": "2026-11-25T16:55:20Z",
+  "observed_at": "2026-11-25T17:01:20Z",
   "status": "WARN",
   "host": "GitHub-hosted Actions runners plus Termux read-only review checkout",
   "checks": [
@@ -88,13 +88,33 @@
     {
       "name": "termux_full_suite_attempt",
       "status": "WARN",
-      "detail": "A full pytest run was started in the separate read-only Termux checkout at commit 231c9d6e9964a8e71590364235f748809bfcc02b with the Termux libpython preload. One failure marker appeared in the progress stream; the final pytest summary and exit code could not be retrieved after the Termux companion disconnected. This is not counted as a passing local full-suite run."
+      "detail": "Full pytest on Termux at 231c9d6e9964a8e71590364235f748809bfcc02b exited 1: 30 failed, 1057 passed, 4 skipped, 12 warnings (419.57s). One failure was TestCrossPlatform.test_detect_platform because its expected platform tuple omitted Android; fixed in commit b0dfbf78 and the focused rerun now passes. The other 29 failures are Termux/Android host-capability failures: subprocess execution of git/python/gcc/unshare returns EACCES and /sys/fs/cgroup/cgroup.controllers is inaccessible in tests that require Linux namespaces, cgroups or host compiler support. These are not counted as passes; Linux GitHub CI passes the corresponding supported suite."
+    },
+    {
+      "name": "termux_focused_tests",
+      "status": "PASS",
+      "detail": "On current local branch b0dfbf785fcdb64e84d5620efccec68c68db93ba: 48 focused tests passed in 51.71s, including Android platform detection and privacy/redaction/plugin/MCP/credential regressions. Ruff passed on changed Python files and git diff --check passed."
+    },
+    {
+      "name": "termux_runtime_health",
+      "status": "WARN",
+      "detail": "The existing Termux runtime process PID 16433 remained active; /api/status, /health, /health/live, /health/ready, /api/control/status, /api/agnes/status and workspace preview returned HTTP 200. Runtime was not restarted at the final branch head; runtime code itself was not changed after the previously verified runtime source commit."
+    },
+    {
+      "name": "termux_workspace_sync",
+      "status": "PASS",
+      "detail": "Primary Termux workspace fast-forwarded from 231c9d6e to b0dfbf785fcdb64e84d5620efccec68c68db93ba. Tracked working tree is clean; untracked runtime data/ was preserved. Earlier local dependency edits were saved to a patch file before restoring those files and fast-forwarding."
+    },
+    {
+      "name": "current_head_github_ci",
+      "status": "PASS",
+      "detail": "All 7 GitHub Actions workflows passed on current PR head b0dfbf785fcdb64e84d5620efccec68c68db93ba. CK-NEXUS CI: 1068 passed, 2 skipped, 12 warnings; secret scan passed across 920 tracked files. Universal System: 103 passed, Bandit 0 blocking findings. Security Attack Regression: 19 passed. Research Stack: 53 + 2 passed. Personal Data Plane: 9 + 14 + 10 passed. AI Factory: 39 passed. Trusted Verifier Image CI passed."
     }
   ],
   "evidence": {
-    "stdout": "GitHub Actions run IDs: 45658409678, 45658409671, 45658409697, 45658409685, 45658409591, 45658409622, 45658409637. All seven completed successfully for the subject commit. PR #414 remains Draft.",
-    "stderr": "SonarCloud check 139361823108 cancelled; final Termux runtime verification unavailable because the Termux companion was offline; live Evidence Graph ingestion endpoint unavailable.",
-    "result": "CI PASS for the subject commit. Overall review status WARN because SonarCloud, staging authentication policy, license/legal confirmation, full independent runner isolation, complete all-extra dependency audit, final-commit runtime verification and live Evidence Graph ingestion remain unresolved.",
+    "stdout": "Current PR head b0dfbf785fcdb64e84d5620efccec68c68db93ba: 7/7 GitHub Actions workflows passed; CK-NEXUS CI 1068 passed, 2 skipped, 12 warnings; Termux focused suite 48 passed; Ruff and git diff --check passed; runtime endpoints returned HTTP 200.",
+    "stderr": "Termux full suite at 231c9d6e exited 1 with 30 failures, 29 attributable to Android/Termux subprocess, namespace, cgroup and compiler limitations; one Android platform expectation was corrected in b0dfbf78. SonarCloud remains cancelled/failed. Runtime process was not restarted at final head.",
+    "result": "CI PASS on current PR head. Overall review remains WARN: SonarCloud, auth policy, dependency/license gate policy, legal license confirmation, separate runner isolation, complete dependency/license audit and live Evidence Graph ingestion remain unresolved. Termux full suite is not green due platform limitations; focused Termux tests pass.",
     "sha256sums": "Not computed for downloaded CI logs; immutable subject commit SHA and GitHub Actions run IDs are recorded in details."
   },
   "audit": {
@@ -155,7 +175,8 @@
       "d139066836c1c2c7adb5de030715df998b9b3d0c",
       "7bf66a9cf9d4b2f19cfd8cb2f858ee17f17da91b",
       "9c25a646eae704c75fffeccf23aea57da6abaf58",
-      "5eebbd3e5bf1c0f0635a96c3beb6639a2cba0ced"
+      "5eebbd3e5bf1c0f0635a96c3beb6639a2cba0ced",
+      "b0dfbf785fcdb64e84d5620efccec68c68db93ba"
     ],
     "reviewer_identity": {
       "account": "dlikemobile26",
@@ -209,9 +230,58 @@
       "Separate reviewer runner/device isolation",
       "Live Evidence Graph and Audit Log ingestion interface",
       "Final commit runtime verification after Termux companion reconnect",
-      "Termux full-suite run showed a failure marker; final test summary/exit code unavailable after device disconnect"
+      "Termux full-suite run showed a failure marker; final test summary/exit code unavailable after device disconnect",
+      "Termux full suite is not green: 29 host-capability failures remain on Android/Termux; validate those tests on a supported Linux host (GitHub CI passed)"
     ],
     "evidence_commit_sha": "4f34626833d5faaf49e3c980a6400b907e177ac1",
-    "termux_review_suite_sha": "231c9d6e9964a8e71590364235f748809bfcc02b"
+    "termux_review_suite_sha": "231c9d6e9964a8e71590364235f748809bfcc02b",
+    "current_pr_head": "b0dfbf785fcdb64e84d5620efccec68c68db93ba",
+    "current_head_workflow_runs": [
+      {
+        "name": "CK-NEXUS CI",
+        "run_id": 45659616857,
+        "conclusion": "success"
+      },
+      {
+        "name": "Universal System Post-P0 CI",
+        "run_id": 45659616915,
+        "conclusion": "success"
+      },
+      {
+        "name": "Personal Data Plane Post-P0 CI",
+        "run_id": 45659616862,
+        "conclusion": "success"
+      },
+      {
+        "name": "Research Stack Integration V1",
+        "run_id": 45659616868,
+        "conclusion": "success"
+      },
+      {
+        "name": "CK-NEXUS AI Factory - Preflight & Score",
+        "run_id": 45659616899,
+        "conclusion": "success"
+      },
+      {
+        "name": "Security Attack Regression V1",
+        "run_id": 45659616926,
+        "conclusion": "success"
+      },
+      {
+        "name": "Trusted Verifier Image CI",
+        "run_id": 45659616946,
+        "conclusion": "success"
+      }
+    ],
+    "termux_focused_test_sha": "b0dfbf785fcdb64e84d5620efccec68c68db93ba",
+    "termux_full_suite_result": {
+      "exit_code": 1,
+      "failed": 30,
+      "passed": 1057,
+      "skipped": 4,
+      "warnings": 12,
+      "platform_specific_failures": 29,
+      "platform_expectation_fixed_in": "b0dfbf785fcdb64e84d5620efccec68c68db93ba"
+    }
   }
 }
