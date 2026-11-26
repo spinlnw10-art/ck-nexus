@@ -601,8 +601,8 @@ class GitLabDuoFlowsClient:
             raise ValueError("workflow_id must be a positive integer")
         token = self._acquire_token()
         query = (
-            "query($workflowId: AiDuoWorkflowsWorkflowID!) { duoWorkflowWorkflows(workflowId: $workflowId) "
-            "{ nodes { status webUrl } } }"
+            "query($workflowId: AiDuoWorkflowsWorkflowID!) "
+            "{ duoWorkflowWorkflows(workflowId: $workflowId) { nodes { status webUrl } } }"
         )
         body = {
             "query": query,
