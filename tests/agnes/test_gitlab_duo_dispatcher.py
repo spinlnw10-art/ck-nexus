@@ -219,7 +219,8 @@ class GitLabDuoFlowsClientTests(unittest.TestCase):
         response.__enter__.return_value = response
         response.read.return_value = (
             b'{"data":{"duoWorkflowWorkflows":{"nodes":'
-            b'[{"status":"running","webUrl":"https://gitlab.com/group/project/-/duo_workflows/123"}]}}}'
+            b'[{"status":"running","webUrl":"https://gitlab.com/group/project/-/'
+            b'duo_workflows/123"}]}}}'
         )
         with (
             patch.object(client, "_acquire_token", return_value="test-token"),
