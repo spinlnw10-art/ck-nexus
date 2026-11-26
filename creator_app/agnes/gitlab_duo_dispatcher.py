@@ -54,6 +54,19 @@ DISPATCH_CAPABILITY_ID = "integration.gitlab_duo.dispatch"
 GITLAB_CREDENTIAL_CONSUMER = "gitlab.duo.dispatcher"
 
 
+class _RejectRedirectHandler(urllib.request.HTTPRedirectHandler):
+    """Never forward a GitLab PRIVATE-TOKEN header to a redirect target."""
+
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        return None
+
+
+def _open_without_redirect(request: urllib.request.Request, *, timeout: int):
+    """Open a request without following redirects, preserving the original origin."""
+    opener = urllib.request.build_opener(_RejectRedirectHandler)
+    return opener.open(request, timeout=timeout)
+
+
 class GitLabDuoDispatchError(RuntimeError):
     """Safe-to-display dispatch error with no credential material."""
 
@@ -223,7 +236,7 @@ class GitLabProtectedBranchVerifier:
                     method="GET",
                     headers={"PRIVATE-TOKEN": token, "Accept": "application/json"},
                 )
-                with urllib.request.urlopen(  # nosec B310
+                with _open_without_redirect(
                     request, timeout=self.timeout_seconds
                 ) as response:
                     raw = response.read(1_000_001)
@@ -251,14 +264,18 @@ class GitLabProtectedBranchVerifier:
                 method="GET",
                 headers={"PRIVATE-TOKEN": token, "Accept": "application/json"},
             )
-            with urllib.request.urlopen(  # nosec B310
+            with _open_without_redirect(
                 branch_request, timeout=self.timeout_seconds
             ) as response:
                 raw = response.read(128_001)
                 if len(raw) > 128_000:
                     return False
                 branch_data = json.loads(raw.decode("utf-8")) if raw else {}
-            return isinstance(branch_data, dict) and branch_data.get("name") == branch
+            return (
+                isinstance(branch_data, dict)
+                and branch_data.get("name") == branch
+                and branch_data.get("protected") is False
+            )
         except Exception:
             return False
 
@@ -490,7 +507,7 @@ class GitLabDuoFlowsClient:
             },
         )
         try:
-            with urllib.request.urlopen(  # nosec B310
+            with _open_without_redirect(
                     request, timeout=self.timeout_seconds
                 ) as response:
                 raw = response.read(1_000_001)
@@ -584,7 +601,7 @@ class GitLabDuoFlowsClient:
             raise ValueError("workflow_id must be a positive integer")
         token = self._acquire_token()
         query = (
-            "query($workflowId: ID!) { duoWorkflowWorkflows(workflowId: $workflowId) "
+            "query($workflowId: AiDuoWorkflowsWorkflowID!) { duoWorkflowWorkflows(workflowId: $workflowId) "
             "{ nodes { status webUrl } } }"
         )
         body = {
@@ -602,7 +619,7 @@ class GitLabDuoFlowsClient:
             },
         )
         try:
-            with urllib.request.urlopen(  # nosec B310
+            with _open_without_redirect(
                     request, timeout=self.timeout_seconds
                 ) as response:
                 raw = response.read(256_001)
