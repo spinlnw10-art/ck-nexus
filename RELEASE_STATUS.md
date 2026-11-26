@@ -4,6 +4,7 @@
 
 ## Current work
 
+- **Homepage/status documentation:** [PR #422](https://github.com/spinlnw10-art/ck-nexus/pull/422) updates the homepage, README, and this release-status snapshot. All 3 GitHub Actions workflows passed on head `1d2048ba2073a4e9d61e875bbff9d08a3dfb437b`; the PR remains open and has not been merged.
 - **Dispatcher:** [PR #421](https://github.com/spinlnw10-art/ck-nexus/pull/421) is open against `main`. Its current head is `86cd16b3c910dc71d19bbdcc954a4cbeae2a619b`. All 7 GitHub Actions workflows passed, including the deleted-files gate; CodeQL is neutral because two configurations were not found (no new alerts reported); all 3 CodeRabbit review threads are resolved. The required Copilot review remains outstanding: requesting it from the active repository-owner identity returned `ACTOR_INELIGIBLE`.
 - **Core bootstrap:** [PR #420](https://github.com/spinlnw10-art/ck-nexus/pull/420) is open and stacked on the dispatcher branch. It is not merged and must be retargeted/revalidated after its prerequisite is integrated.
 - **Tests:** the targeted dispatcher/bootstrap suite passed 45 tests on Termux and 45 tests on independent Ubuntu. The independent Ubuntu full suite reported 1,026 passed, 2 skipped, and 15 warnings. These results are tied to the recorded workspace/source state and are not proof for a different release commit.
