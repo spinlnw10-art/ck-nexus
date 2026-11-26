@@ -16,6 +16,15 @@ class GatewayError(Exception):
             raise AttributeError(f"{name} is immutable")
         super().__setattr__(name, value)
 
+    def __delattr__(self, name: str) -> None:
+        if name in self._IMMUTABLE_FIELDS:
+            raise AttributeError(f"{name} is immutable")
+        super().__delattr__(name)
+
+    def __reduce__(self) -> tuple[type[GatewayError], tuple[str, str, int, bool]]:
+        # Keep pickle/copy working: args holds only the message, so rebuild from the fields.
+        return (type(self), (self.code, self.message, self.status_code, self.retryable))
+
     def public(self, correlation_id: str) -> dict[str, object]:
         return {
             "error": {
