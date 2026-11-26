@@ -71,17 +71,14 @@ def build_core_governed_gitlab_duo_dispatcher(
     if not Path(ledger_path).expanduser().is_absolute():
         raise ValueError("dispatch ledger path must be absolute")
     if not allowed_workflow_definitions or any(
-        not isinstance(item, str) or not item.strip()
-        for item in allowed_workflow_definitions
+        not isinstance(item, str) or not item.strip() for item in allowed_workflow_definitions
     ):
         raise ValueError("Core-approved workflow definitions are required")
     if not allowed_agent_privileges or any(
         type(item) is not int or item < 1 for item in allowed_agent_privileges
     ):
         raise ValueError("Core-approved positive agent privilege IDs are required")
-    if not broker.is_allowed(
-        CredentialId.GITLAB_DUO_TOKEN, consumer=GITLAB_CREDENTIAL_CONSUMER
-    ):
+    if not broker.is_allowed(CredentialId.GITLAB_DUO_TOKEN, consumer=GITLAB_CREDENTIAL_CONSUMER):
         raise PermissionError("Credential Broker policy denies the GitLab Duo consumer")
 
     capability = authority.contract.get("capabilities", {}).get(DISPATCH_CAPABILITY_ID)
