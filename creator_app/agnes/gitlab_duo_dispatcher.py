@@ -223,7 +223,9 @@ class GitLabProtectedBranchVerifier:
                     method="GET",
                     headers={"PRIVATE-TOKEN": token, "Accept": "application/json"},
                 )
-                with urllib.request.urlopen(request, timeout=self.timeout_seconds) as response:
+                with urllib.request.urlopen(  # nosec B310 - base_url is HTTPS-only validated in __init__
+                    request, timeout=self.timeout_seconds
+                ) as response:
                     raw = response.read(1_000_001)
                     if len(raw) > 1_000_000:
                         return False
@@ -249,7 +251,9 @@ class GitLabProtectedBranchVerifier:
                 method="GET",
                 headers={"PRIVATE-TOKEN": token, "Accept": "application/json"},
             )
-            with urllib.request.urlopen(branch_request, timeout=self.timeout_seconds) as response:
+            with urllib.request.urlopen(  # nosec B310 - base_url is HTTPS-only validated in __init__
+                branch_request, timeout=self.timeout_seconds
+            ) as response:
                 raw = response.read(128_001)
                 if len(raw) > 128_000:
                     return False
@@ -486,7 +490,9 @@ class GitLabDuoFlowsClient:
             },
         )
         try:
-            with urllib.request.urlopen(request, timeout=self.timeout_seconds) as response:
+            with urllib.request.urlopen(  # nosec B310 - base_url is HTTPS-only validated in __init__
+                    request, timeout=self.timeout_seconds
+                ) as response:
                 raw = response.read(1_000_001)
                 if len(raw) > 1_000_000:
                     raise GitLabDuoDispatchError("GitLab response exceeded the size limit")
@@ -596,7 +602,9 @@ class GitLabDuoFlowsClient:
             },
         )
         try:
-            with urllib.request.urlopen(request, timeout=self.timeout_seconds) as response:
+            with urllib.request.urlopen(  # nosec B310 - base_url is HTTPS-only validated in __init__
+                    request, timeout=self.timeout_seconds
+                ) as response:
                 raw = response.read(256_001)
                 if len(raw) > 256_000:
                     raise GitLabDuoDispatchError("GitLab GraphQL response exceeded the size limit")
