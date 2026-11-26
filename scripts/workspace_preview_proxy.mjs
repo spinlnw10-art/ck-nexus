@@ -3,7 +3,6 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 
 const root = path.resolve("creator_app/web");
-const upstream = "http://127.0.0.1:8775";
 const files = new Map([
   ["/workspace", ["workspace.html", "text/html; charset=utf-8"]],
   ["/static/workspace.css", ["workspace.css", "text/css; charset=utf-8"]],
@@ -23,24 +22,37 @@ const server = http.createServer(async (req, res) => {
     }
     return;
   }
-  if (url.pathname.startsWith("/api/") && [ "GET", "POST" ].includes(req.method || "")) {
+  if (/^\/api\/[a-zA-Z0-9/_-]*$/.test(url.pathname) && ["GET", "POST"].includes(req.method || "")) {
     try {
       const chunks = [];
       for await (const chunk of req) chunks.push(chunk);
-      const upstreamResponse = await fetch(upstream + url.pathname + url.search, {
-        method: req.method,
-        headers: {
-          ...(req.headers.authorization ? { Authorization: req.headers.authorization } : {}),
-          ...(req.headers["content-type"] ? { "Content-Type": req.headers["content-type"] } : {}),
-        },
-        body: chunks.length ? Buffer.concat(chunks) : undefined,
+      const upstreamResponse = await new Promise((resolve, reject) => {
+        const proxyRequest = http.request({
+          hostname: "127.0.0.1",
+          port: 8775,
+          method: req.method,
+          path: url.pathname + url.search,
+          headers: {
+            ...(req.headers.authorization ? { Authorization: req.headers.authorization } : {}),
+            ...(req.headers["content-type"] ? { "Content-Type": req.headers["content-type"] } : {}),
+          },
+        }, (proxyResponse) => {
+          const responseChunks = [];
+          proxyResponse.on("data", (chunk) => responseChunks.push(chunk));
+          proxyResponse.on("end", () => resolve({
+            status: proxyResponse.statusCode || 502,
+            contentType: proxyResponse.headers["content-type"] || "application/json",
+            body: Buffer.concat(responseChunks),
+          }));
+        });
+        proxyRequest.on("error", reject);
+        proxyRequest.end(chunks.length ? Buffer.concat(chunks) : undefined);
       });
-      const body = Buffer.from(await upstreamResponse.arrayBuffer());
       res.writeHead(upstreamResponse.status, {
-        "Content-Type": upstreamResponse.headers.get("content-type") || "application/json",
+        "Content-Type": upstreamResponse.contentType,
         "Cache-Control": "no-store",
       });
-      res.end(body);
+      res.end(upstreamResponse.body);
     } catch {
       res.writeHead(502, { "Content-Type": "application/json" });
       res.end(JSON.stringify({ detail: { error: "UPSTREAM_UNAVAILABLE", message: "CK-NEXUS API is unavailable." } }));

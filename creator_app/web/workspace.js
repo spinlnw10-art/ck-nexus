@@ -2,7 +2,12 @@
   const TOKEN_KEY = "cknexus_access_token";
   const SESSION_KEY = "nexus_session_id";
   const $ = (s) => document.querySelector(s);
-  const state = { agents: [], plugins: [], connectors: [], status: null, mcpQuery: "", mcpCursor: null, mcpCandidates: [], session: sessionStorage.getItem(SESSION_KEY) || "nexus-web-" + Math.random().toString(36).slice(2,10), busy: false };
+  function createSessionId() {
+    const bytes = new Uint8Array(16);
+    crypto.getRandomValues(bytes);
+    return "nexus-web-" + Array.from(bytes, (value) => value.toString(16).padStart(2, "0")).join("");
+  }
+  const state = { agents: [], plugins: [], connectors: [], status: null, mcpQuery: "", mcpCursor: null, mcpCandidates: [], session: sessionStorage.getItem(SESSION_KEY) || createSessionId(), busy: false };
   const token = () => sessionStorage.getItem(TOKEN_KEY) || "";
   const headers = (json=false) => ({...(json?{"Content-Type":"application/json"}:{}),...(token()?{Authorization:"Bearer "+token()}:{})});
   const toast = (message) => { const el=$("#toast"); el.textContent=message; el.classList.add("show"); setTimeout(()=>el.classList.remove("show"),3000); };
