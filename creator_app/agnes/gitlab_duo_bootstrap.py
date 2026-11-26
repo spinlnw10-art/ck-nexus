@@ -24,7 +24,6 @@ from creator_app.council_authority.authority import CapabilityAuthority
 from creator_app.council_authority.identity import IdentityError, IdentityVerifier
 from creator_app.credential_broker import CredentialBroker, CredentialId
 
-
 ApprovalVerifier = Callable[[str, DuoDispatchRequest, str], bool]
 
 
