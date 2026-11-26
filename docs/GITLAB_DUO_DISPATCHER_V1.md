@@ -92,25 +92,53 @@ credential values, change security gates, or grant GitLab Duo authority over
 CK-NEXUS Core. No runtime activation is implied by this document.
 
 
-## Discovered GitLab namespace (public metadata only)
+## Verified GitLab target metadata (read-only, 2026-11-26)
 
-- Group: CK-NEXUS-group
-- Group URL: https://gitlab.com/groups/ck-nexus-group
-- Group ID: 148654539
-- Public visibility; created 2026-11-26.
-- Unauthenticated GET /api/v4/groups/148654539/projects?include_subgroups=true
-  returned an empty list. The user profile chokmantol has no public projects
-  in the unauthenticated projects listing. Private projects cannot be ruled
-  out from anonymous access.
-- An environment-only Credential Broker probe reports gitlab.duo_token is
-  not configured for consumer gitlab.duo.dispatcher. This probe did not inspect
-  any separate persistent credential store. No token was read or shown.
-- Therefore no target project ID/path, Premium/Ultimate entitlement, Duo
-  Agent Platform enablement, project flow definitions, or actual privilege
-  configuration could be verified. Live dispatch remains disabled.
-- The existing local MCP endpoint binds only to loopback. The MCP SDK is
-  declared in pyproject.toml but is not installed in this Termux Python
-  environment; an install attempt stalled while building a platform dependency
-  and was stopped. The MCP server has not been started. It is not exposed to
-  ChatGPT over an authenticated remote MCP transport. No public tunnel or
-  unauthenticated port exposure was created.
+Authenticated GitLab connector reads confirmed:
+
+- Group: `ck-nexus-group` (ID `148654539`), visibility `public`.
+- Group settings: `duo_core_features_enabled=true`, `duo_features_enabled=true`,
+  `duo_agent_platform_enabled=true`, `foundational_agents_default_enabled=true`,
+  and `duo_remote_flows_enabled=true`.
+- Group setting `duo_workflow_mcp_enabled=false`; this setting is recorded
+  separately and has not been proven to block the REST/GraphQL Remote Flows API.
+- Target project: `ck-nexus-group/CK-NEXUS-project` (ID `89471022`),
+  visibility `private`, default branch `main`.
+- Project settings: `duo_remote_flows_enabled=true` and
+  `duo_foundational_flows_enabled=true`.
+- The project is currently `empty_repo=true`, with zero commits, zero storage,
+  and no source branches. Its workflow definitions and numeric agent privilege
+  IDs therefore cannot yet be discovered or validated.
+- GitLab's authenticated read-only connector identifies the account as
+  `chokmantol`; no token or secret was read or exported.
+
+Environment-only checks on both the Termux and Ubuntu shells found these
+variables absent: `GITLAB_DUO_TOKEN`, `GITLAB_DUO_PROJECT_ID`,
+`CKNEXUS_OMNI_IDENTITY_SECRET_HEX`, `CKNEXUS_OMNI_APPROVAL_VERIFIER`,
+`CKNEXUS_CORE_IDENTITY_SECRET_HEX`, and `CKNEXUS_CORE_CONTRACT_PATH`.
+These checks did not inspect `.env` files or any persistent credential store,
+and do not prove that no separately configured vault exists.
+
+## Remaining activation prerequisites
+
+1. A Core-owned runtime must supply the real `CapabilityAuthority`,
+   `IdentityVerifier`, signed dedicated dispatcher identity, and task-approval
+   verifier. The current Termux and Ubuntu shells do not expose the expected
+   identity/approval environment bindings.
+2. Configure `GITLAB_DUO_TOKEN` through the protected CK-NEXUS Credential
+   Broker for consumer `gitlab.duo.dispatcher`; never place it in source,
+   chat, command arguments, or logs.
+3. Populate the private GitLab project with an authorized repository source,
+   then discover and explicitly allowlist the intended workflow definition and
+   numeric agent privilege IDs. Do not guess these IDs or grant all privileges.
+4. Confirm whether the group-level `duo_workflow_mcp_enabled=false` setting
+   affects the selected integration path with a GitLab administrator.
+5. Only after the above are satisfied may Core call
+   `configure_gitlab_duo_dispatcher_from_core` with the real bindings and run
+   a controlled non-production canary under the existing policy and review
+   gates.
+
+The group and project feature flags being enabled do not establish plan
+entitlement, usable credentials, workflow availability, or permission to
+dispatch. No live GitLab Duo dispatch has been attempted. The adapter remains
+fail-closed and production deployment remains NO-GO.
