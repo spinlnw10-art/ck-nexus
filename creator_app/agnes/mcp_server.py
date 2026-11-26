@@ -29,7 +29,11 @@ from mcp.server.fastmcp import FastMCP
 
 from creator_app.agnes.gitlab_duo_mcp_tools import (
     configure_gitlab_duo_dispatcher as _configure_gitlab_duo_dispatcher,
+)
+from creator_app.agnes.gitlab_duo_mcp_tools import (
     configure_gitlab_duo_dispatcher_from_core as _configure_gitlab_duo_dispatcher_from_core,
+)
+from creator_app.agnes.gitlab_duo_mcp_tools import (
     gitlab_duo_flow_status,
     gitlab_duo_start_flow,
     gitlab_duo_status,
