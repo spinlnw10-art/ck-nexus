@@ -18,6 +18,7 @@ class CredentialId(StrEnum):
     GITHUB_APP_PRIVATE_KEY = "github.app_private_key"
     GITHUB_APP_INSTALLATION_ID = "github.app_installation_id"
     GITHUB_INSTALLATION_TOKEN = "github.installation_token"
+    GITLAB_DUO_TOKEN = "gitlab.duo_token"
 
 
 ENV_BINDINGS: Mapping[CredentialId, str] = {
@@ -30,6 +31,7 @@ ENV_BINDINGS: Mapping[CredentialId, str] = {
     CredentialId.GITHUB_APP_PRIVATE_KEY: "GITHUB_APP_PRIVATE_KEY",
     CredentialId.GITHUB_APP_INSTALLATION_ID: "GITHUB_APP_INSTALLATION_ID",
     CredentialId.GITHUB_INSTALLATION_TOKEN: "GITHUB_APP_INSTALLATION_TOKEN",
+    CredentialId.GITLAB_DUO_TOKEN: "GITLAB_DUO_TOKEN",
 }
 
 
@@ -58,6 +60,7 @@ DEFAULT_CONSUMER_POLICY: Mapping[str, frozenset[CredentialId]] = {
             CredentialId.GITHUB_INSTALLATION_TOKEN,
         }
     ),
+    "gitlab.duo.dispatcher": frozenset({CredentialId.GITLAB_DUO_TOKEN}),
 }
 
 

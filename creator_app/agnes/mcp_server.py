@@ -27,6 +27,14 @@ from urllib.parse import urlsplit
 
 from mcp.server.fastmcp import FastMCP
 
+from creator_app.agnes.gitlab_duo_mcp_tools import (
+    configure_gitlab_duo_dispatcher as _configure_gitlab_duo_dispatcher,
+)
+from creator_app.agnes.gitlab_duo_mcp_tools import (
+    gitlab_duo_flow_status,
+    gitlab_duo_start_flow,
+    gitlab_duo_status,
+)
 from creator_app.ai_team.auto_reply_plugin import AutoReplyError, AutoReplyPlugin
 from creator_app.ai_team.universal_system import UniversalSystem
 from creator_app.brain import BrainRuntime
@@ -172,6 +180,11 @@ _CAPABILITY_MANAGER: SelfCapabilityManager | None = None
 _DEV_ASSISTANT_FABRIC: DevAssistantFabric | None = None
 _DEV_EXECUTION_CONTRACT: DevExecutionContract | None = None
 _BRAIN_RUNTIME: BrainRuntime | None = None
+
+
+def configure_gitlab_duo_dispatcher(client) -> None:
+    """Trusted bootstrap hook; accepts only a fully governed adapter instance."""
+    _configure_gitlab_duo_dispatcher(client)
 
 
 def get_system() -> UniversalSystem:
@@ -1178,6 +1191,44 @@ def cknexus_brain_propose_improvement(
 def cknexus_brain_journal_summary() -> dict[str, Any]:
     """Summarize persisted learning observations and pending improvement candidates."""
     return get_brain_runtime().journal_summary()
+
+
+@mcp.tool()
+def cknexus_gitlab_duo_status() -> dict[str, Any]:
+    """Return redacted local readiness for the governed GitLab Duo dispatcher."""
+    return gitlab_duo_status()
+
+
+@mcp.tool()
+def cknexus_gitlab_duo_start_flow(
+    task_id: str,
+    goal: str,
+    workflow_definition: str,
+    source_branch: str,
+    agent_privileges: list[int],
+    confirmation_binding: str,
+    evidence_refs: list[str],
+    approval_ref: str,
+    project_id: str | None = None,
+) -> dict[str, Any]:
+    """Start one governed GitLab Duo flow; CK-NEXUS Core authorization is mandatory."""
+    return gitlab_duo_start_flow(
+        task_id=task_id,
+        goal=goal,
+        workflow_definition=workflow_definition,
+        source_branch=source_branch,
+        agent_privileges=agent_privileges,
+        confirmation_binding=confirmation_binding,
+        evidence_refs=evidence_refs,
+        approval_ref=approval_ref,
+        project_id=project_id,
+    )
+
+
+@mcp.tool()
+def cknexus_gitlab_duo_flow_status(workflow_id: int) -> dict[str, Any]:
+    """Poll a GitLab Duo flow through the configured Credential Broker."""
+    return gitlab_duo_flow_status(workflow_id)
 
 
 def run_server() -> None:
