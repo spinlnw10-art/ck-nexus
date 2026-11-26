@@ -15,8 +15,8 @@ from creator_app.agnes.gitlab_duo_dispatcher import (
     GitLabDuoDispatchError,
     GitLabDuoFlowsClient,
     GitLabProtectedBranchVerifier,
-    _RejectRedirectHandler,
     _open_without_redirect,
+    _RejectRedirectHandler,
 )
 from creator_app.council_authority.authority import CapabilityAuthority
 from creator_app.council_authority.identity import CallerIdentity
