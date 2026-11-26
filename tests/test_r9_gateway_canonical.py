@@ -103,6 +103,16 @@ def test_gateway_proxies_only_allowlisted_route_and_emits_audit():
     assert response.headers["X-CK-Correlation-ID"]
 
 
+def test_gateway_error_is_handled_by_starlette_without_traceback_assignment_failure():
+    client, proxy, _, _ = make_client()
+    response = client.get("/api/v1/system/status", headers={"Authorization": "Bearer bad"})
+    assert response.status_code == 401
+    assert response.json()["error"]["code"] == "UNAUTHORIZED"
+    assert response.json()["error"]["message"] == "Invalid or expired access token."
+    assert response.json()["error"]["correlation_id"]
+    assert proxy.calls == []
+
+
 def test_permission_denied_before_proxy():
     client, proxy, _, _ = make_client(permissions=())
     response = client.get("/api/v1/system/status", headers={"Authorization": "Bearer ok"})
@@ -143,3 +153,32 @@ def test_rate_limit_key_fragments_are_normalized():
 
 def test_correlation_id_rejects_arbitrary_string():
     assert normalize_correlation_id("not-a-uuid") != "not-a-uuid"
+
+
+def test_gateway_error_preserves_exception_contract_and_traceback_assignment():
+    error = GatewayError("NOT_FOUND", "No route", 404)
+    assert error.args == ("No route",)
+    assert str(error) == "No route"
+
+    try:
+        raise RuntimeError("traceback probe")
+    except RuntimeError as caught:
+        traceback = caught.__traceback__
+
+    error.__traceback__ = traceback
+    assert error.__traceback__ is traceback
+    assert error.public("correlation-1") == {
+        "error": {
+            "code": "NOT_FOUND",
+            "message": "No route",
+            "correlation_id": "correlation-1",
+            "retryable": False,
+        }
+    }
+
+    try:
+        error.status_code = 500
+    except AttributeError:
+        pass
+    else:
+        raise AssertionError("GatewayError fields must remain immutable")
