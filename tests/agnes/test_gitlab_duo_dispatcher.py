@@ -295,7 +295,10 @@ class GitLabProtectedBranchVerifierTests(unittest.TestCase):
             self.assertTrue(verifier("group/project", "agents/CKN-1"))
 
         rules_response.read.return_value = b'[{"name":"main"},{"name":"agents/*"}]'
-        with patch("creator_app.agnes.gitlab_duo_dispatcher._open_without_redirect", return_value=rules_response):
+        with patch(
+            "creator_app.agnes.gitlab_duo_dispatcher._open_without_redirect",
+            return_value=rules_response,
+        ):
             self.assertFalse(verifier("group/project", "agents/CKN-1"))
         self.assertFalse(verifier("other/project", "agents/CKN-1"))
 
