@@ -345,7 +345,7 @@ class GitLabProtectedBranchVerifierTests(unittest.TestCase):
         opener.open.return_value = response
         with patch("urllib.request.build_opener", return_value=opener) as build_opener:
             self.assertIs(_open_without_redirect(request, timeout=5), response)
-        self.assertIsInstance(build_opener.call_args.args[0], _RejectRedirectHandler)
+        self.assertIs(build_opener.call_args.args[0], _RejectRedirectHandler)
         opener.open.assert_called_once_with(request, timeout=5)
 
     def test_branch_verifier_fails_closed_on_api_errors_or_missing_branch(self):
