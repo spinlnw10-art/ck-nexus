@@ -13,6 +13,7 @@ This is a dated engineering snapshot, not a live Production-health claim.
 | Area | Verified status |
 |---|---|
 | Governed GitLab Duo dispatcher | [PR #421](https://github.com/spinlnw10-art/ck-nexus/pull/421) is open; all 7 GitHub Actions workflows passed on head `86cd16b3c910dc71d19bbdcc954a4cbeae2a619b`; all 3 CodeRabbit review threads are resolved; Copilot review remains outstanding. |
+| Homepage / status documentation | [PR #422](https://github.com/spinlnw10-art/ck-nexus/pull/422) updates the homepage, README, and release status; all 3 GitHub Actions workflows passed on head `1d2048ba2073a4e9d61e875bbff9d08a3dfb437b`; PR remains open for review. |
 | CK-NEXUS Core bootstrap | [PR #420](https://github.com/spinlnw10-art/ck-nexus/pull/420) is open and stacked on PR #421; it is not merged. |
 | Automated tests | Targeted suite: 45 passed on Termux and 45 passed on independent Ubuntu. Full Ubuntu suite: 1,026 passed, 2 skipped, 15 warnings. |
 | Quality / security checks | Ruff checks, changed-file format check, `git diff --check`, and the documented Bandit reviewed-finding gate passed for the recorded scope. |
