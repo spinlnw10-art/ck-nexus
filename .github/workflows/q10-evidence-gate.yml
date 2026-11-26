@@ -149,6 +149,15 @@ jobs:
           dependencies = audit.get('dependencies', []) if isinstance(audit, dict) else audit
           vulnerabilities = sum(len(row.get('vulns', [])) for row in dependencies if isinstance(row, dict))
           findings = bandit.get('results', []) if isinstance(bandit, dict) else []
+          # Bandit exits 1 when findings exist; that is not a scanner execution failure.
+          # Exit 2 or a missing/invalid report is a failure and must never become an empty PASS.
+          bandit_report_valid = (
+              isinstance(bandit, dict)
+              and isinstance(bandit.get('results'), list)
+              and 'error' not in bandit
+              and not bandit.get('errors')
+          )
+          bandit_execution_ok = os.getenv('BANDIT_RC', '') in {'0', '1'} and bandit_report_valid
           high_findings = sum(row.get('issue_severity') == 'HIGH' for row in findings)
           medium_findings = sum(row.get('issue_severity') == 'MEDIUM' for row in findings)
           low_findings = sum(row.get('issue_severity') == 'LOW' for row in findings)
@@ -159,13 +168,16 @@ jobs:
           checks = {
               'pip_audit_exit_code': dependency_rc,
               'dependency_vulnerabilities': vulnerabilities,
+              'bandit_exit_code': os.getenv('BANDIT_RC', ''),
+              'bandit_report_valid': bandit_report_valid,
+              'bandit_execution_ok': bandit_execution_ok,
               'bandit_high_findings': high_findings,
               'bandit_medium_findings': medium_findings,
               'bandit_low_findings': low_findings,
               'secret_scan_exit_code': secret_rc,
               'security_attack_regression_exit_code': attack_rc,
           }
-          passed = dependency_rc == '0' and vulnerabilities == 0 and high_findings == 0 and secret_rc == '0' and attack_rc == '0'
+          passed = dependency_rc == '0' and vulnerabilities == 0 and bandit_execution_ok and high_findings == 0 and secret_rc == '0' and attack_rc == '0'
           report = {
               'schema_version': 1,
               'gate': 'Q10_OPEN_SOURCE_LAYERED_SECURITY',

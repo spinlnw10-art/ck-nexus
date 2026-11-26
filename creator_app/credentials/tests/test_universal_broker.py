@@ -41,10 +41,29 @@ def test_full_system_integration() -> None:
         os.environ.pop(key, None)
 
 
-def test_fail_closed_when_no_credentials() -> None:
+def test_fail_closed_when_no_credentials(monkeypatch: pytest.MonkeyPatch) -> None:
     """System should fail closed when no credentials are available."""
-    os.environ.pop("OPENAI_API_KEY", None)
-    os.environ.pop("GROQ_API_KEY", None)
+    provider_keys = (
+        "OPENAI_API_KEY",
+        "GROQ_API_KEY",
+        "MISTRAL_API_KEY",
+        "CEREBRAS_API_KEY",
+        "SAMBANOVA_API_KEY",
+        "OPENROUTER_API_KEY",
+        "DEEPSEEK_API_KEY",
+        "TOGETHER_API_KEY",
+        "ZHIPU_API_KEY",
+        "DASHSCOPE_API_KEY",
+        "GEMINI_API_KEY",
+        "MOONSHOT_API_KEY",
+        "CKNEXUS_LLM_KEYS",
+        "MODEL_STUDIO_API_KEY",
+        "MODEL_STUDIO_BASE_URL",
+        "MODEL_STUDIO_MODEL",
+        *(f"MODEL_STUDIO_API_KEY_{index}" for index in range(1, 10)),
+    )
+    for name in provider_keys:
+        monkeypatch.delenv(name, raising=False)
 
     broker = CredentialBroker()
 

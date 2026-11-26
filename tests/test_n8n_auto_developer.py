@@ -4,6 +4,7 @@ from pathlib import Path
 
 from creator_app.control_plane.task_store import TaskStore
 from creator_app.n8n_intelligence.auto_developer import AutoDeveloper
+from creator_app.termux_support import skip_on_termux
 
 
 def _queue(tmp_path: Path, payload: dict) -> TaskStore:
@@ -96,6 +97,7 @@ def test_successful_run_requires_tests_and_keeps_head_unchanged(tmp_path: Path):
     assert evidence["index_clean"] is True
 
 
+@skip_on_termux
 def test_dirty_primary_repo_uses_isolated_git_worktree(tmp_path: Path):
 
     repo = tmp_path / "repo"

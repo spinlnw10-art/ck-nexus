@@ -16,6 +16,7 @@ from creator_app.council_authority.authority import (
 )
 from creator_app.council_authority.identity import IdentityError, IdentityVerifier
 from creator_app.council_authority.storage import AuthorityStore
+from creator_app.termux_support import skip_on_termux
 
 CONTRACT = json.loads(
     (Path(__file__).parents[1] / "contracts/capability-policy.example.json").read_text()
@@ -270,6 +271,7 @@ def test_expired_grant_is_rejected_inside_consume_transaction(tmp_path):
         assert row["used"] == 0
 
 
+@skip_on_termux
 def test_uncommitted_consume_is_rolled_back_after_process_crash(tmp_path):
     import subprocess
     import sys

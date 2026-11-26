@@ -55,9 +55,12 @@ class DurableExecutionReplayStore:
     def consume_once(self, execution_id: str) -> bool:
         if not execution_id:
             return False
-        db = sqlite3.connect(self.database_path, timeout=2, isolation_level=None)
+        db = sqlite3.connect(self.database_path, timeout=30, isolation_level=None)
         try:
-            db.execute("PRAGMA busy_timeout=2000")
+            # Concurrent workers may queue behind a single atomic claim. Keep the
+            # SQLite lock wait aligned with the durable store rather than failing
+            # valid work after an arbitrary two-second contention window.
+            db.execute("PRAGMA busy_timeout=30000")
             db.execute("BEGIN IMMEDIATE")
             try:
                 db.execute(
@@ -184,6 +187,39 @@ def execution_binding_sha256(request: SkillExecutionRequest, context: OMNIExecut
     return hashlib.sha256(raw).hexdigest()
 
 
+def _declared_tool_target(request: SkillExecutionRequest) -> tuple[str, str]:
+    if not request.execution_id:
+        raise OmniGateError("execution_id_missing")
+    declared_tool = request.plan_step.get("tool_id")
+    declared_target = request.plan_step.get("target_id")
+    if not isinstance(declared_tool, str) or not declared_tool:
+        raise OmniGateError("tool_binding_missing_from_request")
+    if not isinstance(declared_target, str) or not declared_target:
+        raise OmniGateError("target_binding_missing_from_request")
+    return declared_tool, declared_target
+
+
+def _validated_issued_context(
+    authority: IndependentOmniAuthority,
+    request: SkillExecutionRequest,
+    declared_tool: str,
+    declared_target: str,
+) -> OMNIExecutionContext:
+    context = authority.issue_context(request)
+    if not isinstance(context, OMNIExecutionContext):
+        raise OmniAuthorityUnavailable("authority_returned_invalid_context")
+    if not authority.verify_context_proof(request, context):
+        raise OmniAuthorityUnavailable("authority_proof_invalid")
+    context.validate(request)
+    if context.evidence_required and not authority.verify_evidence(request, context):
+        raise OmniAuthorityUnavailable("execution_evidence_invalid_or_missing")
+    if context.tool_id != declared_tool or context.target_id != declared_target:
+        raise OmniGateError("execution_tool_target_binding_mismatch")
+    if authority.is_lease_revoked(context.lease.lease_id):
+        raise OmniGateError("capability_lease_revoked")
+    return context
+
+
 @dataclass(slots=True)
 class OmniProviderAdapter:
     """Resolve OMNI context only through an independent, fail-closed authority.
@@ -197,43 +233,26 @@ class OmniProviderAdapter:
 
     def __call__(self, request: SkillExecutionRequest) -> OMNIExecutionContext:
         authority = self.authority
+        replay_store = self.replay_store
         if authority is None:
             raise OmniAuthorityUnavailable("omni_authority_not_configured")
-        if self.replay_store is None:
+        if replay_store is None:
             raise OmniAuthorityUnavailable("durable_replay_store_not_configured")
-        if not request.execution_id:
-            raise OmniGateError("execution_id_missing")
-        declared_tool = request.plan_step.get("tool_id")
-        declared_target = request.plan_step.get("target_id")
-        if not isinstance(declared_tool, str) or not declared_tool:
-            raise OmniGateError("tool_binding_missing_from_request")
-        if not isinstance(declared_target, str) or not declared_target:
-            raise OmniGateError("target_binding_missing_from_request")
+        declared_tool, declared_target = _declared_tool_target(request)
 
         try:
-            context = authority.issue_context(request)
-            if not isinstance(context, OMNIExecutionContext):
-                raise OmniAuthorityUnavailable("authority_returned_invalid_context")
-            if not authority.verify_context_proof(request, context):
-                raise OmniAuthorityUnavailable("authority_proof_invalid")
-            context.validate(request)
-            if context.evidence_required and not authority.verify_evidence(request, context):
-                raise OmniAuthorityUnavailable("execution_evidence_invalid_or_missing")
-            if context.tool_id != declared_tool or context.target_id != declared_target:
-                raise OmniGateError("execution_tool_target_binding_mismatch")
-            if authority.is_lease_revoked(context.lease.lease_id):
-                raise OmniGateError("capability_lease_revoked")
+            context = _validated_issued_context(
+                authority, request, declared_tool, declared_target
+            )
             binding_sha256 = execution_binding_sha256(request, context)
-            # The authority must atomically consume the ID and this exact binding.
-            # Recheck revocation immediately before consume to narrow the revoke race.
+            # Recheck revocation immediately before the authority's atomic consume.
             if authority.is_lease_revoked(context.lease.lease_id):
                 raise OmniGateError("capability_lease_revoked")
-            # Authority must atomically check lease revocation and consume the binding.
             if not authority.consume_execution(
                 request.execution_id, binding_sha256, context.lease.lease_id
             ):
                 raise OmniAuthorityUnavailable("execution_grant_replayed_or_unavailable")
-            if not self.replay_store.consume_once(request.execution_id):
+            if not replay_store.consume_once(request.execution_id):
                 raise OmniAuthorityUnavailable("execution_grant_replayed_locally")
             return context
         except (OmniGateError, OmniAuthorityUnavailable):

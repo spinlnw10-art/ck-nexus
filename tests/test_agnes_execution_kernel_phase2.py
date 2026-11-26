@@ -14,6 +14,7 @@ from creator_app.agnes.execution.sandbox import (
     SandboxViolation,
 )
 from creator_app.agnes_runtime import AgnesNervousSystem
+from creator_app.termux_support import skip_on_termux
 from tests.omni_context_factory import make_test_omni_context
 
 REPO = Path(__file__).resolve().parents[1]
@@ -32,7 +33,24 @@ def _agnes(tmp_path: Path) -> AgnesNervousSystem:
     )
 
 
+async def _require_sandbox_runtime(tmp_path: Path) -> None:
+    runner = LinuxNamespaceRunner(
+        SandboxPolicy(base_dir=tmp_path / "sandbox-health", repository_root=REPO)
+    )
+    health = await runner.health()
+    if not health["ready"]:
+        pytest.skip(f"namespace sandbox unavailable: {health.get('reason')}")
+
+
 def test_python_alias_resolves_to_trusted_system_python_when_missing(monkeypatch, tmp_path: Path):
+    trusted_candidates = (
+        "/opt/pyvenv/bin/python",
+        "/usr/local/bin/python3",
+        "/usr/bin/python3",
+        "/bin/python3",
+    )
+    if not any(Path(candidate).is_file() for candidate in trusted_candidates):
+        pytest.skip("no trusted system Python is installed in this host environment")
     runner = LinuxNamespaceRunner(
         SandboxPolicy(base_dir=tmp_path / "runtime", repository_root=REPO)
     )
@@ -44,6 +62,14 @@ def test_python_alias_resolves_to_trusted_system_python_when_missing(monkeypatch
 
 
 def test_python_alias_rejects_virtualenv_symlink_outside_trusted_roots(monkeypatch, tmp_path: Path):
+    trusted_candidates = (
+        "/opt/pyvenv/bin/python",
+        "/usr/local/bin/python3",
+        "/usr/bin/python3",
+        "/bin/python3",
+    )
+    if not any(Path(candidate).is_file() for candidate in trusted_candidates):
+        pytest.skip("no trusted system Python is installed in this host environment")
     runner = LinuxNamespaceRunner(
         SandboxPolicy(base_dir=tmp_path / "runtime", repository_root=REPO)
     )
@@ -84,7 +110,9 @@ def _patch_request(*, approval_id: str | None = None, workspace_id: str = "ws-ph
 
 
 @pytest.mark.asyncio
+@skip_on_termux
 async def test_linux_namespace_runner_isolates_network_and_host_root(tmp_path: Path):
+    await _require_sandbox_runtime(tmp_path)
     work = tmp_path / "work"
     work.mkdir()
     script = work / "probe.py"
@@ -114,7 +142,9 @@ async def test_linux_namespace_runner_isolates_network_and_host_root(tmp_path: P
 
 
 @pytest.mark.asyncio
+@skip_on_termux
 async def test_timeout_kills_process_group(tmp_path: Path):
+    await _require_sandbox_runtime(tmp_path)
     work = tmp_path / "work"
     work.mkdir()
     runner = LinuxNamespaceRunner(
@@ -159,7 +189,9 @@ async def test_runtime_fails_closed_without_omni_context_factory(tmp_path: Path)
 
 
 @pytest.mark.asyncio
+@skip_on_termux
 async def test_code_patch_requires_sticky_approval_then_runs_in_sandbox(tmp_path: Path):
+    await _require_sandbox_runtime(tmp_path)
     agnes = _agnes(tmp_path)
     step = _patch_request()
     waiting = await agnes.execute_skill(
@@ -194,7 +226,9 @@ async def test_code_patch_requires_sticky_approval_then_runs_in_sandbox(tmp_path
 
 
 @pytest.mark.asyncio
+@skip_on_termux
 async def test_test_and_security_scan_run_on_same_isolated_workspace(tmp_path: Path):
+    await _require_sandbox_runtime(tmp_path)
     agnes = _agnes(tmp_path)
     step = _patch_request(workspace_id="ws-chain")
     waiting = await agnes.execute_skill(
@@ -257,6 +291,7 @@ async def test_test_and_security_scan_run_on_same_isolated_workspace(tmp_path: P
 
 
 @pytest.mark.asyncio
+@skip_on_termux
 async def test_patch_path_escape_and_delete_are_denied(tmp_path: Path):
     agnes = _agnes(tmp_path)
     bad_patches = [
@@ -330,7 +365,9 @@ def test_phase2_status_does_not_claim_production_safe(tmp_path: Path):
 
 
 @pytest.mark.asyncio
+@skip_on_termux
 async def test_system_mounts_are_read_only_and_output_is_bounded(tmp_path: Path):
+    await _require_sandbox_runtime(tmp_path)
     work = tmp_path / "work-ro"
     work.mkdir()
     runner = LinuxNamespaceRunner(
@@ -376,7 +413,9 @@ def test_command_guard_denies_shell_and_network_git():
 
 
 @pytest.mark.asyncio
+@skip_on_termux
 async def test_api_phase2_approval_then_execute(tmp_path: Path):
+    await _require_sandbox_runtime(tmp_path)
     from fastapi.testclient import TestClient
 
     from creator_app.api import create_app
@@ -433,6 +472,7 @@ async def test_api_phase2_approval_then_execute(tmp_path: Path):
         assert status["idempotency"]["durable"] is True
 
 
+@skip_on_termux
 def test_workspace_requires_full_commit_and_rejects_symlinks(tmp_path: Path):
     from creator_app.agnes.execution.sandbox import SandboxWorkspaceManager
 

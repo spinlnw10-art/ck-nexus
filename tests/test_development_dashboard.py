@@ -7,6 +7,7 @@ from fastapi.testclient import TestClient
 
 from creator_app.api import create_app
 from creator_app.config import Settings
+from creator_app.termux_support import skip_on_termux
 
 
 def test_development_dashboard_page_and_assets_are_served(tmp_path: Path) -> None:
@@ -168,6 +169,7 @@ def test_dashboard_has_no_embedded_status_claims() -> None:
     assert "ข้อมูลเก่า/ตรวจไม่ได้" in javascript
 
 
+@skip_on_termux
 def test_creator_token_guard_fails_closed(monkeypatch) -> None:
     import os
     import subprocess

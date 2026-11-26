@@ -179,7 +179,8 @@ class TestOpenAICompatibleAdapter:
 
 
 class TestGeminiAdapter:
-    def test_not_available_without_key(self):
+    def test_not_available_without_key(self, monkeypatch):
+        monkeypatch.delenv("GEMINI_API_KEY", raising=False)
         adapter = GeminiAdapter()
         assert adapter.is_available() is False
 
@@ -229,9 +230,7 @@ class TestBuildFreeAdapters:
     def test_shared_quota_tracker(self):
         with patch.dict(os.environ, {"GROQ_API_KEY": "gsk_test"}):
             qt = QuotaTracker()
-            adapters = build_free_adapters(
-                quota_tracker=qt, allow_limited_free_tier=True
-            )
+            adapters = build_free_adapters(quota_tracker=qt, allow_limited_free_tier=True)
             assert len(adapters) >= 1
             # Record on adapter's tracker should reflect in shared tracker
             adapters[0]._quota.record("groq", tokens=100)

@@ -186,8 +186,7 @@ def get_brain_runtime() -> BrainRuntime:
     """Return the unified, bounded CK-NEXUS cognitive runtime."""
     global _BRAIN_RUNTIME
     if _BRAIN_RUNTIME is None:
-        root = Path(__file__).resolve().parents[2]
-        _BRAIN_RUNTIME = BrainRuntime(root=root)
+        _BRAIN_RUNTIME = BrainRuntime()
     return _BRAIN_RUNTIME
 
 

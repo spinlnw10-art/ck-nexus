@@ -19,7 +19,14 @@ _PHONE_RE = re.compile(r"(?<!\d)(?:\+?\d[\d .()-]{7,}\d)(?!\d)")
 _API_KEY_RE = re.compile(
     r"(?:sk-[A-Za-z0-9_-]{16,}|gh[pousr]_[A-Za-z0-9]{20,}|AIza[0-9A-Za-z_-]{20,})"
 )
-_PRIVATE_KEY_RE = re.compile(r"-----BEGIN (?:RSA |OPENSSH |EC )?PRIVATE KEY-----")
+_PRIVATE_KEY_RE = re.compile(
+    r"-----BEGIN (?P<kind>(?:RSA |OPENSSH |EC |DSA |ENCRYPTED )?PRIVATE KEY)-----"
+    r"[\s\S]*?-----END (?P=kind)-----"
+)
+_BEARER_RE = re.compile(r"Bearer\s+[A-Za-z0-9._~+/-]+=*", re.IGNORECASE)
+_SECRET_FIELD_PARTS = (
+    "token", "secret", "password", "apikey", "authorization", "cookie", "credential", "privatekey"
+)
 
 _CLASS_RANK = {
     DataClassification.PUBLIC: 0,
@@ -52,6 +59,7 @@ def classify_and_redact(envelope: ContentEnvelope) -> RedactionResult:
 
     replace(_PRIVATE_KEY_RE, "<redacted-private-key>", DataClassification.SECRET)
     replace(_API_KEY_RE, "<redacted-api-key>", DataClassification.SECRET)
+    replace(_BEARER_RE, "<redacted-bearer-token>", DataClassification.SECRET)
     replace(_EMAIL_RE, "<redacted-email>", DataClassification.PERSONAL)
     replace(_PHONE_RE, "<redacted-phone>", DataClassification.PERSONAL)
 
@@ -61,6 +69,26 @@ def classify_and_redact(envelope: ContentEnvelope) -> RedactionResult:
         detected_classes=frozenset(detected),
         taints=frozenset(taints),
     )
+
+
+def redact_value(value: object) -> object:
+    """Recursively redact secret-bearing fields and sensitive text for logs/evidence."""
+    if isinstance(value, dict):
+        redacted: dict[object, object] = {}
+        for key, item in value.items():
+            normalized_key = re.sub(r"[^a-z0-9]", "", str(key).casefold())
+            if any(part in normalized_key for part in _SECRET_FIELD_PARTS):
+                redacted[key] = "[REDACTED]"
+            else:
+                redacted[key] = redact_value(item)
+        return redacted
+    if isinstance(value, (list, tuple)):
+        return [redact_value(item) for item in value]
+    if isinstance(value, str):
+        return classify_and_redact(
+            ContentEnvelope(source="local-redaction", content=value, purpose="log_or_evidence")
+        ).content
+    return value
 
 
 def effective_classification(result: RedactionResult) -> DataClassification:
