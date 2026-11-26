@@ -106,6 +106,58 @@
           <a href="/development" class="release-link">VIEW EVIDENCE <span aria-hidden="true">↗</span></a>
         </section>
 
+        <section class="platform-overview reveal-item" aria-labelledby="engineering-status-heading">
+          <div class="overview-heading">
+            <p class="eyebrow">ENGINEERING STATUS / VERIFIED 2026-11-26</p>
+            <h2 id="engineering-status-heading">Latest engineering progress.</h2>
+            <p>สถานะการพัฒนาล่าสุดจาก GitHub และผลทดสอบที่ตรวจสอบได้ ณ วันที่ 26 พฤศจิกายน 2026 ไม่ใช่สถานะ Production runtime แบบเรียลไทม์</p>
+          </div>
+          <div class="capability-grid">
+            <article>
+              <span>01 / OPEN PR #421</span>
+              <h3>Governed GitLab Duo dispatcher</h3>
+              <p>PR ยังเปิดอยู่ · GitHub Actions ผ่านครบ 7 workflows · CodeRabbit review threads ปิดครบ 3 รายการ · รอ Copilot review และการอนุมัติตามกติกา repository</p>
+              <p><a href="https://github.com/spinlnw10-art/ck-nexus/pull/421">เปิด PR #421 ↗</a></p>
+            </article>
+            <article>
+              <span>02 / OPEN PR #420</span>
+              <h3>CK-NEXUS Core bootstrap</h3>
+              <p>เชื่อม dispatcher เข้ากับ Core authority, identity verifier, Credential Broker และ approval verifier โดย fail-closed เมื่อ binding ไม่ครบ เป็น PR ที่ต่อยอดจาก #421 และยังไม่ Merge</p>
+              <p><a href="https://github.com/spinlnw10-art/ck-nexus/pull/420">เปิด PR #420 ↗</a></p>
+            </article>
+            <article>
+              <span>03 / TEST EVIDENCE</span>
+              <h3>Verification results</h3>
+              <p>ชุดทดสอบเฉพาะส่วน 45 ผ่านบน Termux และ 45 ผ่านบน Ubuntu; ชุดทดสอบเต็มบน Ubuntu 1,026 ผ่าน, 2 ข้าม พร้อมคำเตือน 15 รายการ</p>
+              <p>Ruff, format check และ Bandit gate ที่ใช้ reviewed-finding allowlist ผ่านตามขอบเขตที่บันทึกไว้</p>
+            </article>
+            <article>
+              <span>04 / MCP SMOKE TEST</span>
+              <h3>Local MCP interface</h3>
+              <p>ตรวจ Streamable HTTP initialize ได้ 200, tools/list ได้ 200 พบ 35 tools รวม GitLab Duo 3 tools; status รายงาน ready=false และ configured=false ตาม fail-closed design</p>
+              <p>หยุด smoke-test server หลังทดสอบแล้ว ไม่ได้เปิดเป็นบริการถาวร</p>
+            </article>
+            <article>
+              <span>05 / INTEGRATION BLOCKERS</span>
+              <h3>Live dispatch not enabled</h3>
+              <p>ยังไม่มีการส่งงาน GitLab Duo จริง; project เป้าหมายยังว่าง และยังขาด trusted Core runtime bindings, broker credential, workflow definitions และ approved privilege IDs</p>
+            </article>
+            <article>
+              <span>07 / HOMEPAGE STATUS UPDATE</span>
+              <h3>Prepared engineering snapshot</h3>
+              <p>PR #422 อัปเดตหน้าเว็บหลัก, README และ Release Status; 3 workflows ผ่าน แต่ยัง Merge ไม่ได้เพราะ Copilot Code Review ตอบ ACTOR_INELIGIBLE สำหรับทั้งบัญชีเจ้าของและบัญชีผู้ร่วมงาน</p>
+              <p><a href="https://github.com/spinlnw10-art/ck-nexus/pull/422">ตรวจ PR #422 ↗</a></p>
+            </article>
+            <article>
+              <span>06 / RELEASE GATE</span>
+              <h3>NO-GO for Production</h3>
+              <p>ไม่มีการ bypass gate, merge หรือ deploy การเปิดใช้งานจริงต้องผ่าน Core governance, independent review และ Q10–Q16 evidence บน release candidate เดียวกัน</p>
+              <p><a href="https://github.com/spinlnw10-art/ck-nexus/blob/main/RELEASE_STATUS.md">ดู Release Status ↗</a></p>
+            </article>
+          </div>
+          <p class="runtime-note">Latest dispatcher PR head: <code>86cd16b3c910dc71d19bbdcc954a4cbeae2a619b</code>. This is a dated engineering snapshot; use <a href="/development">/development</a> and the linked PRs for newer evidence.</p>
+        </section>
+
         <section class="platform-overview reveal-item" aria-label="ความสามารถหลักของ CK-NEXUS">
           <div class="overview-heading">
             <p class="eyebrow">ONE PLATFORM / CAPABILITY AREAS</p>

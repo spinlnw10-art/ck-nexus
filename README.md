@@ -6,6 +6,23 @@ CK-NEXUS is one platform with one canonical application runtime. **Agnes** is it
 
 > **Release decision: NO-GO for Production.** Do not treat a passing test subset, CI run, implemented feature, or running service as Production approval. The current release decision and gate evidence are maintained in [Release Status](RELEASE_STATUS.md) and the [Q10–Q16 Closure Contract](docs/Q10_Q16_CLOSURE_CONTRACT.md).
 
+## Latest engineering status — 2026-11-26
+
+This is a dated engineering snapshot, not a live Production-health claim.
+
+| Area | Verified status |
+|---|---|
+| Governed GitLab Duo dispatcher | [PR #421](https://github.com/spinlnw10-art/ck-nexus/pull/421) is open; all 7 GitHub Actions workflows passed on head `86cd16b3c910dc71d19bbdcc954a4cbeae2a619b`; all 3 CodeRabbit review threads are resolved; Copilot review remains outstanding because the API returned HTTP 422 `ACTOR_INELIGIBLE` for both the repository owner and a push-enabled collaborator; no bypass is configured. |
+| Homepage / status documentation | [PR #422](https://github.com/spinlnw10-art/ck-nexus/pull/422) updates the homepage, README, and release status; all 3 GitHub Actions workflows passed on latest head `f3fa5bd0638100b9a6354adabc8fe6039c434f6d`; CodeQL and all 3 language-analysis jobs passed; CodeRabbit was skipped and SonarCloud cancelled. PR remains open and blocked by the repository-required Copilot review eligibility gate. |
+| CK-NEXUS Core bootstrap | [PR #420](https://github.com/spinlnw10-art/ck-nexus/pull/420) is open and stacked on PR #421; it is not merged. |
+| Automated tests | Targeted suite: 45 passed on Termux and 45 passed on independent Ubuntu. Full Ubuntu suite: 1,026 passed, 2 skipped, 15 warnings. |
+| Quality / security checks | Ruff checks, changed-file format check, `git diff --check`, and the documented Bandit reviewed-finding gate passed for the recorded scope. |
+| MCP smoke test | Local Streamable HTTP initialize and tools/list returned HTTP 200; 35 tools were listed, including 3 GitLab Duo tools. Duo readiness correctly remained `ready=false` / `configured=false`; the smoke-test server was stopped. |
+| Live integration | No live GitLab Duo dispatch was attempted. The target GitLab project remains empty; trusted Core bindings, broker credential, workflow definitions, and approved privilege IDs are still prerequisites. |
+| Production release | **NO-GO.** No gate bypass, merge, credential provisioning, or deployment was performed. Q10–Q16 release evidence remains mandatory. |
+
+Use the [CK-NEXUS web workspace](creator_app/web/index.html), [PR #421](https://github.com/spinlnw10-art/ck-nexus/pull/421), [PR #420](https://github.com/spinlnw10-art/ck-nexus/pull/420), and [Release Status](RELEASE_STATUS.md) for the supporting evidence. The dated test results above do not certify a newer commit or a live runtime.
+
 ## Start here
 
 | Need | Open |

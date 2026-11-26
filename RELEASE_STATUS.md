@@ -1,3 +1,30 @@
+# Current engineering snapshot — 2026-11-26
+
+**Production decision: NO-GO.** This update records the current GitLab Duo engineering work; it does not supersede the Q10–Q16 release contract or certify a Production candidate.
+
+## Current work
+
+- **Homepage/status documentation:** [PR #422](https://github.com/spinlnw10-art/ck-nexus/pull/422) updates the homepage, README, and this release-status snapshot. On latest head `f3fa5bd0638100b9a6354adabc8fe6039c434f6d`, all 3 GitHub Actions workflows, CodeQL, and all 3 language-analysis jobs passed; CodeRabbit was skipped and SonarCloud cancelled. The PR remains open and is blocked by the Copilot review eligibility gate.
+- **Dispatcher:** [PR #421](https://github.com/spinlnw10-art/ck-nexus/pull/421) is open against `main`. Its current head is `86cd16b3c910dc71d19bbdcc954a4cbeae2a619b`. All 7 GitHub Actions workflows passed, including the deleted-files gate; CodeQL is neutral because two configurations were not found (no new alerts reported); all 3 CodeRabbit review threads are resolved. The required Copilot review remains outstanding: the Copilot review API returned HTTP 422 `ACTOR_INELIGIBLE` for both the repository-owner account and a collaborator account with push permission (no eligible Copilot Code Review license or organization policy disables it). The active ruleset has no bypass actors; the gate was not changed.
+- **Core bootstrap:** [PR #420](https://github.com/spinlnw10-art/ck-nexus/pull/420) is open and stacked on the dispatcher branch. It is not merged and must be retargeted/revalidated after its prerequisite is integrated.
+- **Tests:** the targeted dispatcher/bootstrap suite passed 45 tests on Termux and 45 tests on independent Ubuntu. The independent Ubuntu full suite reported 1,026 passed, 2 skipped, and 15 warnings. These results are tied to the recorded workspace/source state and are not proof for a different release commit.
+- **Quality/security:** Ruff checks, changed-file formatting, `git diff --check`, and the documented Bandit reviewed-finding gate passed for their recorded scopes.
+- **MCP smoke test:** local Streamable HTTP initialize and tools/list returned HTTP 200; 35 tools were listed, including 3 GitLab Duo tools. The Duo status correctly returned `ready=false` and `configured=false` without trusted Core runtime bindings. The smoke-test server was stopped after verification.
+- **Live integration:** no live GitLab Duo dispatch was attempted. The target GitLab project (ID `89471022`) remains empty. Trusted Core identity/approval bindings, broker credential, workflow definitions, and approved privilege IDs remain prerequisites.
+- **Deployment:** no gate bypass, credential provisioning, merge, or Production deployment was performed. Runtime health of any remote Production service is not asserted by these repository checks.
+
+## Required next gates
+
+1. Complete the required independent Copilot review on PR #421 and resolve any findings.
+2. Integrate PR #421 only through the repository's required checks and CK-NEXUS Core governance.
+3. Rebase/retarget and independently verify PR #420 against the resulting canonical base.
+4. Configure trusted Core bindings and approved GitLab workflow/privilege definitions through the governed credential and approval mechanisms; then perform an explicitly authorized non-production integration test.
+5. Recompute the exact release subject and close Q10–Q16 on that same candidate before any Production decision.
+
+The detailed historical evidence below is retained for traceability. Older commit-bound results remain historical and must not be interpreted as current release-gate closure.
+
+---
+
 # Release evidence snapshot — 2026-11-19 (PR #380 code baseline)
 
 **Code-bearing baseline after PR #380:** `0d7b0d1c0efee01d6307b418c848cd0c84411ea0`
