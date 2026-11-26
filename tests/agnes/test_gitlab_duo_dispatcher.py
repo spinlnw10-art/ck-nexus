@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import tempfile
 import unittest
 from dataclasses import replace
@@ -14,6 +15,8 @@ from creator_app.agnes.gitlab_duo_dispatcher import (
     GitLabDuoDispatchError,
     GitLabDuoFlowsClient,
     GitLabProtectedBranchVerifier,
+    _RejectRedirectHandler,
+    _open_without_redirect,
 )
 from creator_app.council_authority.authority import CapabilityAuthority
 from creator_app.council_authority.identity import CallerIdentity
@@ -208,6 +211,36 @@ class GitLabDuoFlowsClientTests(unittest.TestCase):
                 client.start_flow(self.request())
             request.assert_not_called()
 
+    def test_get_flow_status_uses_gitlab_workflow_id_scalar(self):
+        from unittest.mock import MagicMock
+
+        client = self.client()
+        response = MagicMock()
+        response.__enter__.return_value = response
+        response.read.return_value = (
+            b'{"data":{"duoWorkflowWorkflows":{"nodes":'
+            b'[{"status":"running","webUrl":"https://gitlab.com/group/project/-/duo_workflows/123"}]}}}'
+        )
+        with (
+            patch.object(client, "_acquire_token", return_value="test-token"),
+            patch(
+                "creator_app.agnes.gitlab_duo_dispatcher._open_without_redirect",
+                return_value=response,
+            ) as open_request,
+        ):
+            result = client.get_flow_status(123)
+        request = open_request.call_args.args[0]
+        body = json.loads(request.data.decode("utf-8"))
+        self.assertIn(
+            "$workflowId: AiDuoWorkflowsWorkflowID!",
+            body["query"],
+        )
+        self.assertEqual(
+            body["variables"]["workflowId"],
+            "gid://gitlab/Ai::DuoWorkflows::Workflow/123",
+        )
+        self.assertEqual(result["status"], "running")
+
     def test_secret_assignment_pattern_is_rejected(self):
         with self.assertRaisesRegex(ValueError, "credential material"):
             GitLabDuoFlowsClient.governed_goal("password = not-a-real-secret", task_id="CKN-123")
@@ -254,17 +287,66 @@ class GitLabProtectedBranchVerifierTests(unittest.TestCase):
         rules_response.headers.get.return_value = ""
         branch_response = MagicMock()
         branch_response.__enter__.return_value = branch_response
-        branch_response.read.return_value = b'{"name":"agents/CKN-1"}'
+        branch_response.read.return_value = b'{"name":"agents/CKN-1","protected":false}'
         with patch(
-            "urllib.request.urlopen",
+            "creator_app.agnes.gitlab_duo_dispatcher._open_without_redirect",
             side_effect=[rules_response, branch_response],
         ):
             self.assertTrue(verifier("group/project", "agents/CKN-1"))
 
         rules_response.read.return_value = b'[{"name":"main"},{"name":"agents/*"}]'
-        with patch("urllib.request.urlopen", return_value=rules_response):
+        with patch("creator_app.agnes.gitlab_duo_dispatcher._open_without_redirect", return_value=rules_response):
             self.assertFalse(verifier("group/project", "agents/CKN-1"))
         self.assertFalse(verifier("other/project", "agents/CKN-1"))
+
+    def test_branch_response_must_explicitly_report_unprotected(self):
+        from unittest.mock import MagicMock
+
+        verifier = GitLabProtectedBranchVerifier(
+            base_url="https://gitlab.com",
+            project_id="group/project",
+            credential_provider=lambda: "test-token",
+        )
+        for payload in (
+            b'{"name":"agents/CKN-1","protected":true}',
+            b'{"name":"agents/CKN-1"}',
+            b'{"name":"agents/CKN-1","protected":"false"}',
+        ):
+            rules_response = MagicMock()
+            rules_response.__enter__.return_value = rules_response
+            rules_response.read.return_value = b"[]"
+            rules_response.headers.get.return_value = ""
+            branch_response = MagicMock()
+            branch_response.__enter__.return_value = branch_response
+            branch_response.read.return_value = payload
+            with patch(
+                "creator_app.agnes.gitlab_duo_dispatcher._open_without_redirect",
+                side_effect=[rules_response, branch_response],
+            ):
+                self.assertFalse(verifier("group/project", "agents/CKN-1"))
+
+    def test_transport_rejects_redirects_instead_of_forwarding_private_token(self):
+        from urllib.request import Request
+
+        handler = _RejectRedirectHandler()
+        request = Request("https://gitlab.com/api/v4/projects")
+        self.assertIsNone(
+            handler.redirect_request(
+                request,
+                None,
+                302,
+                "Found",
+                {},
+                "https://attacker.example/collect",
+            )
+        )
+        opener = unittest.mock.MagicMock()
+        response = unittest.mock.MagicMock()
+        opener.open.return_value = response
+        with patch("urllib.request.build_opener", return_value=opener) as build_opener:
+            self.assertIs(_open_without_redirect(request, timeout=5), response)
+        self.assertIsInstance(build_opener.call_args.args[0], _RejectRedirectHandler)
+        opener.open.assert_called_once_with(request, timeout=5)
 
     def test_branch_verifier_fails_closed_on_api_errors_or_missing_branch(self):
         import urllib.error
@@ -276,7 +358,7 @@ class GitLabProtectedBranchVerifierTests(unittest.TestCase):
             credential_provider=lambda: "test-token",
         )
         with patch(
-            "urllib.request.urlopen",
+            "creator_app.agnes.gitlab_duo_dispatcher._open_without_redirect",
             side_effect=urllib.error.HTTPError("https://gitlab.com", 403, "Forbidden", {}, None),
         ):
             self.assertFalse(verifier("group/project", "agents/CKN-1"))
@@ -286,7 +368,7 @@ class GitLabProtectedBranchVerifierTests(unittest.TestCase):
         rules_response.read.return_value = b"[]"
         rules_response.headers.get.return_value = ""
         with patch(
-            "urllib.request.urlopen",
+            "creator_app.agnes.gitlab_duo_dispatcher._open_without_redirect",
             side_effect=[
                 rules_response,
                 urllib.error.HTTPError("https://gitlab.com", 404, "Not Found", {}, None),
