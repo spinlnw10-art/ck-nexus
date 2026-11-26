@@ -223,7 +223,7 @@ class GitLabProtectedBranchVerifier:
                     method="GET",
                     headers={"PRIVATE-TOKEN": token, "Accept": "application/json"},
                 )
-                with urllib.request.urlopen(  # nosec B310 - base_url is HTTPS-only validated in __init__
+                with urllib.request.urlopen(  # nosec B310
                     request, timeout=self.timeout_seconds
                 ) as response:
                     raw = response.read(1_000_001)
@@ -251,7 +251,7 @@ class GitLabProtectedBranchVerifier:
                 method="GET",
                 headers={"PRIVATE-TOKEN": token, "Accept": "application/json"},
             )
-            with urllib.request.urlopen(  # nosec B310 - base_url is HTTPS-only validated in __init__
+            with urllib.request.urlopen(  # nosec B310
                 branch_request, timeout=self.timeout_seconds
             ) as response:
                 raw = response.read(128_001)
@@ -490,7 +490,7 @@ class GitLabDuoFlowsClient:
             },
         )
         try:
-            with urllib.request.urlopen(  # nosec B310 - base_url is HTTPS-only validated in __init__
+            with urllib.request.urlopen(  # nosec B310
                     request, timeout=self.timeout_seconds
                 ) as response:
                 raw = response.read(1_000_001)
@@ -602,7 +602,7 @@ class GitLabDuoFlowsClient:
             },
         )
         try:
-            with urllib.request.urlopen(  # nosec B310 - base_url is HTTPS-only validated in __init__
+            with urllib.request.urlopen(  # nosec B310
                     request, timeout=self.timeout_seconds
                 ) as response:
                 raw = response.read(256_001)
