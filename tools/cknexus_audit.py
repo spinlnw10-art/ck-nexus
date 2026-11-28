@@ -139,33 +139,52 @@ def scan_tree(root: Path, output: Path | None, max_file_bytes: int, max_zip_entr
     }
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Read-only repository/ZIP inventory, integrity and evidence report")
-    parser.add_argument("--root", default=".", help="directory to audit (default: current directory)")
-    parser.add_argument("--output", default="audit-output", help="separate output directory (default: audit-output)")
+    parser = argparse.ArgumentParser(
+        description="Read-only repository/ZIP inventory, integrity and evidence report"
+    )
     parser.add_argument("--max-file-bytes", type=int, default=64 * 1024 * 1024)
     parser.add_argument("--max-zip-entries", type=int, default=20000)
     parser.add_argument("--max-zip-uncompressed-bytes", type=int, default=2 * 1024 * 1024 * 1024)
     args = parser.parse_args()
     if min(args.max_file_bytes, args.max_zip_entries, args.max_zip_uncompressed_bytes) <= 0:
         parser.error("limits must be positive")
-    root = Path(args.root)
-    output = Path(args.output)
-    if not output.is_absolute():
-        output = Path.cwd() / output
-    if output.resolve() == root.resolve():
-        parser.error("--output must not be the audited root")
-    report = scan_tree(root, output, args.max_file_bytes, args.max_zip_entries,
-                       args.max_zip_uncompressed_bytes)
+
+    # Anchor both paths to the current working directory; do not accept
+    # user-controlled filesystem paths from CLI arguments in CI.
+    root = Path.cwd().resolve(strict=True)
+    output = root / "audit-output"
+    report = scan_tree(
+        root,
+        output,
+        args.max_file_bytes,
+        args.max_zip_entries,
+        args.max_zip_uncompressed_bytes,
+    )
     output.mkdir(parents=True, exist_ok=True)
-    payload = json.dumps(report, indent=2, sort_keys=True) + "\n"
+    payload = json.dumps(report, indent=2, sort_keys=True) + "\\n"
     report_path = output / "audit-report.json"
     report_path.write_text(payload, encoding="utf-8")
-    manifest = {"schema_version": "cknexus.manifest.v1", "report": report_path.name,
-                "report_sha256": hashlib.sha256(payload.encode()).hexdigest(),
-                "decision": report["decision"], "generated_at": report["generated_at"]}
-    (output / "evidence-manifest.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
-    print(json.dumps({"decision": report["decision"], "summary": report["summary"],
-                      "report": str(report_path), "manifest": str(output / "evidence-manifest.json")}, indent=2))
+    manifest = {
+        "schema_version": "cknexus.manifest.v1",
+        "report": report_path.name,
+        "report_sha256": hashlib.sha256(payload.encode()).hexdigest(),
+        "decision": report["decision"],
+        "generated_at": report["generated_at"],
+    }
+    (output / "evidence-manifest.json").write_text(
+        json.dumps(manifest, indent=2) + "\\n", encoding="utf-8"
+    )
+    print(
+        json.dumps(
+            {
+                "decision": report["decision"],
+                "summary": report["summary"],
+                "report": "audit-output/audit-report.json",
+                "manifest": "audit-output/evidence-manifest.json",
+            },
+            indent=2,
+        )
+    )
     return 0 if report["decision"] == "PASS" else 2
 
 if __name__ == "__main__":
