@@ -37,7 +37,8 @@ class AuditTests(unittest.TestCase):
             root.mkdir()
             api_source = "API_" + "KEY = " + repr("abcdefghijklmnopqrstuvwx")
             (root / "app.py").write_text(api_source, encoding="utf-8")
-            (root / "safe.py").write_text("access_token = self._access_token(config)", encoding="utf-8")
+            safe_source = "access_token = self._access_token(config)"
+            (root / "safe.py").write_text(safe_source, encoding="utf-8")
             before = (root / "app.py").read_bytes()
             report = audit.scan_tree(root, Path(tmp) / "out", 1024 * 1024, 100, 1024 * 1024)
             self.assertEqual(report["decision"], "REVIEW_REQUIRED")
