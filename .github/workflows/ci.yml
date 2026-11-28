@@ -2,7 +2,7 @@ name: CK-NEXUS CI
 
 on:
   push:
-    branches: [main, release/q04-q08-clean]
+    branches: [main, release/q04-q08-clean, q12-attested-runner-integration]
   pull_request:
   workflow_dispatch:
 
@@ -101,13 +101,13 @@ jobs:
           PY
 
   q12-delegated-cgroup-probe:
-    if: ${{ (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/q12-attested-runner-integration') || (github.event_name == 'pull_request' && github.event.pull_request.head.ref == 'q12-attested-runner-integration') }}
+    if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/q12-attested-runner-integration') || (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/q12-attested-runner-integration') || (github.event_name == 'pull_request' && github.event.pull_request.head.ref == 'q12-attested-runner-integration') }}
     permissions:
       contents: write
       id-token: write
       attestations: write
     env:
-      Q12_SOURCE_SHA: e7b2ce8622952977dc1cd9c226bba516b88425a3
+      Q12_SOURCE_SHA: 0d6e4f874f934051f6c5d89dedb860a95ae774ca
       Q12_SOURCE_REPOSITORY: chokmantol/ck-nexus
       Q12_WORKFLOW_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
     runs-on: ubuntu-24.04
