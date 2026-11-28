@@ -112,7 +112,10 @@ class AuditTests(unittest.TestCase):
             root.mkdir()
             (root / "real.txt").write_text("safe", encoding="utf-8")
             (root / "link.txt").symlink_to(root / "real.txt")
-            actual_dir = root / "actual-dir"\n            actual_dir.mkdir()\n            (actual_dir / "inside.txt").write_text("inside", encoding="utf-8")\n            (root / "linked-dir").symlink_to(actual_dir, target_is_directory=True)
+            actual_dir = root / "actual-dir"
+            actual_dir.mkdir()
+            (actual_dir / "inside.txt").write_text("inside", encoding="utf-8")
+            (root / "linked-dir").symlink_to(actual_dir, target_is_directory=True)
             report = audit.scan_tree(root, None, 1024 * 1024, 100, 1024 * 1024)
             statuses = {item["status"] for item in report["files"]}
             self.assertEqual(report["decision"], "REVIEW_REQUIRED")
