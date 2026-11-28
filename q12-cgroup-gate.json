@@ -1,0 +1,57 @@
+{
+  "completed_at": "2026-11-28T12:33:49.013483+00:00",
+  "environment": "staging",
+  "environment_class": "github-hosted-ubuntu24-transient-systemd-delegation",
+  "execution_mode": "transient-systemd-service",
+  "gate": "Q12",
+  "gate_exit_code": 0,
+  "health": {
+    "controllers": [
+      "cpu",
+      "cpuset",
+      "io",
+      "memory",
+      "pids"
+    ],
+    "delegated_writable": true,
+    "enabled_controllers": [
+      "cpu",
+      "memory",
+      "pids"
+    ],
+    "missing_controllers": [],
+    "missing_enabled_controllers": [],
+    "ready": true,
+    "required_controllers": [
+      "cpu",
+      "memory",
+      "pids"
+    ],
+    "root": "/sys/fs/cgroup/system.slice/cknexus-q12-delegation-probe-46145262816.service",
+    "unified_v2": true
+  },
+  "log_sha256": "ff934ed889a8e2673dbb28aa8962b01b52e699054fe7fcf2e9702611a0f4b6eb",
+  "observed": {
+    "cpu.max": "20000 100000",
+    "memory.max": "67108864",
+    "pid_attached": true,
+    "pids.max": "16"
+  },
+  "production_promotion_allowed": false,
+  "release_subject_manifest_sha256": "611ce11b5e6fd8ce161333d4d7dca76e414f6cd1673a9d83ddc1b2fb933c4d6e",
+  "result": "PASS",
+  "runner_arch": "X64",
+  "runner_image": "ubuntu24",
+  "runner_name": "GitHub Actions 1000008182",
+  "runner_os": "Linux",
+  "runner_uid": 1001,
+  "runner_user": "runner",
+  "schema_version": 1,
+  "source_sha": "9abb16eaa3e8072a2eef62210339084f6b0abd3e",
+  "source_tree": "0762e1f00d8400140eaef38f9bc5ebf40155f482",
+  "status": "PASS",
+  "workflow_ref": "spinlnw10-art/ck-nexus/.github/workflows/ci.yml@refs/pull/430/merge",
+  "workflow_run_attempt": 1,
+  "workflow_run_id": 46145262816,
+  "workflow_sha": "761bbb32fe49af55971aaf46c5dd15a5b132f787"
+}
