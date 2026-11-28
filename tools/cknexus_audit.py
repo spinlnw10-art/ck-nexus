@@ -161,7 +161,7 @@ def main() -> int:
         args.max_zip_uncompressed_bytes,
     )
     output.mkdir(parents=True, exist_ok=True)
-    payload = json.dumps(report, indent=2, sort_keys=True) + "\\n"
+    payload = json.dumps(report, indent=2, sort_keys=True) + "\n"
     report_path = output / "audit-report.json"
     report_path.write_text(payload, encoding="utf-8")
     manifest = {
@@ -172,7 +172,7 @@ def main() -> int:
         "generated_at": report["generated_at"],
     }
     (output / "evidence-manifest.json").write_text(
-        json.dumps(manifest, indent=2) + "\\n", encoding="utf-8"
+        json.dumps(manifest, indent=2) + "\n", encoding="utf-8"
     )
     print(
         json.dumps(
