@@ -77,9 +77,10 @@ class AuditTests(unittest.TestCase):
             path = Path(tmp) / "sample.zip"
             with zipfile.ZipFile(path, "w") as archive:
                 archive.writestr("one.txt", "x" * 4096)
-            too_many = audit.scan_zip(path, 0 + 1, 8192)
+                archive.writestr("two.txt", "y")
+            too_many = audit.scan_zip(path, 1, 8192)
             too_large = audit.scan_zip(path, 10, 1024)
-            self.assertEqual(too_many["status"], "ok")
+            self.assertEqual(too_many["status"], "limit_exceeded")
             self.assertEqual(too_large["status"], "limit_exceeded")
 
     def test_size_limit_skip_requires_review(self):
