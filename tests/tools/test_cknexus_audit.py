@@ -16,7 +16,10 @@ class AuditTests(unittest.TestCase):
             p.write_text("hello", encoding="utf-8")
             digest, size = audit.sha256_file(p)
             self.assertEqual(size, 5)
-            self.assertEqual(digest, "2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824")
+            self.assertEqual(
+                digest,
+                "2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824",
+            )
 
     def test_zip_integrity_and_unsafe_path_detection(self):
         with tempfile.TemporaryDirectory() as tmp:
