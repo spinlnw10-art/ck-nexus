@@ -21,11 +21,11 @@ SECRET_PATTERNS = [
     ("private_key", re.compile(rb"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----")),
     ("github_token", re.compile(rb"\bgh[pousr]_[A-Za-z0-9]{20,}\b")),
     ("aws_access_key", re.compile(rb"\bAKIA[0-9A-Z]{16}\b")),
-    ("generic_api_key_assignment", re.compile(rb"(?i)(?:api[_-]?key|access[_-]?token|client[_-]?secret)\s*[:=]\s*['\"]?[A-Za-z0-9_./+=-]{20,}")),
+    ("generic_api_key_assignment", re.compile(rb"""(?i)\b(?:api[_-]?key|access[_-]?token|client[_-]?secret)\b\s*[:=]\s*(['"])[A-Za-z0-9_./+=-]{20,}\1""")),
 ]
 TEXT_SUFFIXES = {".py", ".js", ".ts", ".tsx", ".jsx", ".json", ".yaml", ".yml", ".toml",
                  ".ini", ".cfg", ".env", ".sh", ".bash", ".md", ".txt", ".sql", ".xml",
-                 ".properties", ".conf", ".gradle", ". Dockerfile"}
+                 ".properties", ".conf", ".gradle", "Dockerfile"}
 
 def sha256_file(path: Path, chunk_size: int = 1024 * 1024) -> tuple[str, int]:
     digest = hashlib.sha256()
@@ -39,8 +39,8 @@ def sha256_file(path: Path, chunk_size: int = 1024 * 1024) -> tuple[str, int]:
 def safe_relative(path: Path, root: Path) -> str:
     return path.relative_to(root).as_posix()
 
-def scan_zip(path: Path, max_entries: int, max_uncompressed: int) -> dict:
-    result = {"path": str(path), "status": "ok", "entries": 0, "total_uncompressed_bytes": 0,
+def scan_zip(path: Path, max_entries: int, max_uncompressed: int, display_path: str | None = None) -> dict:
+    result = {"path": display_path or path.name, "status": "ok", "entries": 0, "total_uncompressed_bytes": 0,
               "encrypted_entries": 0, "unsafe_paths": [], "suspicious_compression": [],
               "testzip_error": None}
     try:
@@ -112,7 +112,7 @@ def scan_tree(root: Path, output: Path | None, max_file_bytes: int, max_zip_entr
                 suffix = path.suffix.lower() or "[no_extension]"
                 extension_counts[suffix] += 1
                 if path.suffix.lower() == ".zip":
-                    archives.append(scan_zip(path, max_zip_entries, max_zip_bytes))
+                    archives.append(scan_zip(path, max_zip_entries, max_zip_bytes, rel))
                 if path.suffix.lower() in TEXT_SUFFIXES and size <= 2 * 1024 * 1024:
                     raw = path.read_bytes()
                     for kind, pattern in SECRET_PATTERNS:
