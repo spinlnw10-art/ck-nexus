@@ -107,8 +107,7 @@ jobs:
       id-token: write
       attestations: write
     env:
-      Q12_SOURCE_SHA: ac83df96948074e54fe21e74d7ea339a88972f4e
-      Q12_SOURCE_TREE: 363efe45f61734e290ad336500d13b35f6c91792
+      Q12_SOURCE_SHA: bc77cda869fa8587b8a031d06c5da048fd0bce34
       Q12_SOURCE_REPOSITORY: chokmantol/ck-nexus
     runs-on: ubuntu-24.04
     timeout-minutes: 10
@@ -130,7 +129,8 @@ jobs:
           git -C "$source_dir" fetch --depth 1 origin "$Q12_SOURCE_SHA"
           git -C "$source_dir" checkout --detach FETCH_HEAD
           test "$(git -C "$source_dir" rev-parse HEAD)" = "$Q12_SOURCE_SHA"
-          test "$(git -C "$source_dir" rev-parse 'HEAD^{tree}')" = "$Q12_SOURCE_TREE"
+          source_tree="$(git -C "$source_dir" rev-parse 'HEAD^{tree}')"
+          echo "Q12_SOURCE_TREE=$source_tree" >> "$GITHUB_ENV"
           test -f "$source_dir/scripts/agnes_cgroup_v2_staging_gate.py"
           paths=(app creator_app services gateway orchestration idea_engine migrations deploy observability Dockerfile docker-compose.prod.yml main.py pyproject.toml uv.lock)
           subject="$(git -C "$source_dir" ls-tree -r HEAD -- "${paths[@]}" | sha256sum | awk '{print $1}')"
