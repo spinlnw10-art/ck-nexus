@@ -1,0 +1,5 @@
+{
+  "schema_version": 1,
+  "policy_id": "CKNEXUS-SAST-STRICT-0",
+  "fail_on_any_finding": true
+}
