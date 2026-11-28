@@ -47,26 +47,32 @@ if [ ! -f .env.local ]; then
   cp .env.example .env.local
 fi
 
-HOST="${CKNEXUS_HOST:-127.0.0.1}"
-PORT_VALUE="${PORT:-8000}"
+# Load the same dotenv configuration as Settings.from_env() without printing secrets.
+BIND_CONFIG=$(.venv/bin/python -c 'import os; from creator_app.config import Settings; Settings.from_env(); print(os.getenv("CKNEXUS_HOST", "127.0.0.1")); print(os.getenv("PORT", "8000"))')
+HOST=$(printf '%s\n' "$BIND_CONFIG" | sed -n '1p')
+PORT_VALUE=$(printf '%s\n' "$BIND_CONFIG" | sed -n '2p')
 STARTUP_TIMEOUT="${CKNEXUS_STARTUP_TIMEOUT_SECONDS:-90}"
 
 case "$PORT_VALUE" in
   ''|*[!0-9]*)
-    log "ERROR: PORT must be an integer between 1 and 65535 (received: $PORT_VALUE)" >&2
+    log "ERROR: PORT must be an integer between 1 and 65535." >&2
     exit 2
     ;;
 esac
 if [ "$PORT_VALUE" -lt 1 ] || [ "$PORT_VALUE" -gt 65535 ]; then
-  log "ERROR: PORT must be between 1 and 65535 (received: $PORT_VALUE)" >&2
+  log "ERROR: PORT must be between 1 and 65535." >&2
   exit 2
 fi
 case "$STARTUP_TIMEOUT" in
-  ''|*[!0-9]*|0)
-    log "ERROR: CKNEXUS_STARTUP_TIMEOUT_SECONDS must be a positive integer" >&2
+  ''|*[!0-9]*)
+    log "ERROR: CKNEXUS_STARTUP_TIMEOUT_SECONDS must be a positive integer." >&2
     exit 2
     ;;
 esac
+if [ "$STARTUP_TIMEOUT" -lt 1 ]; then
+  log "ERROR: CKNEXUS_STARTUP_TIMEOUT_SECONDS must be a positive integer." >&2
+  exit 2
+fi
 
 log "Starting unified runtime (host=$HOST port=$PORT_VALUE)"
 .venv/bin/python -m creator_app.unified &
@@ -86,7 +92,8 @@ trap 'exit 129' HUP
 if ! .venv/bin/python scripts/wait_for_health.py \
   --host "$HOST" \
   --port "$PORT_VALUE" \
-  --timeout "$STARTUP_TIMEOUT"
+  --timeout "$STARTUP_TIMEOUT" \
+  --pid "$SERVER_PID"
 then
   log "ERROR: startup failed; inspect the runtime log above and the health endpoint." >&2
   exit 1
