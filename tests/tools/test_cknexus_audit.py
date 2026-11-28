@@ -31,6 +31,17 @@ class AuditTests(unittest.TestCase):
             self.assertEqual(result["status"], "review_required")
             self.assertIn("../escape.txt", result["unsafe_paths"])
 
+    def test_size_limit_skip_requires_review(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp) / "source"
+            root.mkdir()
+            (root / "oversized.txt").write_bytes(b"x" * 32)
+            report = audit.scan_tree(root, Path(tmp) / "out", 16, 100, 1024 * 1024)
+            self.assertEqual(report["decision"], "REVIEW_REQUIRED")
+            self.assertEqual(report["summary"]["files_hashed"], 0)
+            self.assertEqual(report["summary"]["files_skipped"], 1)
+            self.assertEqual(report["files"][0]["status"], "skipped_size_limit")
+
     def test_read_only_scan_and_secret_redaction(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp) / "source"
