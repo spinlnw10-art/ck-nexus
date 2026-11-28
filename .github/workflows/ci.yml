@@ -107,7 +107,7 @@ jobs:
       id-token: write
       attestations: write
     env:
-      Q12_SOURCE_SHA: 9e5500888a749f183112310ed1886be6e7c27982
+      Q12_SOURCE_SHA: 5c7ce0f0513895e39f9aa4681850178ef9dd5202
       Q12_SOURCE_REPOSITORY: chokmantol/ck-nexus
       Q12_WORKFLOW_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
     runs-on: ubuntu-24.04
