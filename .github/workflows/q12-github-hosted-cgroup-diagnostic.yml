@@ -1,0 +1,117 @@
+name: Q12 GitHub-hosted cgroup v2 capability diagnostic
+
+on:
+  push:
+    branches:
+      - ops/q12-github-hosted-cgroup-diagnostic
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  diagnostic:
+    name: Non-root cgroup v2 delegation probe (diagnostic only)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Record runner and cgroup capabilities
+        shell: bash
+        run: |
+          set -uo pipefail
+          python3 - <<'PY'
+          import json
+          import os
+          import pathlib
+          import platform
+          import subprocess
+          import time
+
+          result = {
+              "schema_version": 1,
+              "gate": "Q12_DIAGNOSTIC_ONLY",
+              "runner_image": os.getenv("ImageOS", "unknown"),
+              "runner_name": os.getenv("RUNNER_NAME", "unknown"),
+              "os": platform.platform(),
+              "kernel": platform.release(),
+              "uid": os.getuid(),
+              "non_root": os.getuid() != 0,
+              "cgroup_v2": False,
+              "cgroup_path": None,
+              "controllers": [],
+              "delegated_writable": False,
+              "nested_cgroup_enforcement": False,
+              "production_promotion_allowed": False,
+              "status": "NOT_VERIFIED",
+              "errors": [],
+          }
+
+          try:
+              lines = pathlib.Path("/proc/self/cgroup").read_text().splitlines()
+              rel = next(line.split(":", 2)[2] for line in lines if line.startswith("0::"))
+              root = pathlib.Path("/sys/fs/cgroup") / rel.lstrip("/")
+              result["cgroup_path"] = str(root)
+              result["cgroup_v2"] = pathlib.Path("/sys/fs/cgroup/cgroup.controllers").is_file()
+              if not result["cgroup_v2"]:
+                  raise RuntimeError("cgroup v2 controllers file is missing")
+              result["controllers"] = pathlib.Path(root, "cgroup.controllers").read_text().split()
+              result["delegated_writable"] = os.access(root, os.W_OK | os.X_OK)
+              if not result["non_root"]:
+                  raise RuntimeError("runner process is root; non-root requirement failed")
+              if not result["delegated_writable"]:
+                  raise RuntimeError("current job cgroup is not writable by the non-root runner")
+
+              # Exercise a temporary child cgroup and move only this probe process
+              # plus a short-lived sleep process. Always move this process back.
+              child = root / ("cknexus-q12-probe-" + str(os.getpid()))
+              grandchild = child / "probe"
+              child.mkdir()
+              moved_self = False
+              try:
+                  (child / "cgroup.procs").write_text(str(os.getpid()))
+                  moved_self = True
+                  available = pathlib.Path(child, "cgroup.controllers").read_text().split()
+                  wanted = [x for x in ("cpu", "memory", "pids") if x in available]
+                  if not wanted:
+                      raise RuntimeError("none of cpu/memory/pids controllers are delegated")
+                  (child / "cgroup.subtree_control").write_text(" ".join("+" + x for x in wanted))
+                  grandchild.mkdir()
+                  proc = subprocess.Popen(["sleep", "2"])
+                  try:
+                      (grandchild / "cgroup.procs").write_text(str(proc.pid))
+                      proc.wait(timeout=5)
+                  finally:
+                      if proc.poll() is None:
+                          proc.kill()
+                          proc.wait()
+                  result["nested_cgroup_enforcement"] = True
+              finally:
+                  if moved_self:
+                      (root / "cgroup.procs").write_text(str(os.getpid()))
+                  if grandchild.exists():
+                      grandchild.rmdir()
+                  if child.exists():
+                      child.rmdir()
+
+              result["status"] = "PASS_DIAGNOSTIC" if result["nested_cgroup_enforcement"] else "NOT_VERIFIED"
+          except Exception as exc:
+              result["errors"].append(type(exc).__name__ + ": " + str(exc))
+
+          pathlib.Path("q12-github-hosted-diagnostic.json").write_text(
+              json.dumps(result, indent=2, sort_keys=True) + "\n"
+          )
+          print(json.dumps(result, indent=2, sort_keys=True))
+          PY
+      - name: Upload diagnostic evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: q12-github-hosted-cgroup-diagnostic-${{ github.run_id }}
+          path: q12-github-hosted-diagnostic.json
+          if-no-files-found: error
+          retention-days: 30
+      - name: Keep this diagnostic separate from Q12 release evidence
+        if: always()
+        run: |
+          echo "This workflow does not satisfy Q12 release acceptance by itself."
+          echo "Q12 remains blocked until the canonical non-root delegated runner and exact-subject kernel gate pass."

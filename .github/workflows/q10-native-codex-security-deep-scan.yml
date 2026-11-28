@@ -1,0 +1,205 @@
+name: Q10 Native Codex Security Deep Scan (frozen release subject)
+
+on:
+  push:
+    branches:
+      - ops/q12-github-hosted-cgroup-diagnostic
+  workflow_dispatch:
+    inputs:
+      confirm_paid_scan:
+        description: Confirm a live Codex Security Deep Scan. The $5 limit is an estimate, not a hard billing cap.
+        required: true
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+env:
+  Q10_SOURCE_SHA: 4ecd04b55ac14af4fbcd4d22339bca41475f16d2
+  Q10_SOURCE_TREE: b56dd8d11f6c72d52ee92dead2b357406a42884b
+  Q10_RELEASE_SUBJECT: 3d7371215bae7bdc24f77a7abaddb5104ec0437d6a405a59f5e1a08ff8a80005
+  Q10_PAID_SCAN_APPROVED: ${{ (github.event_name == 'workflow_dispatch' && inputs.confirm_paid_scan == true) || (github.event_name == 'push' && contains(github.event.head_commit.message, '[Q10-PAID-SCAN-APPROVED]')) }}
+
+jobs:
+  native-deep-scan:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - name: Checkout exact frozen release subject
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: ${{ env.Q10_SOURCE_SHA }}
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Verify exact Q10 scan subject
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$Q10_SOURCE_SHA"
+          test "$(git rev-parse 'HEAD^{tree}')" = "$Q10_SOURCE_TREE"
+          paths=(app creator_app services gateway orchestration idea_engine migrations deploy observability Dockerfile docker-compose.prod.yml main.py pyproject.toml uv.lock)
+          subject="$(git ls-tree -r HEAD -- "${paths[@]}" | sha256sum | awk '{print $1}')"
+          test "$subject" = "$Q10_RELEASE_SUBJECT"
+          echo "Exact frozen Q10 subject verified."
+
+      - name: Set up Node.js 24 and Python 3.12
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '24'
+      - name: Set up Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12'
+
+      - name: Install pinned official Codex Security CLI
+        run: npm install --global @openai/codex-security@0.10.1
+
+      - name: Run zero-cost native CLI preflight
+        id: dryrun
+        shell: bash
+        run: |
+          set +e
+          out="$RUNNER_TEMP/q10-codex-security-output"
+          mkdir -p "$out"
+          codex-security --version > q10-version.txt 2>&1
+          codex-security scan . --mode deep --headless --dry-run \
+            --max-cost 5 --max-discovery-runs 10 --workers 2 --subagents 0 \
+            --stop-after-no-new 3 --output-dir "$out" --json \
+            > q10-dry-run.json 2> q10-dry-run.log
+          rc=$?
+          echo "exit_code=$rc" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Check Codex Security credential without exposing it
+        if: ${{ env.Q10_PAID_SCAN_APPROVED == 'true' }}
+        id: auth
+        env:
+          CODEX_SECURITY_API_KEY: ${{ secrets.CODEX_SECURITY_API_KEY || secrets.OPENAI_API_KEY }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -n "${CODEX_SECURITY_API_KEY:-}" ]; then
+            echo "available=true" >> "$GITHUB_OUTPUT"
+            echo "CODEX_SECURITY_API_KEY is configured (value hidden)."
+          else
+            echo "available=false" >> "$GITHUB_OUTPUT"
+            echo "::error::Set CODEX_SECURITY_API_KEY in repository Actions secrets before starting the paid scan."
+            exit 1
+          fi
+
+      - name: Run native Codex Security deep scan
+        if: ${{ env.Q10_PAID_SCAN_APPROVED == 'true' && steps.auth.outputs.available == 'true' && steps.dryrun.outputs.exit_code == '0' }}
+        id: scan
+        env:
+          OPENAI_API_KEY: ${{ secrets.CODEX_SECURITY_API_KEY || secrets.OPENAI_API_KEY }}
+        shell: bash
+        run: |
+          set +e
+          codex-security scan . --auth api-key --mode deep --headless \
+            --max-cost 5 --max-discovery-runs 10 --workers 2 --subagents 0 \
+            --stop-after-no-new 3 --output-dir "$Q10_OUTPUT_DIR" --json \
+            > q10-scan.json 2> q10-scan.log
+          rc=$?
+          echo "exit_code=$rc" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Build Q10 native scan evidence
+        if: always()
+        env:
+          AUTH_AVAILABLE: ${{ steps.auth.outputs.available }}
+          DRY_RUN_RC: ${{ steps.dryrun.outputs.exit_code }}
+          SCAN_RC: ${{ steps.scan.outputs.exit_code }}
+          CONFIRMED: ${{ env.Q10_PAID_SCAN_APPROVED }}
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, os
+          from datetime import datetime, timezone
+          from pathlib import Path
+          def read(name):
+              p = Path(name)
+              return p.read_text(encoding="utf-8", errors="replace") if p.exists() else ""
+          dry = read("q10-dry-run.json")
+          scan = read("q10-scan.json")
+          scan_log = read("q10-scan.log")
+          rc = os.getenv("SCAN_RC", "")
+          dry_rc = os.getenv("DRY_RUN_RC", "")
+          try:
+              scan_obj = json.loads(scan) if scan else None
+          except Exception:
+              scan_obj = None
+          import shutil
+          output_dir = Path(os.environ.get("RUNNER_TEMP", "/tmp")) / "q10-codex-security-output"
+          artifact_copy = Path("q10-output-artifacts")
+          if artifact_copy.exists():
+              shutil.rmtree(artifact_copy)
+          if output_dir.exists():
+              shutil.copytree(output_dir, artifact_copy)
+          files = []
+          if output_dir.exists():
+              for p in sorted(x for x in output_dir.rglob("*") if x.is_file()):
+                  files.append({
+                      "path": str(p.relative_to(output_dir)),
+                      "size": p.stat().st_size,
+                      "sha256": hashlib.sha256(p.read_bytes()).hexdigest()
+                  })
+          if os.getenv("CONFIRMED") != "true":
+              status = "PREPARED_NOT_EXECUTED"
+          elif os.getenv("AUTH_AVAILABLE") != "true":
+              status = "BLOCKED_MISSING_CODEX_SECURITY_API_KEY"
+          elif rc == "0" and isinstance(scan_obj, dict) and files:
+              status = "SCAN_COMPLETED_REQUIRES_INDEPENDENT_REVIEW"
+          else:
+              status = "FAILED_OR_INCOMPLETE"
+          evidence = {
+              "schema_version": 1,
+              "gate": "Q10_NATIVE_CODEX_SECURITY",
+              "executor": "@openai/codex-security",
+              "executor_version": read("q10-version.txt").strip() or None,
+              "scan_mode": "deep",
+              "target_scope": ".",
+              "source_sha": os.environ["Q10_SOURCE_SHA"],
+              "source_tree": os.environ["Q10_SOURCE_TREE"],
+              "release_subject_manifest_sha256": os.environ["Q10_RELEASE_SUBJECT"],
+              "credential_configured": os.getenv("AUTH_AVAILABLE") == "true",
+              "credential_exposed": False,
+              "dry_run_exit_code": int(dry_rc) if dry_rc.isdigit() else None,
+              "scan_exit_code": int(rc) if rc.isdigit() else None,
+              "scan_result_sha256": hashlib.sha256(scan.encode()).hexdigest(),
+              "scan_log_sha256": hashlib.sha256(scan_log.encode()).hexdigest(),
+              "output_artifacts": files,
+              "status": status,
+              "completed_at": datetime.now(timezone.utc).isoformat(),
+              "production_promotion_allowed": False
+          }
+          Path("Q10_CODEX_SECURITY_EVIDENCE.json").write_text(json.dumps(evidence, indent=2, sort_keys=True) + "\\n")
+          print(json.dumps(evidence, indent=2, sort_keys=True))
+          PY
+
+      - name: Upload private Q10 scan evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: q10-native-codex-security-${{ env.Q10_SOURCE_SHA }}-${{ github.run_id }}
+          path: |
+            Q10_CODEX_SECURITY_EVIDENCE.json
+            q10-version.txt
+            q10-dry-run.json
+            q10-dry-run.log
+            q10-scan.json
+            q10-scan.log
+            q10-output-artifacts/
+          if-no-files-found: warn
+          retention-days: 90
+
+      - name: Enforce zero-cost preflight
+        if: always()
+        env:
+          DRY_RUN_RC: ${{ steps.dryrun.outputs.exit_code }}
+        run: test "${DRY_RUN_RC:-1}" = "0"
+
+      - name: Keep scan result separate from release approval
+        if: always()
+        run: echo "Native scan completion is not Q10 closure. Findings, coverage, remediation, independent review, and owner sign-off remain required."

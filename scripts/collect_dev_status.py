@@ -13,7 +13,12 @@ from pathlib import Path
 from typing import Any
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlparse
-from urllib.request import Request, urlopen
+from urllib.request import Request
+
+try:
+    from scripts._safe_http import safe_urlopen
+except ImportError:
+    from _safe_http import safe_urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = Path(os.getenv("CKNEXUS_DEV_STATUS_FILE", ROOT / "data/dev_status.json"))
@@ -271,7 +276,7 @@ def probe_qwen_daily() -> dict[str, Any]:
             "Authorization": "Bearer " + key, "Content-Type": "application/json"})
         started = time.monotonic()
         try:
-            with urlopen(req, timeout=15) as response:
+            with safe_urlopen(req, timeout=15) as response:
                 payload = json.loads(response.read(65536))
                 success = response.status == 200 and bool(payload.get("choices"))
                 result = {"last_success": now() if success else None,
