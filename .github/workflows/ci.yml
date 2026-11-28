@@ -130,6 +130,7 @@ jobs:
           git -C "$source_dir" checkout --detach FETCH_HEAD
           test "$(git -C "$source_dir" rev-parse HEAD)" = "$Q12_SOURCE_SHA"
           source_tree="$(git -C "$source_dir" rev-parse 'HEAD^{tree}')"
+          Q12_SOURCE_TREE="$source_tree"
           echo "Q12_SOURCE_TREE=$source_tree" >> "$GITHUB_ENV"
           test -f "$source_dir/scripts/agnes_cgroup_v2_staging_gate.py"
           paths=(app creator_app services gateway orchestration idea_engine migrations deploy observability Dockerfile docker-compose.prod.yml main.py pyproject.toml uv.lock)
