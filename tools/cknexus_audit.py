@@ -177,6 +177,8 @@ def _read_fd(fd: int, expected: os.stat_result, max_file_bytes: int,
     if zip_data is not None:
         archives.append(scan_zip_bytes(bytes(zip_data), rel, max_zip_entries, max_zip_bytes))
     if suffix in TEXT_SUFFIXES or Path(rel).name == "Dockerfile":
+        if total > SECRET_SCAN_LIMIT:
+            errors.append({"path": rel, "error": "secret_scan_size_limit_exceeded"})
         raw = bytes(secret_sample)
         for kind, pattern in SECRET_PATTERNS:
             if pattern.search(raw):
