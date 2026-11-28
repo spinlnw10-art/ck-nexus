@@ -93,3 +93,25 @@ def test_wait_reports_timeout_when_server_never_responds() -> None:
     assert ready is False
     assert "connection refused" in detail
     assert clock[0] >= 0.03
+
+
+def test_wait_exits_immediately_when_server_process_has_exited() -> None:
+    calls = 0
+
+    def opener(*_args: object, **_kwargs: object) -> FakeResponse:
+        nonlocal calls
+        calls += 1
+        return FakeResponse({"ready": False})
+
+    ready, detail = wait_for_health(
+        "http://127.0.0.1:8123/health/ready",
+        timeout=90,
+        process_pid=1234,
+        process_alive=lambda _pid: False,
+        opener=opener,
+        progress=lambda _message: None,
+    )
+
+    assert ready is False
+    assert detail == "server process exited (pid=1234)"
+    assert calls == 0
