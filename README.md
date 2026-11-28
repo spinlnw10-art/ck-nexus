@@ -6,6 +6,20 @@ CK-NEXUS is one platform with one canonical application runtime. **Agnes** is it
 
 > **Release decision: NO-GO for Production.** Do not treat a passing test subset, CI run, implemented feature, or running service as Production approval. The current release decision and gate evidence are maintained in [Release Status](RELEASE_STATUS.md) and the [Q10–Q16 Closure Contract](docs/Q10_Q16_CLOSURE_CONTRACT.md).
 
+## Latest repository delivery — Audit & Evidence MVP
+
+The Audit & Evidence MVP is available for review in [PR #431](https://github.com/spinlnw10-art/ck-nexus/pull/431). It adds a read-only repository inventory and ZIP inspection tool, SHA-256 evidence manifest, duplicate detection, redacted secret-pattern checks, and regression tests.
+
+**Candidate status:** PR open and ready for review; changes are not yet merged into `main`.
+
+**Verification recorded for implementation commit `d8939f6`:**
+- Four GitHub Actions workflows succeeded: CK-NEXUS CI, Security Attack Regression V1, Audit Evidence, and AI Factory Preflight & Score.
+- Audit report: 874 files hashed, 4,557,585 bytes hashed, 2 duplicate groups, no skipped files, no potential secret-pattern findings, and no read errors.
+- [Audit Evidence workflow run](https://github.com/spinlnw10-art/ck-nexus/actions/runs/46162228445).
+
+These results apply to implementation commit `d8939f6`; any subsequent README-only commit requires its own applicable checks. A successful audit or CI run is not independent security approval, Production certification, merge authorization, or deployment approval. The Production release decision remains **NO-GO** until all mandatory gates are satisfied.
+
+
 ## Start here
 
 | Need | Open |
