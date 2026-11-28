@@ -346,4 +346,3 @@ jobs:
           echo "A verified staging Q12 result does not grant production approval."
           echo "CK-NEXUS Core and independent review remain required."
 
-[executed on device: localhost (c5d96b7b-6d65-40f4-a269-d435b827a6f5)]
