@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import contextlib
 import os
 import subprocess
 import sys
@@ -53,10 +54,8 @@ def test_gated_launcher_waits_for_parent_release(tmp_path: Path) -> None:
     finally:
         for fd in (gate_write_fd, ready_read_fd):
             if fd >= 0:
-                try:
+                with contextlib.suppress(OSError):
                     os.close(fd)
-                except OSError:
-                    pass
         if process.poll() is None:
             process.kill()
             process.communicate(timeout=5)
@@ -76,10 +75,8 @@ def test_gated_launcher_does_not_exec_when_parent_withholds_release(tmp_path: Pa
     finally:
         for fd in (gate_write_fd, ready_read_fd):
             if fd >= 0:
-                try:
+                with contextlib.suppress(OSError):
                     os.close(fd)
-                except OSError:
-                    pass
         if process.poll() is None:
             process.kill()
             process.communicate(timeout=5)
