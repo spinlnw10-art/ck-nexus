@@ -3,15 +3,6 @@ name: CK-NEXUS AI Factory - Preflight & Score
 on:
   pull_request:
   workflow_dispatch:
-    inputs:
-      q12_source_sha:
-        description: Exact GitLab merge-request source commit SHA
-        required: false
-        type: string
-      q12_source_tree:
-        description: Exact GitLab merge-request source tree SHA
-        required: false
-        type: string
   schedule:
     - cron: "17 */6 * * *"
 
@@ -24,7 +15,7 @@ concurrency:
 
 jobs:
   preflight:
-    if: ${{ !inputs.q12_source_sha }}
+    if: ${{ github.event_name != 'workflow_dispatch' || github.ref != 'refs/heads/ops/q12-github-hosted-cgroup-diagnostic' }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -81,14 +72,14 @@ jobs:
           echo "It does not authorize production mutation or release promotion."
 
   q12-delegated-cgroup-probe:
-    if: ${{ github.event_name == 'workflow_dispatch' && inputs.q12_source_sha != '' && inputs.q12_source_tree != '' && github.ref == 'refs/heads/ops/q12-github-hosted-cgroup-diagnostic' }}
+    if: ${{ github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/ops/q12-github-hosted-cgroup-diagnostic' }}
     permissions:
       contents: write
       id-token: write
       attestations: write
     env:
-      Q12_SOURCE_SHA: ${{ inputs.q12_source_sha }}
-      Q12_SOURCE_TREE: ${{ inputs.q12_source_tree }}
+      Q12_SOURCE_SHA: e2c659f3c4d1749b7ec883422aa788bd45b2f139
+      Q12_SOURCE_TREE: 1d07529473d667d86fb191df6156c67e7548759d
       Q12_SOURCE_REPOSITORY: chokmantol/ck-nexus
     runs-on: ubuntu-24.04
     timeout-minutes: 10
