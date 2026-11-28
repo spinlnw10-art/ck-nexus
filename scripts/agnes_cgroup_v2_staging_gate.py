@@ -27,7 +27,7 @@ def main() -> int:
     args = parser.parse_args()
 
     if os.getenv("CKNEXUS_ENVIRONMENT", "").strip().lower() != "staging":
-        emit({"status": "BLOCKED", "reason": "CKNEXUS_ENVIRONMENT_must_be_staging"})
+        emit({"status": "BLOCKED", "environment": os.getenv("CKNEXUS_ENVIRONMENT"), "reason": "CKNEXUS_ENVIRONMENT_must_be_staging"})
         return 2
 
     manager = CgroupV2Manager(
@@ -35,7 +35,7 @@ def main() -> int:
     )
     health = manager.health()
     if not health.get("ready"):
-        emit({"status": "BLOCKED", "reason": "delegated_cgroup_v2_unavailable", "health": health})
+        emit({"status": "BLOCKED", "environment": os.getenv("CKNEXUS_ENVIRONMENT"), "health": health, "reason": "delegated_cgroup_v2_unavailable"})
         return 2
 
     child = subprocess.Popen([sys.executable, "-c", "import time; time.sleep(30)"])
@@ -65,10 +65,10 @@ def main() -> int:
             "pids.max": "16",
             "pid_attached": True,
         }
-        emit({"status": "PASS" if passed else "FAIL", "health": health, "observed": observed})
+        emit({"status": "PASS" if passed else "FAIL", "environment": os.getenv("CKNEXUS_ENVIRONMENT"), "health": health, "observed": observed})
         return 0 if passed else 1
     except Exception as exc:
-        emit({"status": "FAIL", "reason": type(exc).__name__, "health": health})
+        emit({"status": "FAIL", "environment": os.getenv("CKNEXUS_ENVIRONMENT"), "reason": type(exc).__name__, "health": health})
         return 1
     finally:
         child.terminate()
