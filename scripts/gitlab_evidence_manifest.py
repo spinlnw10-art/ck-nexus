@@ -184,8 +184,13 @@ def validate_q12_gate(payload: dict[str, Any]) -> dict[str, Any]:
     if not isinstance(controllers, list) or not required.issubset(controllers):
         raise EvidenceManifestError("Q12 required cgroup controllers are unavailable")
     enabled_controllers = health.get("enabled_controllers")
-    if not isinstance(enabled_controllers, list) or not required.issubset(enabled_controllers):
-        raise EvidenceManifestError("Q12 required cgroup controllers are not enabled for child cgroups")
+    if (
+        not isinstance(enabled_controllers, list)
+        or not required.issubset(enabled_controllers)
+    ):
+        raise EvidenceManifestError(
+            "Q12 required cgroup controllers are not enabled for child cgroups"
+        )
     if health.get("missing_enabled_controllers") != []:
         raise EvidenceManifestError("Q12 reports missing enabled cgroup controllers")
     root = health.get("root")
