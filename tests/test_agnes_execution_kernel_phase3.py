@@ -29,6 +29,7 @@ def _agnes(tmp_path: Path) -> AgnesNervousSystem:
     )
 
 
+@pytest.mark.cgroup_staging
 @pytest.mark.asyncio
 async def test_hardened_runner_enables_no_new_privs_and_seccomp(tmp_path: Path):
     policy = SandboxPolicy(base_dir=tmp_path / "s", repository_root=ROOT)
@@ -93,6 +94,7 @@ async def test_redis_idempotency_coordinates_two_dispatcher_instances():
     assert replay and replay.result == {"ok": True}
 
 
+@pytest.mark.cgroup_staging
 @pytest.mark.asyncio
 async def test_autonomous_pipeline_stops_at_candidate_and_can_discard(tmp_path: Path):
     agnes = _agnes(tmp_path)
@@ -243,6 +245,7 @@ async def test_pipeline_failure_rolls_back_workspace(tmp_path: Path):
     assert not (tmp_path / "sandbox" / "workspaces" / "fail-ws").exists()
 
 
+@pytest.mark.cgroup_staging
 def test_phase3_api_pending_approval_then_advance_to_candidate(tmp_path: Path):
     from fastapi.testclient import TestClient
 
