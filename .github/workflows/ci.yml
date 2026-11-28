@@ -283,6 +283,7 @@ jobs:
           PY
 
       - name: Attest Q12 evidence bytes
+        id: attest
         if: steps.evidence.outputs.status == 'PASS'
         uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
         with:
@@ -292,6 +293,7 @@ jobs:
         if: steps.evidence.outputs.status == 'PASS'
         env:
           GH_TOKEN: ${{ github.token }}
+          ATTESTATION_BUNDLE: ${{ steps.attest.outputs.bundle-path }}
         shell: bash
         run: |
           set -euo pipefail
@@ -312,7 +314,9 @@ jobs:
             git -C "$publish_dir" checkout --orphan "$evidence_branch"
           fi
           cp "$evidence_file" "$publish_dir/q12-cgroup-gate.json"
-          git -C "$publish_dir" add q12-cgroup-gate.json
+          test -s "$ATTESTATION_BUNDLE"
+          cp "$ATTESTATION_BUNDLE" "$publish_dir/q12-attestation.bundle.json"
+          git -C "$publish_dir" add q12-cgroup-gate.json q12-attestation.bundle.json
           git -C "$publish_dir" commit -m "evidence(q12): source $Q12_SOURCE_SHA"
           git -C "$publish_dir" push origin "HEAD:refs/heads/$evidence_branch"
 
@@ -323,6 +327,7 @@ jobs:
           name: q12-systemd-delegation-${{ github.run_id }}
           path: |
             q12-cgroup-gate.json
+            q12-attestation.bundle.json
             Q12_SYSTEMD_DELEGATION_DIAGNOSTIC.json
             q12-systemd-delegation.log
           if-no-files-found: warn
