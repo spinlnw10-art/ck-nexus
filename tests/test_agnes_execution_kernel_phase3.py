@@ -9,6 +9,7 @@ from creator_app.agnes.execution.phase3 import PipelineHandle, PipelineState, Re
 from creator_app.agnes.execution.phase3.hardening import CgroupV2Manager
 from creator_app.agnes.execution.phase3.sandbox import HardenedLinuxNamespaceRunner
 from creator_app.agnes.execution.sandbox import SandboxPolicy, SandboxWorkspaceManager
+from creator_app.agnes.execution.sandbox.runner import _SETUP_SCRIPT
 from creator_app.agnes_runtime import AgnesNervousSystem
 from tests.omni_context_factory import make_test_omni_context
 
@@ -29,6 +30,7 @@ def _agnes(tmp_path: Path) -> AgnesNervousSystem:
     )
 
 
+@pytest.mark.cgroup_staging
 @pytest.mark.asyncio
 async def test_hardened_runner_enables_no_new_privs_and_seccomp(tmp_path: Path):
     policy = SandboxPolicy(base_dir=tmp_path / "s", repository_root=ROOT)
@@ -59,7 +61,24 @@ def test_cgroup_v2_doctor_is_truthful():
     health = CgroupV2Manager().health()
     assert health["unified_v2"] is True
     # This CI/sandbox mounts cgroup2 read-only, so Phase 3 must not fake enforcement.
-    assert health["ready"] is health["delegated_writable"]
+    assert health["ready"] is (
+        health["delegated_writable"]
+        and not health["missing_controllers"]
+        and not health["missing_enabled_controllers"]
+    )
+
+
+def test_hardened_launcher_uses_single_shell_continuations():
+    lines = _SETUP_SCRIPT.splitlines()
+    start = lines.index('if [ -n "$LAUNCHER" ]; then')
+    end = lines.index("fi", start)
+    continuation_lines = [
+        line.rstrip()
+        for line in lines[start:end]
+        if line.rstrip().endswith("\\")
+    ]
+    assert continuation_lines
+    assert all(not line.endswith("\\\\") for line in continuation_lines)
 
 
 class FakeRedis:
@@ -93,6 +112,7 @@ async def test_redis_idempotency_coordinates_two_dispatcher_instances():
     assert replay and replay.result == {"ok": True}
 
 
+@pytest.mark.cgroup_staging
 @pytest.mark.asyncio
 async def test_autonomous_pipeline_stops_at_candidate_and_can_discard(tmp_path: Path):
     agnes = _agnes(tmp_path)
@@ -243,6 +263,7 @@ async def test_pipeline_failure_rolls_back_workspace(tmp_path: Path):
     assert not (tmp_path / "sandbox" / "workspaces" / "fail-ws").exists()
 
 
+@pytest.mark.cgroup_staging
 def test_phase3_api_pending_approval_then_advance_to_candidate(tmp_path: Path):
     from fastapi.testclient import TestClient
 

@@ -1,0 +1,165 @@
+{
+  "schema_version": 1,
+  "record_type": "ck-nexus-historical-verification-index",
+  "classification": "HISTORICAL_REFERENCE_ONLY",
+  "policy": "Historical results may be reused as context and lineage references. They are not PASS evidence for the current GitLab commit unless source tree equivalence is independently established.",
+  "records": [
+    {
+      "id": "github-pr-421-actions",
+      "result": "PASS_REPORTED_WITH_EXCEPTIONS",
+      "result_scope": "selected GitHub Actions succeeded; CodeQL is unconfirmed and SonarCloud was cancelled or failed; historical PR head only",
+      "repository": "spinlnw10-art/ck-nexus",
+      "pr": 421,
+      "head_sha": "86cd16b3c910dc71d19bbdcc954a4cbeae2a619b",
+      "runs": [
+        {
+          "name": "Block deleted files",
+          "run_id": 45744674171,
+          "conclusion": "success"
+        },
+        {
+          "name": "Development Assistant Execution Contract CI",
+          "run_id": 45744674188,
+          "conclusion": "success"
+        },
+        {
+          "name": "CK-NEXUS AI Factory - Preflight & Score",
+          "run_id": 45744674169,
+          "conclusion": "success"
+        },
+        {
+          "name": "Development Assistant Fabric CI",
+          "run_id": 45744674119,
+          "conclusion": "success"
+        },
+        {
+          "name": "Universal System Post-P0 CI",
+          "run_id": 45744674197,
+          "conclusion": "success"
+        },
+        {
+          "name": "Security Attack Regression V1",
+          "run_id": 45744674187,
+          "conclusion": "success"
+        },
+        {
+          "name": "CK-NEXUS CI",
+          "run_id": 45744674152,
+          "conclusion": "success"
+        }
+      ],
+      "additional_checks": {
+        "ruff": "PASS_REPORTED",
+        "bandit": "PASS_REPORTED",
+        "coderabbit": "3 Major findings fixed; review threads resolved",
+        "codeql": "NEUTRAL_OR_UNCONFIRMED_IN_PR421_DESCRIPTION",
+        "sonarcloud": "CANCELLED_OR_FAILED"
+      },
+      "scope": "PR #421 head only for seven GitHub Actions; combined stacked test figures below must not be attributed to PR #421 alone."
+    },
+    {
+      "id": "github-pr-420-actions",
+      "result": "PASS_REPORTED_WITH_EXCEPTIONS",
+      "result_scope": "selected GitHub Actions and reported tests passed; SonarCloud was cancelled; combined test evidence is not isolated to PR #420",
+      "repository": "spinlnw10-art/ck-nexus",
+      "pr": 420,
+      "head_sha": "7dc538cbe81603fae609ee1e7649488acb0fcfb2",
+      "runs": [
+        {
+          "name": "CK-NEXUS AI Factory - Preflight & Score",
+          "run_id": 45742919335,
+          "conclusion": "success"
+        },
+        {
+          "name": "Development Assistant Execution Contract CI",
+          "run_id": 45742919142,
+          "conclusion": "success"
+        },
+        {
+          "name": "Development Assistant Fabric CI",
+          "run_id": 45742919292,
+          "conclusion": "success"
+        },
+        {
+          "name": "Security Attack Regression V1",
+          "run_id": 45742919187,
+          "conclusion": "success"
+        },
+        {
+          "name": "Universal System Post-P0 CI",
+          "run_id": 45742919152,
+          "conclusion": "success"
+        },
+        {
+          "name": "CK-NEXUS CI",
+          "run_id": 45742919218,
+          "conclusion": "success"
+        }
+      ],
+      "test_evidence": {
+        "result": "PASS_REPORTED",
+        "targeted_tests": 45,
+        "full_suite": {
+          "passed": 1026,
+          "skipped": 2,
+          "failed": 0,
+          "warnings": 15
+        },
+        "scope": "combined dispatcher + Core bootstrap Ubuntu workspace; not an isolated PR #420 result",
+        "environment": "Ubuntu"
+      },
+      "additional_checks": {
+        "termux_targeted_tests": "45 passed",
+        "ruff": "PASS_REPORTED",
+        "ruff_format": "PASS_REPORTED",
+        "bandit": "0 unreviewed MEDIUM/HIGH findings",
+        "sonarcloud": "CANCELLED"
+      }
+    },
+    {
+      "id": "termux-full-suite-2026-11-25",
+      "result": "PASS_REPORTED",
+      "tests": {
+        "passed": 1060,
+        "skipped": 32,
+        "failed": 0,
+        "warnings": 13
+      },
+      "duration_seconds": 110.24,
+      "environment": {
+        "platform": "Termux",
+        "python": "3.13",
+        "venv": ".venv-termux-runtime",
+        "runtime_preload": "$PREFIX/lib/libpython3.13.so"
+      },
+      "branch": "fix/termux-cgroup-probe-and-test-isolation-20261126",
+      "observed_head_before_pending_commit": "820f6f2e2fe0089665fe25189ceb0a7c122228b4",
+      "sha_binding": "NOT_ESTABLISHED: test run was reported before the pending commit; do not attribute result to current GitLab HEAD",
+      "source_conversation_time": "2026-11-25T22:34:43Z"
+    },
+    {
+      "id": "historical-lint-security-lock",
+      "result": "PARTIALLY_REPORTED_NOT_FULLY_SHA_BOUND",
+      "checks": [
+        "Ruff",
+        "Bandit",
+        "UV lock",
+        "Semgrep",
+        "CodeQL"
+      ],
+      "note": "PR-specific checks above are recorded where available. No evidence retrieved that binds all these check results to the current imported GitLab tree."
+    }
+  ],
+  "previous_gitlab_candidate": {
+    "status_label": "HISTORICAL_NOT_CURRENT",
+    "project": "chokmantol/ck-nexus",
+    "branch": "ci/gitlab-sast-unit-evidence-20261126",
+    "sha": "6c54f07b4ef346ef662c11ad46cf235787a2d9ff",
+    "relationship": "GitHub PR #420/#421 and Termux historical evidence refer to different commit SHAs/repositories or combined workspaces. No source-tree equivalence proof to the current remediation branch."
+  },
+  "authority": {
+    "independent_review": "REQUIRED",
+    "core_approval": "REQUIRED",
+    "production_go": "NOT_GRANTED"
+  }
+}
