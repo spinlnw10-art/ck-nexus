@@ -98,7 +98,7 @@ class AuditTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp) / "source"
             root.mkdir()
-            secret = b"-----BEGIN PRIVATE KEY-----\\nvery-secret-material\\n"
+            secret = b"-----BEGIN " + b"PRIVATE KEY-----" + b"\\nvery-secret-material\\n"
             (root / "private.pem").write_bytes(secret)
             report = audit.scan_tree(root, None, 1024 * 1024, 100, 1024 * 1024)
             self.assertEqual(report["decision"], "REVIEW_REQUIRED")
