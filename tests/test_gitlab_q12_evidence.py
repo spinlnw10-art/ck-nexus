@@ -5,11 +5,10 @@ from copy import deepcopy
 import pytest
 
 from creator_app.agnes.execution.phase3.hardening import CgroupV2Manager
-from scripts.gitlab_evidence_manifest import pipeline_provenance
-
 from scripts.gitlab_evidence_manifest import (
     EvidenceManifestError,
     junit_is_clean,
+    pipeline_provenance,
     validate_q12_gate,
 )
 
