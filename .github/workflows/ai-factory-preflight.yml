@@ -78,8 +78,8 @@ jobs:
       id-token: write
       attestations: write
     env:
-      Q12_SOURCE_SHA: bee3e5dd6a214482809cd506bc71b9aaca054a0c
-      Q12_SOURCE_TREE: 642a601bb62f2e028a5bc0feeca2b94f858155b7
+      Q12_SOURCE_SHA: 42e3e6792bd12d935c7f3d96c90f3763d794f844
+      Q12_SOURCE_TREE: 991df074e38dc5f531942cfb8f0dc37257f6c746
       Q12_SOURCE_REPOSITORY: chokmantol/ck-nexus
     runs-on: ubuntu-24.04
     timeout-minutes: 10
