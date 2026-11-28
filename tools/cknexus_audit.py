@@ -123,7 +123,9 @@ def scan_tree(root: Path, output: Path | None, max_file_bytes: int, max_zip_entr
                 errors.append({"path": rel, "error": type(exc).__name__})
     duplicates = [{"sha256": digest, "paths": sorted(paths)} for digest, paths in hashes.items() if len(paths) > 1]
     archives_bad = sum(a["status"] not in {"ok"} for a in archives)
-    decision = "REVIEW_REQUIRED" if errors or findings or archives_bad else "PASS"
+    files_skipped = sum(f["status"] != "hashed" for f in files)
+    # A partial inventory is not a clean PASS: skipped files must be reviewed.
+    decision = "REVIEW_REQUIRED" if errors or findings or archives_bad or files_skipped else "PASS"
     return {
         "schema_version": "cknexus.audit.v1", "tool": "cknexus-audit-evidence", "tool_version": VERSION,
         "generated_at": datetime.now(timezone.utc).isoformat(), "root_label": root.name,
