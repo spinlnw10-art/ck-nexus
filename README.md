@@ -15,7 +15,7 @@ CK-NEXUS is one platform with one canonical application runtime. **Agnes** is it
 | See live development evidence | Start the Creator App and open **/development**; API: **/api/dev-status** |
 | Understand Agnes and agent governance | [Agnes Master Upgrade](docs/CK-NEXUS-AGNES-MASTER-UPGRADE.md) · [Development Council](docs/DEVELOPMENT_COUNCIL.md) |
 | Configure integrations | [Integration Hub](docs/INTEGRATION_HUB.md) |
-| Test the GitLab Duo dispatcher PR | [Tester handoff (2026-11-28)](docs/CK_NEXUS_TESTER_HANDOFF_2026-11-28.md) · [PR #421](https://github.com/spinlnw10-art/ck-nexus/pull/421) |
+| Test the GitLab Duo dispatcher PR (non-production only) | [Tester handoff (2026-11-28)](docs/CK_NEXUS_TESTER_HANDOFF_2026-11-28.md) · [PR #421](https://github.com/spinlnw10-art/ck-nexus/pull/421) |
 | Review security and tests | [Security Audit](docs/SECURITY_AUDIT.md) · [Test Report](docs/TEST_REPORT.md) |
 | Prepare a release | [Release Status](RELEASE_STATUS.md) · [Release Checklist](docs/RELEASE_CHECKLIST.md) · [Q10–Q16 Contract](docs/Q10_Q16_CLOSURE_CONTRACT.md) |
 | Prepare customer delivery | [Seller Checklist](docs/SELLER_CHECKLIST.md) |
