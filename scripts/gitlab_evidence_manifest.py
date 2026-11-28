@@ -156,6 +156,15 @@ def parse_junit(root: Path) -> dict[str, int]:
     return totals
 
 
+def junit_is_clean(junit: Mapping[str, int]) -> bool:
+    """Require at least one executed (non-skipped) test and zero failures/errors."""
+    return (
+        junit.get("tests", 0) > junit.get("skipped", 0)
+        and junit.get("failures", 0) == 0
+        and junit.get("errors", 0) == 0
+    )
+
+
 def validate_q12_gate(payload: dict[str, Any]) -> dict[str, Any]:
     """Require observed delegated cgroup v2 enforcement, not a mocked health check."""
     if payload.get("status") != "PASS":
@@ -512,7 +521,8 @@ def build_manifest(
     graph_sha = hashlib.sha256(_serialize(graph_payload)).hexdigest()
 
     reports_present = all(report is not None for report in reports.values())
-    junit_clean = junit["failures"] == 0 and junit["errors"] == 0
+    junit_executed_tests = max(0, junit["tests"] - junit["skipped"])
+    junit_clean = junit_is_clean(junit)
     secret_clean = not secret_findings
     sast_policy_pass = bool(sast_policy_result["passed"])
     valid = bool(
@@ -550,6 +560,7 @@ def build_manifest(
         "merge_request_diff_base_sha": diff_base_sha,
         "reports": reports,
         "junit": junit,
+        "junit_executed_tests": junit_executed_tests,
         "junit_failures_and_errors": junit["failures"] + junit["errors"],
         "sast_findings": sast_findings,
         "sast_findings_count": len(sast_findings),
@@ -591,6 +602,8 @@ def build_manifest(
             "evidence_graph_validated": graph_validation["validated"],
             "junit_failures": junit["failures"],
             "junit_errors": junit["errors"],
+            "junit_executed_tests": junit_executed_tests,
+            "junit_has_executed_tests": junit_executed_tests > 0,
             "junit_clean": junit_clean,
             "secret_clean": secret_clean,
             "secret_findings_count": len(secret_findings),

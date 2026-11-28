@@ -4,7 +4,11 @@ from copy import deepcopy
 
 import pytest
 
-from scripts.gitlab_evidence_manifest import EvidenceManifestError, validate_q12_gate
+from scripts.gitlab_evidence_manifest import (
+    EvidenceManifestError,
+    junit_is_clean,
+    validate_q12_gate,
+)
 
 
 @pytest.fixture
@@ -67,3 +71,18 @@ def test_q12_evidence_requires_a_delegated_root(passing_q12_gate):
 
     with pytest.raises(EvidenceManifestError):
         validate_q12_gate(payload)
+
+
+@pytest.mark.parametrize(
+    ("junit", "expected"),
+    [
+        ({"tests": 3, "failures": 0, "errors": 0, "skipped": 0}, True),
+        ({"tests": 3, "failures": 0, "errors": 0, "skipped": 1}, True),
+        ({"tests": 0, "failures": 0, "errors": 0, "skipped": 0}, False),
+        ({"tests": 3, "failures": 0, "errors": 0, "skipped": 3}, False),
+        ({"tests": 3, "failures": 1, "errors": 0, "skipped": 0}, False),
+        ({"tests": 3, "failures": 0, "errors": 1, "skipped": 0}, False),
+    ],
+)
+def test_junit_gate_requires_executed_tests_and_no_failures(junit, expected):
+    assert junit_is_clean(junit) is expected
