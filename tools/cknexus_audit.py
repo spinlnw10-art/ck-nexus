@@ -88,7 +88,8 @@ def scan_zip_bytes(data: bytes, display_path: str, max_entries: int,
                 if info.flag_bits & 0x1:
                     result["encrypted_entries"] += 1
                 mode = (info.external_attr >> 16) & 0xFFFF
-                if stat.S_ISLNK(mode) or (mode and not (stat.S_ISREG(mode) or stat.S_ISDIR(mode))):
+                file_type = stat.S_IFMT(mode)
+                if file_type and not (stat.S_ISREG(mode) or stat.S_ISDIR(mode)):
                     result["special_entries"].append(name[:240])
                 if info.file_size and info.compress_size == 0:
                     result["suspicious_compression"].append(name[:240])
