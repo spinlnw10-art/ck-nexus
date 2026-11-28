@@ -242,7 +242,11 @@ def report_findings(report: dict[str, Any], name: str) -> list[dict[str, Any]]:
             (
                 entry.get("value")
                 for entry in identifiers
-                if isinstance(entry, dict) and entry.get("type") in {"semgrep_id", "cwe", "gitleaks_rule_id"}
+                if isinstance(entry, dict) and entry.get("type") in {
+                    "semgrep_id",
+                    "cwe",
+                    "gitleaks_rule_id",
+                }
             ),
             None,
         )
