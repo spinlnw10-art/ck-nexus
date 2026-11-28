@@ -23,11 +23,11 @@ A read-only repository and ZIP evidence auditor. It is designed to work without 
 From the repository root:
 
 ```bash
-python3 tools/cknexus_audit.py --root . --output ./audit-output
+python3 tools/cknexus_audit.py
 python3 -m unittest discover -s tests/tools -v
 ```
 
-The output directory must be outside the audited source root's contents or it will be excluded from the scan. The auditor never extracts ZIPs and never modifies source files. It may write only the requested report and manifest.
+Run the command from the repository directory you want to audit. The tool anchors its scan to the current working directory and writes reports to ./audit-output, which is excluded from the scan. It does not accept arbitrary root/output paths from CLI arguments. The auditor never extracts ZIPs and never modifies source files; it writes only its report and manifest.
 
 ## CI
 
