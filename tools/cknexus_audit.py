@@ -3,18 +3,18 @@
 from __future__ import annotations
 
 import argparse
+import contextlib
 import hashlib
 import io
 import json
 import os
 import re
 import stat
-import sys
 import tempfile
 import zipfile
 import zlib
 from collections import Counter, defaultdict
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path, PurePosixPath, PureWindowsPath
 
 VERSION = "0.2.0"
@@ -91,9 +91,11 @@ def scan_zip_bytes(data: bytes, display_path: str, max_entries: int,
                 file_type = stat.S_IFMT(mode)
                 if file_type and not (stat.S_ISREG(mode) or stat.S_ISDIR(mode)):
                     result["special_entries"].append(name[:240])
-                if info.file_size and info.compress_size == 0:
-                    result["suspicious_compression"].append(name[:240])
-                elif info.compress_size and info.file_size / info.compress_size > ZIP_RATIO_LIMIT:
+                if (
+                    info.file_size and info.compress_size == 0
+                    or info.compress_size
+                    and info.file_size / info.compress_size > ZIP_RATIO_LIMIT
+                ):
                     result["suspicious_compression"].append(name[:240])
             if result["total_uncompressed_bytes"] > max_uncompressed:
                 result.update(status="limit_exceeded", error="uncompressed_size_limit")
@@ -265,7 +267,7 @@ def scan_tree(root: Path, output: Path | None, max_file_bytes: int,
     decision = "REVIEW_REQUIRED" if errors or findings or archives_bad or files_skipped else "PASS"
     return {
         "schema_version": "cknexus.audit.v1", "tool": "cknexus-audit-evidence",
-        "tool_version": VERSION, "generated_at": datetime.now(timezone.utc).isoformat(),
+        "tool_version": VERSION, "generated_at": datetime.now(UTC).isoformat(),
         "root_label": root.name, "read_only": True, "decision": decision,
         "summary": {
             "files_hashed": sum(f["status"] == "hashed" for f in files),
@@ -291,10 +293,8 @@ def _atomic_write(directory: Path, filename: str, payload: bytes) -> None:
             os.fsync(stream.fileno())
         os.replace(temporary, target)
     except Exception:
-        try:
+        with contextlib.suppress(OSError):
             os.unlink(temporary)
-        except OSError:
-            pass
         raise
 
 
