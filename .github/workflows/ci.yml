@@ -101,7 +101,7 @@ jobs:
           PY
 
   q12-delegated-cgroup-probe:
-    if: ${{ github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/q12-attested-runner-integration' }}
+    if: ${{ (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/q12-attested-runner-integration') || (github.event_name == 'pull_request' && github.event.pull_request.head.ref == 'q12-attested-runner-integration') }}
     permissions:
       contents: write
       id-token: write
