@@ -2,7 +2,7 @@ name: CK-NEXUS CI
 
 on:
   push:
-    branches: [main, release/q04-q08-clean]
+    branches: [main, release/q04-q08-clean, q12-attested-runner-integration]
   pull_request:
   workflow_dispatch:
 
@@ -99,3 +99,257 @@ jobs:
           assert q9['grant_consumed_before_execution'] is True
           print('Q05/Q08/Q09 candidate evidence PASS')
           PY
+
+  q12-delegated-cgroup-probe:
+    if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/q12-attested-runner-integration') || (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/q12-attested-runner-integration') || (github.event_name == 'pull_request' && github.event.pull_request.head.ref == 'q12-attested-runner-integration') }}
+    permissions:
+      contents: write
+      id-token: write
+      attestations: write
+    env:
+      Q12_SOURCE_SHA: 0d6e4f874f934051f6c5d89dedb860a95ae774ca
+      Q12_SOURCE_REPOSITORY: chokmantol/ck-nexus
+      Q12_WORKFLOW_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout workflow repository
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Checkout and verify exact GitLab MR source
+        id: subject
+        shell: bash
+        run: |
+          set -euo pipefail
+          source_dir="$RUNNER_TEMP/ck-nexus-source"
+          git init "$source_dir"
+          git -C "$source_dir" remote add origin "https://gitlab.com/$Q12_SOURCE_REPOSITORY.git"
+          git -C "$source_dir" fetch --depth 1 origin "$Q12_SOURCE_SHA"
+          git -C "$source_dir" checkout --detach FETCH_HEAD
+          test "$(git -C "$source_dir" rev-parse HEAD)" = "$Q12_SOURCE_SHA"
+          source_tree="$(git -C "$source_dir" rev-parse 'HEAD^{tree}')"
+          Q12_SOURCE_TREE="$source_tree"
+          echo "Q12_SOURCE_TREE=$source_tree" >> "$GITHUB_ENV"
+          test -f "$source_dir/scripts/agnes_cgroup_v2_staging_gate.py"
+          paths=(app creator_app services gateway orchestration idea_engine migrations deploy observability Dockerfile docker-compose.prod.yml main.py pyproject.toml uv.lock)
+          subject="$(git -C "$source_dir" ls-tree -r HEAD -- "${paths[@]}" | sha256sum | awk '{print $1}')"
+          echo "Q12_SOURCE_DIR=$source_dir" >> "$GITHUB_ENV"
+          echo "subject_manifest=$subject" >> "$GITHUB_OUTPUT"
+          {
+            echo "Q12 source SHA: $Q12_SOURCE_SHA"
+            echo "Q12 source tree: $Q12_SOURCE_TREE"
+            echo "Release subject manifest: $subject"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Run canonical AGNES gate inside a non-root delegated systemd service
+        id: gate
+        shell: bash
+        run: |
+          set +e
+          unit="cknexus-q12-delegation-probe-${GITHUB_RUN_ID}"
+          sudo systemd-run --wait --pipe --collect \
+            --unit="$unit" \
+            --property="User=$(id -un)" \
+            --property="Group=$(id -gn)" \
+            --property="Delegate=cpu memory pids" \
+            --setenv=CKNEXUS_ENVIRONMENT=staging \
+            --setenv=Q12_SOURCE_DIR="$Q12_SOURCE_DIR" \
+            --setenv=Q12_GATE_RAW_PATH="$GITHUB_WORKSPACE/q12-gate-raw.json" \
+            --working-directory="$GITHUB_WORKSPACE" \
+            /usr/bin/python3 -c '
+          import json, os, pathlib, subprocess, sys
+          lines = pathlib.Path("/proc/self/cgroup").read_text().splitlines()
+          rel = next(x.split(":", 2)[2] for x in lines if x.startswith("0::"))
+          root = pathlib.Path("/sys/fs/cgroup") / rel.lstrip("/")
+          print(json.dumps({
+              "runner_uid": os.getuid(),
+              "runner_user": __import__("pwd").getpwuid(os.getuid()).pw_name,
+              "delegated_cgroup_root": str(root),
+              "cgroup_v2": (root / "cgroup.controllers").is_file(),
+              "controllers": (root / "cgroup.controllers").read_text().split() if (root / "cgroup.controllers").is_file() else [],
+              "writable": os.access(root, os.W_OK | os.X_OK)
+          }, sort_keys=True), flush=True)
+          if os.getuid() == 0:
+              raise SystemExit("non-root service identity required")
+          if not os.access(root, os.W_OK | os.X_OK):
+              raise SystemExit("delegated cgroup root is not writable")
+          bootstrap = root / ("cknexus-manager-" + str(os.getpid()))
+          bootstrap.mkdir()
+          (bootstrap / "cgroup.procs").write_text(str(os.getpid()))
+          control = root / "cgroup.subtree_control"
+          enabled = set(control.read_text().split())
+          missing = [x for x in ("cpu", "memory", "pids") if x not in enabled]
+          if missing:
+              control.write_text(" ".join("+" + x for x in missing))
+          print(json.dumps({"delegated_root_subtree_control": control.read_text().split()}, sort_keys=True), flush=True)
+          source_dir = pathlib.Path(os.environ["Q12_SOURCE_DIR"])
+          gate_path = source_dir / "scripts" / "agnes_cgroup_v2_staging_gate.py"
+          result = subprocess.run(
+              [sys.executable, str(gate_path), "--root", str(root)],
+              env={**os.environ, "CKNEXUS_ENVIRONMENT": "staging"},
+              text=True,
+              capture_output=True,
+          )
+          pathlib.Path(os.environ["Q12_GATE_RAW_PATH"]).write_text(result.stdout, encoding="utf-8")
+          print(result.stdout, end="", flush=True)
+          if result.stderr:
+              print(result.stderr, file=sys.stderr, flush=True)
+          raise SystemExit(result.returncode)
+          ' > q12-systemd-delegation.log 2>&1
+          rc=$?
+          echo "exit_code=$rc" >> "$GITHUB_OUTPUT"
+          cat q12-systemd-delegation.log
+          exit 0
+
+      - name: Build source-bound Q12 evidence
+        id: evidence
+        if: always()
+        env:
+          Q12_RELEASE_SUBJECT: ${{ steps.subject.outputs.subject_manifest }}
+          GATE_RC: ${{ steps.gate.outputs.exit_code }}
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import getpass
+          import hashlib
+          import json
+          import os
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          raw_path = Path("q12-gate-raw.json")
+          raw = {}
+          if raw_path.is_file():
+              try:
+                  raw = json.loads(raw_path.read_text(encoding="utf-8"))
+              except (UnicodeDecodeError, json.JSONDecodeError):
+                  raw = {}
+          log_path = Path("q12-systemd-delegation.log")
+          log = log_path.read_text(encoding="utf-8", errors="replace") if log_path.exists() else ""
+          rc = os.getenv("GATE_RC", "")
+          passed = rc == "0" and raw.get("status") == "PASS" and raw.get("environment") == "staging"
+          evidence = {
+              **raw,
+              "schema_version": 1,
+              "gate": "Q12",
+              "source_sha": os.environ["Q12_SOURCE_SHA"],
+              "source_tree": os.environ["Q12_SOURCE_TREE"],
+              "release_subject_manifest_sha256": os.getenv("Q12_RELEASE_SUBJECT", ""),
+              "runner_image": os.getenv("ImageOS", "ubuntu24"),
+              "runner_name": os.getenv("RUNNER_NAME", "unknown"),
+              "runner_os": os.getenv("RUNNER_OS", "unknown"),
+              "runner_arch": os.getenv("RUNNER_ARCH", "unknown"),
+              "runner_uid": os.getuid(),
+              "runner_user": getpass.getuser(),
+              "execution_mode": "transient-systemd-service",
+              "environment_class": "github-hosted-ubuntu24-transient-systemd-delegation",
+              "workflow_run_id": int(os.environ["GITHUB_RUN_ID"]),
+              "workflow_run_attempt": int(os.getenv("GITHUB_RUN_ATTEMPT", "1")),
+              "workflow_ref": os.environ["GITHUB_WORKFLOW_REF"],
+              "workflow_sha": os.getenv("Q12_WORKFLOW_HEAD_SHA", os.environ["GITHUB_SHA"]),
+              "gate_exit_code": int(rc) if rc.isdigit() else None,
+              "result": "PASS" if passed else "NOT_VERIFIED",
+              "production_promotion_allowed": False,
+              "log_sha256": hashlib.sha256(log.encode()).hexdigest(),
+              "completed_at": datetime.now(timezone.utc).isoformat(),
+          }
+          if not passed:
+              evidence["status"] = "NOT_VERIFIED"
+          Path("q12-cgroup-gate.json").write_text(
+              json.dumps(evidence, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+          )
+          diagnostic = {
+              "schema_version": 1,
+              "gate": "Q12_DIAGNOSTIC",
+              "source_sha": os.environ["Q12_SOURCE_SHA"],
+              "source_tree": os.environ["Q12_SOURCE_TREE"],
+              "workflow_run_id": int(os.environ["GITHUB_RUN_ID"]),
+              "runner_name": os.getenv("RUNNER_NAME", "unknown"),
+              "runner_os": os.getenv("RUNNER_OS", "unknown"),
+              "runner_arch": os.getenv("RUNNER_ARCH", "unknown"),
+              "canonical_agnes_gate_pass": passed,
+              "status": "PASS_CANDIDATE_REQUIRES_REVIEW" if passed else "NOT_VERIFIED",
+              "production_promotion_allowed": False,
+              "log_sha256": evidence["log_sha256"],
+              "completed_at": evidence["completed_at"],
+          }
+          Path("Q12_SYSTEMD_DELEGATION_DIAGNOSTIC.json").write_text(
+              json.dumps(diagnostic, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+          )
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
+              output.write("status=" + ("PASS" if passed else "NOT_VERIFIED") + "\n")
+          print(json.dumps(diagnostic, indent=2, sort_keys=True))
+          PY
+
+      - name: Attest Q12 evidence bytes
+        id: attest
+        if: steps.evidence.outputs.status == 'PASS'
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
+        with:
+          subject-path: q12-cgroup-gate.json
+
+      - name: Publish source-bound Q12 evidence ref
+        if: steps.evidence.outputs.status == 'PASS'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ATTESTATION_BUNDLE: ${{ steps.attest.outputs.bundle-path }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          evidence_branch="evidence/q12/${Q12_SOURCE_SHA}"
+          evidence_file="$GITHUB_WORKSPACE/q12-cgroup-gate.json"
+          python3 -c "import json,sys; d=json.load(open(sys.argv[1])); assert d.get('status') == 'PASS' and d.get('source_sha') == sys.argv[2]" "$evidence_file" "$Q12_SOURCE_SHA"
+          publish_dir="$RUNNER_TEMP/q12-evidence-publish"
+          mkdir -p "$publish_dir"
+          git -C "$publish_dir" init
+          git -C "$publish_dir" config user.name "github-actions[bot]"
+          git -C "$publish_dir" config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git -C "$publish_dir" config commit.gpgsign false
+          git -C "$publish_dir" remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          if git -C "$publish_dir" ls-remote --exit-code origin "refs/heads/$evidence_branch" >/dev/null 2>&1; then
+            git -C "$publish_dir" fetch --no-tags origin "refs/heads/$evidence_branch"
+            git -C "$publish_dir" checkout -B "$evidence_branch" FETCH_HEAD
+          else
+            git -C "$publish_dir" checkout --orphan "$evidence_branch"
+          fi
+          cp "$evidence_file" "$publish_dir/q12-cgroup-gate.json"
+          test -s "$ATTESTATION_BUNDLE"
+          cp "$ATTESTATION_BUNDLE" "$publish_dir/q12-attestation.bundle.json"
+          git -C "$publish_dir" add q12-cgroup-gate.json q12-attestation.bundle.json
+          git -C "$publish_dir" commit -m "evidence(q12): source $Q12_SOURCE_SHA"
+          git -C "$publish_dir" push origin "HEAD:refs/heads/$evidence_branch"
+
+      - name: Upload Q12 delegated-runner evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: q12-systemd-delegation-${{ github.run_id }}
+          path: |
+            q12-cgroup-gate.json
+            q12-attestation.bundle.json
+            Q12_SYSTEMD_DELEGATION_DIAGNOSTIC.json
+            q12-systemd-delegation.log
+          if-no-files-found: warn
+          retention-days: 90
+
+      - name: Require canonical Q12 gate success
+        if: always()
+        env:
+          GATE_RC: ${{ steps.gate.outputs.exit_code }}
+          EVIDENCE_STATUS: ${{ steps.evidence.outputs.status }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GATE_RC" = "0"
+          test "$EVIDENCE_STATUS" = "PASS"
+          python3 -c "import json; d=json.load(open('q12-cgroup-gate.json')); assert d['status']=='PASS' and d['result']=='PASS' and d['production_promotion_allowed'] is False"
+
+      - name: Keep staging evidence separate from production approval
+        if: always()
+        run: |
+          echo "A verified staging Q12 result does not grant production approval."
+          echo "CK-NEXUS Core and independent review remain required."
+
