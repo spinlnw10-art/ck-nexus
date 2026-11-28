@@ -8,6 +8,9 @@ from __future__ import annotations
 
 from typing import Any
 
+from creator_app.agnes.gitlab_duo_bootstrap import (
+    build_core_governed_gitlab_duo_dispatcher,
+)
 from creator_app.agnes.gitlab_duo_dispatcher import (
     DuoDispatchRequest,
     GitLabDuoDispatchError,
@@ -23,6 +26,13 @@ def configure_gitlab_duo_dispatcher(client: GitLabDuoFlowsClient | None) -> None
     if client is not None and not isinstance(client, GitLabDuoFlowsClient):
         raise TypeError("client must be a GitLabDuoFlowsClient or None")
     _CLIENT = client
+
+
+def configure_gitlab_duo_dispatcher_from_core(**core_bindings: Any) -> dict[str, Any]:
+    """Build and inject the dispatcher from explicit trusted Core-owned bindings."""
+    client = build_core_governed_gitlab_duo_dispatcher(**core_bindings)
+    configure_gitlab_duo_dispatcher(client)
+    return client.readiness()
 
 
 def gitlab_duo_status() -> dict[str, Any]:

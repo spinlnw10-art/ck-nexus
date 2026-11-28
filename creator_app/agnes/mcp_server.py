@@ -31,6 +31,9 @@ from creator_app.agnes.gitlab_duo_mcp_tools import (
     configure_gitlab_duo_dispatcher as _configure_gitlab_duo_dispatcher,
 )
 from creator_app.agnes.gitlab_duo_mcp_tools import (
+    configure_gitlab_duo_dispatcher_from_core as _configure_gitlab_duo_dispatcher_from_core,
+)
+from creator_app.agnes.gitlab_duo_mcp_tools import (
     gitlab_duo_flow_status,
     gitlab_duo_start_flow,
     gitlab_duo_status,
@@ -185,6 +188,11 @@ _BRAIN_RUNTIME: BrainRuntime | None = None
 def configure_gitlab_duo_dispatcher(client) -> None:
     """Trusted bootstrap hook; accepts only a fully governed adapter instance."""
     _configure_gitlab_duo_dispatcher(client)
+
+
+def configure_gitlab_duo_dispatcher_from_core(**core_bindings: Any) -> dict[str, Any]:
+    """Compose and inject the Duo adapter from live CK-NEXUS Core bindings."""
+    return _configure_gitlab_duo_dispatcher_from_core(**core_bindings)
 
 
 def get_system() -> UniversalSystem:
