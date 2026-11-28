@@ -48,6 +48,30 @@ class AuditTests(unittest.TestCase):
             self.assertEqual(result["status"], "invalid")
             self.assertEqual(result["testzip_error"], "error")
 
+    def test_encrypted_zip_entry_requires_review(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "encrypted.zip"
+            with zipfile.ZipFile(path, "w") as archive:
+                archive.writestr("secret.txt", "payload")
+            with zipfile.ZipFile(path) as archive:
+                info = archive.infolist()[0]
+            info.flag_bits |= 0x1
+            with mock.patch.object(zipfile.ZipFile, "infolist", return_value=[info]):
+                result = audit.scan_zip(path, 10, 1024)
+            self.assertEqual(result["status"], "review_required")
+            self.assertEqual(result["encrypted_entries"], 1)
+
+    def test_truncated_text_secret_scan_requires_review(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp) / "source"
+            root.mkdir()
+            (root / "large.pem").write_bytes(b"x" * (audit.SECRET_SCAN_LIMIT + 1))
+            report = audit.scan_tree(root, None, audit.SECRET_SCAN_LIMIT + 10, 100, 1024)
+            self.assertEqual(report["decision"], "REVIEW_REQUIRED")
+            self.assertIn("secret_scan_size_limit_exceeded", {
+                error["error"] for error in report["errors"]
+            })
+
     def test_zip_entry_and_uncompressed_limits(self):
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "sample.zip"
