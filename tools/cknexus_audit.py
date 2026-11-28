@@ -296,8 +296,11 @@ def _atomic_write(directory: Path, filename: str, payload: bytes) -> None:
 
 
 def write_evidence(output: Path, report: dict) -> tuple[str, str]:
-    output.mkdir(parents=True, exist_ok=True)
-    output_stat = output.lstat()
+    try:
+        output_stat = output.lstat()
+    except FileNotFoundError:
+        output.mkdir(parents=True, exist_ok=True)
+        output_stat = output.lstat()
     if stat.S_ISLNK(output_stat.st_mode) or not stat.S_ISDIR(output_stat.st_mode):
         raise ValueError("audit-output must be a real directory, not a symlink")
     report_bytes = (json.dumps(report, indent=2, sort_keys=True) + "\n").encode("utf-8")
