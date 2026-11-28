@@ -9,6 +9,7 @@ from creator_app.agnes.execution.phase3 import PipelineHandle, PipelineState, Re
 from creator_app.agnes.execution.phase3.hardening import CgroupV2Manager
 from creator_app.agnes.execution.phase3.sandbox import HardenedLinuxNamespaceRunner
 from creator_app.agnes.execution.sandbox import SandboxPolicy, SandboxWorkspaceManager
+from creator_app.agnes.execution.sandbox.runner import _SETUP_SCRIPT
 from creator_app.agnes_runtime import AgnesNervousSystem
 from tests.omni_context_factory import make_test_omni_context
 
@@ -65,6 +66,19 @@ def test_cgroup_v2_doctor_is_truthful():
         and not health["missing_controllers"]
         and not health["missing_enabled_controllers"]
     )
+
+
+def test_hardened_launcher_uses_single_shell_continuations():
+    lines = _SETUP_SCRIPT.splitlines()
+    start = lines.index('if [ -n "$LAUNCHER" ]; then')
+    end = lines.index("fi", start)
+    continuation_lines = [
+        line.rstrip()
+        for line in lines[start:end]
+        if line.rstrip().endswith("\\")
+    ]
+    assert continuation_lines
+    assert all(not line.endswith("\\\\") for line in continuation_lines)
 
 
 class FakeRedis:
