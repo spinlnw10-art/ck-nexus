@@ -1,5 +1,5 @@
 {
-  "completed_at": "2026-11-28T12:33:49.013483+00:00",
+  "completed_at": "2026-11-28T12:37:07.978305+00:00",
   "environment": "staging",
   "environment_class": "github-hosted-ubuntu24-transient-systemd-delegation",
   "execution_mode": "transient-systemd-service",
@@ -27,10 +27,10 @@
       "memory",
       "pids"
     ],
-    "root": "/sys/fs/cgroup/system.slice/cknexus-q12-delegation-probe-46145262816.service",
+    "root": "/sys/fs/cgroup/system.slice/cknexus-q12-delegation-probe-46145544272.service",
     "unified_v2": true
   },
-  "log_sha256": "ff934ed889a8e2673dbb28aa8962b01b52e699054fe7fcf2e9702611a0f4b6eb",
+  "log_sha256": "e47f760f9790bf960b5c65717b09fa38f48521645a3963593a64ca6aa21e69c3",
   "observed": {
     "cpu.max": "20000 100000",
     "memory.max": "67108864",
@@ -42,7 +42,7 @@
   "result": "PASS",
   "runner_arch": "X64",
   "runner_image": "ubuntu24",
-  "runner_name": "GitHub Actions 1000008182",
+  "runner_name": "GitHub Actions 1000008186",
   "runner_os": "Linux",
   "runner_uid": 1001,
   "runner_user": "runner",
@@ -50,8 +50,8 @@
   "source_sha": "9abb16eaa3e8072a2eef62210339084f6b0abd3e",
   "source_tree": "0762e1f00d8400140eaef38f9bc5ebf40155f482",
   "status": "PASS",
-  "workflow_ref": "spinlnw10-art/ck-nexus/.github/workflows/ci.yml@refs/pull/430/merge",
+  "workflow_ref": "spinlnw10-art/ck-nexus/.github/workflows/ci.yml@refs/heads/q12-attested-runner-integration",
   "workflow_run_attempt": 1,
-  "workflow_run_id": 46145262816,
+  "workflow_run_id": 46145544272,
   "workflow_sha": "761bbb32fe49af55971aaf46c5dd15a5b132f787"
 }
