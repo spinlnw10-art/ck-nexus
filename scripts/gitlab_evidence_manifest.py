@@ -177,9 +177,17 @@ def validate_q12_gate(payload: dict[str, Any]) -> dict[str, Any]:
         raise EvidenceManifestError("Q12 gate health evidence is missing")
     if health.get("unified_v2") is not True or health.get("delegated_writable") is not True:
         raise EvidenceManifestError("Q12 requires writable delegated unified cgroup v2")
+    if health.get("ready") is not True:
+        raise EvidenceManifestError("Q12 cgroup delegation health is not ready")
     controllers = health.get("controllers")
-    if not isinstance(controllers, list) or not {"cpu", "memory", "pids"}.issubset(controllers):
+    required = {"cpu", "memory", "pids"}
+    if not isinstance(controllers, list) or not required.issubset(controllers):
         raise EvidenceManifestError("Q12 required cgroup controllers are unavailable")
+    enabled_controllers = health.get("enabled_controllers")
+    if not isinstance(enabled_controllers, list) or not required.issubset(enabled_controllers):
+        raise EvidenceManifestError("Q12 required cgroup controllers are not enabled for child cgroups")
+    if health.get("missing_enabled_controllers") != []:
+        raise EvidenceManifestError("Q12 reports missing enabled cgroup controllers")
     root = health.get("root")
     if not isinstance(root, str) or not root:
         raise EvidenceManifestError("Q12 delegated cgroup root is missing")
@@ -198,6 +206,7 @@ def validate_q12_gate(payload: dict[str, Any]) -> dict[str, Any]:
         "environment": "staging",
         "delegated_root": root,
         "controllers": sorted(controllers),
+        "enabled_controllers": sorted(enabled_controllers),
         "observed": expected,
     }
 
