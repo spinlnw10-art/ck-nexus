@@ -8,8 +8,8 @@ import json
 import os
 import subprocess
 import time
-from pathlib import Path
 from collections.abc import Callable
+from pathlib import Path
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
