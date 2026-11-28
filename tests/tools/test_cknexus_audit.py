@@ -43,7 +43,9 @@ class AuditTests(unittest.TestCase):
             path = Path(tmp) / "sample.zip"
             with zipfile.ZipFile(path, "w") as archive:
                 archive.writestr("file.txt", "payload")
-            with mock.patch.object(zipfile.ZipFile, "testzip", side_effect=zlib.error("bad stream")):
+            with mock.patch.object(
+                zipfile.ZipFile, "testzip", side_effect=zlib.error("bad stream")
+            ):
                 result = audit.scan_zip(path, 100, 1024 * 1024)
             self.assertEqual(result["status"], "invalid")
             self.assertEqual(result["testzip_error"], "error")
