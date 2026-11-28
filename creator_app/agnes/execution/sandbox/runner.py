@@ -71,6 +71,20 @@ exec chroot "$ROOT" /usr/bin/env -i \
 """
 
 
+_GATED_LAUNCHER_SCRIPT = (
+    "import os, sys\n"
+    "ready_fd = int(sys.argv[1])\n"
+    "gate_fd = int(sys.argv[2])\n"
+    "command = sys.argv[3:]\n"
+    "os.write(ready_fd, b'1')\n"
+    "os.close(ready_fd)\n"
+    "token = os.read(gate_fd, 1)\n"
+    "os.close(gate_fd)\n"
+    "if token != b'1':\n"
+    "    raise SystemExit(70)\n"
+    "os.execvpe(command[0], command, os.environ)\n"
+)
+
 class LinuxNamespaceRunner:
     """Linux user/mount/PID/network namespace + chroot development sandbox.
 
