@@ -45,20 +45,26 @@ unit_tests:
 
 cgroup_v2_staging:
   stage: evidence
-  image: python:3.12-slim
   tags:
     - cknexus-cgroup-v2
   before_script:
-    - apt-get update
-    - apt-get install -y --no-install-recommends git build-essential libseccomp-dev
-    - rm -rf /var/lib/apt/lists/*
-    - python -m pip install --no-cache-dir uv
-  script:
+    # Shell executor runs on the delegated host; Docker images and apt-get are unavailable.
+    - command -v python3.12
+    - python3.12 --version
+    - command -v uv
+    - command -v git
+    - command -v gcc
     - test -n "${CKNEXUS_AGNES_CGROUP_ROOT:-}"
-    - uv sync --all-extras --dev --frozen
+    - test -w "$CKNEXUS_AGNES_CGROUP_ROOT"
+    - test -r "$CKNEXUS_AGNES_CGROUP_ROOT/cgroup.subtree_control"
+    - grep -qw cpu "$CKNEXUS_AGNES_CGROUP_ROOT/cgroup.subtree_control"
+    - grep -qw memory "$CKNEXUS_AGNES_CGROUP_ROOT/cgroup.subtree_control"
+    - grep -qw pids "$CKNEXUS_AGNES_CGROUP_ROOT/cgroup.subtree_control"
+  script:
+    - uv sync --python 3.12 --all-extras --dev --frozen
     - set -o pipefail
-    - CKNEXUS_ENVIRONMENT=staging uv run --no-sync python scripts/agnes_cgroup_v2_staging_gate.py --root "$CKNEXUS_AGNES_CGROUP_ROOT" | tee q12-cgroup-gate.json
-    - uv run --no-sync pytest -q -m cgroup_staging --junitxml=cgroup-report.xml
+    - CKNEXUS_ENVIRONMENT=staging uv run --python 3.12 --no-sync python scripts/agnes_cgroup_v2_staging_gate.py --root "$CKNEXUS_AGNES_CGROUP_ROOT" | tee q12-cgroup-gate.json
+    - uv run --python 3.12 --no-sync pytest -q -m cgroup_staging --junitxml=cgroup-report.xml
   artifacts:
     when: always
     expire_in: 90 days

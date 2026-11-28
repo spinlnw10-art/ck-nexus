@@ -22,6 +22,7 @@ def test_cgroup_health_requires_cpu_memory_and_pids(tmp_path: Path) -> None:
 
 def test_cgroup_health_ready_for_delegated_required_controllers(tmp_path: Path) -> None:
     (tmp_path / "cgroup.controllers").write_text("io memory pids cpu\n", encoding="utf-8")
+    (tmp_path / "cgroup.subtree_control").write_text("cpu memory pids\n", encoding="utf-8")
     health = CgroupV2Manager(tmp_path).health()
     assert health["ready"] is True
     assert health["missing_controllers"] == []

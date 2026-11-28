@@ -60,7 +60,11 @@ def test_cgroup_v2_doctor_is_truthful():
     health = CgroupV2Manager().health()
     assert health["unified_v2"] is True
     # This CI/sandbox mounts cgroup2 read-only, so Phase 3 must not fake enforcement.
-    assert health["ready"] is health["delegated_writable"]
+    assert health["ready"] is (
+        health["delegated_writable"]
+        and not health["missing_controllers"]
+        and not health["missing_enabled_controllers"]
+    )
 
 
 class FakeRedis:

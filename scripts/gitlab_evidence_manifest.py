@@ -381,6 +381,45 @@ def _lineage(graph: EvidenceGraph, start_node_id: str) -> list[dict[str, Any]]:
     ]
 
 
+def pipeline_provenance(
+    environ: Mapping[str, str],
+    *,
+    commit_sha: str,
+    git_runner: Callable[..., str],
+) -> dict[str, str | None]:
+    """Keep detached MR source evidence distinct from an actual merged-result subject."""
+    pipeline_source = environ.get("CI_PIPELINE_SOURCE")
+    event_type = environ.get("CI_MERGE_REQUEST_EVENT_TYPE")
+    is_merge_result = pipeline_source == "merge_request_event" and event_type in {
+        "merged_result",
+        "merge_train",
+    }
+    configured_source_sha = environ.get("CI_MERGE_REQUEST_SOURCE_BRANCH_SHA")
+    if is_merge_result and not configured_source_sha:
+        raise EvidenceManifestError(
+            "merged-result pipeline is missing CI_MERGE_REQUEST_SOURCE_BRANCH_SHA"
+        )
+    source_sha = configured_source_sha or commit_sha
+    source_tree_sha = git_runner("rev-parse", f"{source_sha}^{{tree}}")
+    merge_result_sha = commit_sha if is_merge_result else None
+    merge_result_tree_sha = (
+        git_runner("rev-parse", f"{commit_sha}^{{tree}}") if is_merge_result else None
+    )
+    if is_merge_result:
+        subject_kind = str(event_type)
+    elif pipeline_source == "merge_request_event":
+        subject_kind = "detached_merge_request_source"
+    else:
+        subject_kind = "branch_commit"
+    return {
+        "pipeline_subject_kind": subject_kind,
+        "source_branch_sha": source_sha,
+        "source_tree_sha": source_tree_sha,
+        "merge_result_commit_sha": merge_result_sha,
+        "merge_result_tree_sha": merge_result_tree_sha,
+    }
+
+
 def build_manifest(
     root: Path = ROOT,
     *,
@@ -410,14 +449,15 @@ def build_manifest(
     )
 
     commit_sha = env.get("CI_COMMIT_SHA") or runner("rev-parse", "HEAD")
-    source_sha = env.get("CI_MERGE_REQUEST_SOURCE_BRANCH_SHA") or commit_sha
+    provenance = pipeline_provenance(env, commit_sha=commit_sha, git_runner=runner)
+    source_sha = provenance["source_branch_sha"]
+    source_tree_sha = provenance["source_tree_sha"]
+    merge_result_sha = provenance["merge_result_commit_sha"]
+    merge_result_tree_sha = provenance["merge_result_tree_sha"]
     diff_base_sha = env.get("CI_MERGE_REQUEST_DIFF_BASE_SHA") or None
-    merge_result_tree_sha = runner("rev-parse", f"{commit_sha}^{{tree}}")
-    source_tree_sha = runner("rev-parse", f"{source_sha}^{{tree}}")
     for label, value in (
         ("commit_sha", commit_sha),
         ("source_branch_sha", source_sha),
-        ("merge_result_tree_sha", merge_result_tree_sha),
         ("source_tree_sha", source_tree_sha),
     ):
         if not value:
@@ -549,10 +589,11 @@ def build_manifest(
         "ref": env.get("CI_COMMIT_REF_NAME"),
         "ref_type": env.get("CI_COMMIT_REF_TYPE"),
         "pipeline_source": env.get("CI_PIPELINE_SOURCE"),
-        # Merge-result provenance: the commit/tree this pipeline actually ran on.
+        "pipeline_subject_kind": provenance["pipeline_subject_kind"],
+        # Detached MR source runs must never claim a merge-result subject.
         "commit_sha": commit_sha,
-        "tree_sha": merge_result_tree_sha,
-        "merge_result_commit_sha": commit_sha,
+        "tree_sha": runner("rev-parse", f"{commit_sha}^{{tree}}"),
+        "merge_result_commit_sha": merge_result_sha,
         "merge_result_tree_sha": merge_result_tree_sha,
         # Candidate source provenance: the branch head that produced the merge result.
         "source_branch_sha": source_sha,

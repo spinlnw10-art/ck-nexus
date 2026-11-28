@@ -26,9 +26,10 @@ class CgroupV2Manager:
     REQUIRED_CONTROLLERS = frozenset({"cpu", "memory", "pids"})
 
     def __init__(
-        self, root: Path = Path("/sys/fs/cgroup"), group_prefix: str = "cknexus-agnes"
+        self, root: Path | None = None, group_prefix: str = "cknexus-agnes"
     ) -> None:
-        self.root = root
+        configured_root = os.getenv("CKNEXUS_AGNES_CGROUP_ROOT")
+        self.root = root or Path(configured_root or "/sys/fs/cgroup")
         self.group_prefix = group_prefix
 
     def health(self) -> dict[str, object]:
@@ -40,15 +41,27 @@ class CgroupV2Manager:
                 controllers = set(controllers_file.read_text(encoding="utf-8").split())
             except OSError:
                 controllers = set()
+        subtree_control_file = self.root / "cgroup.subtree_control"
+        enabled_controllers: set[str] = set()
+        if subtree_control_file.exists():
+            try:
+                enabled_controllers = set(
+                    subtree_control_file.read_text(encoding="utf-8").split()
+                )
+            except OSError:
+                enabled_controllers = set()
         writable = self.root.is_dir() and os.access(self.root, os.W_OK)
         missing = sorted(self.REQUIRED_CONTROLLERS - controllers)
+        missing_enabled = sorted(self.REQUIRED_CONTROLLERS - enabled_controllers)
         return {
             "unified_v2": unified,
             "delegated_writable": writable,
             "controllers": sorted(controllers),
+            "enabled_controllers": sorted(enabled_controllers),
             "required_controllers": sorted(self.REQUIRED_CONTROLLERS),
             "missing_controllers": missing,
-            "ready": unified and writable and not missing,
+            "missing_enabled_controllers": missing_enabled,
+            "ready": unified and writable and not missing and not missing_enabled,
             "root": str(self.root),
         }
 

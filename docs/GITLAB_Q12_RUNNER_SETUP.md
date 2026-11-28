@@ -8,16 +8,18 @@ The `cgroup_v2_staging` job is a release-evidence gate. It must run on a dedicat
 
 - Dedicated Linux VM or host with unified cgroup v2.
 - GitLab Runner registered to project `chokmantol/ck-nexus` (project ID `89477515`), with tag `cknexus-cgroup-v2`.
-- Prefer a shell executor on a disposable, isolated runner host; do not mount the host cgroup filesystem into a general-purpose shared container runner.
+- Use a shell executor on a disposable, isolated runner host; do not mount the host cgroup filesystem into a general-purpose shared container runner. The cgroup job omits the Docker image because the Shell executor runs directly on the host.
+- Pre-provision Python 3.12, uv, git, gcc, and the build toolchain required by locked Python dependencies. The job must not run apt-get or install host packages as the unprivileged gitlab-runner user.
 - Runner must be locked to this project, must not run untrusted jobs from other projects, and must not receive production credentials or deployment secrets.
 - Configure the runner service under systemd with controller delegation for `cpu`, `memory`, and `pids` (for example, a service drop-in using `Delegate=cpu memory pids`). Verify the resulting service subtree is writable by the runner identity and exposes all three controllers.
+- The configured delegated root must have cpu, memory, and pids enabled in cgroup.subtree_control, not merely listed in cgroup.controllers. Arrange a proper systemd delegation hierarchy with an empty domain parent before enabling child controllers; do not move the runner service process or write host cgroup controls blindly. Verify cgroup.subtree_control from the runner identity before registering the runner as ready.
 - Set `CKNEXUS_AGNES_CGROUP_ROOT` in the runner's protected local environment to the actual delegated subtree path. Do not set it to `/sys/fs/cgroup` unless that exact root is the writable delegated boundary. Do not store runner tokens or secrets in this repository.
 
 ## Register and validate
 
 1. In GitLab project Settings → CI/CD → Runners, create a project runner using GitLab's current runner creation flow. Use the runner authentication token (`glrt-` token) only on the host during registration; do not use or publish a legacy registration token.
 2. Apply the tag `cknexus-cgroup-v2`; disable untagged jobs; lock it to this project. Keep the host disposable and isolated because CI executes repository code.
-3. On the runner host, verify unified cgroup v2, delegated write access as the runner service identity, and availability of `cpu`, `memory`, and `pids` in the configured subtree.
+3. On the runner host, provision Python 3.12, uv, git, gcc, and Python build prerequisites. Verify unified cgroup v2, delegated write access as the runner service identity, and that cpu, memory, and pids appear in both cgroup.controllers and cgroup.subtree_control at the configured root. Ensure the delegated parent is empty where the kernel no-internal-process constraint applies.
 4. Run the MR pipeline. The job first executes `scripts/agnes_cgroup_v2_staging_gate.py`, which creates a disposable child cgroup, writes the exact CPU/memory/PID limits, attaches a child PID, reads back the effective values, and cleans up.
 5. The job then runs all `cgroup_staging` tests. The evidence manifest requires the JSON gate result and validates the observed values; missing, BLOCKED, FAIL, malformed, or mismatched evidence fails closed.
 
