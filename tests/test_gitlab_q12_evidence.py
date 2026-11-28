@@ -21,7 +21,10 @@ def passing_q12_gate() -> dict[str, object]:
         "health": {
             "unified_v2": True,
             "delegated_writable": True,
+            "ready": True,
             "controllers": ["cpu", "memory", "pids"],
+            "enabled_controllers": ["cpu", "memory", "pids"],
+            "missing_enabled_controllers": [],
             "root": "/sys/fs/cgroup/cknexus-delegated",
         },
         "observed": {
@@ -47,7 +50,10 @@ def test_q12_evidence_requires_observed_delegated_limits(passing_q12_gate):
         (("environment",), "development"),
         (("health", "unified_v2"), False),
         (("health", "delegated_writable"), False),
+        (("health", "ready"), False),
         (("health", "controllers"), ["cpu", "memory"]),
+        (("health", "enabled_controllers"), ["cpu", "memory"]),
+        (("health", "missing_enabled_controllers"), ["pids"]),
         (("observed", "cpu.max"), "max 100000"),
         (("observed", "memory.max"), "max"),
         (("observed", "pids.max"), "max"),
